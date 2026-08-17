@@ -128,13 +128,28 @@ idle stretches and easily paced around. Enrich the Timing cluster with:
 This is the fast-follow the LII spec already gestures at (challenge-level behavioural enrichment); for
 login it should be brought forward because timing is doing more work here.
 
-## 6. Highest-value data ask: login outcome
+## 6. There is only one data ask: the account identifier
 
-Even in Mode B, if the customer sends a **per-attempt login outcome** (success/fail), fail-rate per
-anchor becomes a strong signal and helps separate credential stuffing (varied, mostly-fail, one shot
-per account) from heavy legitimate re-auth (mostly-success, one account). Requesting this signal is
-the login equivalent of the LII spec's "get fraud labels" priority and should be near the top of the
-list.
+It's tempting to list "per-attempt login outcome (success/fail)" as a separate signal — fail-rate
+would separate credential stuffing (mostly-fail, one shot per account) from heavy legitimate re-auth
+(mostly-success). **But outcome and identifier are inseparable.** To report an outcome the customer's
+backend has already resolved the attempt to an account (it looked up that account to check the
+password), so the identifier exists at that exact moment and costs ~nothing extra to send. The
+consequence runs both ways:
+
+- A customer who *can* send outcome can send the identifier — so we'd just ask for the identifier,
+  which is the stronger signal (it unlocks account fan-out, §3.3 / §4).
+- A customer who *won't* send the identifier (the definition of Mode B) won't be sending outcome
+  either.
+
+So **outcome is not an independent lever, and it is not a Mode B lifeline.** The single data ask is
+the account identifier; getting it moves the key from Mode B to Mode A. If it's present, treat
+fail-rate as a free Mode A enrichment on top of fan-out.
+
+This is what makes the mode split real: **Mode B is genuinely low-integration** — the customer sends
+nothing but the session, no identifier and no outcome. There is no cheap signal to recover fan-out
+there, which is exactly why the multi-dimensional timing work (§5) and the infrastructure signal set
+(§3.2) have to carry Mode B on their own.
 
 ## 7. Open items to resolve before productising
 
@@ -157,8 +172,9 @@ list.
   primary *behavioural* signal in Mode B, but the full network-infrastructure signal set (IP
   rotation, ASN/subnet concentration, proxy/VPN/hosting, harvested proxy, tz mismatch, UA mismatch)
   transfers unchanged, so it isn't timing alone. Make timing multi-dimensional (median/p90, burst,
-  cadence regularity) so it's not a single flimsy signal, and request login outcome to recover some
-  of what fan-out gave us.
+  cadence regularity) so it's not a single flimsy signal. Note there is no "login outcome" shortcut:
+  outcome and account identifier are inseparable, so a Mode B key that won't send the identifier
+  won't send outcome either — the only data ask is the identifier, which promotes the key to Mode A.
 - *"Use the sign up flow 3 anchor"* — yes: `init_fingerprint + cdn__ja4_hash + timezone_continent`
   is a strictly better anchor for login than init_fingerprint alone because it survives the much
   larger volume of legitimate shared-device login traffic.
