@@ -107,12 +107,27 @@ keys can run tighter.
 
 ### Suggested action tiers (login)
 
-| Tier | Mode A condition | Mode B condition |
+Mode B scores by **cluster corroboration** (LII discipline), not a raw signal
+count, because the compound anchor pins JA4 and leaves only two genuinely
+independent dimensions to corroborate with — **Network** and **Timing**
+(Device/UA is a weak third). This is deliberately stricter than FVD v4's raw
+3-of-11 count, since Mode B cannot confirm fan-out and must keep FPR down.
+
+| Tier | Mode A condition | Mode B condition (implemented in the analyser) |
 | --- | --- | --- |
-| HARD_CHALLENGE | gate + fan-out + ≥2 infra signals | gate + ≥3 infra signals incl. RAPID_TIMING |
-| CHALLENGE | gate + fan-out only | gate + 2 infra signals |
-| MONITOR | gate + 1 infra signal | gate + 1 infra signal |
-| NOISE / COLLISION | as FVD v4 | as FVD v4 |
+| HARD_CHALLENGE | gate + fan-out + ≥2 infra signals | gate + Timing fires + (Network **or** Device) |
+| CHALLENGE | gate + fan-out only | gate + Timing alone, **or** Network + Device (no Timing) |
+| MONITOR | gate + 1 infra signal | gate + exactly one of Network / Device |
+| NOISE | gate + 0 signals | gate + nothing fires |
+| COLLISION | >500 sessions/hour AND >10 ISPs | same |
+| LOW_VELOCITY | below gate | below gate |
+
+Clusters: **Network** = proxy/VPN/hosting · IP rotation · ASN/subnet/country
+concentration · harvested proxy · timezone scatter (fires if any member fires).
+**Timing** = rapid avg gap · burst · metronomic cadence. **Device** = UA mismatch.
+A testing finding worth noting: in Mode B, rapid automation almost always trips a
+Network signal too, so "Timing alone" is effectively unreachable — the realistic
+HARD path is Timing + Network.
 
 ## 5. Make rapid timing multi-dimensional (it's the load-bearing signal in Mode B)
 
@@ -164,7 +179,24 @@ there, which is exactly why the multi-dimensional timing work (§5) and the infr
 - **Signal lifecycle monitoring.** Same anti-detect-browser degradation risk as both parents; carry
   LII's single-session-fingerprint-ratio and entropy-distribution monitors over.
 
-## 8. TL;DR answers to the questions raised
+## 8. Tooling — test Mode B first
+
+Mode B is the case to validate before anything else: no fan-out to lean on, so the
+verdict rests entirely on infrastructure + timing, which is where the false-positive
+risk lives. The analyser and extraction query are in the repo:
+
+- `tools/login_velocity_modeb.py` — zero-dependency analyser implementing the anchor,
+  gate, and cluster scoring above. `--self-test` validates the tier logic on labelled
+  synthetic clusters (no warehouse needed); `--data sessions.csv` runs a real key.
+- `queries/login_modeb_extraction.sql` — session-only extraction for a login key.
+- See `tools/README.md` for the calibration workflow (14-day baseline → pick
+  `--daily-threshold` above the legitimate tail → confirm shared-device traffic stays
+  out of HARD_CHALLENGE).
+
+Validation status: tier logic verified on synthetic data; **not yet run on a real
+login key** — recall/FPR pending, same as the parent specs.
+
+## 9. TL;DR answers to the questions raised
 
 - *"With login, velocity should be higher than normal"* — correct; the signup gate of 6/day is far
   too low for login. Raise it, and in Mode A gate on **distinct accounts** rather than raw sessions.
