@@ -172,6 +172,74 @@ without an account relationship, account context). Enforcement follows axis 2 on
 
 ---
 
+## 4a. JA4_b / TLS-stack signals (from Sri Alapati's nine logics)
+
+Source: Sri Alapati, Slack DM 2026-03-06. Items #2 and #5 apply directly to BRE. Tested against
+1 day of Production traffic by splitting `CDN__JA4_HASH_AT_SESSION_CREATED` on `_` — JA4_b
+(part 2) is the cipher-suite hash, which identifies the TLS stack rather than the self-reported
+user-agent.
+
+**Measured browser JA4_b baseline (1 day, Production):**
+
+| JA4_b | Top-3 hash for |
+|---|---|
+| `8daaf6152771` | Chrome 75.4% · Samsung Browser 91.5% · Headless Chrome 72.0% · Chrome Webview 52.5% · Edge 29.3% · Firefox 25.4% · Opera 24.3% |
+| `55b375c5d22e` | Safari 64.9% · Mobile Safari 62.7% · Opera 63.2% · Edge 61.5% · Chrome Mobile 54.9% · Firefox 38.0% · **Chrome 20.6%** |
+| `5c443a9f7afe` | minor share across most Chromium browsers |
+
+**#5 (cross-verify browser name against JA4_b) does not work between mainstream browsers.**
+The worked example was "Chrome claiming `5b57614c22b0`, which is Firefox's cipher hash". In this
+data the mainstream browsers share cipher hashes almost completely: `55b375c5d22e` is the top
+hash for five different browsers and Firefox's #1, and Chrome legitimately shows 20.6% of its
+traffic (12.15M sessions/day) on it. A browser-vs-browser mismatch rule would fire on ~12M
+legitimate Chrome sessions daily. Likely cause is TLS 1.3 cipher-order convergence plus possible
+CDN normalisation — worth confirming whether the CDN-observed JA4 is less discriminating than a
+raw client-side one.
+
+It *does* work in the non-browser direction:
+- **CaptchaBotRS** — `8daaf6152771` at 98.75%, a genuine Chrome TLS stack. So it is automation
+  driving real Chrome, which explains WebGL 0 alongside a perfect browser TLS fingerprint, and
+  why it defeated every aggregate signal in §2.
+- **Resty** — `f57a46bbacb6` at 100%, which is Mobile Safari's #3 hash. A Go library presenting
+  a Safari cipher hash.
+
+**#2 (is JA4_b a browser stack at all) works, and is the strongest signal found for Cypress.**
+
+| Browser | JA4_b | In browser set? |
+|---|---|---|
+| **Cypress** | `5d04281c6031` 69.4% · `e8a523a41297` 30.1% | **No** — neither appears in any mainstream browser's top 3 |
+| **JavaFX** | `1ce71f0edbb1` · `bd868743f55c` · `a1c778405cf3` | **No** |
+| Yandex | `8daaf6152771` 96.8% | Yes (Chrome) — Chromium-based, consistent |
+| Puffin Cloud Browser | `8daaf6152771` 100% | Yes (Chrome) — consistent with server-side Chrome rendering |
+| Atom / CrosswalkApp | Chrome hashes, mixed | Yes — further confirms both are Chromium shells, not tools |
+| Nintendo Browser | `700b5f71ebac` 99.05% | **No — but legitimate.** False positive risk |
+
+Cypress defeated S1 (WebGL 14), S4 (dictionary band 63) and S6 (JA4 concentration 0.691). Its
+TLS stack is the one thing that gives it away, and unlike every aggregate signal here it is
+per-session, volume-independent and not forgeable from client-side JS.
+
+**Cost:** Nintendo Browser shows the allowlist must cover legitimate long-tail browsers, not just
+the mainstream set — the same maintenance burden the design doc is trying to avoid. Real, but
+bounded.
+
+### Proposed additions
+
+| Signal | Condition | Pts | Notes |
+|---|---|---|---|
+| **S10 — non-browser TLS stack** | JA4_b outside maintained browser allowlist | **3** | **Replaces S6.** Concentration was measuring diversity as a proxy for what this measures directly. |
+| **S11 — UA/TLS class inconsistency** | Non-browser UA with browser JA4_b, or vice versa | **2** | Never browser-vs-browser (see above) |
+
+### Other items from the same list, mapped
+
+- **#7 — too many distinct hashes from one subnet.** Aimed squarely at the one case nothing here
+  catches: CaptchaBotRS, 1,208 IPs / 444 ASNs / residential-shaped. Highest-value item after #2.
+- **#4 — baseline most-seen hash per browser name, version *and* OS.** The test above used
+  browser name alone, which is why the baseline looks degenerate; version+OS granularity would
+  sharpen it and is the right way to build the S10 allowlist.
+- **#3 — IP + JA4 verification ratio per key.** Fits the account-level Tier-2 routing in §2a.
+- **#6, #8, #9** — subnet/ASN and JA4-velocity variants; overlap with the doc's existing §3.4
+  investigation signals.
+
 ## 5. Open items
 
 - **Weights are unvalidated.** They reproduce this window's known-good answers, which is not the
