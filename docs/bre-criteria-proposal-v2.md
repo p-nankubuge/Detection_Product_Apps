@@ -24,6 +24,7 @@ innocence, it means the data cannot support a verdict.
 | **G1** | `total_sessions >= 50` over the 14-day window | The doc's own Tier-2 floor (§3.2). Below this, every ratio is noise. Keep it at 50, not 1,000: three of the seven browsers flagged in the 2026-09-18 run sat below 1,000 sessions. |
 | **G2** | `sessions_verify_attempted > 0` | A browser that never reaches verify cannot be assessed on solve behaviour. This gate alone removes both false positives from the last run — **KorbytPlayer** (0 attempts / 497 sessions, resolved to Adobe signage behind Zscaler) and **KakaoTalk** (0 / 76). Without it, "0% verification rate" conflates "fails every challenge" with "never challenged". |
 | **G3** | `mega-browser exclusion` — the ~10 highest-volume browsers are ruled out on `country_count >= 200`, not scored | Purely a cost measure: exact `COUNT(DISTINCT user_ip)` over Chrome-scale groups cannot finish inside the query budget. All ten read 236–244 countries and 44–80% verification, so Condition B's country clause excludes them anyway. Re-derive the list each run; do not hardcode it as permanent. |
+| **G4** | `PUBLIC_KEY_CATEGORY = 'Production'` | **The single highest-impact gate.** Development, Internal Test and client_poc keys generate exactly the library traffic the scorecard is built to find — Postman, Apache HTTP Client, Node Fetch, Resty, Unirest are what integration testing looks like. Without this gate the output is dominated by our own and our customers' test harnesses. Category distribution (1 day): Production 106.6M sessions / 235 keys · Internal Test 1.17M / 15 · Development 1.03M / 162 · client_poc 160K / 4. |
 
 **Deliberately not gates** (and previously proposed as such, wrongly):
 
@@ -49,7 +50,7 @@ Applied only to browsers passing G1–G3. Suggested review threshold: **score >=
 | **S4 — never trusted** | `>= 95%` of sessions in dictionary bands `{1,3}` | **2** | Corroborates the library class (all at exactly 100%) | **Novelty, not badness — see §4.** Downgraded from 3 to 2. |
 | **S5 — trusted tool / solve farm** | `pass_rate >= 99% AND attempted >= 500` | **2** | Cypress, Resty, Unirest — the P2 class that raw verification rate hides | The `attempted >= 500` floor is what stops tiny-sample 100%s flooding it |
 | **S6 — TLS homogeneity** | `ja4_concentration_ratio >= 0.65` | **2** | Go-http-client (1.000), Postman (0.943), De Standaard (1.000), JavaFX (0.750), Cypress (0.691) | Misses Apache HTTP Client (0.445) and Node Fetch (0.402) — Java/Node TLS stacks vary |
-| **S7 — key spread** | `key_count >= 5` | **1** | Scanner-shaped rather than integration-shaped | Popular legitimate clients also span keys |
+| **S7 — account spread** | `account_count >= 5` | **1** | Scanner-shaped rather than integration-shaped. **Count accounts, not keys** — keys are sub-account, so one customer with 18 keys is still one customer. Cypress: 18 production keys but 9 accounts. Atom: 43 keys, 26 accounts. | Popular legitimate clients also span accounts |
 | **S8 — no satellite at volume** | `satellite = 0 AND sessions >= 10000` | **1** | Confirming only | Several tool-shaped clients do have satellite sessions (Herma 54/54, JavaFX 5, CaptchaBotRS 12) |
 | **S9 — no DI match** | `> 50%` of sessions at dictionary `-1` | **1** | Nokia Browser (98.5%), Palm Pre (100%) | Small populations only |
 
@@ -58,7 +59,58 @@ false positives from the last run are gated out by G2 rather than needing a thre
 
 ---
 
-## 3. Ranked output with account attribution
+## 2a. Routing: global classification vs account-level assessment
+
+A browser is only a *global* classification problem if it appears across many accounts. If it is
+concentrated on one or two, it is an account-level matter and belongs in the Tier-2 alert (§3),
+not on a global telltale list — no global list entry should be created from single-account
+evidence. Account count, not key count, is the dimension: keys are sub-account.
+
+| Account spread (Production keys) | Route | This window |
+|---|---|---|
+| **1–2 accounts** | Account-level only. Tier-2 alert + account team conversation. | Resty (HP Inc) · De Standaard (Chime) · BAND · StreamMasterPro · OpenFin |
+| **3–8 accounts** | Account-level per account, watch for global promotion | CaptchaBotRS (6) · JavaFX (4) · Avic (3) |
+| **9+ accounts** | Global candidate — assess on browser-level signals | Cypress (9) · Yandex (11) · *Atom (26) and CrosswalkApp (15) — both cleared* |
+
+## 3. Ranked output, Production keys only, by account
+
+Restricting to `PUBLIC_KEY_CATEGORY = 'Production'` removes most of the previous list:
+
+| Browser | Prod sessions | Keys | **Accounts** | WebGL | ip_div | Attempt | Pass | Verdict |
+|---|---|---|---|---|---|---|---|---|
+| **Cypress** | 55,784 | 18 | **9** | 14 | 0.000986 | 93.9% | 100% | Customer E2E suites. Global candidate but benign; per-account enforcement call |
+| ~~Atom~~ | 51,884 | 43 | **26** | 2,164 | 0.641 | 32.1% | 99.98% | **Cleared** — 26 accounts, 2,164 WebGL hashes, 262 satellite |
+| ~~CrosswalkApp~~ | 39,705 | 19 | **15** | 475 | 0.051 | 78.4% | 99.91% | **Cleared** — 15 accounts, diverse |
+| **Resty** | 20,278 | 1 | **1** (HP Inc) | 0 | 0.000789 | **0.05%** | 0.0% | Account-level. Profile inverts vs dev key — barely attempts on production |
+| **CaptchaBotRS** | 1,346 | 6 | **6** | 0 | 0.918 | 27.9% | 4.79% | Strongest genuine candidate: non-renderer, 6 accounts, residential-shaped |
+| **Yandex** | 375 | 12 | **11** | 0 | 0.136 | 62.1% | 100% | Non-renderer across 11 accounts — investigate |
+| **JavaFX** | 264 | 4 | **4** | 0 | 0.723 | 89.4% | 99.6% | Microsoft Identity signup + 3 others |
+| **De Standaard** | 149 | 1 | **1** (Chime) | 0 | 1.0 | 100% | 100% | Account-level. Newspaper UA on a fintech login |
+| OpenFin / Avic / BAND / StreamMasterPro | 62–261 | 1–4 | 1–3 | 0 | 0.08–0.70 | 11–100% | 100% | Low volume, account-level |
+
+**Dropped entirely by G4** (all were Development or Internal Test): **Go-http-client**,
+Apache HTTP Client, Node Fetch, Postman Desktop, Unirest for Java.
+
+### Go-http-client is internal test traffic
+
+The design doc's flagship P1 example — "16.2M sessions, 12th biggest browser globally, no
+enforcement" — resolves to two **Internal Test** keys:
+`2EAD3543-36DC-4A77-90E1-F3AE6B16CF16` (16,562,798 sessions, **exactly one browser name**) and
+`F75933C8-8431-44C7-B6BB-4631062FB963` (160,836, one browser). On Production keys it has
+essentially no traffic.
+
+It is not a customer-facing threat and should not carry a global telltale. The 0.0003%
+verification rate that made it look like the clearest bot on the platform is what synthetic load
+testing looks like. Worth raising separately: 16.5M internal-test sessions in 14 days is ~1.3% of
+all platform traffic and distorts any global aggregate that doesn't filter on key category.
+
+### Attribution caveat, resolved
+
+`CUSTOMER_KEYS` (427 rows) covers Production keys completely — `keys_unresolved = 0` for every
+browser above. The unresolved keys in the earlier pass were *all* Development or Internal Test.
+So the earlier worry about incomplete attribution was an artifact of not filtering on G4.
+
+## 3b. Superseded ranked output (pre-G4, retained for traceability)
 
 | Score | Browser | Sessions | Top accounts | Read |
 |---|---|---|---|---|
