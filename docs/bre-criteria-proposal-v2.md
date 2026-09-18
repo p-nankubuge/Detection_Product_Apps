@@ -229,16 +229,78 @@ bounded.
 | **S10 — non-browser TLS stack** | JA4_b outside maintained browser allowlist | **3** | **Replaces S6.** Concentration was measuring diversity as a proxy for what this measures directly. |
 | **S11 — UA/TLS class inconsistency** | Non-browser UA with browser JA4_b, or vice versa | **2** | Never browser-vs-browser (see above) |
 
-### Other items from the same list, mapped
+### #7 tested — fails at browser level, belongs in Tier 2
 
-- **#7 — too many distinct hashes from one subnet.** Aimed squarely at the one case nothing here
-  catches: CaptchaBotRS, 1,208 IPs / 444 ASNs / residential-shaped. Highest-value item after #2.
+Both subnet formulations were measured over 14 days (IPv4 only, /24 subnets) and both rank
+legitimate browsers as the most suspicious:
+
+| Browser | Max hashes/subnet | Subnets with ≥10 hashes | Subnet ratio (/24s ÷ IPs) |
+|---|---|---|---|
+| **Opera Mobile** (legitimate, 232 countries) | **214** | **14,680** | 0.357 |
+| Headless Chrome | 90 | 2,123 | 0.588 |
+| Atom (legitimate, 26 accounts) | 90 | 43 | 0.640 |
+| Resty | 7 | 0 | 0.242 |
+| Nintendo Browser (legitimate) | 6 | 0 | 0.920 |
+| Cypress | 3 | 0 | 0.603 |
+| Puffin Cloud Browser | 3 | 0 | 0.113 |
+| **CaptchaBotRS** | **2** | **0** | **0.972** |
+| JavaFX | 2 | 0 | 1.000 |
+| De Standaard | 1 | 0 | 0.436 |
+
+Aggregating over a browser's entire user population accumulates carrier NAT blocks containing
+many device types, so a large legitimate browser naturally shows many hashes per subnet. Sri's
+#6 specifies "per KEY" and #7's rationale is about a *single* subnet being impossible for one
+home or corporate NAT — so both are per-key/per-subnet alerts, not browser-level features.
+Subnet ratio fails the same way in the other direction: it is low for datacenter-hosted clients
+(Puffin 0.113, Resty 0.242) *and* low for carrier-concentrated mobile (Opera Mobile 0.357), so
+it separates datacenter-from-distributed, not bot-from-human.
+
+**Route both to the Tier-2 account alert (§3), evaluated per key and per subnet.** Not scored
+signals.
+
+This is the third candidate signal to turn out wrong-altitude for browser classification, after
+residential-proxy prevalence and subnet ratio. The pattern is worth stating plainly: the
+browser-level layer has few legitimate inputs, and most of the strong detection ideas are
+session-level or account-level.
+
+**The doc's §6.5 subnet claim no longer reproduces.** Nokia Browser now measures a subnet ratio
+of **0.948** (127 /24s across 134 IPs) against the documented 0.085 (21 across 248) — consistent
+with the farm having stopped (§F3 of the run report). Any future use of that figure as a
+reference profile should note it describes traffic that no longer exists.
 - **#4 — baseline most-seen hash per browser name, version *and* OS.** The test above used
   browser name alone, which is why the baseline looks degenerate; version+OS granularity would
   sharpen it and is the right way to build the S10 allowlist.
 - **#3 — IP + JA4 verification ratio per key.** Fits the account-level Tier-2 routing in §2a.
 - **#6, #8, #9** — subnet/ASN and JA4-velocity variants; overlap with the doc's existing §3.4
   investigation signals.
+
+## 4b. What the full criteria set flags
+
+Gates G1–G4 applied (Production keys only), S10/S11 replacing S6, threshold >= 8.
+
+| Score | Browser | Prod sessions | Accounts | Firing signals | Route |
+|---|---|---|---|---|---|
+| **12** | **Resty** | 20,278 | 1 (HP Inc) | S1 WebGL 0 · S2 ip_div 0.000789 · S4 dict 100% · S8 · S11 (Mobile Safari TLS on a Go library) | Tier 2 — customer integration |
+| **10** | **Cypress** | 55,784 | 9 | S2 ip_div 0.000986 · S5 pass 100% · S7 · S8 · **S10 non-browser TLS** | Global candidate; benign (customer QA) |
+| **9** | **JavaFX** | 264 | 4 | S1 WebGL 0 · S4 dict 100% · **S10 non-browser TLS** | Per-account — Microsoft Identity signup |
+| 6 | CaptchaBotRS | 1,346 | 6 | S1 WebGL 0 · S7 · **S11 (genuine Chrome TLS on a bot-named UA)** | Per-account, watch |
+| 6 | De Standaard | 149 | 1 (Chime) | S1 WebGL 0 · S4 dict 100% | Tier 2 |
+| 4 | Yandex | 375 | 11 | S1 WebGL 0 · S7 | Below threshold |
+
+S10 earns its weight: it is the only signal that fires on Cypress, which defeats S1 (14 WebGL
+hashes), S4 (dictionary band 63) and the retired S6 (JA4 concentration 0.691). It also lifts
+JavaFX from 6 to 9, over the threshold.
+
+Caveats on this list:
+- **De Standaard's S10 is unscored** — it had no sessions in the 1-day Production window used to
+  build the JA4_b baseline, so its TLS stack was never classified. Its 6 may be an underestimate.
+- **CaptchaBotRS at 6 sits below threshold** and is the entry most worth being wrong about: a
+  non-renderer on 6 accounts driving genuine Chrome TLS from 1,111 IPs across 430 ASNs. Nothing
+  in the browser-level set catches it properly; it needs the Tier-2 residential-proxy and
+  per-key subnet work.
+- Nothing here has been validated against a labelled set. Three of the seven browsers the
+  original Conditions A/B surfaced turned out to be false positives or internal traffic, so
+  treat any new list the same way until attribution is checked.
 
 ## 5. Open items
 
