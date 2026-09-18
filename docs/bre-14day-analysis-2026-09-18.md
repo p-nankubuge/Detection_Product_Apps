@@ -65,10 +65,15 @@ Reads on each:
    its sessions never attempt.
 4. **Unirest for Java** — Java HTTP client. **2 IPs and 2 ASNs serving 6,577 sessions**, 100%
    wired, 99.5% hosting, no WebGL. The most concentrated infrastructure in the population.
-5. **KorbytPlayer** — Korbyt is a digital-signage platform. 1 key, 1 ASN, 1 ISP, 1 WebGL hash,
-   100% hosting/proxy/wired, and **zero verification attempts** across 497 sessions. Reads as a
-   single customer's signage fleet in one datacenter, not an attack. Non-browser, but the
-   appropriate action is probably an account conversation rather than enforcement.
+5. **KorbytPlayer** — **false positive; recommend no action.** All 497 sessions are on a single
+   key, `BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C` ("Adobe - ARP FF - Production - Key 8",
+   account **Adobe**, id 23423, Active). The single ASN is **22616 — Zscaler Inc.**, a corporate
+   SASE/proxy egress, not datacenter hosting: the 100% `is_hosting_provider` / `is_proxy`
+   reading is Zscaler's IP classification, and 8 IPs on one Zscaler ASN is the normal external
+   shape of a corporate network rather than IP rotation. Korbyt is a digital-signage platform,
+   so this reads as Adobe running signage players inside its own network. It was flagged only
+   by Condition A on **zero verification attempts across 497 sessions** — see §3.2; a 0%
+   verification rate with 0 attempts carries no information about solve capability.
 6. **Beamrise** — a defunct Chromium-derived browser. 130 sessions, 2 keys, 100% wired, 1
    verification attempt in 14 days, JA4 concentration 0.992. Low volume, but a dead browser
    name on datacenter-shaped traffic is the same profile the doc built its Nokia Browser case on.
@@ -121,6 +126,13 @@ Chrome, (empty UA) and Opera Mobile.
 Splitting Condition A into `attempt_rate` and `pass_rate_given_attempt` would separate "bot
 failing challenges" from "client never challenged", which are different findings needing
 different responses. It would also surface the inverse case below.
+
+This is not a marginal issue: **both zero-attempt hits turned out to be false positives on
+inspection** — KorbytPlayer resolves to Adobe signage behind Zscaler, and KakaoTalk's 43 WebGL
+hashes across 76 sessions are real device diversity. Of Condition A's four hits this window,
+the two with real attempt volume (Go-http-client, Beamrise) are genuine and the two with zero
+attempts are not. Gating Condition A on `verify_attempted > 0` would have excluded both without
+losing either true positive.
 
 ### 3.3 The high-verification-rate case is worse than the headline rate suggests
 
