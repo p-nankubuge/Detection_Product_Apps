@@ -76,17 +76,42 @@ guards remove it in this sample:
 ```
 location = game_verify
 AND has(suspicion_flags, 'bba-4-axis-mouse-replay-above-10')
-AND behavioral_analysis__mouse__events_count >= 6
+AND behavioral_analysis__mouse__events_count >= 4   -- see section 5
 AND public_key NOT IN (<Arkose QA synthetic keys>)
 ```
 
 In the sample, excluding QA, this fires on ~7.3k of 6.5M mouse sessions (~0.11%). Every key it hits is
 explained by automation (Gtop100, Roblox) except Amazon Client (129), which needs a look.
 
+## 5. Events threshold: ≥4 vs ≥5 vs ≥6 (AT&T, Roblox, Adobe — full 14 days)
+
+All hours Sept 24 – Oct 7 (not sampled), `game_verify`, sessions with in-game mouse data, accounts AT&T
+(23583), Roblox (21178) and Adobe (23423). Base: `bba-4-axis-mouse-replay-above-10`.
+
+| Account | Mouse sessions | `>10` hits | ≥4 events | ≥5 | ≥6 | Of those solved | Hits with 4–5 events | Hits with <4 events |
+|---|---|---|---|---|---|---|---|---|
+| AT&T | 344,708 | 1,365 | 1,365 | 1,365 | 1,365 | 257 | 0 | 0 |
+| Roblox | 7,843,334 | 6,678 | 6,678 | 6,678 | 6,678 | 3,864 | 0 | 0 |
+| Adobe | 352,506 | 82 | **0** | **0** | **0** | 0 | 0 | 82 |
+
+- **4, 5 and 6 give identical results** on these accounts. No high-repeat replay hit had 4 or 5 events.
+  Every bot hit had ≥6 and every Adobe collision had <4.
+- **Adobe:** 82 high-repeat hits over 14 days (Oct 4 only: 66 + 16), all under 4 events. Every threshold
+  removes them. Zero Adobe sessions would be denied.
+- **AT&T:** 1,365 hits. Most are **AT&T Consumer SDK Android Key 4** (`4DD22AF2-…`): 1,159 on Oct 2
+  12:00–24:00 (72 solved), then 80 + 105 on Oct 7, all solved. This fits the Key 4 attack Rahul raised on
+  the Oct 5 call. The rest are small Key 3 (`FAD1…`) bursts (1–10, unsolved).
+- **Roblox:** 6,678 hits, almost all **Roblox Signup Key 2** (`A2A14B1D-…`). Bursts Oct 1–3 were mostly
+  solved (3,864 solved in total). The Oct 7 burst (2,348) went unsolved. Login Key 1 and Game Join Key 6
+  hits were all unsolved.
+
+**Recommendation: `events_count >= 4`.** It costs nothing in false positives on these three accounts and
+leaves 2 events of margin under the 6-event AT&T script. Note there was no 4–5-event traffic to test
+against, so this shows ≥4 is safe here, not that it catches more. Re-check on the platform-wide run.
+
 Open items:
 
-- **The events threshold has no margin.** The AT&T attack had exactly 6 events, so `>= 6` only just keeps
-  it. Test `>= 4` and `>= 5` against the Adobe-style collisions before fixing the value.
+- ~~The events threshold has no margin.~~ Resolved for AT&T/Roblox/Adobe (section 5): use `>= 4`.
 - **Amazon Client — Key 1 (`2F1CD804-…`).** One track, 43 IPs, Mobile Safari, malformed events, 128/129
   solved. Confirm it's automation, not a customer test harness, before going live there.
 - **QA synthetics.** A global deny would hit New-Synthetics-Key. Exclude it, or confirm with QA that a deny

@@ -53,3 +53,35 @@ WHERE ymdh IN ('2026/10/04/03', '2026/10/04/09', '2026/10/04/15', '2026/10/04/21
   AND contains(suspicion_flags, 'bba-4-axis-mouse-replay')
 GROUP BY 1
 ORDER BY 2 DESC;
+
+-- 3. Events-threshold comparison per account (section 5 of the findings) -----
+-- Run in chunks of 12 h or less (24 h times out). Rows with k IS NULL are account totals.
+SELECT * FROM (
+    SELECT
+        account_id                                                   AS a,
+        public_key                                                   AS k,
+        count(*)                                                     AS n,
+        count_if(solved = 1)                                         AS s,
+        count_if(r)                                                  AS hi,
+        count_if(r AND ev >= 4)                                      AS e4,
+        count_if(r AND ev >= 5)                                      AS e5,
+        count_if(r AND ev >= 6)                                      AS e6,
+        count_if(r AND ev >= 4 AND solved = 1)                       AS e4s,
+        count_if(r AND ev >= 5 AND solved = 1)                       AS e5s,
+        count_if(r AND ev >= 6 AND solved = 1)                       AS e6s,
+        approx_distinct(IF(r AND ev IN (4, 5), trk))                 AS b45trk,
+        approx_distinct(IF(r AND ev IN (4, 5), user_ip))             AS b45ip
+    FROM (
+        SELECT account_id, public_key, solved, user_ip,
+               behavioral_analysis__mouse__events_count              AS ev,
+               behavioral_analysis__mouse__four_axis_key             AS trk,
+               contains(suspicion_flags, 'bba-4-axis-mouse-replay-above-10') AS r
+        FROM arkoselabs.events_faster
+        WHERE ymdh >= '2026/10/02/12' AND ymdh < '2026/10/03/00'
+          AND location = 'game_verify'
+          AND account_id IN (21178, 23423, 23583)                    -- Roblox, Adobe, AT&T
+          AND behavioral_analysis__mouse__four_axis_key IS NOT NULL
+    )
+    GROUP BY GROUPING SETS ((account_id, public_key), (account_id))
+)
+WHERE k IS NULL OR hi > 0;
