@@ -121,3 +121,42 @@ Open items:
 - **`bba-3-axis-mouse-replay` is blind to short scripts** (>9 events required). Revisit if it's meant to
   catch replays.
 - **Full run.** This is a 4 h/day sample. Run the full 14 days per key before the CHNGE.
+
+## 6. `bba-3-axis-mouse-replay` platform-wide (correction to section 1)
+
+Section 1 marked this flag 0% because it can't see the AT&T script (it needs >9 mouse events; that bot had
+6). That judged it against one attack. The ask is a *set* of high-confidence in-game biometric signals for
+post-solve deny and auto-punish, across all keys. So this flag was re-checked on its own.
+
+Sample: all keys, `game_verify`, 4 h/day (03/09/15/21 UTC) on Sept 6–7, 12–13, 18–19 and Oct 4–5 (32 h,
+roughly 1.8M in-game mouse sessions). The 3-axis flag matches identical *coordinates* while ignoring timing
+(`exact_match_no_time_cnt`), so it catches replays with randomised timing, which defeat the 4-axis flag.
+
+Hits excluding Arkose QA synthetics (~44k per sample, always also caught by 4-axis):
+
+| Key | Hits (sum of samples) | Solved | Also 4-axis `>10` | Read |
+|---|---|---|---|---|
+| Gtop100 — Production | 10,179 | 10,177 | 1,445 | Solve farm; Sept 12–13 hits are **Headless Chrome**. 4-axis misses ~85%. |
+| Amazon IDS — Key 2 | 4,243 | 3,236 | 3,762 | Sept 6–7 attack (3.7k IPs, 24 tracks). |
+| Adobe Sign Up — Key 2 | 1,047 | 853 | 21 | Oct 4–5: 46 tracks repeated ~274× across 520 IPs. **A real replay attack, not collisions.** 4-axis missed it. |
+| Bumble SMS Mobile — Key 4 | 1,182 | 756 | 0 | Sept 18–19 burst, 71 tracks. |
+| Amazon Client — Key 1 | 858 | 858 | 850 | Same single-track automation seen in section 2. |
+| Unknown key `0152B4EB-…` | 732 | 674 | 0 | Key not found in Dataswan. |
+| Roblox Login — Key 1 | 437 | 0 | 0 | Already failing. |
+| Hornet Registration — Key 1 | 412 | 0 | 0 | Already failing. |
+| Expedia BEXG Login — Key 4 | 272 | 31 | 0 | |
+| Roblox Other — Key 3 | 222 | 222 | 0 | Oct 4–5. |
+| Roblox Signup — Key 2 | 167 | 163 | 83 | |
+| Others (Agoda, Meta, Tinder, Uber, Blizzard, WBD, …) | 1–53 each | — | ~0 | Small; includes rows with low repeat counts and few IPs. **These are the false-positive-risk tail to review.** |
+
+Takeaways:
+
+- **Complementary to 4-axis, not redundant.** On most keys above, 4-axis `>10` caught little or nothing of
+  what 3-axis caught (Gtop100, Adobe, Bumble, the unknown key, Roblox Other/Login, Hornet, Expedia).
+- **It never fires on AT&T Key 3** (short scripts). The two flags cover different bot styles: 4-axis catches
+  short exact replays, 3-axis catches longer replays with jittered timing.
+- **Revises section 2 on Adobe.** The Oct 4 Adobe 4-axis hits under 4 events were collisions, but Adobe *was*
+  under a separate replay attack the same days, which only 3-axis sees.
+- **Next:** measure the 3-axis tail per key (repeat count vs IPs vs events) to set a repeat-count floor, the
+  same way `>10` was set for 4-axis. Then propose both as deny signals:
+  `(4-axis >10 AND events >= 4) OR (3-axis AND <repeat floor TBD>)`.
