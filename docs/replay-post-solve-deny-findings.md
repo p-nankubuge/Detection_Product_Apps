@@ -160,3 +160,175 @@ Takeaways:
 - **Next:** measure the 3-axis tail per key (repeat count vs IPs vs events) to set a repeat-count floor, the
   same way `>10` was set for 4-axis. Then propose both as deny signals:
   `(4-axis >10 AND events >= 4) OR (3-axis AND <repeat floor TBD>)`.
+
+---
+
+# Part 2 — other replay signals, touch, and behaviour flags (12 Oct)
+
+## 7. Other mouse replay signals (all keys, one table per signal)
+
+Samples: all keys, `game_verify`, sessions with in-game mouse data, Arkose QA synthetic monitor excluded. **S1** = 6–7 Sept, **S2** = 4–5 Oct (4 hours a day, 16 hours each; S1 = 1,195,594 mouse sessions).
+
+### 7a. `g-biometric-mouse-no-time-replay`
+
+Definition: `exact_match_no_time_cnt > 3` AND `events_count > 9` AND touch null session. **This is the same definition as `bba-3-axis-mouse-replay`.**
+
+| Sample | Hits | Solved | Keys | Also `bba-3-axis-mouse-replay` |
+|---|---|---|---|---|
+| S1 | 5,457 | 4,367 | 12 | 5,457 (100%) |
+| S2 | 10,157 | 9,335 | 18 | 10,157 (100%) |
+
+**Verdict:** duplicate of section 6. Adds no coverage.
+
+### 7b. `g-biometric-mouse-exact-replay`
+
+Definition: `exact_match_cnt > 1` AND `events_count > 0` AND touch null session (a looser 4-axis: repeat above 1 instead of above 2).
+
+| Sample | Hits | Solved | Keys | Also 4-axis `>10` & ≥4 events | Also 3-axis |
+|---|---|---|---|---|---|
+| S1 | 6,539 | 5,323 | 11 | 6,416 | 4,320 |
+| S2 | 7,361 | 7,142 | 8 | 1,934 | 6,364 |
+
+| Key (S2) | Hits | Solved | IPs | Median events | Read |
+|---|---|---|---|---|---|
+| Gtop100 – Production | 6,401 | 6,401 | 6 | 9 | Solve farm. Catches more than 4-axis `>10` (1,856), but 5,636 are already caught by 3-axis. |
+| Adobe Sign Up – Key 2 | 541 | 439 | 371 | 8 | All also caught by 3-axis. |
+| Amazon IDS – Key 2 | 209 | 209 | 207 | **1** | 1-event sessions: chance collisions. |
+| Hornet Registration – Key 1 | 111 | 0 | 103 | 6 | Already failing. |
+
+**Verdict:** possible third signal, but only with an events guard (≥4), and its gain over 4-axis + 3-axis is small. Low priority.
+
+### 7c. `bba-4-axis-mouse-replay-above-2-below-11`
+
+Definition: `bba-4-axis-mouse-replay` AND `exact_match_cnt < 11` (exact track repeated 3–10 times).
+
+| Sample | Hits | Solved | Keys | IPs | Also 3-axis |
+|---|---|---|---|---|---|
+| S1 | 12 | 10 | 2 | 11 | 10 |
+| S2 | 1,363 | 1,335 | 7 | 112 | 1,057 |
+
+S2: 1,250 of the 1,363 were Gtop100 (5 IPs, all solved, 1,066 tracks): a farm that spreads its recordings so each one repeats only a few times. 969 of those are already caught by 3-axis. This band is also where short-track chance matches sit (Adobe, section 5b).
+
+**Verdict:** mixed. Not a deny signal; can feed pressure.
+
+### 7d. `mouse-replay-1250`
+
+Definition: one hard-coded mouse track (`biometrics_mouse = "1250,0,147,204;…"`) from a 2024 Microsoft Identity attack, cloned as global.
+
+| Sample | Hits |
+|---|---|
+| S1 | 0 |
+| S2 | 0 |
+
+**Verdict:** dead. It can only match that one recording. Candidate for retirement.
+
+**Not evaluated as global candidates:** key-scoped replay flags (Microsoft Identity, Snap, Twitter, Sony, Meta). They're tied to one key by design.
+
+**Also found:** AT&T Key 3 had an earlier replay burst on **6–7 Sept**: 2,185 hits, 2,012 solved, same 6-event no-movement style (median track repeat about 1,138). The 19–21 Sept attack wasn't the first.
+
+---
+
+## 8. Touch replay signals (all keys, one table per signal)
+
+Touch sessions at `game_verify` (touch track present): **584,834** in S1 and **476,893** in S2, on 127–128 keys. Median 5 touch events; **27% have fewer than 4 events** (single taps). Only 50 (S1) and 187 (S2) touch sessions in total repeated an exact track more than 10 times.
+
+### 8a. `g-biometric-touch-exact-replay`
+
+Definition: `touch__exact_match_cnt > 2` AND `touch__events_count > 0` (no repeat floor, no events guard).
+
+| Sample | Hits | Solved | Keys | IPs | Median events | Repeat >10 & ≥4 events |
+|---|---|---|---|---|---|---|
+| S1 | 136 | 128 | 4 | 43 | 1 | 0 |
+| S2 | 2,412 | 916 | 5 | 1,994 | 2 | 23 (8 solved) |
+
+| Key (S2) | Hits | Solved | IPs | Median events | Read |
+|---|---|---|---|---|---|
+| Roblox Login – Key 1 | 1,430 | 0 | 1,083 | 3 | Already failing. |
+| Roblox Signup – Key 2 | 586 | 581 | 565 | 3 | Short taps; looks like chance matches. |
+| Uber SMS – Key 1 | 328 | 318 | 309 | 1 | Single taps landing on the same pixel. In one hour on 30 Sept this key alone had **9,184 hits (99% solved, median 1 event)**. These are real users, not an attack. |
+| Bumble SMS Mobile – Key 4 | 67 | 16 | 29 | 3 | The only high-repeat cluster (6 tracks, repeat median 22). |
+
+**Verdict:** as written, mostly chance matches from single taps. With the same guards as mouse (repeat >10, ≥4 events), almost nothing is left (0 and 23 sessions). **No meaningful touch replay attack is visible in these samples.**
+
+### 8b. `g-biometric-touch-no-time-replay`
+
+Definition: `touch__exact_match_no_time_cnt > 100` AND `touch__events_count > 0`.
+
+| Sample | Hits | Solved | Keys | IPs | Median events | Under 4 events |
+|---|---|---|---|---|---|---|
+| S1 | 3,055 | 3,027 | 3 | 291 | 4 | 1,229 |
+| S2 | 24,738 | 24,722 | 1 | 14,397 | 3 | 14,937 |
+
+S1: Gtop100 2,559 and Roblox Game Join 493. S2: all on **Roblox Signup – Key 2**: 14,397 IPs, 24,635 distinct exact tracks, 99.9% solved, median 3 events.
+
+**Verdict:** not usable as is. The S2 spike is short taps sharing the same coordinates across 14k IPs, which looks like same-device-model users tapping the same button rather than one bot. Needs an events guard and a review of Roblox Signup before it can be judged.
+
+**Touch summary:** the gap is real (about 99% of AT&T Key 3 traffic has no mouse data), but **touch replay isn't how mobile bots are getting through** in these samples. Mobile needs a different kind of signal (device/SDK integrity, IP, velocity) rather than a touch-replay deny.
+
+---
+
+## 9. Making the behaviour flags usable: IP add-ons (tested one at a time)
+
+The behaviour flags (no movement, fast click, 6 events, no input) fire on 0.4–1.1% of mouse sessions across 30–64 keys, mixing bots and people. Test: add **one** IP signal from the *IP Intelligence Improvements Q4 2026 – Phase 1* one-pager at a time and see whether the remaining hits look more like bots.
+
+**How "looks like bots" is measured:** the share of hits *also* caught by a replay signal (4-axis `>10` & ≥4 events, or 3-axis). Replay is our near-certain bot marker, so this is a **lower bound** on bot share: bots that don't replay aren't counted. Baseline across all mouse sessions: **0.64%**.
+
+Sample S1 (6–7 Sept, 1,195,594 mouse sessions, all keys).
+
+### 9a. `g-biometrics-no-mouse-movement-no-biometric-touch-no-keyboard-input`
+
+| Add-on | Hits | Solved | Keys | Replay-confirmed |
+|---|---|---|---|---|
+| None (flag alone) | 6,578 | 5,895 | 50 | 2,881 (44%) |
+| Datacenter IP | 1,094 | 989 | 28 | 460 (42%) |
+| High-risk ASN band | 615 | 514 | 7 | 334 (54%) |
+| Harvested proxy | 266 | 242 | 16 | 160 (60%) |
+
+### 9b. `g-biometric-no-mouse-movement`
+
+| Add-on | Hits | Solved | Keys | Replay-confirmed |
+|---|---|---|---|---|
+| None (flag alone) | 7,563 | 6,744 | 51 | 2,881 (38%) |
+| Datacenter IP | 1,201 | 1,079 | 30 | 460 (38%) |
+| High-risk ASN band | 680 | 573 | 7 | 334 (49%) |
+| Harvested proxy | 320 | 287 | 20 | 160 (50%) |
+
+### 9c. `g-biometric-mouse-click-fast`
+
+| Add-on | Hits | Solved | Keys | Replay-confirmed |
+|---|---|---|---|---|
+| None (flag alone) | 4,314 | 3,896 | 30 | 2,787 (65%) |
+| Datacenter IP | 713 | 619 | 19 | 335 (47%) |
+| High-risk ASN band | 384 | 295 | 9 | 312 (81%) |
+| Harvested proxy | 218 | 201 | 11 | 156 (72%) |
+
+### 9d. `mouse-behavioral-analysis--mouse--events-count-is-6`
+
+| Add-on | Hits | Solved | Keys | Replay-confirmed |
+|---|---|---|---|---|
+| None (flag alone) | 12,759 | 4,432 | 43 | 2,768 (22%) |
+| Datacenter IP | 8,293 | 528 | 22 | 355 (4%) |
+| High-risk ASN band | 1,353 | 340 | 9 | 318 (24%) |
+| Harvested proxy | 235 | 216 | 16 | 161 (69%) |
+
+(Datacenter + 6 events is mostly Roblox Game Join traffic that already fails: 8,293 hits, 528 solved.)
+
+**Add-ons that didn't work at `game_verify`:**
+
+- **Datacenter with no fingerprint (2e):** only 377 mouse sessions in the whole sample. Scripts without a fingerprint rarely reach the game, so 2e belongs at `session_setup`, not here.
+- **Commercial VPN (`hosting` + `vpn`):** 0 hits on these flags.
+- **IP velocity ratio:** not populated at `game_verify` (0%). Using it needs a join to the `session_setup` event.
+
+**What this shows:**
+
+- **High-risk ASN and harvested proxy help the most.** They lift the replay-confirmed share from 22–65% to 49–81%, but cut coverage by 85–98%.
+- **Datacenter alone doesn't help** (flat, or worse on fast-click and 6-events).
+- **None of these pairs reaches deny grade** (replay signals are about 100%). They're good for **pressure tiers and auto-punish escalation**, not for a standalone deny.
+
+**Other add-ons worth testing next (not yet run):**
+
+1. **Key-level spike:** fire when a behaviour flag's rate on a key jumps above its own baseline. This is how SOC already spots attacks, and it fits the throughput-based auto-escalation the Automation team is scoping.
+2. **IP velocity** from `session_setup`, joined on session.
+3. **Device Intelligence low-trust dictionary** and **JA4 bot hashes**, already present in suspicion flags.
+4. **Many IPs sharing one track or device**: the coordination tell behind replay, but applied to fingerprints.
+5. **Solve-timing flags** (`bio-timing-h-*`).
