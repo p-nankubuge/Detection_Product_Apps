@@ -332,3 +332,226 @@ Sample S1 (6–7 Sept, 1,195,594 mouse sessions, all keys).
 3. **Device Intelligence low-trust dictionary** and **JA4 bot hashes**, already present in suspicion flags.
 4. **Many IPs sharing one track or device**: the coordination tell behind replay, but applied to fingerprints.
 5. **Solve-timing flags** (`bio-timing-h-*`).
+
+---
+
+# Part 3 — ML replay, new exact-replay suspicion flag, 5-day check (13 Oct)
+
+## 10. ML replay model: `behavioral_analysis__experimental_attributes.ml_replay.prob`
+
+**What it is:** an ML replay model (v12_3) scored on each round at `check_answer`. The `ml_replay` block in the experimental attributes JSON carries `status`, `prob` (0–1, chance the round's mouse track is a replay) and the model version.
+
+**What it can't score:**
+
+- **Touch:** rounds with touch data are skipped (`skipped_ineligible: touch_data_present`). That was 58% of `check_answer` rounds in the 4–5 Oct sample.
+- **Short tracks:** rounds with too few mouse moves are skipped (`too_few_mouse_moves`). It skipped **all 45,759 AT&T Key 3 attack rounds** for this reason.
+- Bad or missing data: `skipped_data_quality` (invalid event, negative number, decoding error), `null_session`, `no_events`.
+
+**Telltales already using it:**
+
+| Telltale | Rule | Action | Owner |
+|---|---|---|---|
+| `att-severallkeys-…-ml-replay-prob-90` (all 5 AT&T keys) | any round `prob >= 0.9` and `round_number > 1` | **immediate non-legit** | r.morera |
+| Roblox Game Join / Signup, Blizzard | same rule | suspicion flag | – |
+| `g-ml-replay-prob-greater-90` (global) | same rule on a 10% random sample (`rand_1 <= 0.1`, CHNGE-6144) | – | Alexander McGrath |
+
+### 10a. False-positive check
+
+There's no ground truth, so three proxies were used. Each is imperfect on its own.
+
+**1. Rounds Arkose rated NO-THREAT** (`check_answer`, round > 1, 2 hours on 4 Oct)
+
+| Threshold | NO-THREAT rounds flagged |
+|---|---|
+| `prob >= 0.90` | 53 of 2,256 (2.3%) |
+| `prob >= 0.97` | 6 of 2,256 (0.27%) |
+
+**2. Do high scores repeat within a session?** (same 2 hours, 52,077 sessions with at least 2 scored rounds after round 1)
+
+| Session pattern | Sessions | NO-THREAT |
+|---|---|---|
+| No round ≥ 0.9 | 37,409 | 604 |
+| One high round, the rest < 0.5 | 1,368 | 12 |
+| Mixed | 8,544 | 32 |
+| Every round ≥ 0.9 | 4,756 | 1 |
+
+- A rule that fires on **any round ≥ 0.9** flags **45 of 649 NO-THREAT sessions (6.9%)**.
+- A rule that needs **every round ≥ 0.9** flags **1 of 649 (0.15%)**.
+- Humans don't score high round after round; the model's mistakes show up as one-off spikes.
+
+**3. Five days, all keys (9–13 Oct, NO-THREAT sessions only)**
+
+| Rule | NO-THREAT sessions flagged (of 91,384) |
+|---|---|
+| Any round ≥ 0.9 (the live AT&T rule) | 4,495 (4.9%) |
+| At least 2 rounds ≥ 0.9 | 636 (0.70%) |
+| Any round ≥ 0.97 | 597 (0.65%) |
+
+Where the NO-THREAT hits sit (5 days):
+
+| Key | NO-THREAT sessions | Any round ≥ 0.9 | ≥ 2 rounds ≥ 0.9 |
+|---|---|---|---|
+| Roblox Other – Key 3 | 43,347 | 2,427 (5.6%) | 285 (0.66%) |
+| Meta Login – Key 2 | 26,721 | 442 (1.7%) | 18 (0.07%) |
+| Blizzard ROW Login – Key 5 | 2,522 | 174 (6.9%) | 18 (0.7%) |
+| Blizzard ROW Registration | 1,437 | 119 (8.3%) | 24 (1.7%) |
+| Gtop100 – Production | 559 | 283 | 0 |
+
+(Gtop100 is a solve farm, so its NO-THREAT label is the wrong one; those aren't real false positives.)
+
+**Verdict:** a single round ≥ 0.9 is too loose to deny on. Requiring **at least 2 rounds ≥ 0.9 in the session** (or one round ≥ 0.97) cuts the NO-THREAT hit rate about 7×, to under 1%, and keeps the bot-heavy keys. **The live AT&T telltale uses the loose rule as an immediate deny.** Its real impact on AT&T is small, because almost all AT&T traffic is touch or too short to score, but the rule should be tightened. Precision needs confirming with the model owner (Alexander McGrath).
+
+### 10b. What it adds
+
+It is the only in-game signal that sees the two biggest attacks running right now (section 12d): **Uber SMS** and **Roblox Game Join**. The deterministic replay flags catch almost none of either.
+
+---
+
+## 11. New suspicion flag: `g-biometric-mouse-exact-replay-events-4plus`
+
+The existing `g-biometric-mouse-exact-replay` (ID 45563, THR-444, p.seth) is `exact_match_cnt > 1` AND `events_count > 0` AND touch null session, at location **ALL**. The new flag adds an events guard and pins it to `game_verify`. It runs **alongside** the parent, which stays unchanged.
+
+| Field | Value |
+|---|---|
+| Type | `suspicion_flags`, risk score 0, immediate non-legit off |
+| Location | `GAME_VERIFY` (also as a `location` condition in the definition, which Dataswan requires) |
+| Owner category / risk category / cohort | Behavioural / BOT-ADV / Suspicious |
+| Life cycle | Manual (Behavioural doesn't support automatic) |
+| Degrade | none; keeps running |
+| Status | Definition passes Dataswan validation. To be created by Patricia; first review Mon 19 Oct. |
+
+```json
+[
+  {"key": "location", "operator": "TS_EQ", "value": "game_verify", "type": "string"},
+  {"key": "behavioral_analysis__mouse__exact_match_cnt", "operator": "TS_GREATER", "value": 1, "type": "int"},
+  {"key": "behavioral_analysis__mouse__events_count",    "operator": "TS_GREATER", "value": 3, "type": "int"},
+  {"operator": "OR", "conditions": [
+    {"key": "behavioral_analysis__touch__is_null_session", "operator": "TS_EQ", "value": true, "type": "boolean"},
+    {"key": "behavioral_analysis__touch__is_null_session", "operator": "TS_EQ", "value": "1",  "type": "string"}
+  ]}
+]
+```
+
+**Why pinning it to `game_verify` matters:** the parent fires at every location, and the flag carries through to the `game_verify` row. On 13 Oct the parent was on **27k Roblox Game Join `game_verify` rows whose own `exact_match_cnt` was 1**: it had been set at an earlier location. Judged on `game_verify` values, the new flag would fire on 125 Game Join sessions over 5 days instead. Across all keys the parent appeared on 81,071 `game_verify` mouse rows in 5 days; the new flag would have fired on 24,026 (section 12c).
+
+---
+
+## 12. What each proposed signal flagged, 9–13 Oct (all keys, one table per signal)
+
+All keys, every hour, Arkose QA synthetic monitor excluded. `game_verify` signals cover **16,453,272** sessions with in-game mouse data. "Solved" = would be denied by a post-solve deny. Per-key rows list keys with 20+ hits in a 12-hour window, so they can add up to slightly less than the total.
+
+### 12a. `bba-4-axis-mouse-replay-above-10` AND `events_count >= 4`
+
+| Day | Mouse sessions | Hits | Solved |
+|---|---|---|---|
+| 9 Oct | 3,159,965 | 749 | 743 |
+| 10 Oct | 3,583,574 | 1,782 | 1,753 |
+| 11 Oct | 3,279,483 | 6,671 | 6,670 |
+| 12 Oct | 3,314,511 | 5,164 | 1,890 |
+| 13 Oct | 3,115,739 | 1,405 | 1,216 |
+| **Total** | **16,453,272** | **15,771** | **12,272** |
+
+| Key | Hits | Solved | What it is |
+|---|---|---|---|
+| Gtop100 – Production | 9,878 | 9,878 | Solve farm, 5 IPs, 50–100 tracks per half-day |
+| **AT&T Consumer Login Web – Key 3** | **3,461** | **46** | **New replay burst on 12 Oct**: 1 track across about 1,400 IPs, mostly failing |
+| Amazon Client – Key 1 | 1,832 | 1,831 | 1 track, 17–37 IPs per half-day, all solved. Still needs confirming |
+| Roblox Signup – Key 2 | 560 | 517 | 6 tracks, IPs ≈ hits |
+| Roblox Game Join – Key 6 | 39 | 0 | |
+
+### 12b. `bba-3-axis-mouse-replay`
+
+| Day | Hits | Solved |
+|---|---|---|
+| 9 Oct | 8,650 | 5,532 |
+| 10 Oct | 13,408 | 10,646 |
+| 11 Oct | 38,098 | 35,927 |
+| 12 Oct | 18,628 | 12,438 |
+| 13 Oct | 9,818 | 7,177 |
+| **Total** | **88,602** | **71,720** |
+
+| Key | Hits | Solved | What it is |
+|---|---|---|---|
+| Gtop100 – Production | 54,033 | 54,031 | Solve farm (5–100 IPs, 14–34 tracks) |
+| Hornet Registration – Key 1 | 8,108 | 1 | 6 tracks across 360–630 IPs per half-day; **about 80% of the key's mouse traffic**; failing |
+| Amazon IDS – Key 2 | 7,024 | 7,018 | 5–14 tracks, IPs ≈ hits |
+| Roblox Other – Key 3 | 5,788 | 5,788 | 8–20 tracks, IPs ≈ hits |
+| Meta Login – Key 2 | 3,623 | 71 | 4–16 tracks; failing |
+| AT&T Consumer Login Web – Key 3 | 3,473 | 50 | Same 12 Oct burst as 12a |
+| Amazon Client – Key 1 | 1,853 | 1,852 | Same track as 12a |
+| Roblox Game Join – Key 6 | 994 | 100 | |
+| Airbnb Account Lookup – Key 6 | 964 | 785 | |
+| Roblox Signup – Key 2 | 656 | 579 | |
+| Roblox Login – Key 1 | 512 | 0 | Failing |
+| Bumble SMS Mobile – Key 4 | 396 | 396 | |
+| Microsoft Azure – Key 1 | 298 | 298 | 4–12 tracks, 7–16 IPs |
+| Adobe Sign Up – Key 2 | 162 | 101 | |
+| Expedia BEXG Login – Key 4 | 137 | 137 | |
+| Airbnb Phone OTP – Key 5 | 115 | 115 | |
+| Match Registration – Key 2 | 57 | 57 | |
+
+**Read:** 3-axis fires 5–6× more than 4-axis and on many more keys. Several keys show the "few tracks, IPs ≈ hits, all solved" pattern (Amazon IDS, Roblox Other, Bumble, Azure, Airbnb). That fits either a replay farm on residential proxies or a common path through a specific game. **This is why a repeat-count floor is needed before 3-axis can deny.**
+
+### 12c. `g-biometric-mouse-exact-replay-events-4plus` (section 11, computed from `game_verify` fields)
+
+| Day | Hits | Solved | NO-THREAT |
+|---|---|---|---|
+| 9 Oct | 1,142 | 1,098 | 0 |
+| 10 Oct | 2,637 | 2,582 | 0 |
+| 11 Oct | 11,834 | 11,746 | 0 |
+| 12 Oct | 6,485 | 3,061 | 0 |
+| 13 Oct | 1,928 | 1,656 | 0 |
+| **Total** | **24,026** | **20,143** | **0** |
+
+| Key | Hits | Solved | Median events | What it is |
+|---|---|---|---|---|
+| Gtop100 – Production | 17,424 | 17,424 | 6 | Solve farm, 5 IPs |
+| AT&T Consumer Login Web – Key 3 | 3,476 | 53 | 80 | 12 Oct burst (1 track) |
+| Amazon Client – Key 1 | 1,870 | 1,869 | 50 | Same track as 12a |
+| Roblox Signup – Key 2 | 656 | 578 | 78–145 | 6–7 tracks |
+| Hornet Registration – Key 1 | 240+ | 0 | 4–6 | Tracks ≈ hits; failing |
+| Amazon IDS – Key 2 | 196 | 195 | 4–6 | **Tracks ≈ hits at 4–6 events: looks like chance matches. The false-positive risk to watch.** |
+| Roblox Game Join – Key 6 | 125 | 8 | 34–58 | |
+
+**Read:** most hits are on keys 12a and 12b already catch (Gtop100, AT&T, Amazon Client, Roblox Signup); session-level overlap wasn't measured. Its main extra reach is Gtop100, where it fires on more sessions than 4-axis `>10`. Amazon IDS at 4–6 events is the one to watch in the Monday review; if it grows, raise the guard to `> 5`.
+
+### 12d. ML replay (`ml_replay.prob`, `check_answer`, round > 1, sessions)
+
+Sessions are counted per 12-hour window, so a session spanning two windows counts twice.
+
+| Day | Sessions scored | Any round ≥ 0.9 | ≥ 2 rounds ≥ 0.9 | Every round ≥ 0.9 (2+ rounds) | Any round ≥ 0.97 |
+|---|---|---|---|---|---|
+| 9 Oct | 934,302 | 331,865 | 197,437 | 115,028 | 24,386 |
+| 10 Oct | 1,882,257 | 1,238,961 | 1,047,397 | 560,650 | 62,266 |
+| 11 Oct | 1,631,813 | 1,084,875 | 838,771 | 479,634 | 97,291 |
+| 12 Oct | 1,276,504 | 729,022 | 534,825 | 302,433 | 34,359 |
+| 13 Oct | 1,684,371 | 983,823 | 737,921 | 184,143 | 43,430 |
+| **Total** | **7,409,247** | **4,368,546** | **3,356,351** | **1,641,888** | **261,732** |
+
+| Key | Sessions scored | Any round ≥ 0.9 | ≥ 2 rounds ≥ 0.9 | What it is |
+|---|---|---|---|---|
+| **Uber SMS – Key 1** | 3,571,113 | 3,136,580 (88%) | 2,623,567 | **Large bot attack.** Sample hour (10 Oct 18:00): 231k scored rounds, 95% already BOT-STD, 62k IPs, 5k ASNs, **about 20% of rounds solved**. Replay flags hit 3 rounds. |
+| **Roblox Game Join – Key 6** | 893,777 | 715,867 (80%) | 545,638 | **Attack from 13 Oct 11:00 UTC**: about 600k sessions that day, against 13–59k per half-day before. All BOT/CUSTOM. |
+| Roblox Signup – Key 2 | 821,681 | 189,676 (23%) | 66,624 | |
+| Microsoft MSID | 664,444 | 52,871 (8%) | 12,669 | Mostly one-off spikes (every-round only 177) |
+| Roblox Login – Key 1 | 371,844 | 82,249 (22%) | 17,913 | |
+| Gtop100 – Production | 205,813 | 73,566 (36%) | 43,141 | Solve farm |
+| Meta Login – Key 2 | 136,961 | 11,216 (8%) | 2,167 | |
+| Adobe Sign Up – Key 2 | 83,096 | 28,252 (34%) | 20,640 | |
+
+**Read:** the ML model flags far more than the deterministic replay signals (4.4M sessions against 16–89k), mostly on the two big attacks. The deterministic flags can't see either one. On Uber about 1 in 5 bot rounds solves, so a post-solve deny on **≥ 2 rounds ≥ 0.9** would close a real gap there. Both attacks are already labelled BOT-STD or CUSTOM by other signals, so the false-positive risk on these keys is low; the risk sits on the quieter keys in 10a.
+
+### 12e. Summary across signals
+
+| Signal | 5-day hits | Solved (would be denied) | NO-THREAT hit | Ready to deny? |
+|---|---|---|---|---|
+| 4-axis `>10` & ≥4 events | 15,771 | 12,272 | not measured; earlier review clean | **Yes** |
+| 3-axis | 88,602 | 71,720 | not measured | After a repeat floor |
+| Exact replay, events ≥4 (new) | 24,026 | 20,143 | 0 | Suspicion flag first; review 19 Oct |
+| ML replay, ≥ 2 rounds ≥ 0.9 | 3,356,351 sessions | not joined to `game_verify` yet | 636 of 91,384 (0.70%) | After model-owner sign-off |
+
+**New this week:**
+
+- **AT&T Key 3** had another single-track replay burst on 12 Oct (3,114 hits in 12 hours, 1,410 IPs). Almost all failed, so the challenge held this time; 4-axis caught every one.
+- **Uber SMS** and **Roblox Game Join** are under large bot attacks that only the ML model sees in-game.
+- **Hornet Registration:** about 80% of its mouse traffic is 3-axis replay (6 tracks), all failing.

@@ -1,8 +1,10 @@
 -- Mouse-replay post-solve deny — platform-wide sweep (events_faster / Athena)
 --
--- See docs/replay-post-solve-deny-findings.md. Two queries:
+-- See docs/replay-post-solve-deny-findings.md. Queries:
 --   1. Daily totals for each candidate across all keys.
 --   2. Per-key breakdown of replay hits, used to tell bots from short-track collisions.
+--   3. Events-threshold comparison per account.
+--   4–6. Five-day sweep (9–13 Oct): game_verify flags, the new exact-replay flag, ML replay.
 --
 -- A full day across all keys times out in Superset. Use a list of sampled hours (as here) or
 -- chunks of 6 h or less.
@@ -85,3 +87,71 @@ SELECT * FROM (
     GROUP BY GROUPING SETS ((account_id, public_key), (account_id))
 )
 WHERE k IS NULL OR hi > 0;
+
+-- 4. Five-day sweep of the proposed game_verify signals (section 12 of the findings) ---
+-- One row per day and key with 20+ hits, plus a day total (k IS NULL). Run in 12 h chunks;
+-- two in parallel is the most Superset takes before the 60 s tool timeout.
+SELECT * FROM (
+    SELECT d, k, arbitrary(a) a, count(*) n,
+        count_if(s1) s1, count_if(s1 AND sv) s1s, approx_distinct(IF(s1, trk)) s1t, approx_distinct(IF(s1, ip)) s1ip,
+        count_if(s2) s2, count_if(s2 AND sv) s2s, approx_distinct(IF(s2, trk3)) s2t, approx_distinct(IF(s2, ip)) s2ip,
+        count_if(gx) gx, count_if(gx AND sv) gxs
+    FROM (
+        SELECT substr(ymdh, 1, 10) d, public_key k, account_id a, solved = 1 sv, user_ip ip,
+            behavioral_analysis__mouse__four_axis_key trk, behavioral_analysis__mouse__three_axis_key trk3,
+            contains(suspicion_flags, 'bba-4-axis-mouse-replay-above-10')
+                AND behavioral_analysis__mouse__events_count >= 4                  AS s1,
+            contains(suspicion_flags, 'bba-3-axis-mouse-replay')                  AS s2,
+            -- parent flag as carried on the game_verify row (location ALL: may have been set earlier)
+            contains(suspicion_flags, 'g-biometric-mouse-exact-replay')           AS gx
+        FROM arkoselabs.events_faster
+        WHERE ymdh >= '2026/10/09/00' AND ymdh < '2026/10/09/12'
+          AND location = 'game_verify'
+          AND behavioral_analysis__mouse__four_axis_key IS NOT NULL
+          AND public_key <> '2EAD3543-36DC-4A77-90E1-F3AE6B16CF16')            -- Arkose QA synthetic monitor
+    GROUP BY GROUPING SETS ((d, k), (d)))
+WHERE k IS NULL OR s1 + s2 >= 20
+ORDER BY d, k NULLS FIRST;
+
+-- 5. New suspicion flag g-biometric-mouse-exact-replay-events-4plus, from game_verify fields --
+-- Filtering on the fields keeps the scan cheap enough for a full day.
+SELECT * FROM (
+    SELECT d, k, count(*) hits, count_if(sv) solved, approx_distinct(trk) tracks, approx_distinct(ip) ips,
+           approx_percentile(ev, 0.5) ev_med, count_if(nt) no_threat
+    FROM (
+        SELECT substr(ymdh, 1, 10) d, public_key k, solved = 1 sv, user_ip ip,
+               behavioral_analysis__mouse__four_axis_key trk, behavioral_analysis__mouse__events_count ev,
+               risk_category = 'NO-THREAT' nt
+        FROM arkoselabs.events_faster
+        WHERE ymdh >= '2026/10/13/00' AND ymdh < '2026/10/14/00'
+          AND location = 'game_verify'
+          AND behavioral_analysis__mouse__exact_match_cnt > 1
+          AND behavioral_analysis__mouse__events_count > 3
+          AND CAST(behavioral_analysis__touch__is_null_session AS varchar) IN ('true', '1')
+          AND public_key <> '2EAD3543-36DC-4A77-90E1-F3AE6B16CF16')
+    GROUP BY GROUPING SETS ((d, k), (d)))
+WHERE k IS NULL OR hits >= 10
+ORDER BY d, hits DESC;
+
+-- 6. ML replay per key, session level, with NO-THREAT false-positive proxy (section 10) --
+-- Run in 12 h chunks. Keeps the top 11 keys plus any key with 20+ flagged NO-THREAT sessions.
+WITH r AS (
+    SELECT coalesce(session_token, session) sid, public_key, risk_category rc,
+           try_cast(json_extract_scalar(behavioral_analysis__experimental_attributes, '$.ml_replay.prob') AS double) p
+    FROM arkoselabs.events_faster
+    WHERE ymdh >= '2026/10/09/00' AND ymdh < '2026/10/09/12'
+      AND location = 'check_answer' AND round_number > 1
+      AND public_key <> '2EAD3543-36DC-4A77-90E1-F3AE6B16CF16'),
+s AS (
+    SELECT sid, arbitrary(public_key) k, bool_or(rc = 'NO-THREAT') nt,
+           count(*) n, count_if(p >= 0.9) hi, count_if(p >= 0.97) hi97
+    FROM r WHERE p IS NOT NULL GROUP BY 1),
+g AS (
+    SELECT k, count(*) sess, count_if(hi >= 1) any90, count_if(hi >= 2) two90,
+           count_if(n >= 2 AND hi = n) all90, count_if(hi97 >= 1) any97,
+           count_if(nt) nt_sess, count_if(nt AND hi >= 1) nt_any90,
+           count_if(nt AND hi >= 2) nt_two90, count_if(nt AND hi97 >= 1) nt_any97
+    FROM s GROUP BY GROUPING SETS ((k), ()))
+SELECT * FROM (SELECT g.*, row_number() OVER (ORDER BY any90 DESC) rk FROM g)
+WHERE rk <= 11 OR nt_any90 >= 20
+ORDER BY any90 DESC;
