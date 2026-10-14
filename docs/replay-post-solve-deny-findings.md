@@ -24,11 +24,11 @@ Sample size: 3,967,287 check_answer rounds and 7,924,411 game_verify sessions.
 | Signal | check_answer | game_verify | What we found | What we suggested | Detail |
 |---|---|---|---|---|---|
 | `bba-4-axis-mouse-replay-above-10` + `events_count >= 4` | 0 (only runs at game_verify) | 1,312 | Caught 100% of the AT&T Key 3 attack. 15.8k hits in 5 days, 12.3k solved. **0 NO-THREAT hits** out of 1.54M. Events guard ≥4, ≥5 and ≥6 gave identical results; Adobe hits were all short-track collisions | **Deny-ready.** Global post-solve deny with `events_count >= 4`, excluding the QA synthetic key; confirm Amazon Client – Key 1 first | §5, §12a |
-| `bba-3-axis-mouse-replay` | 10,473 | 3,367 | Catches replays with randomised timing that 4-axis misses (Gtop100 headless, Adobe 4–5 Oct, Amazon IDS, Bumble). 88.6k hits in 5 days, 71.7k solved. 8 NO-THREAT hits (all Roblox Other). Blind to scripts with 9 events or fewer | Set a repeat-count floor (`exact_match_no_time_cnt >= N`) to remove the low-repeat tail, then a **separate** global deny | §6, §12b |
+| `bba-3-axis-mouse-replay` | 10,473 | 3,367 | Catches replays with randomised timing that 4-axis misses (Gtop100 headless, Adobe 4–5 Oct, Amazon IDS, Bumble). 88.6k hits in 5 days, 71.7k solved. 8 NO-THREAT hits, all on Roblox Other – Key 3 with a repeat count of 5–15. Blind to scripts with 9 events or fewer | **Repeat floor `exact_match_no_time_cnt > 20`**: removes all 8 NO-THREAT hits and 8% of hits (9–13 Oct: 56.7k of 61.8k kept, 50.7k solved). Then a **separate** global deny | §6, §12b, §15b |
 | `g-biometric-mouse-exact-replay` with `events_count >= 4`, pinned to game_verify (new) | parent flag 31,690; guarded version from fields 5,948 | parent flag 2,567; guarded version 1,607 | Parent runs at every location and carries to game_verify, so it showed on 27k Roblox Game Join rows whose own match count was 1. Guarded version: 24k hits in 5 days, 20.1k solved, 0 NO-THREAT. Amazon IDS hits at 4–6 events look like chance matches | Run as a **suspicion flag** first; review Mon 19 Oct; raise the guard to `> 5` if Amazon IDS grows | §7b, §11, §12c |
 | ML replay, at least 2 rounds `prob >= 0.9` | 550,485 rounds ≥ 0.9 | 294,804 sessions ≥ 0.9 (see note) | Only in-game signal that sees the current Uber SMS and Roblox Game Join attacks. "Any round ≥ 0.9" (the live AT&T rule) flags 4.9% of NO-THREAT sessions; "≥ 2 rounds" flags 0.70%. 1.96M flagged sessions solved in 5 days, 1.79M on Uber. Skips touch and very short tracks | Already used as an **adaptive reset** (global at 10%, AT&T and Roblox keys; §9f). For a hard deny, require ≥ 2 rounds ≥ 0.9 and trial with the model owner (Alexander McGrath), starting with Uber SMS | §9f, §10, §12d, §12d-ii |
 
-**Note on ML at game_verify:** the score also appears on game_verify rows. Where a session has check_answer rows, the game_verify score equals the **last round's** score in 90% of cases. But **78% of game_verify rows with an ML score have no check_answer rows at all**: whole keys (Pinterest Login, AT&T Consumer Login Web – Key 3, Adobe Sign-in, Expedia EPC, Citizens, HP, DoorDash, Payoneer, AT&T Forgot Password) only show the score at game_verify. So the check_answer-based ML numbers in §12d **miss those keys entirely**. This needs its own analysis (see §10c).
+**Note on ML at game_verify:** the score also appears on game_verify rows. Where a session has check_answer rows, the game_verify score equals the **last round's** score in 90% of cases. But **78% of game_verify rows with an ML score have no check_answer rows at all**: whole keys (Pinterest Login, AT&T Consumer Login Web – Key 3, Adobe Sign-in, Expedia EPC, Citizens, HP, DoorDash, Payoneer, AT&T Forgot Password) only show the score at game_verify. So the check_answer-based ML numbers in §12d **miss those keys entirely**. **Tested in §15a: the game_verify score alone can't separate bots from people** (≥ 0.99 is 64–66% NO-THREAT, the same as or worse than a score below 0.5). Don't use it for a deny or a reset; keep ML on check_answer rounds.
 
 ### Pressure inputs (not deny-grade on their own)
 
@@ -55,13 +55,19 @@ At `check_answer`: sessions flagged on any round over 2 sample hours (10 and 12 
 | | high-risk ASN | 2,097 | 1,769 | **0** | | | |
 | | harvested proxy | 432 | 310 | 2 (0.5%) | | | |
 
-**Pressure add-ons suggested but not yet tested** (§9):
+**The five extra pressure add-ons, now tested** (§15c):
 
-1. Key-level spike trigger: fire when a flag's rate on a key jumps above its own baseline (fits the Automation team's throughput escalation).
-2. IP velocity from `session_setup`, joined on session (not populated at game_verify).
-3. Device Intelligence low-trust dictionary and JA4 bot hashes.
-4. Many IPs sharing one mouse track or device.
-5. Solve-timing flags (`bio-timing-h-*`).
+| Add-on | Result | Use |
+|---|---|---|
+| Key-level spike (flag count in an hour ≥ 3× the key's median and ≥ 30) | 28,297 flagged sessions in spike hours, **2 NO-THREAT (0.007%)**, 99% solved. Normal hours: 94 of 19,333 (0.49%). Picked up the Uber SMS attack | **Best trigger for auto-punish** |
+| IP velocity from `session_setup` (long-term ratio ≥ 1) | **0 NO-THREAT** on every pressure flag; covers 10% of `events-count-is-6` and 1–3% of the rest | Clean add-on, small coverage |
+| Many IPs sharing one mouse track (≥ 5 IPs in an hour) | 0 NO-THREAT but tiny; it's replay seen another way | Already covered by the replay flags |
+| JA4 bot hashes (`ja4-hashes-related-to-bots`, `g--e-ja4-global-cluster-strict`, `ja4-dict-1-challenger`) | 0–1 NO-THREAT, under 500 sessions per flag | Clean, small |
+| Device Intelligence dictionary (`g-di-dict-1-match-short-term-threshold-exceeded-1x`) | Under 70 sessions per hour | Too rare to matter |
+| Solve-timing (`bio-timing-h-*`) | 0.7–1.9% NO-THREAT, no better than the flag alone | Not useful |
+| Shared canvas fingerprint (stand-in for device) | Common on legit devices; NO-THREAT stays | Not useful |
+
+**High-risk ASN, re-checked during an attack:** on 13 Oct 09:00, during the Roblox Game Join attack, it was no longer zero (2 of 679 for no-movement, 3 of 448 for `events-count-is-6`). Still well under 1%, so it remains a reset add-on, not a deny.
 
 ### Not usable / retire
 
@@ -72,7 +78,7 @@ At `check_answer`: sessions flagged on any round over 2 sample hours (10 and 12 
 | `g-biometric-touch-exact-replay` | 1 | 0 | Single taps landing on the same pixel by chance; with mouse-style guards almost nothing is left | §8a |
 | `g-biometric-touch-no-time-replay` | 0 | 0 | Short taps across thousands of IPs, looks like same-device users | §8b |
 
-(The touch flags recorded almost no hits as flags in these 4 hours, fewer than the §8 samples. Worth confirming they're still active.)
+(**Confirmed active** in Dataswan (IDs 45562, 45571, location ALL, suspicion flags). They fire, but rarely: 102 and 14 `check_answer` rows out of 3.28M touch rows in 12 hours on 13 Oct; the highest touch `exact_match_cnt` seen was 4. See §15d.)
 
 ---
 
@@ -210,7 +216,7 @@ Hits excluding Arkose QA synthetics (~44k per sample, always also caught by 4-ax
 | Adobe Sign Up — Key 2 | 1,047 | 853 | 21 | Oct 4–5: 46 tracks repeated ~274× across 520 IPs. **A real replay attack, not collisions.** 4-axis missed it. |
 | Bumble SMS Mobile — Key 4 | 1,182 | 756 | 0 | Sept 18–19 burst, 71 tracks. |
 | Amazon Client — Key 1 | 858 | 858 | 850 | Same single-track automation seen in section 2. |
-| Unknown key `0152B4EB-…` | 732 | 674 | 0 | Key not found in Dataswan. |
+| Unknown key `0152B4EB-D2DC-460A-89A1-629838B529C9` | 732 | 674 | 0 | Not in Dataswan. Account ID 22846, served from `iframe.arkoselabs.com`, no user agent; the account's other key `C07CAFBC-F76F-4DFD-ABFA-A6B78ADC1F29` isn't in Dataswan either. On 13 Oct only `session_dropped` rows. See §15d. |
 | Roblox Login — Key 1 | 437 | 0 | 0 | Already failing. |
 | Hornet Registration — Key 1 | 412 | 0 | 0 | Already failing. |
 | Expedia BEXG Login — Key 4 | 272 | 31 | 0 | |
@@ -737,3 +743,103 @@ For comparison: the looser "any round ≥ 0.9" rule would deny 2,355,537 session
 - **AT&T Key 3** had another single-track replay burst on 12 Oct (3,114 hits in 12 hours, 1,410 IPs). Almost all failed, so the challenge held this time; 4-axis caught every one.
 - **Uber SMS** and **Roblox Game Join** are under large bot attacks that only the ML model sees in-game. On Uber, **about 1.79M flagged sessions solved in 5 days.**
 - **Hornet Registration:** about 80% of its mouse traffic is 3-axis replay (6 tracks), all failing.
+
+---
+
+# Part 4 — follow-up analysis (14 Oct)
+
+## 15. Follow-up analysis
+
+### 15a. ML replay score on `game_verify` rows
+
+All keys, every `game_verify` row with an ML score, 13 Oct 00:00–12:00 in two 6-hour windows.
+
+| Window | Scored sessions | NO-THREAT overall | Score ≥ 0.9 | ≥ 0.9 NO-THREAT | Score ≥ 0.99 | ≥ 0.99 NO-THREAT | Score < 0.5 NO-THREAT |
+|---|---|---|---|---|---|---|---|
+| 00:00–06:00 | 1,440,988 | 46% | 382,942 | 37% | 24,234 | 66% | – |
+| 06:00–12:00 | 1,787,794 | 49% | 365,490 | 53% | 30,412 | 64% | 46% |
+
+With add-ons (06:00–12:00): ≥ 0.9 with high-risk ASN is 16% NO-THREAT (5,969 of 36,872); ≥ 0.97 with high-risk ASN is 48%; ≥ 0.9 with a harvested proxy is 29%.
+
+**Verdict:** at `game_verify` a high score is no more likely to be a bot than a low one. On keys that only score at `game_verify` (Pinterest, Adobe, DoorDash and others, §10c) there is one score per session and nothing to cross-check it against. **Don't use the `game_verify` ML score for a deny or a reset.** Keep ML on `check_answer` rounds (§10a: ≥ 2 rounds ≥ 0.9 gives 0.70% NO-THREAT). Some keys show 0 NO-THREAT at every threshold (`A2A14B1D-…`, `476068BF-…`, `56938EF5-…`), but those keys assign no NO-THREAT at all, so that says nothing.
+
+### 15b. `bba-3-axis-mouse-replay` repeat floor
+
+`game_verify`, recomputed from fields (`exact_match_no_time_cnt > 3` AND `events_count > 9` AND touch null session), 9–13 Oct, all keys, QA key excluded.
+
+| Repeat count | Hits | Solved | NO-THREAT | NO-THREAT key and counts |
+|---|---|---|---|---|
+| 4–5 | 353 | 270 | 1 | Roblox Other – Key 3 (`63E4117F-…`), count 5 |
+| 6–10 | 695 | 612 | 1 | same key, count 8 |
+| 11–20 | 4,038 | 3,780 | 6 | same key, counts 11, 13, 13, 14, 15 |
+| 21–50 | 17,334 | 15,803 | 0 | |
+| 51–100 | 14,990 | 10,966 | 0 | |
+| 101+ | 24,407 | 21,928 | 0 | |
+| **Total** | **61,817** | **53,359** | **8** | |
+
+**Floor: `exact_match_no_time_cnt > 20`.** It removes all 8 NO-THREAT hits and 5,086 hits (8%), and keeps 56,731 (50,697 solved). The highest NO-THREAT count was 15, so `> 20` leaves some margin.
+
+(These 61.8k field-based hits are lower than the 88.6k in §12b, which counted the flag as carried onto the `game_verify` row. The flag runs at location ALL, so it can be set on an earlier round whose own counts differ.)
+
+**Proposed deny definition:** `exact_match_no_time_cnt > 20` AND `events_count > 9` AND touch null session, at `game_verify`. Combined with the 4-axis deny: `(4-axis > 10 AND events >= 4) OR (3-axis > 20 AND events > 9)`.
+
+### 15c. The five extra pressure add-ons
+
+`check_answer`, sessions flagged on any round. Hours: 12 Oct 15:00 (normal) and 13 Oct 09:00 (during the Roblox Game Join attack). NO-THREAT shown as count of sessions.
+
+**JA4, Device Intelligence dictionary, country-velocity flag, solve timing (flags present on the `check_answer` row):**
+
+| Signal | Add-on | 12 Oct 15:00 sessions / NO-THREAT | 13 Oct 09:00 sessions / NO-THREAT |
+|---|---|---|---|
+| No movement, no touch, no keyboard | none | 6,845 / 35 | 4,077 / 70 |
+| | high-risk ASN | 1,952 / 0 | 679 / 2 |
+| | JA4 bot hash | 81 / 0 | 31 / 1 |
+| | `g-dx-country-code-velocity-*` | 82 / 0 | 77 / 0 |
+| | solve timing | 2,688 / 19 | 2,842 / 49 |
+| `events-count-is-6` | none | 5,562 / 12 | 2,373 / 33 |
+| | high-risk ASN | 1,843 / 0 | 448 / 3 |
+| | JA4 bot hash | 488 / 0 | 15 / 0 |
+| | `g-dx-country-code-velocity-*` | 84 / 0 | 73 / 0 |
+| | solve timing | 2,626 / 8 | 1,568 / 26 |
+| Click fast | none | 930 / 12 | 1,004 / 29 |
+| | JA4 bot hash | 70 / 0 | 2 / 0 |
+| ML any round ≥ 0.9 | none | 77,174 / 203 | 36,454 / 112 |
+| | high-risk ASN | 29,877 / 0 | 9,478 / 12 |
+| | JA4 bot hash | 1,071 / 0 | 199 / 0 |
+| | solve timing | 17,100 / 23 | 28,400 / 56 |
+
+The Device Intelligence dictionary flag (`g-di-dict-1-match-short-term-threshold-exceeded-1x`) is on fewer than 70 sessions an hour across all signals. Most session-setup flags (JA4, DI) appear on far fewer `check_answer` rows than `session_setup` rows, so a telltale should read them from the session, not the round.
+
+**IP velocity from `session_setup`** (joined on session, 12 Oct 15:00; 93% of sessions matched):
+
+| Signal | Sessions | Long-term IP velocity ratio ≥ 1 | NO-THREAT | Short-term ratio ≥ 1 | NO-THREAT |
+|---|---|---|---|---|---|
+| All `check_answer` sessions | 290,276 | 3,108 | 0 | 3,346 | 7 |
+| No movement, no touch, no keyboard | 6,845 | 56 | 0 | 12 | 0 |
+| `events-count-is-6` | 5,562 | 584 | 0 | 441 | 0 |
+| Click fast | 930 | 149 | 0 | 71 | 0 |
+| ML any round ≥ 0.9 | 77,174 | 1,991 | 0 | 1,358 | 0 |
+
+**Many IPs sharing one track or device** (12 Oct 15:00): sessions whose mouse track was seen from ≥ 5 IPs in the hour: 1,265 in total, 0 NO-THREAT, but only 63 on `events-count-is-6` and 60 on ML. That is replay seen another way, already covered by the replay flags. Using a shared canvas fingerprint per key as a stand-in for a device doesn't work: 167k sessions share one with ≥ 50 IPs, 9,279 of them NO-THREAT.
+
+**Key-level spike** (`game_verify`, 12 Oct 12:00–24:00, keys with ≥ 100 flagged sessions). A spike hour is one where a key's flag count is ≥ 30 and ≥ 3× that key's median hourly count in the window.
+
+| Signal | Spike hours | Sessions in spike hours | Solved | NO-THREAT | Sessions in normal hours | NO-THREAT |
+|---|---|---|---|---|---|---|
+| No movement, no touch, no keyboard | 7 (3 keys) | 16,277 | 16,159 | 2 | 7,349 | 64 (0.87%) |
+| `events-count-is-6` | 6 (2 keys) | 12,020 | 11,986 | 0 | 11,984 | 30 (0.25%) |
+
+Most of the spike volume is Uber SMS (`30000F36-…`) from 12:00 to 16:00: about 4,000 no-movement and 3,000 `events-count-is-6` sessions an hour, nearly all solved, against a median of 86 and 17. It also caught a 23:00 jump on `2BF0FE95-…` (290 against a median of 71) and two smaller jumps on `FDED3FA5-…`.
+
+**Verdict:**
+
+- **Key-level spike is the strongest add-on**, and it's the right shape for the ask: it turns a noisy per-session flag into a key-wide "attack is on" signal with NO-THREAT near zero, which is what punish auto-activation needs. Limits: one 12-hour window, with a baseline taken from the same window. A live version needs a trailing baseline (for example 7 days, same hour).
+- **IP velocity from `session_setup`** is clean everywhere tested; use it as a reset add-on alongside high-risk ASN. Coverage is small except on `events-count-is-6`.
+- **JA4 bot hashes** are clean but small.
+- **Solve timing, the DI dictionary flag and shared canvas fingerprints** don't help.
+
+### 15d. Loose ends
+
+- **Touch flags are active.** `g-biometric-touch-exact-replay` (45562) and `g-biometric-touch-no-time-replay` (45571) are live global suspicion flags at location ALL (THR-444). On 13 Oct 00:00–12:00 they were on 102 and 14 `check_answer` rows, and 8 and 1 `game_verify` rows, out of 3.28M touch rows. The highest touch `exact_match_cnt` seen was 4. They are live but barely fire.
+- **Key `0152B4EB-D2DC-460A-89A1-629838B529C9`:** not in Dataswan. Account ID **22846**. Traffic comes from `iframe.arkoselabs.com` (site and origin) with no user agent. The only other key on that account, `C07CAFBC-F76F-4DFD-ABFA-A6B78ADC1F29`, is also not in Dataswan. In the §6 samples it had 1,650–4,100 `game_verify` sessions per 2 hours from 1,500–3,400 IPs, almost all solved. On 13 Oct it only logged `session_dropped` rows (69, one IP). Ask the Platform or CS team who owns account 22846.
+- **Amazon Client – Key 1:** parked for now, as agreed.
