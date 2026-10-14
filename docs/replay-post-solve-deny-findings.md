@@ -8,6 +8,56 @@ high-confidence trigger for auto-punish. Page-level, touch and keyboard biometri
 Source: `arkoselabs.events_faster` (Athena via Superset), `location = 'game_verify'`. Queries in
 `queries/replay_post_solve_sweep.sql`.
 
+## Summary: every signal we looked at, by what it's for
+
+Hit counts below are from 4 sample hours across 10–13 Oct, all keys, Arkose QA synthetic monitor excluded. **check_answer counts are rounds** (one per puzzle round, so a session can count more than once); **game_verify counts are sessions** (one per completed challenge). A flag set at check_answer can also show on that session's game_verify row, because flags carry forward.
+
+Sample size: 3,967,287 check_answer rounds and 7,924,411 game_verify sessions.
+
+### Deny candidates (post-solve at `game_verify`)
+
+| Signal | check_answer | game_verify | What we found | What we suggested | Detail |
+|---|---|---|---|---|---|
+| `bba-4-axis-mouse-replay-above-10` + `events_count >= 4` | 0 (only runs at game_verify) | 1,312 | Caught 100% of the AT&T Key 3 attack. 15.8k hits in 5 days, 12.3k solved. **0 NO-THREAT hits** out of 1.54M. Events guard ≥4, ≥5 and ≥6 gave identical results; Adobe hits were all short-track collisions | **Deny-ready.** Global post-solve deny with `events_count >= 4`, excluding the QA synthetic key; confirm Amazon Client – Key 1 first | §5, §12a |
+| `bba-3-axis-mouse-replay` | 10,473 | 3,367 | Catches replays with randomised timing that 4-axis misses (Gtop100 headless, Adobe 4–5 Oct, Amazon IDS, Bumble). 88.6k hits in 5 days, 71.7k solved. 8 NO-THREAT hits (all Roblox Other). Blind to scripts with 9 events or fewer | Set a repeat-count floor (`exact_match_no_time_cnt >= N`) to remove the low-repeat tail, then a **separate** global deny | §6, §12b |
+| `g-biometric-mouse-exact-replay` with `events_count >= 4`, pinned to game_verify (new) | parent flag 31,690; guarded version from fields 5,948 | parent flag 2,567; guarded version 1,607 | Parent runs at every location and carries to game_verify, so it showed on 27k Roblox Game Join rows whose own match count was 1. Guarded version: 24k hits in 5 days, 20.1k solved, 0 NO-THREAT. Amazon IDS hits at 4–6 events look like chance matches | Run as a **suspicion flag** first; review Mon 19 Oct; raise the guard to `> 5` if Amazon IDS grows | §7b, §11, §12c |
+| ML replay, at least 2 rounds `prob >= 0.9` | 550,485 rounds ≥ 0.9 | 294,804 sessions ≥ 0.9 (see note) | Only in-game signal that sees the current Uber SMS and Roblox Game Join attacks. "Any round ≥ 0.9" (the live AT&T rule) flags 4.9% of NO-THREAT sessions; "≥ 2 rounds" flags 0.70%. 1.96M flagged sessions solved in 5 days, 1.79M on Uber. Skips touch and very short tracks | Tighten the AT&T telltale to ≥ 2 rounds; with the model owner (Alexander McGrath), trial a post-solve deny starting with Uber SMS | §10, §12d, §12d-ii |
+
+**Note on ML at game_verify:** the score also appears on game_verify rows. Where a session has check_answer rows, the game_verify score equals the **last round's** score in 90% of cases. But **78% of game_verify rows with an ML score have no check_answer rows at all**: whole keys (Pinterest Login, AT&T Consumer Login Web – Key 3, Adobe Sign-in, Expedia EPC, Citizens, HP, DoorDash, Payoneer, AT&T Forgot Password) only show the score at game_verify. So the check_answer-based ML numbers in §12d **miss those keys entirely**. This needs its own analysis (see §10c).
+
+### Pressure inputs (not deny-grade on their own)
+
+| Signal | check_answer | game_verify | What we found | What we suggested | Detail |
+|---|---|---|---|---|---|
+| `bba-4-axis-mouse-replay-above-2-below-11` | 0 | 162 | Exact track repeated 3–10 times. Mostly Gtop100 spreading recordings; also where short-track chance matches sit | Pressure input, not a deny | §7c |
+| `g-biometrics-no-mouse-movement-no-biometric-touch-no-keyboard-input` | 82,374 | 6,676 | 44% replay-confirmed alone. With high-risk ASN 54%, harvested proxy 60%; datacenter doesn't help | Pair with high-risk ASN or harvested proxy as a pressure tier | §9a |
+| `g-biometric-no-mouse-movement` | 85,379 | 6,948 | 38% alone; high-risk ASN 49%, harvested proxy 50% | Same | §9b |
+| `g-biometric-mouse-click-fast` | 26,922 | 1,092 | 65% alone; high-risk ASN **81%**, harvested proxy 72% | Same; strongest of the four | §9c |
+| `mouse-behavioral-analysis--mouse--events-count-is-6` | 57,547 | 5,850 | 22% alone; harvested proxy 69%; datacenter drops it to 4% (mostly failing Roblox Game Join) | Pair with harvested proxy only | §9d |
+
+**Pressure add-ons suggested but not yet tested** (§9):
+
+1. Key-level spike trigger: fire when a flag's rate on a key jumps above its own baseline (fits the Automation team's throughput escalation).
+2. IP velocity from `session_setup`, joined on session (not populated at game_verify).
+3. Device Intelligence low-trust dictionary and JA4 bot hashes.
+4. Many IPs sharing one mouse track or device.
+5. Solve-timing flags (`bio-timing-h-*`).
+
+### Not usable / retire
+
+| Signal | check_answer | game_verify | Why | Detail |
+|---|---|---|---|---|
+| `g-biometric-mouse-no-time-replay` | 10,473 | 3,367 | Identical definition and identical hits to `bba-3-axis-mouse-replay` | §7a |
+| `mouse-replay-1250` | 0 | 0 | One hard-coded 2024 track; never fires | §7d |
+| `g-biometric-touch-exact-replay` | 1 | 0 | Single taps landing on the same pixel by chance; with mouse-style guards almost nothing is left | §8a |
+| `g-biometric-touch-no-time-replay` | 0 | 0 | Short taps across thousands of IPs, looks like same-device users | §8b |
+
+(The touch flags recorded almost no hits as flags in these 4 hours, fewer than the §8 samples. Worth confirming they're still active.)
+
+---
+
+> Section references (§) in this summary point to the Confluence page *Proposal: Post-Solve Deny on In-Game Mouse Replay Signals*, which uses the same signal sections as Parts 2–3 below.
+
 ## 1. The AT&T attack (Sept 19–21, Key 3)
 
 - 134.0k attack sessions at `game_verify`, 127.9k solved.
@@ -404,6 +454,34 @@ Where the NO-THREAT hits sit (5 days):
 ### 10b. What it adds
 
 It is the only in-game signal that sees the two biggest attacks running right now (section 12d): **Uber SMS** and **Roblox Game Join**. The deterministic replay flags catch almost none of either.
+
+### 10c. ML scores on `game_verify` rows (new, not yet analysed)
+
+In one sample hour (12 Oct 15:00), 485,461 `game_verify` sessions carried an ML score.
+
+- **Where the session also has `check_answer` rows** (108,665): the `game_verify` score equals the last round's score in 90% of cases.
+- **376,796 (78%) have no `check_answer` rows at all.** On these keys the score only exists at `game_verify`:
+
+| Key | Sessions scored at `game_verify` | No `check_answer` rows | Score ≥ 0.9 |
+|---|---|---|---|
+| Pinterest – Login – Key 1 | 78,769 | 78,747 | 5,038 |
+| Uber SMS – Key 1 | 69,120 | 18,056 | 49,571 |
+| AT&T Consumer Login Web – Key 3 | 52,068 | 51,155 | 3,167 |
+| Adobe – Sign-in – Key 5 | 34,378 | 34,378 | 10,161 |
+| Expedia EPC – UPL – Key 13 | 19,207 | 19,207 | 2,907 |
+| Citizens – OLB – Key 1 | 15,179 | 15,173 | 1,607 |
+| HP ID – Returning Users – Key 1 | 14,520 | 14,510 | 1,158 |
+| DoorDash – Website – Key 1 | 11,518 | 11,518 | 10,004 |
+| Meta Login – Key 2 | 9,494 | 8,171 | 5,360 |
+| Payoneer – Login – Key 2 | 8,647 | 8,644 | 460 |
+| AT&T Consumer Forgot Password – Key 2 | 8,640 | 8,070 | 290 |
+| Adobe – ARP FF – Key 8 | 6,825 | 6,825 | 2,224 |
+
+**What this means:**
+
+- The §10a false-positive check and the §12d–12d-ii numbers used `check_answer` only, so **they don't cover these keys**.
+- On these keys there's one score per session (the last round), so the "≥ 2 rounds" rule can't be applied. A `game_verify` ML deny would need its own threshold and its own false-positive check.
+- DoorDash (87% of scored sessions ≥ 0.9) and Adobe Sign-in (30%) stand out and need a look before any deny.
 
 ---
 
