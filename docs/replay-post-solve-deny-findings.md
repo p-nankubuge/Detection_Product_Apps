@@ -459,6 +459,8 @@ All keys, every hour, Arkose QA synthetic monitor excluded. `game_verify` signal
 | Roblox Signup – Key 2 | 560 | 517 | 6 tracks, IPs ≈ hits |
 | Roblox Game Join – Key 6 | 39 | 0 | |
 
+**NO-THREAT check:** **0** hits out of 1,542,935 NO-THREAT `game_verify` mouse sessions over the 5 days.
+
 ### 12b. `bba-3-axis-mouse-replay`
 
 | Day | Hits | Solved |
@@ -491,6 +493,8 @@ All keys, every hour, Arkose QA synthetic monitor excluded. `game_verify` signal
 | Match Registration – Key 2 | 57 | 57 | |
 
 **Read:** 3-axis fires 5–6× more than 4-axis and on many more keys. Several keys show the "few tracks, IPs ≈ hits, all solved" pattern (Amazon IDS, Roblox Other, Bumble, Azure, Airbnb). That fits either a replay farm on residential proxies or a common path through a specific game. **This is why a repeat-count floor is needed before 3-axis can deny.**
+
+**NO-THREAT check:** **8** hits out of 1,542,935 NO-THREAT `game_verify` mouse sessions (0.0005%), all on Roblox Other – Key 3 and all solved. That is low, but it is the 3-axis false-positive candidate to look at when setting the repeat floor.
 
 ### 12c. `g-biometric-mouse-exact-replay-events-4plus` (section 11, computed from `game_verify` fields)
 
@@ -531,7 +535,7 @@ Sessions are counted per 12-hour window, so a session spanning two windows count
 | Key | Sessions scored | Any round ≥ 0.9 | ≥ 2 rounds ≥ 0.9 | What it is |
 |---|---|---|---|---|
 | **Uber SMS – Key 1** | 3,571,113 | 3,136,580 (88%) | 2,623,567 | **Large bot attack.** Sample hour (10 Oct 18:00): 231k scored rounds, 95% already BOT-STD, 62k IPs, 5k ASNs, **about 20% of rounds solved**. Replay flags hit 3 rounds. |
-| **Roblox Game Join – Key 6** | 893,777 | 715,867 (80%) | 545,638 | **Attack from 13 Oct 11:00 UTC**: about 600k sessions that day, against 13–59k per half-day before. All BOT/CUSTOM. |
+| **Roblox Game Join – Key 6** | 893,777 | 715,867 (80%) | 545,638 | **Attack on 13 Oct**: about 600k sessions that day, against 13–59k per half-day before. All BOT/CUSTOM. Most never reach `game_verify` (12d-ii). |
 | Roblox Signup – Key 2 | 821,681 | 189,676 (23%) | 66,624 | |
 | Microsoft MSID | 664,444 | 52,871 (8%) | 12,669 | Mostly one-off spikes (every-round only 177) |
 | Roblox Login – Key 1 | 371,844 | 82,249 (22%) | 17,913 | |
@@ -541,17 +545,51 @@ Sessions are counted per 12-hour window, so a session spanning two windows count
 
 **Read:** the ML model flags far more than the deterministic replay signals (4.4M sessions against 16–89k), mostly on the two big attacks. The deterministic flags can't see either one. On Uber about 1 in 5 bot rounds solves, so a post-solve deny on **≥ 2 rounds ≥ 0.9** would close a real gap there. Both attacks are already labelled BOT-STD or CUSTOM by other signals, so the false-positive risk on these keys is low; the risk sits on the quieter keys in 10a.
 
+### 12d-ii. ML replay: how many flagged sessions then solved at `game_verify`
+
+ML scores sit on `check_answer` rows, one per round, so each flagged session was matched to its own `game_verify` row by session ID (6-hour windows, `game_verify` looked up to 1 hour later). A spot check confirmed that sessions with no `game_verify` row really never got there: in one hour, 567 of 809 had none, and only 19 of those ever solved a round.
+
+| Day | Sessions with ≥ 2 rounds ≥ 0.9 | **Solved at `game_verify`** (would be denied) | Never reached `game_verify` | NO-THREAT and solved |
+|---|---|---|---|---|
+| 9 Oct | 197,574 | 96,957 | 95,401 | 68 |
+| 10 Oct | 1,047,829 | 771,474 | 265,323 | 36 |
+| 11 Oct | 836,763 | 434,813 | 387,639 | 47 |
+| 12 Oct | 534,496 | 440,547 | 61,932 | 38 |
+| 13 Oct | 772,201 | 219,520 | 336,111 | 38 |
+| **Total** | **3,388,863** | **1,963,311 (58%)** | **1,146,406 (34%)** | **227** |
+
+For comparison: the looser "any round ≥ 0.9" rule would deny 2,355,537 sessions; "any round ≥ 0.97" would deny 150,689.
+
+| Key | Sessions with ≥ 2 rounds ≥ 0.9 | Solved at `game_verify` | Share solved |
+|---|---|---|---|
+| **Uber SMS – Key 1** | 2,631,027 | **1,785,790** | 68% |
+| Roblox Game Join – Key 6 | 570,410 | 110,844 | 19% |
+| Gtop100 – Production | 42,191 | 37,014 | 88% |
+| Roblox Signup – Key 2 | 67,271 | 9,701 | 14% |
+| Microsoft MSID | 11,168 | 6,319 | 57% |
+| Adobe Sign Up – Key 2 | 20,803 | 3,056 | 15% |
+| Roblox Login – Key 1 | 17,964 | 712 | 4% |
+
+(Per-key rows only count windows where the key was in the top 8, so they're lower bounds.)
+
+**Read:**
+
+- **Uber SMS is the gap.** About 1.79M ML-flagged Uber sessions solved and were verified in 5 days: **91% of everything a "≥ 2 rounds ≥ 0.9" post-solve deny would catch.** The deterministic replay flags catch almost none of it.
+- **Game Join:** the attack is mostly failing already (19% solve), but 110k still got through.
+- **NO-THREAT:** 227 flagged-and-solved sessions in 5 days, about 1 in 8,600 of the would-be denies.
+- **Microsoft MSID** (6.3k solved) has no NO-THREAT sessions to check against, so it should be reviewed by hand before any deny covers it.
+
 ### 12e. Summary across signals
 
 | Signal | 5-day hits | Solved (would be denied) | NO-THREAT hit | Ready to deny? |
 |---|---|---|---|---|
-| 4-axis `>10` & ≥4 events | 15,771 | 12,272 | not measured; earlier review clean | **Yes** |
-| 3-axis | 88,602 | 71,720 | not measured | After a repeat floor |
+| 4-axis `>10` & ≥4 events | 15,771 | 12,272 | 0 of 1.54M | **Yes** |
+| 3-axis | 88,602 | 71,720 | 8 of 1.54M (Roblox Other) | After a repeat floor |
 | Exact replay, events ≥4 (new) | 24,026 | 20,143 | 0 | Suspicion flag first; review 19 Oct |
-| ML replay, ≥ 2 rounds ≥ 0.9 | 3,356,351 sessions | not joined to `game_verify` yet | 636 of 91,384 (0.70%) | After model-owner sign-off |
+| ML replay, ≥ 2 rounds ≥ 0.9 | 3,388,863 sessions | **1,963,311** (1.79M on Uber SMS) | 636 of 91,384 flagged (0.70%); 227 flagged and solved | After model-owner sign-off |
 
 **New this week:**
 
 - **AT&T Key 3** had another single-track replay burst on 12 Oct (3,114 hits in 12 hours, 1,410 IPs). Almost all failed, so the challenge held this time; 4-axis caught every one.
-- **Uber SMS** and **Roblox Game Join** are under large bot attacks that only the ML model sees in-game.
+- **Uber SMS** and **Roblox Game Join** are under large bot attacks that only the ML model sees in-game. On Uber, **about 1.79M flagged sessions solved in 5 days.**
 - **Hornet Registration:** about 80% of its mouse traffic is 3-axis replay (6 tracks), all failing.
