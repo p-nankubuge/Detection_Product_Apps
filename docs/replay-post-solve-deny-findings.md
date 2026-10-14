@@ -14,6 +14,11 @@ Hit counts below are from 4 sample hours across 10–13 Oct, all keys, Arkose QA
 
 Sample size: 3,967,287 check_answer rounds and 7,924,411 game_verify sessions.
 
+**Two ways to act after a solve.** Both stop a bot that has already solved the challenge:
+
+- **Deny at `game_verify`:** the session is refused outright. Needs a near-zero false-positive signal.
+- **Adaptive challenge reset at `check_answer`:** on the round that would complete the game, the game is marked unsolved and reset to a new one, often on a harder theme. To the user it looks like a wrong answer. A real user can solve again and verify. This is a softer post-solve action and already in production (see §9f).
+
 ### Deny candidates (post-solve at `game_verify`)
 
 | Signal | check_answer | game_verify | What we found | What we suggested | Detail |
@@ -21,19 +26,34 @@ Sample size: 3,967,287 check_answer rounds and 7,924,411 game_verify sessions.
 | `bba-4-axis-mouse-replay-above-10` + `events_count >= 4` | 0 (only runs at game_verify) | 1,312 | Caught 100% of the AT&T Key 3 attack. 15.8k hits in 5 days, 12.3k solved. **0 NO-THREAT hits** out of 1.54M. Events guard ≥4, ≥5 and ≥6 gave identical results; Adobe hits were all short-track collisions | **Deny-ready.** Global post-solve deny with `events_count >= 4`, excluding the QA synthetic key; confirm Amazon Client – Key 1 first | §5, §12a |
 | `bba-3-axis-mouse-replay` | 10,473 | 3,367 | Catches replays with randomised timing that 4-axis misses (Gtop100 headless, Adobe 4–5 Oct, Amazon IDS, Bumble). 88.6k hits in 5 days, 71.7k solved. 8 NO-THREAT hits (all Roblox Other). Blind to scripts with 9 events or fewer | Set a repeat-count floor (`exact_match_no_time_cnt >= N`) to remove the low-repeat tail, then a **separate** global deny | §6, §12b |
 | `g-biometric-mouse-exact-replay` with `events_count >= 4`, pinned to game_verify (new) | parent flag 31,690; guarded version from fields 5,948 | parent flag 2,567; guarded version 1,607 | Parent runs at every location and carries to game_verify, so it showed on 27k Roblox Game Join rows whose own match count was 1. Guarded version: 24k hits in 5 days, 20.1k solved, 0 NO-THREAT. Amazon IDS hits at 4–6 events look like chance matches | Run as a **suspicion flag** first; review Mon 19 Oct; raise the guard to `> 5` if Amazon IDS grows | §7b, §11, §12c |
-| ML replay, at least 2 rounds `prob >= 0.9` | 550,485 rounds ≥ 0.9 | 294,804 sessions ≥ 0.9 (see note) | Only in-game signal that sees the current Uber SMS and Roblox Game Join attacks. "Any round ≥ 0.9" (the live AT&T rule) flags 4.9% of NO-THREAT sessions; "≥ 2 rounds" flags 0.70%. 1.96M flagged sessions solved in 5 days, 1.79M on Uber. Skips touch and very short tracks | Tighten the AT&T telltale to ≥ 2 rounds; with the model owner (Alexander McGrath), trial a post-solve deny starting with Uber SMS | §10, §12d, §12d-ii |
+| ML replay, at least 2 rounds `prob >= 0.9` | 550,485 rounds ≥ 0.9 | 294,804 sessions ≥ 0.9 (see note) | Only in-game signal that sees the current Uber SMS and Roblox Game Join attacks. "Any round ≥ 0.9" (the live AT&T rule) flags 4.9% of NO-THREAT sessions; "≥ 2 rounds" flags 0.70%. 1.96M flagged sessions solved in 5 days, 1.79M on Uber. Skips touch and very short tracks | Already used as an **adaptive reset** (global at 10%, AT&T and Roblox keys; §9f). For a hard deny, require ≥ 2 rounds ≥ 0.9 and trial with the model owner (Alexander McGrath), starting with Uber SMS | §9f, §10, §12d, §12d-ii |
 
 **Note on ML at game_verify:** the score also appears on game_verify rows. Where a session has check_answer rows, the game_verify score equals the **last round's** score in 90% of cases. But **78% of game_verify rows with an ML score have no check_answer rows at all**: whole keys (Pinterest Login, AT&T Consumer Login Web – Key 3, Adobe Sign-in, Expedia EPC, Citizens, HP, DoorDash, Payoneer, AT&T Forgot Password) only show the score at game_verify. So the check_answer-based ML numbers in §12d **miss those keys entirely**. This needs its own analysis (see §10c).
 
 ### Pressure inputs (not deny-grade on their own)
 
-| Signal | check_answer | game_verify | What we found | What we suggested | Detail |
-|---|---|---|---|---|---|
-| `bba-4-axis-mouse-replay-above-2-below-11` | 0 | 162 | Exact track repeated 3–10 times. Mostly Gtop100 spreading recordings; also where short-track chance matches sit | Pressure input, not a deny | §7c |
-| `g-biometrics-no-mouse-movement-no-biometric-touch-no-keyboard-input` | 82,374 | 6,676 | 44% replay-confirmed alone. With high-risk ASN 54%, harvested proxy 60%; datacenter doesn't help | Pair with high-risk ASN or harvested proxy as a pressure tier | §9a |
-| `g-biometric-no-mouse-movement` | 85,379 | 6,948 | 38% alone; high-risk ASN 49%, harvested proxy 50% | Same | §9b |
-| `g-biometric-mouse-click-fast` | 26,922 | 1,092 | 65% alone; high-risk ASN **81%**, harvested proxy 72% | Same; strongest of the four | §9c |
-| `mouse-behavioral-analysis--mouse--events-count-is-6` | 57,547 | 5,850 | 22% alone; harvested proxy 69%; datacenter drops it to 4% (mostly failing Roblox Game Join) | Pair with harvested proxy only | §9d |
+How a pressure signal can act depends on where it fires:
+
+- **At `check_answer` (this session):** an **adaptive challenge reset**. This is the natural use, because these flags fire mostly per round at `check_answer`.
+- **At `game_verify` (future sessions):** the challenge is over, so the only options are carrying pressure forward to the same IP, device or track on the next attempt, a key-level spike trigger, or auto-activating punish.
+
+At `check_answer`: sessions flagged on any round over 2 sample hours (10 and 12 Oct, 15:00), all keys. "Would be reset" = flagged sessions that solved the game. Baseline: 589,384 sessions, **6.5% NO-THREAT**.
+
+| Signal | Add-on | At `check_answer`: sessions flagged | Would be reset (solved) | NO-THREAT | At `game_verify` (4 h, sessions) | What we suggested | Detail |
+|---|---|---|---|---|---|---|---|
+| `bba-4-axis-mouse-replay-above-2-below-11` | – | 0 (only at game_verify) | – | – | 162 | Pressure input only; carry forward from game_verify | §7c |
+| `g-biometrics-no-mouse-movement-no-biometric-touch-no-keyboard-input` | none | 9,542 | 5,682 | 75 (0.8%) | 6,676 | Adaptive reset with high-risk ASN | §9a, §9f |
+| | high-risk ASN | 2,255 | 1,810 | **0** | | | |
+| | harvested proxy | 559 | 364 | 8 (1.4%) | | | |
+| `g-biometric-no-mouse-movement` | none | 9,826 | 5,847 | 81 (0.8%) | 6,948 | Same as above (near-identical population) | §9b, §9f |
+| | high-risk ASN | 2,291 | 1,831 | **0** | | | |
+| | harvested proxy | 573 | 376 | 8 (1.4%) | | | |
+| `g-biometric-mouse-click-fast` | none | 1,697 | 684 | 34 (2.0%) | 1,092 | Weakest at `check_answer`; keep for `game_verify` carry-forward with high-risk ASN | §9c, §9f |
+| | high-risk ASN | 143 | 58 | 2 (1.4%) | | | |
+| | harvested proxy | 122 | 43 | 3 (2.5%) | | | |
+| `mouse-behavioral-analysis--mouse--events-count-is-6` | none | 7,099 | 4,949 | 25 (0.35%) | 5,850 | Adaptive reset with high-risk ASN | §9d, §9f |
+| | high-risk ASN | 2,097 | 1,769 | **0** | | | |
+| | harvested proxy | 432 | 310 | 2 (0.5%) | | | |
 
 **Pressure add-ons suggested but not yet tested** (§9):
 
@@ -149,8 +169,7 @@ All hours Sept 24 – Oct 7 (not sampled), `game_verify`, sessions with in-game 
 - **Adobe:** 82 high-repeat hits over 14 days (Oct 4 only: 66 + 16), all under 4 events. Every threshold
   removes them. Zero Adobe sessions would be denied.
 - **AT&T:** 1,365 hits. Most are **AT&T Consumer SDK Android Key 4** (`4DD22AF2-…`): 1,159 on Oct 2
-  12:00–24:00 (72 solved), then 80 + 105 on Oct 7, all solved. This fits the Key 4 attack Rahul raised on
-  the Oct 5 call. The rest are small Key 3 (`FAD1…`) bursts (1–10, unsolved).
+  12:00–24:00 (72 solved), then 80 + 105 on Oct 7, all solved. The rest are small Key 3 (`FAD1…`) bursts (1–10, unsolved).
 - **Roblox:** 6,678 hits, almost all **Roblox Signup Key 2** (`A2A14B1D-…`). Bursts Oct 1–3 were mostly
   solved (3,864 solved in total). The Oct 7 burst (2,348) went unsolved. Login Key 1 and Game Join Key 6
   hits were all unsolved.
@@ -387,6 +406,53 @@ Sample S1 (6–7 Sept, 1,195,594 mouse sessions, all keys).
 
 # Part 3 — ML replay, new exact-replay suspicion flag, 5-day check (13 Oct)
 
+### 9f. Adaptive challenge at `check_answer` (how the pressure signals can act in-session)
+
+**How it works** (from the SOC training *Adaptive Challenges, Multi Puzzle & High Sec Puzzle Selection* and the *Adaptive Challenge – Feature Doc & How To*): an adaptive telltale runs at `check_answer`. On the round that would complete the game, instead of letting the session verify, the game is marked unsolved and reset to a new game. The new game can use a different client theme (e.g. wall, high_wall, ML_defence) and a higher minimum security level. To the user it looks like a wrong answer.
+
+**Configuration:**
+
+- Location `check_answer`; a client theme is required.
+- `adaptive_challenge__count < N` in the definition controls whether the telltale applies again after a reset; the guide recommends `< 1`.
+- The pressure (`adaptive_reset_1`, `_2`, `_3`) caps the number of resets. Pressures stop at 3 and the service at 5.
+
+**Already in production:**
+
+- `g-ml-replay-prob-greater-90`: global, 10% of sessions, one reset onto each key's ML_defence theme. The 48-hour rollout review found **about 92% of reset sessions didn't come back to verify; 7.7% (344) solved the second game and verified**, which the owner treats as the upper bound on false-positive impact. The recommendation there was to scale past 10%.
+- AT&T (all 5 keys) and Roblox (Signup, Login, Game Join): ML replay ≥ 0.9 with one reset.
+- Customer-specific adaptive telltales on Roblox, WBD and Payoneer.
+
+**The pressure signals at `check_answer`** (sessions flagged on any round, 2 sample hours; NO-THREAT baseline is 6.5% of all sessions):
+
+| Signal | Add-on | Sessions flagged | Would be reset (solved) | NO-THREAT |
+|---|---|---|---|---|
+| No movement, no touch, no keyboard | none | 9,542 | 5,682 | 75 (0.8%) |
+| | high-risk ASN | 2,255 | 1,810 | 0 |
+| | harvested proxy | 559 | 364 | 8 (1.4%) |
+| No mouse movement | none | 9,826 | 5,847 | 81 (0.8%) |
+| | high-risk ASN | 2,291 | 1,831 | 0 |
+| | harvested proxy | 573 | 376 | 8 (1.4%) |
+| Click fast | none | 1,697 | 684 | 34 (2.0%) |
+| | high-risk ASN | 143 | 58 | 2 (1.4%) |
+| | harvested proxy | 122 | 43 | 3 (2.5%) |
+| Events count is 6 | none | 7,099 | 4,949 | 25 (0.35%) |
+| | high-risk ASN | 2,097 | 1,769 | 0 |
+| | harvested proxy | 432 | 310 | 2 (0.5%) |
+| *ML replay, any round ≥ 0.9 (for comparison)* | none | 168,784 | 125,750 | 549 (0.33%) |
+| | high-risk ASN | 38,718 | 31,461 | 5 (0.01%) |
+
+**Read:**
+
+- Every flag on its own is already **8–20× less likely to be NO-THREAT** than an average session (0.35–2.0% vs 6.5%).
+- **With high-risk ASN, three of the four have zero NO-THREAT sessions** in the sample, while still resetting 1.8k solved sessions each in 2 hours. These are good candidates for an adaptive reset.
+- Harvested proxy is weaker at `check_answer` than at `game_verify` (§9a–9d).
+- Click-fast is the weakest in-session signal (2.0%) and the smallest; it's better kept for `game_verify` carry-forward.
+- The ML row isn't filtered to round > 1 here, so it's a little wider than the live telltales.
+
+**Not yet measured:** how many reset sessions then verify on the second game (the 7.7% figure above is ML-only). That's the real false-positive check for an adaptive reset and needs the reset to run, e.g. on a small `rand_1` sample like the ML rollout.
+
+---
+
 ## 10. ML replay model: `behavioral_analysis__experimental_attributes.ml_replay.prob`
 
 **What it is:** an ML replay model (v12_3) scored on each round at `check_answer`. The `ml_replay` block in the experimental attributes JSON carries `status`, `prob` (0–1, chance the round's mouse track is a replay) and the model version.
@@ -401,9 +467,9 @@ Sample S1 (6–7 Sept, 1,195,594 mouse sessions, all keys).
 
 | Telltale | Rule | Action | Owner |
 |---|---|---|---|
-| `att-severallkeys-…-ml-replay-prob-90` (all 5 AT&T keys) | any round `prob >= 0.9` and `round_number > 1` | **immediate non-legit** | r.morera |
-| Roblox Game Join / Signup, Blizzard | same rule | suspicion flag | – |
-| `g-ml-replay-prob-greater-90` (global) | same rule on a 10% random sample (`rand_1 <= 0.1`, CHNGE-6144) | – | Alexander McGrath |
+| `att-severallkeys-…-ml-replay-prob-90` (all 5 AT&T keys) | any round `prob >= 0.9`, `round_number > 1`, `adaptive_challenge__count < 5` | **adaptive reset** (1 reset, onto wheel) | r.morera |
+| Roblox Signup, Login, Game Join | same rule, `adaptive_challenge__count < 1` | **adaptive reset** (1 reset, onto high_wall); Roblox also ingests the flag in its own metrics | s.vargas / r.morera |
+| `g-ml-replay-prob-greater-90` (global, all keys) | same rule on a 10% random sample (`rand_1 <= 0.1`, CHNGE-6144) | **adaptive reset** (1 reset, onto each key's ML_defence theme) | Alexander McGrath |
 
 ### 10a. False-positive check
 
@@ -449,7 +515,7 @@ Where the NO-THREAT hits sit (5 days):
 
 (Gtop100 is a solve farm, so its NO-THREAT label is the wrong one; those aren't real false positives.)
 
-**Verdict:** a single round ≥ 0.9 is too loose to deny on. Requiring **at least 2 rounds ≥ 0.9 in the session** (or one round ≥ 0.97) cuts the NO-THREAT hit rate about 7×, to under 1%, and keeps the bot-heavy keys. **The live AT&T telltale uses the loose rule as an immediate deny.** Its real impact on AT&T is small, because almost all AT&T traffic is touch or too short to score, but the rule should be tightened. Precision needs confirming with the model owner (Alexander McGrath).
+**Verdict:** a single round ≥ 0.9 is too loose to deny on. Requiring **at least 2 rounds ≥ 0.9 in the session** (or one round ≥ 0.97) cuts the NO-THREAT hit rate about 7×, to under 1%, and keeps the bot-heavy keys. **The live telltales use the loose rule, but as an adaptive reset, not a deny** (§9f), so a real user caught by a one-off spike gets a second game rather than a refusal. The loose rule is fine for a reset; a hard deny should use the stricter one. Precision needs confirming with the model owner (Alexander McGrath).
 
 ### 10b. What it adds
 
