@@ -4,7 +4,8 @@
 --   1. Daily totals for each candidate across all keys.
 --   2. Per-key breakdown of replay hits, used to tell bots from short-track collisions.
 --   3. Events-threshold comparison per account.
---   4–6. Five-day sweep (9–13 Oct): game_verify flags, the new exact-replay flag, ML replay.
+--   4–7. Five-day sweep (9–13 Oct): game_verify flags, the new exact-replay flag, ML replay,
+--        and ML-flagged sessions matched to their game_verify solve.
 --
 -- A full day across all keys times out in Superset. Use a list of sampled hours (as here) or
 -- chunks of 6 h or less.
@@ -155,3 +156,34 @@ g AS (
 SELECT * FROM (SELECT g.*, row_number() OVER (ORDER BY any90 DESC) rk FROM g)
 WHERE rk <= 11 OR nt_any90 >= 20
 ORDER BY any90 DESC;
+
+-- 7. ML replay -> did the flagged session solve at game_verify? (section 12d-ii) ----
+-- Run in 6 h windows; game_verify is looked up to 1 h past the window end.
+WITH r AS (
+    SELECT coalesce(session_token, session) sid, public_key k, risk_category rc,
+           try_cast(json_extract_scalar(behavioral_analysis__experimental_attributes, '$.ml_replay.prob') AS double) p
+    FROM arkoselabs.events_faster
+    WHERE ymdh >= '2026/10/09/00' AND ymdh < '2026/10/09/06'
+      AND location = 'check_answer' AND round_number > 1
+      AND public_key <> '2EAD3543-36DC-4A77-90E1-F3AE6B16CF16'),
+s AS (
+    SELECT sid, arbitrary(k) k, bool_or(rc = 'NO-THREAT') nt, count_if(p >= 0.9) hi, count_if(p >= 0.97) hi97
+    FROM r WHERE p IS NOT NULL GROUP BY 1 HAVING count_if(p >= 0.9) >= 1),
+v AS (
+    SELECT coalesce(session_token, session) sid, max(solved) sv
+    FROM arkoselabs.events_faster
+    WHERE ymdh >= '2026/10/09/00' AND ymdh < '2026/10/09/07'
+      AND location = 'game_verify'
+      AND behavioral_analysis__mouse__four_axis_key IS NOT NULL   -- ML only scores mouse; keeps the scan small
+    GROUP BY 1),
+j AS (SELECT s.*, v.sv FROM s LEFT JOIN v ON s.sid = v.sid)
+SELECT * FROM (
+    SELECT k, count(*) any90, count_if(sv = 1) any90_solved,
+           count_if(hi >= 2) two90, count_if(hi >= 2 AND sv = 1) two90_solved,
+           count_if(hi >= 2 AND sv IS NULL) two90_no_gv,
+           count_if(hi97 >= 1 AND sv = 1) any97_solved,
+           count_if(nt AND hi >= 2 AND sv = 1) nt_two90_solved,
+           row_number() OVER (ORDER BY count_if(hi >= 2) DESC) rk
+    FROM j GROUP BY GROUPING SETS ((k), ()))
+WHERE rk <= 8
+ORDER BY two90 DESC;
