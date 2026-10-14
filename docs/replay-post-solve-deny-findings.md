@@ -400,7 +400,7 @@ Sample S1 (6–7 Sept, 1,195,594 mouse sessions, all keys).
 - **Datacenter alone doesn't help** (flat, or worse on fast-click and 6-events).
 - **None of these pairs reaches deny grade** (replay signals are about 100%). They're good for **pressure tiers and auto-punish escalation**, not for a standalone deny.
 
-**Other add-ons worth testing next (not yet run):**
+**Other add-ons worth testing next** (now tested, see §15c):
 
 1. **Key-level spike:** fire when a behaviour flag's rate on a key jumps above its own baseline. This is how SOC already spots attacks, and it fits the throughput-based auto-escalation the Automation team is scoping.
 2. **IP velocity** from `session_setup`, joined on session.
@@ -527,7 +527,7 @@ Where the NO-THREAT hits sit (5 days):
 
 It is the only in-game signal that sees the two biggest attacks running right now (section 12d): **Uber SMS** and **Roblox Game Join**. The deterministic replay flags catch almost none of either.
 
-### 10c. ML scores on `game_verify` rows (new, not yet analysed)
+### 10c. ML scores on `game_verify` rows (analysed in §15a)
 
 In one sample hour (12 Oct 15:00), 485,461 `game_verify` sessions carried an ML score.
 
