@@ -103,6 +103,12 @@ Work from the repo root, `cd spike_scan`.
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)
    and look at it before committing.
+8b. **SOC action pack (the deliverable to share).** Set `action` (keep live / create / create (scoped) / hold) and
+   `action_detail` on each combo in `combos.json` from the recurrence and status findings, then
+   `python3 spike_report.py soc --win-start <D-4> --win-end <D> --recur-start <D-25> --discovery data/discovery_<Y>.json`
+   -> `reports/soc_<D>.html` + `reports/soc_latest.html`: one self-contained file with the action summary and, per TT
+   combination (live and candidates), the signals, TT definition, recurrence table and per-key time series.
+   Send this file to SOC; the other reports are working views.
 9. **Commit and push** `spike_scan/` with a message like `spike-scan: <Y> — N combos tracked, M new`.
 
 ## Known limits

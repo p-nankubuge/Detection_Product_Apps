@@ -12,6 +12,9 @@
   perkey  --combo ID --win-start D --win-end D [--all]
           One time-series per spiking key (own y-scale): sessions created vs verified, from
           data/chart_key_counts.csv -> reports/<day>_<combo>_per_key.html.
+  soc     --win-start D --win-end D --recur-start D [--discovery F]
+          THE deliverable: one HTML for SOC (reports/soc_<today>.html) with the action summary and, per TT
+          combination, signals + TT definition + recurrence table + per-key time series.
   recurrence --start D --end D [--today D]
           Burst episodes per combo x key over a long history (keys from data/recur_keys.json)
           -> reports/recurrence_<day>.html + data/recurrence_<day>.json. Answers "does it come back?".
@@ -509,14 +512,37 @@ def svg_hourly(hours, created, verified, base_daily, uid):
     return "\n".join(out)
 
 
+PERKEY_CSS = ('.baseline{stroke:var(--text-secondary);stroke-width:1.5;stroke-dasharray:4 3}'
+              '.line.partial{stroke-dasharray:3 3}.dot.hollow.s1{fill:var(--surface-2);stroke:var(--series-1)}.dot.hollow.s2{fill:var(--surface-2);stroke:var(--series-2)}'
+              '.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}'
+              '.kcard{background:var(--surface-2);border-radius:8px;padding:12px 16px}.kcard h3{margin:0;color:var(--text-primary)}'
+              '.kstats{font-size:12px;color:var(--text-secondary);margin:2px 0 6px}.kstats b{color:var(--text-primary)}'
+              '.tag{font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid var(--grid);margin-left:6px;color:var(--text-secondary)}'
+              '.tag.ongoing{border-color:var(--text-primary);color:var(--text-primary);font-weight:600}'
+              '.sub{font-size:11px;color:var(--text-muted);margin:8px 0 0}')
+
+
 def cmd_perkey(a):
-    combos = {c["id"]: c for c in load_combos()}
-    c = combos[a.combo]
+    c = {c["id"]: c for c in load_combos()}[a.combo]
+    we = dt.date.fromisoformat(a.win_end)
+    title = c.get("telltale_name") or c["id"]
+    body, n, _ = perkey_body(c, a.win_start, a.win_end, a.all, "p", heading=True)
+    parts = ['<!doctype html><html><head><meta charset="utf-8"><title>%s per key</title><style>%s%s</style></head><body><div class="viz-root">'
+             % (html.escape(title), css(), PERKEY_CSS)] + body + ['<div id="tip"></div>%s</div></body></html>' % JS]
+    rep = ROOT / "reports"
+    rep.mkdir(exist_ok=True)
+    out = rep / ("%s_%s_per_key.html" % (we - dt.timedelta(days=1), c["id"]))
+    out.write_text("\n".join(parts))
+    print("wrote", out.relative_to(ROOT), "(%d keys)" % n)
+
+
+def perkey_body(c, win_start, win_end, all_keys, uid, heading=True):
+    """-> (html parts, n keys, {key: status}) — per-key daily + hourly charts for one combo, no page wrapper."""
     names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
     rows = read_counts(CHART_COUNTS)
     if not rows:
         sys.exit("data/chart_key_counts.csv is empty -- run 03_track_exact_day.sql with --keys and ingest --chart")
-    ws, we = dt.date.fromisoformat(a.win_start), dt.date.fromisoformat(a.win_end)
+    ws, we = dt.date.fromisoformat(win_start), dt.date.fromisoformat(win_end)
     bs = ws - dt.timedelta(days=7)
     days = days_between(bs, we)
     win_days, base_days = days_between(ws, we), days_between(bs, ws)
@@ -525,7 +551,7 @@ def cmd_perkey(a):
     for r in rows:
         if r["combo_id"] == c["id"]:
             ver[r["public_key"]][r["day"]] = int(r.get("verified") or 0)
-    keys = [k for k in st if st[k]["spiking"]] if not a.all else [k for k in st if st[k]["peak"] >= ACTIVE_MIN]
+    keys = [k for k in st if st[k]["spiking"]] if not all_keys else [k for k in st if st[k]["peak"] >= ACTIVE_MIN]
     hours, hourly = load_hourly(c["id"])
     today, today_hour = load_today(c["id"], str(we))  # today so far (we = window end = today when run daily)
     cdays = days + ([str(we)] if today_hour else [])
@@ -535,17 +561,9 @@ def cmd_perkey(a):
     order = {"ongoing": 0, "elevated": 1, "subsided": 2, "no hourly data": 3}
     keys.sort(key=lambda k: (order[status[k][0]], -(st[k]["peak"] / max(st[k]["base"], 1))))
     title = c.get("telltale_name") or c["id"]
-    parts = ['<!doctype html><html><head><meta charset="utf-8"><title>%s per key</title><style>%s'
-             '.baseline{stroke:var(--text-secondary);stroke-width:1.5;stroke-dasharray:4 3}'
-             '.line.partial{stroke-dasharray:3 3}.dot.hollow.s1{fill:var(--surface-2);stroke:var(--series-1)}.dot.hollow.s2{fill:var(--surface-2);stroke:var(--series-2)}'
-             '.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}'
-             '.kcard{background:var(--surface-2);border-radius:8px;padding:12px 16px}.kcard h3{margin:0;color:var(--text-primary)}'
-             '.kstats{font-size:12px;color:var(--text-secondary);margin:2px 0 6px}.kstats b{color:var(--text-primary)}'
-             '.tag{font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid var(--grid);margin-left:6px;color:var(--text-secondary)}'
-             '.tag.ongoing{border-color:var(--text-primary);color:var(--text-primary);font-weight:600}'
-             '.sub{font-size:11px;color:var(--text-muted);margin:8px 0 0}'
-             '</style></head><body><div class="viz-root">' % (html.escape(title), css())]
-    parts.append("<h1>%s — per key</h1>" % html.escape(title))
+    parts = []
+    if heading:
+        parts.append("<h1>%s — per key</h1>" % html.escape(title))
     parts.append('<p class="muted">%s<br>Exact daily sessions per key carrying this combination, each chart on its own scale. '
                  '<b>Created</b> = sessions with the signal; <b>verified</b> = of those, sessions that ended verified '
                  '(<code>SESSIONS_VERIFIED &gt; 0</code>). A wide gap means the traffic is already being stopped; lines on top of each other mean it is getting through. '
@@ -581,20 +599,16 @@ def cmd_perkey(a):
         hc, hv = hourly.get(k, (zero, zero))
         last6 = sum(hc[-6:]) / 6.0 if hc else 0
         hourly_svg = ('<div class="sub">Hourly, %s → %s UTC (dashed = baseline hourly rate)</div>%s'
-                      % (hours[0], hours[-1], svg_hourly(hours, hc, hv, s["base"], "h%d" % i))) if hours else ""
+                      % (hours[0], hours[-1], svg_hourly(hours, hc, hv, s["base"], "%sh%d" % (uid, i)))) if hours else ""
         parts.append('<div class="kcard"><h3>%s<span class="tag %s">%s</span><span class="tag">%s</span></h3><div class="kstats">%s · <code>%s</code></div>'
                      '<div class="kstats">%s</div><div class="kstats">window verified: <b>%s of %s (%.0f%%)</b> · last 24h: <b>%s</b> · last 6h: %s/h vs baseline %s/h</div>%s%s</div>'
                      % (html.escape(key_label(k, names)), stt.split()[0], stt, tag, html.escape(n.get("account_name", "")), k, stats,
                         "{:,}".format(wv), "{:,}".format(wc), vr, fmt(rate), fmt(last6), fmt(s["base"] / 24),
                         svg_key_lines(cdays, s["series"] + ([today.get(k, [0, 0])[0]] if partial else []),
-                                      vser + ([today.get(k, [0, 0])[1]] if partial else []), s["base"], str(ws), "p%d" % i, partial),
+                                      vser + ([today.get(k, [0, 0])[1]] if partial else []), s["base"], str(ws), "%sp%d" % (uid, i), partial),
                         hourly_svg))
-    parts.append('</div><div id="tip"></div>%s</div></body></html>' % JS)
-    rep = ROOT / "reports"
-    rep.mkdir(exist_ok=True)
-    out = rep / ("%s_%s_per_key.html" % (we - dt.timedelta(days=1), c["id"]))
-    out.write_text("\n".join(parts))
-    print("wrote", out.relative_to(ROOT), "(%d keys)" % len(keys))
+    parts.append('</div>')
+    return parts, len(keys), {k: status[k] for k in keys}
 
 RECUR_KEYS = ROOT / "data" / "recur_keys.json"  # {combo_id: [public_key, ...]} keys backfilled in chart_key_counts
 
@@ -620,33 +634,27 @@ def episodes_of(days, created, verified, med):
     return eps, thr
 
 
-def cmd_recurrence(a):
-    """Per combo x key: daily history (data/chart_key_counts.csv, keys in data/recur_keys.json),
-    burst episodes and whether they repeat. Optional --today adds today-so-far from the hourly file."""
-    combos = {c["id"]: c for c in load_combos()}
-    names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
+def recurrence_data(start, end, today=None):
+    """-> (days, {combo_id: [key row]}) burst episodes per combo x key (keys from data/recur_keys.json)."""
     keymap = json.loads(RECUR_KEYS.read_text())
     rows = read_counts(CHART_COUNTS)
-    days = days_between(dt.date.fromisoformat(a.start), dt.date.fromisoformat(a.end))
+    days = days_between(dt.date.fromisoformat(start), dt.date.fromisoformat(end))
     di = {d: i for i, d in enumerate(days)}
-    have = {r["day"] for r in rows}
-    gaps = [d for d in days if d not in have]
-    result, parts = {}, []
+    result = {}
     for cid, keys in keymap.items():
-        c = combos[cid]
         ser = {k: ([0] * len(days), [0] * len(days)) for k in keys}
         for r in rows:
             if r["combo_id"] == cid and r["public_key"] in ser and r["day"] in di:
                 ser[r["public_key"]][0][di[r["day"]]] = int(r["sessions"])
                 ser[r["public_key"]][1][di[r["day"]]] = int(r["verified"])
-        today = load_today(cid, a.today)[0] if a.today else {}
+        tday = load_today(cid, today)[0] if today else {}
         krows = []
         for k in keys:
             cr, vr = ser[k]
             med = sorted(cr)[len(cr) // 2]
             eps, thr = episodes_of(days, cr, vr, med)
-            t = today.get(k, [0, 0])
-            t_burst = bool(a.today) and t[0] >= thr
+            t = tday.get(k, [0, 0])
+            t_burst = bool(today) and t[0] >= thr
             starts = [dt.date.fromisoformat(e["start"]) for e in eps]
             gaps_d = [(b - x).days for x, b in zip(starts, starts[1:])]
             n = len(eps) + (1 if t_burst and not (eps and eps[-1]["end"] == days[-1]) else 0)
@@ -657,7 +665,66 @@ def cmd_recurrence(a):
                           "today": t, "today_burst": t_burst, "n_episodes": n, "kind": kind, "created": cr, "verified": vr})
         krows.sort(key=lambda r: ({"recurring": 0, "persistent": 1, "one-off": 2, "none": 3}[r["kind"]], -max(r["created"])))
         result[cid] = krows
-        # --- HTML: heat table (each row on its own scale: cell shade = day / key's threshold)
+    return days, result
+
+
+def recurrence_body(krows, days, today, names):
+    """Heat table (each row on its own scale: shade = day / key's burst threshold) + episode list, no wrapper."""
+    parts = []
+    head = "".join('<th class="d">%s</th>' % d[5:].replace("-", "/") for d in days) + ('<th class="d">%s*</th>' % today[5:].replace("-", "/") if today else "")
+    trs = []
+    for r in krows:
+        cells = []
+        burst_i = {i for e in r["episodes"] for i in range(e["start_i"], e["end_i"] + 1)}
+        vals = list(zip(r["created"], r["verified"])) + ([tuple(r["today"])] if today else [])
+        for i, (cv, vv) in enumerate(vals):
+            is_b = (i in burst_i) or (i == len(days) and r["today_burst"])
+            lvl = 0 if cv < ACTIVE_MIN else min(4, 1 + int(3 * cv / (r["threshold"] * 3)))
+            cls = ("b%d" % lvl) if is_b else ("h%d" % min(lvl, 1))
+            tipd = days[i] if i < len(days) else today + " (so far)"
+            cells.append('<td class="hm %s" data-tip="%s · %s created · %s verified (%s)">%s</td>'
+                         % (cls, tipd, "{:,}".format(cv), "{:,}".format(vv), ("%d%%" % round(100 * vv / cv)) if cv else "–", fmt(cv) if cv >= 100 else ""))
+        trs.append('<tr><td class="kn">%s<br><span class="muted">median %s/day · %s</span></td>%s</tr>'
+                   % (html.escape(key_label(r["key"], names)), fmt(r["median"]), r["kind"], "".join(cells)))
+    parts.append('<div class="scroll"><table class="heat"><tr><th>Key</th>%s</tr>%s</table></div>' % (head, "".join(trs)))
+    ers = []
+    for r in krows:
+        for e in r["episodes"]:
+            ers.append('<tr><td>%s</td><td>%s</td><td>%s</td><td class="n">%d</td><td class="n">%s</td><td class="n">%s</td><td class="n">%d%%</td></tr>'
+                       % (html.escape(key_label(r["key"], names)), e["start"] + ("" if e["end"] == e["start"] else " → " + e["end"]),
+                          DOW[dt.date.fromisoformat(e["start"]).weekday()], e["days"], fmt(e["peak"]), fmt(e["sessions"]),
+                          round(100 * e["verified"] / max(e["sessions"], 1))))
+        if r["today_burst"]:
+            ers.append('<tr><td>%s</td><td>%s (today so far)</td><td>%s</td><td class="n">–</td><td class="n">%s</td><td class="n">%s</td><td class="n">%d%%</td></tr>'
+                       % (html.escape(key_label(r["key"], names)), today, DOW[dt.date.fromisoformat(today).weekday()], fmt(r["today"][0]), fmt(r["today"][0]),
+                          round(100 * r["today"][1] / max(r["today"][0], 1))))
+    if ers:
+        parts.append('<details><summary>Burst episodes (%d)</summary><table><tr><th>Key</th><th>Dates</th><th>Starts</th><th class="n">Days</th><th class="n">Peak day</th><th class="n">Episode sessions</th><th class="n">Verified</th></tr>%s</table></details>' % (len(ers), "".join(ers)))
+    return parts
+
+
+RECUR_INTRO = ('Every row is on its <b>own scale</b>: a day is a <b>burst</b> (coloured) when it has ≥%s sessions and ≥%d× that key\'s median day; '
+               'back-to-back burst days are one episode. A key is <b>recurring</b> with ≥2 separate episodes, <b>persistent</b> when it sits ≥%s on most days. '
+               'Hover a cell for created / verified.')
+
+
+def save_recurrence_json(result, tag):
+    js = {cid: [{k: v for k, v in r.items() if k not in ("created", "verified")} | {"episodes": [{k: v for k, v in e.items() if not k.endswith("_i")} for e in r["episodes"]]}
+                for r in krows] for cid, krows in result.items()}
+    (ROOT / "data" / ("recurrence_%s.json" % tag)).write_text(json.dumps(js, indent=1))
+
+
+def cmd_recurrence(a):
+    """Per combo x key: daily history (data/chart_key_counts.csv, keys in data/recur_keys.json),
+    burst episodes and whether they repeat. Optional --today adds today-so-far from the hourly file."""
+    combos = {c["id"]: c for c in load_combos()}
+    names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
+    days, result = recurrence_data(a.start, a.end, a.today)
+    have = {r["day"] for r in read_counts(CHART_COUNTS)}
+    gaps = [d for d in days if d not in have]
+    parts, srows = [], []
+    for cid, krows in result.items():
+        c = combos[cid]
         title = c.get("telltale_name") or cid
         nrec = sum(1 for r in krows if r["kind"] == "recurring")
         parts.append('<div class="card"><h2>%s <span class="muted" style="font-size:12px;font-weight:400">[%s]</span></h2>' % (html.escape(title), c["status"]))
@@ -665,70 +732,25 @@ def cmd_recurrence(a):
         parts.append('<div class="tiles"><div class="tile"><b>%d / %d</b><span>keys with ≥2 separate bursts</span></div>'
                      '<div class="tile"><b>%d</b><span>burst episodes in %d days</span></div></div>'
                      % (nrec, len(krows), sum(r["n_episodes"] for r in krows), len(days) + (1 if a.today else 0)))
-        head = "".join('<th class="d">%s</th>' % d[5:].replace("-", "/") for d in days) + ('<th class="d">%s*</th>' % a.today[5:].replace("-", "/") if a.today else "")
-        trs = []
-        for r in krows:
-            cells = []
-            burst_i = {i for e in r["episodes"] for i in range(e["start_i"], e["end_i"] + 1)}
-            vals = list(zip(r["created"], r["verified"])) + ([tuple(r["today"])] if a.today else [])
-            for i, (cv, vv) in enumerate(vals):
-                is_b = (i in burst_i) or (i == len(days) and r["today_burst"])
-                lvl = 0 if cv < ACTIVE_MIN else min(4, 1 + int(3 * cv / (r["threshold"] * 3)))
-                cls = ("b%d" % lvl) if is_b else ("h%d" % min(lvl, 1))
-                tipd = days[i] if i < len(days) else a.today + " (so far)"
-                cells.append('<td class="hm %s" data-tip="%s · %s created · %s verified (%s)">%s</td>'
-                             % (cls, tipd, "{:,}".format(cv), "{:,}".format(vv), ("%d%%" % round(100 * vv / cv)) if cv else "–", fmt(cv) if cv >= 100 else ""))
-            trs.append('<tr><td class="kn">%s<br><span class="muted">median %s/day · %s</span></td>%s</tr>'
-                       % (html.escape(key_label(r["key"], names)), fmt(r["median"]), r["kind"], "".join(cells)))
-        parts.append('<div class="scroll"><table class="heat"><tr><th>Key</th>%s</tr>%s</table></div>' % (head, "".join(trs)))
-        ers = []
-        for r in krows:
-            for e in r["episodes"]:
-                ers.append('<tr><td>%s</td><td>%s</td><td>%s</td><td class="n">%d</td><td class="n">%s</td><td class="n">%s</td><td class="n">%d%%</td></tr>'
-                           % (html.escape(key_label(r["key"], names)), e["start"] + ("" if e["end"] == e["start"] else " → " + e["end"]),
-                              DOW[dt.date.fromisoformat(e["start"]).weekday()], e["days"], fmt(e["peak"]), fmt(e["sessions"]),
-                              round(100 * e["verified"] / max(e["sessions"], 1))))
-            if r["today_burst"]:
-                ers.append('<tr><td>%s</td><td>%s (today so far)</td><td>%s</td><td class="n">–</td><td class="n">%s</td><td class="n">%s</td><td class="n">%d%%</td></tr>'
-                           % (html.escape(key_label(r["key"], names)), a.today, DOW[dt.date.fromisoformat(a.today).weekday()], fmt(r["today"][0]), fmt(r["today"][0]),
-                              round(100 * r["today"][1] / max(r["today"][0], 1))))
-        if ers:
-            parts.append('<details><summary>Burst episodes (%d)</summary><table><tr><th>Key</th><th>Dates</th><th>Starts</th><th class="n">Days</th><th class="n">Peak day</th><th class="n">Episode sessions</th><th class="n">Verified</th></tr>%s</table></details>' % (len(ers), "".join(ers)))
+        parts += recurrence_body(krows, days, a.today, names)
         parts.append("</div>")
-    # summary table
-    srows = []
-    for cid, krows in result.items():
-        c = combos[cid]
         rec = [r for r in krows if r["kind"] == "recurring"]
-        ep_days = sorted({e["start"] for r in krows for e in r["episodes"]})
         srows.append('<tr><td>%s</td><td>%s</td><td class="n">%d</td><td class="n">%d</td><td class="n">%d</td><td>%s</td></tr>'
-                     % (html.escape(c.get("telltale_name") or cid), c["status"], len(krows), len(rec),
-                        sum(r["n_episodes"] for r in krows), html.escape(", ".join(key_label(r["key"], names) for r in rec[:4]) + (" …" if len(rec) > 4 else ""))))
+                     % (html.escape(title), c["status"], len(krows), len(rec), sum(r["n_episodes"] for r in krows),
+                        html.escape(", ".join(key_label(r["key"], names) for r in rec[:4]) + (" …" if len(rec) > 4 else ""))))
     head = ['<!doctype html><html><head><meta charset="utf-8"><title>Recurrence %s → %s</title><style>%s%s</style></head><body><div class="viz-root">'
             % (a.start, a.end, css(), RECUR_CSS),
             "<h1>Do these attacks come back?</h1>",
-            '<p class="muted">Daily sessions per key for each tracked combination, %s → %s%s (UTC, exact counts on the keys each combination spiked on). '
-            'Every row is on its <b>own scale</b>: a day is a <b>burst</b> (coloured) when it has ≥%s sessions and ≥%d× that key\'s median day; '
-            'back-to-back burst days are one episode. A key is <b>recurring</b> with ≥2 separate episodes, <b>persistent</b> when it sits ≥%s on most days. '
-            'Hover a cell for created / verified. Generated %s.</p>'
-            % (days[0], days[-1], (" plus %s so far (*)" % a.today) if a.today else "", fmt(ACTIVE_MIN), SPIKE_X, fmt(ACTIVE_MIN),
+            '<p class="muted">Daily sessions per key for each tracked combination, %s → %s%s (UTC, exact counts on the keys each combination spiked on). %s Generated %s.</p>'
+            % (days[0], days[-1], (" plus %s so far (*)" % a.today) if a.today else "", RECUR_INTRO % (fmt(ACTIVE_MIN), SPIKE_X, fmt(ACTIVE_MIN)),
                dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))]
     if gaps:
         head.append('<p class="muted"><b>Missing days:</b> %s</p>' % ", ".join(gaps))
     head.append('<div class="card"><h2>Summary</h2><table><tr><th>Combination</th><th>Status</th><th class="n">Keys</th><th class="n">Recurring keys</th><th class="n">Episodes</th><th>Recurring on</th></tr>%s</table></div>' % "".join(srows))
     out = ROOT / "reports" / ("recurrence_%s.html" % (a.today or days[-1]))
     out.write_text("\n".join(head + parts) + '<div id="tip"></div>%s</div></body></html>' % JS)
-    js = {cid: [{k: v for k, v in r.items() if k not in ("created", "verified")} | {"episodes": [{k: v for k, v in e.items() if not k.endswith("_i")} for e in r["episodes"]]}
-                for r in krows] for cid, krows in result.items()}
-    (ROOT / "data" / ("recurrence_%s.json" % (a.today or days[-1]))).write_text(json.dumps(js, indent=1))
+    save_recurrence_json(result, a.today or days[-1])
     print("wrote", out.relative_to(ROOT))
-    for cid, krows in result.items():
-        print("\n==", cid)
-        for r in krows:
-            if r["n_episodes"]:
-                print("  %-55s %-10s med=%-6s %s%s" % (key_label(r["key"], names)[:55], r["kind"], r["median"],
-                      "; ".join("%s%s pk %s v%d%%" % (e["start"][5:], "+%dd" % (e["days"] - 1) if e["days"] > 1 else "", fmt(e["peak"]), round(100 * e["verified"] / max(e["sessions"], 1))) for e in r["episodes"]),
-                      (" | today %s v%d%%" % (fmt(r["today"][0]), round(100 * r["today"][1] / max(r["today"][0], 1)))) if r["today_burst"] else ""))
 
 
 DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -739,6 +761,93 @@ RECUR_CSS = """
 .hm.b1{background:color-mix(in srgb,var(--series-2) 35%,transparent)}.hm.b2{background:color-mix(in srgb,var(--series-2) 60%,transparent)}
 .hm.b3{background:color-mix(in srgb,var(--series-2) 85%,transparent);color:#fff}.hm.b4{background:var(--series-2);color:#fff;font-weight:600}
 """
+
+
+SOC_CSS = """
+.toc td a{color:var(--text-primary)}.pill{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;border:1px solid var(--grid);margin-left:6px;vertical-align:middle;color:var(--text-secondary)}
+.pill.create{background:var(--series-2);border-color:var(--series-2);color:#fff;font-weight:600}.pill.keep{background:var(--series-1);border-color:var(--series-1);color:#fff;font-weight:600}
+.action{border-left:4px solid var(--series-2);padding:8px 14px;background:var(--surface-1);border-radius:4px;margin:10px 0;font-size:13px}
+.action.keep{border-left-color:var(--series-1)}.action.hold{border-left-color:var(--text-muted)}
+.flags li{font-size:13px;margin:2px 0}.sec{border-top:1px solid var(--grid);margin-top:22px;padding-top:6px}
+section.combo{background:var(--surface-2);border-radius:10px;padding:18px 22px;margin:22px 0}
+section.combo .card{background:var(--surface-1);font-size:13px;line-height:1.5}section.combo .kcard{background:var(--surface-1)}
+@media print{.scroll{overflow:visible}details{display:block}section.combo{break-before:page}}
+"""
+ACTION_ORDER = {"keep": 0, "create": 1, "hold": 2}
+
+
+def _akind(action):
+    return "keep" if action.startswith("keep") else "create" if action.startswith("create") else "hold"
+
+
+def cmd_soc(a):
+    """One self-contained HTML for SOC: action summary, then per TT combination its signals, TT definition,
+    status now, recurrence table and per-key created-vs-verified time series."""
+    combos = load_combos()
+    names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
+    ws, we = dt.date.fromisoformat(a.win_start), dt.date.fromisoformat(a.win_end)
+    today = str(we)
+    rdays, recur = recurrence_data(a.recur_start, a.win_end, today)
+    save_recurrence_json(recur, today)
+    combos.sort(key=lambda c: ACTION_ORDER[_akind(c.get("action", "hold"))])
+    sections, srows = [], []
+    for ci, c in enumerate(combos):
+        title = c.get("telltale_name") or c["id"]
+        anchor = "tt-%s" % c["id"]
+        ak = _akind(c.get("action", "hold"))
+        body, nkeys, status = perkey_body(c, a.win_start, a.win_end, False, "c%d" % ci, heading=False)
+        krows = recur.get(c["id"], [])
+        rec = [r for r in krows if r["kind"] == "recurring"]
+        ongoing = [k for k, v in status.items() if v[0] == "ongoing"]
+        srows.append('<tr><td><a href="#%s">%s</a></td><td>%s</td><td><span class="pill %s">%s</span></td><td class="n">%d</td><td class="n">%d / %d</td><td>%s</td></tr>'
+                     % (anchor, html.escape(title), c["status"], ak, html.escape(c.get("action", "")), nkeys, len(rec), len(krows),
+                        html.escape(", ".join(key_label(k, names) for k in ongoing)) or '<span class="muted">none</span>'))
+        defn = tt_definition(c)
+        meta = None
+        if c.get("draft") and (ROOT / c["draft"]).exists():
+            meta = json.loads((ROOT / c["draft"]).read_text())
+            defn = meta.get("telltale_definition", meta)
+        sec = ['<section class="combo" id="%s"><h2 style="margin-top:0">%d. %s <span class="pill">%s</span><span class="pill %s">%s</span></h2>'
+               % (anchor, ci + 1, html.escape(title), c["status"], ak, html.escape(c.get("action", "")))]
+        sec.append('<div class="action %s"><b>Action:</b> %s</div>' % (ak, html.escape(c.get("action_detail", ""))))
+        sec.append('<h3>Signal combination (all must be present on the session)</h3><ul class="flags">%s</ul>'
+                   % "".join("<li><code>%s</code></li>" % html.escape(f) for f in c["flags"]))
+        if meta:
+            sec.append('<p class="muted">Draft: location <b>%s</b> · type %s · cohort %s · ticket %s · %s · not created in Dataswan.</p>'
+                       % tuple(html.escape(str(meta.get(k, "–"))) for k in ("location", "telltale_type", "cohort_category", "ticket", "_validated")))
+        sec.append('<details%s><summary>Telltale definition JSON</summary><pre>%s</pre></details>'
+                   % ("" if c["status"] == "live" else " open", html.escape(json.dumps(defn, indent=2))))
+        sec.append('<h3 class="sec">Does it come back? Daily bursts per key, %s → %s</h3>' % (rdays[0], today))
+        sec.append('<p class="muted">%d of %d keys had ≥2 separate bursts, %d episodes in total. %s</p>'
+                   % (len(rec), len(krows), sum(r["n_episodes"] for r in krows), RECUR_INTRO % (fmt(ACTIVE_MIN), SPIKE_X, fmt(ACTIVE_MIN))))
+        sec += recurrence_body(krows, rdays, today, names) if krows else ['<p class="muted">No backfilled history for this combination.</p>']
+        sec.append('<h3 class="sec">Is it still going on? Per-key time series (%d spiking keys)</h3>' % nkeys)
+        sec += body
+        sec.append("</section>")
+        sections.append("\n".join(sec))
+    gen = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    head = ['<!doctype html><html><head><meta charset="utf-8"><title>Spike scan — SOC action pack %s</title><style>%s%s%s%s</style></head><body><div class="viz-root">'
+            % (today, css(), PERKEY_CSS, RECUR_CSS, SOC_CSS),
+            "<h1>Spike scan — telltale action pack</h1>",
+            '<p class="muted">Generated %s. Scan window <b>%s → %s</b> vs 7-day baseline; history back to <b>%s</b> for recurrence; today (%s) so far from hourly data. '
+            'Exact session counts from <code>ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY</code> (Production keys). '
+            '<b>Created</b> = sessions carrying the signal combination; <b>verified</b> = of those, sessions that ended verified — a wide gap means it is being stopped, '
+            'lines on top of each other mean it is getting through.</p>' % (gen, ws, we - dt.timedelta(days=1), rdays[0], today),
+            '<div class="card"><h2 style="margin-top:0">What to do</h2><table class="toc"><tr><th>Telltale</th><th>Status</th><th>Action</th><th class="n">Spiking keys</th>'
+            '<th class="n">Recurring keys</th><th>Ongoing now (last 24h ≥3× baseline)</th></tr>%s</table></div>' % "".join(srows)]
+    disc = json.loads(pathlib.Path(a.discovery).read_text()) if a.discovery else None
+    tail = []
+    if disc:
+        drows = "".join('<tr><td>%s</td><td class="n">%s</td><td>%s</td></tr>'
+                        % ("<br>".join(html.escape(f) for f in d["combo"].split(" + ")), d["keys_spiking"], html.escape(d.get("note", "")))
+                        for d in disc.get("combos", []))
+        tail.append('<section class="combo"><h2 style="margin-top:0">Appendix — how these were found</h2><p class="muted">%s</p>'
+                    '<table><tr><th>Combination</th><th class="n">Keys spiking</th><th>Note</th></tr>%s</table></section>' % (html.escape(disc.get("summary", "")), drows))
+    out = ROOT / "reports" / ("soc_%s.html" % today)
+    doc = "\n".join(head + sections + tail) + '<div id="tip"></div>%s</div></body></html>' % JS
+    out.write_text(doc)
+    (ROOT / "reports" / "soc_latest.html").write_text(doc)
+    print("wrote", out.relative_to(ROOT), "and reports/soc_latest.html")
 
 
 def main():
@@ -758,8 +867,10 @@ def main():
     pk.add_argument("--win-end", required=True); pk.add_argument("--all", action="store_true", help="every key with a >=1k day, not just spiking")
     rc = sp.add_parser("recurrence"); rc.add_argument("--start", required=True); rc.add_argument("--end", required=True, help="exclusive")
     rc.add_argument("--today", help="also show this (partial) day from data/hourly_key_counts.csv")
+    so = sp.add_parser("soc"); so.add_argument("--win-start", required=True); so.add_argument("--win-end", required=True, help="today (exclusive end of full days)")
+    so.add_argument("--recur-start", required=True, help="first day of the recurrence history"); so.add_argument("--discovery")
     a = p.parse_args()
-    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence}[a.cmd](a)
+    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc}[a.cmd](a)
 
 
 if __name__ == "__main__":
