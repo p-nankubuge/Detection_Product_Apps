@@ -8,6 +8,8 @@
   missing --since YYYY-MM-DD      print UTC days with no rows yet (yesterday is the last full day)
   report  --win-start D --win-end D [--discovery discovery.json]
           Writes reports/<win-end - 1 day>.html and reports/latest.html.
+  perkey  --combo ID --win-start D --win-end D [--all]
+          One chart per spiking key (own y-scale) -> reports/<day>_<combo>_per_key.html.
 """
 import argparse, csv, datetime as dt, html, json, pathlib, sys
 from collections import defaultdict
@@ -343,6 +345,91 @@ def cmd_report(a):
     print("wrote reports/%s.html and reports/latest.html" % name)
 
 
+def svg_key_bars(days, vals, totals, base, win_start, uid):
+    """One key, one combo: daily exact sessions on the key's own scale, baseline mean dashed."""
+    W, H, L, R, T, B = 460, 190, 48, 12, 18, 26
+    pw, ph = W - L - R, H - T - B
+    ymax = max(vals + [base, 1]) * 1.15
+    bw = pw / len(days)
+    x = lambda i: L + bw * i
+    y = lambda v: T + ph - ph * v / ymax
+    out = ['<svg viewBox="0 0 %d %d" class="chart" role="img" aria-labelledby="%s-t">' % (W, H, uid),
+           '<title id="%s-t">Daily sessions</title>' % uid]
+    wi = days.index(win_start) if win_start in days else None
+    if wi is not None:
+        out.append('<rect x="%.1f" y="%d" width="%.1f" height="%d" class="win"/>' % (x(wi), T, W - R - x(wi), ph))
+    for f in (0, .5, 1):
+        v = ymax / 1.15 * f
+        out.append('<line x1="%d" x2="%d" y1="%.1f" y2="%.1f" class="grid"/>' % (L, W - R, y(v), y(v)))
+        out.append('<text x="%d" y="%.1f" class="axis" text-anchor="end">%s</text>' % (L - 6, y(v) + 4, fmt(v)))
+    peak_i = max(range(len(vals)), key=lambda i: vals[i])
+    for i, d in enumerate(days):
+        v = vals[i]
+        share = ("%.2f%% of key traffic" % (100.0 * v / totals[i])) if totals[i] else "below 300/day capture floor"
+        tip = "%s · %s sessions · %s" % (d, "{:,}".format(v) if v else "<300", share)
+        if v > 0:
+            out.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" class="seg c0"/>'
+                       % (x(i) + bw * 0.18, y(v), bw * 0.64, max(y(0) - y(v), 1)))
+        out.append('<rect x="%.1f" y="%d" width="%.1f" height="%d" class="hit" data-tip="%s"/>' % (x(i), T, bw, ph, tip))
+        if i % 2 == 0 or i == len(days) - 1:
+            out.append('<text x="%.1f" y="%d" class="axis" text-anchor="middle">%s</text>' % (x(i) + bw / 2, H - 8, d[5:]))
+    if base > 0:
+        out.append('<line x1="%d" x2="%d" y1="%.1f" y2="%.1f" class="baseline"/>' % (L, W - R, y(base), y(base)))
+        out.append('<text x="%d" y="%.1f" class="axis">baseline avg %s</text>' % (L + 4, y(base) - 4, fmt(base)))
+    if vals[peak_i] > 0:
+        out.append('<text x="%.1f" y="%.1f" class="dlabel" text-anchor="middle">%s</text>'
+                   % (x(peak_i) + bw / 2, y(vals[peak_i]) - 5, fmt(vals[peak_i])))
+    out.append("</svg>")
+    return "\n".join(out)
+
+
+def cmd_perkey(a):
+    combos = {c["id"]: c for c in load_combos()}
+    c = combos[a.combo]
+    names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
+    rows = read_counts()
+    ws, we = dt.date.fromisoformat(a.win_start), dt.date.fromisoformat(a.win_end)
+    bs = ws - dt.timedelta(days=7)
+    days = days_between(bs, we)
+    win_days, base_days = days_between(ws, we), days_between(bs, ws)
+    st = combo_stats(c["id"], rows, days, win_days, base_days)
+    tot = defaultdict(dict)
+    for r in rows:
+        tot[r["public_key"]][r["day"]] = int(r["key_total"])
+    keys = [k for k in st if st[k]["spiking"]] if not a.all else [k for k in st if st[k]["peak"] >= ACTIVE_MIN]
+    keys.sort(key=lambda k: -(st[k]["peak"] / max(st[k]["base"], 1)))
+    title = c.get("telltale_name") or c["id"]
+    parts = ['<!doctype html><html><head><meta charset="utf-8"><title>%s per key</title><style>%s'
+             '.baseline{stroke:var(--text-secondary);stroke-width:1.5;stroke-dasharray:4 3}'
+             '.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}'
+             '.kcard{background:var(--surface-2);border-radius:8px;padding:12px 16px}.kcard h3{margin:0;color:var(--text-primary)}'
+             '.kstats{font-size:12px;color:var(--text-secondary);margin:2px 0 6px}</style></head><body><div class="viz-root">' % (html.escape(title), css())]
+    parts.append("<h1>%s — per key</h1>" % html.escape(title))
+    parts.append('<p class="muted">%s<br>Exact daily sessions per key, each on its own scale. Shaded = window %s → %s; dashed = baseline daily mean (%s → %s). '
+                 'Days with no bar were below the 300/day capture floor. Hover a day for sessions and share of the key\'s traffic. '
+                 'Sorted by peak ÷ baseline.</p>' % (" + ".join("<code>%s</code>" % html.escape(f) for f in c["flags"]), ws, we - dt.timedelta(days=1), bs, ws - dt.timedelta(days=1)))
+    parts.append('<div class="kgrid">')
+    for i, k in enumerate(keys):
+        s = st[k]
+        totals = [tot[k].get(d, 0) for d in days]
+        bshare = [s["series"][j] / totals[j] for j, d in enumerate(days) if d in base_days and totals[j]]
+        wshare = [s["series"][j] / totals[j] for j, d in enumerate(days) if d in win_days and totals[j]]
+        ratio = ("%.0f×" % (s["peak"] / s["base"])) if s["base"] >= 1 else "new (no baseline)"
+        stats = "baseline %s/day · window %s/day · peak %s (%s)" % (fmt(s["base"]), fmt(s["win"]), fmt(s["peak"]), ratio)
+        if bshare and wshare:
+            stats += " · share of key traffic %.2f%% → peak %.2f%%" % (100 * sum(bshare) / len(bshare), 100 * max(wshare))
+        n = names.get(k, {})
+        parts.append('<div class="kcard"><h3>%s</h3><div class="kstats">%s · <code>%s</code></div><div class="kstats">%s</div>%s</div>'
+                     % (html.escape(key_label(k, names)), html.escape(n.get("account_name", "")), k, stats,
+                        svg_key_bars(days, s["series"], totals, s["base"], str(ws), "p%d" % i)))
+    parts.append('</div><div id="tip"></div>%s</div></body></html>' % JS)
+    rep = ROOT / "reports"
+    rep.mkdir(exist_ok=True)
+    out = rep / ("%s_%s_per_key.html" % (we - dt.timedelta(days=1), c["id"]))
+    out.write_text("\n".join(parts))
+    print("wrote", out.relative_to(ROOT), "(%d keys)" % len(keys))
+
+
 def main():
     p = argparse.ArgumentParser()
     sp = p.add_subparsers(dest="cmd", required=True)
@@ -350,8 +437,10 @@ def main():
     k = sp.add_parser("keys"); k.add_argument("--names", required=True)
     m = sp.add_parser("missing"); m.add_argument("--since", required=True)
     r = sp.add_parser("report"); r.add_argument("--win-start", required=True); r.add_argument("--win-end", required=True); r.add_argument("--discovery")
+    pk = sp.add_parser("perkey"); pk.add_argument("--combo", required=True); pk.add_argument("--win-start", required=True)
+    pk.add_argument("--win-end", required=True); pk.add_argument("--all", action="store_true", help="every key with a >=1k day, not just spiking")
     a = p.parse_args()
-    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report}[a.cmd](a)
+    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey}[a.cmd](a)
 
 
 if __name__ == "__main__":
