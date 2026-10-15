@@ -1,6 +1,7 @@
 # IP Connection-Type Velocity — SOC Implementation & Support Guide
 
 **Status:** DRAFT for SOC enablement · **Author:** Patricia Nankubuge · **Data as of:** 14–15 Oct 2026
+**Confluence:** https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4771381280
 **Companion to:** [Residential Proxy IP — SOC Implementation & Support Guide](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4707778564)
 
 > Items marked **VERIFY** could not be confirmed from Dataswan, Superset or Confluence.
@@ -41,14 +42,14 @@ and the SOC enablement thread in #C0BHGFL23C3 (2 Oct 2026).
 1. **A steady stream of false-positive tickets and manual overrides.** For about 3 months, SOC kept
    raising IP velocity thresholds by hand. These are the main cases:
 
-   | Customer | Ticket(s) | What happened |
-   | --- | --- | --- |
-   | HP | ESM-5858, CHNGE-4419/4516 | Auto threshold of 45/hr was too low. It was raised twice, then switched to manual. |
-   | Wells Fargo | ESM-6148, CHNGE-4465, ESM-5892, ESM-6544 | Thresholds changed day to day, and the customer wanted stable, controllable values. Switched to manual at 25/hr and 150/day. |
-   | Roblox | ESM-6296, CHNGE-4749/4760 | South-East Asian mobile carriers (Viettel, FPT, VNPT) showed high but legitimate velocity. Login raised to 550/hr and 1500/day. |
-   | AT&T | ESM-6297, CHNGE-4750 | Normal traffic of about 60/hr and 150/day was being caught. |
-   | Coursera | ESM-6291, CHNGE-4772 | A 15/hr threshold was too aggressive during a promotion. |
-   | Bumble, Agoda | ESM-6360, ESM-5631 | FPs on the IP velocity short-term and long-term telltales. |
+| Customer | Ticket(s) | What happened |
+| --- | --- | --- |
+| HP | ESM-5858, CHNGE-4419/4516 | Auto threshold of 45/hr was too low. It was raised twice, then switched to manual. |
+| Wells Fargo | ESM-6148, CHNGE-4465, ESM-5892, ESM-6544 | Thresholds changed day to day, and the customer wanted stable, controllable values. Switched to manual at 25/hr and 150/day. |
+| Roblox | ESM-6296, CHNGE-4749/4760 | South-East Asian mobile carriers (Viettel, FPT, VNPT) showed high but legitimate velocity. Login raised to 550/hr and 1500/day. |
+| AT&T | ESM-6297, CHNGE-4750 | Normal traffic of about 60/hr and 150/day was being caught. |
+| Coursera | ESM-6291, CHNGE-4772 | A 15/hr threshold was too aggressive during a promotion. |
+| Bumble, Agoda | ESM-6360, ESM-5631 | FPs on the IP velocity short-term and long-term telltales. |
 
 2. **The root cause was connection-type blindness.** The auto-thresholder treated every IP the
    same, so one number had to fit residential, CGNAT, corporate NAT and hosting traffic. The Roblox
@@ -59,7 +60,7 @@ and the SOC enablement thread in #C0BHGFL23C3 (2 Oct 2026).
    telltales by hand on AT&T, Air Canada, Anthropic, Base App, Bumble, Citizens, Coinbase, Coursera,
    GroupMe, HP, HelloSign, Roblox, TIAA and Wells Fargo. They don't adapt to changes in traffic. The
    built-in CT thresholds replace them; see the caveat in the
-   [Relationship to the existing IP velocity telltales](#relationship-to-the-existing-ip-velocity-telltales)
+   "Relationship to the existing IP velocity telltales"
    section.
 4. **Other fixes in the same proposal.** These are separate from the CT work:
    - fix the "valley bug" in the circadian threshold picker (DETCORE-3854);
@@ -78,7 +79,7 @@ and the SOC enablement thread in #C0BHGFL23C3 (2 Oct 2026).
 | **Connection type** | Comes from IP Intelligence (`connection_type`). Values: `wifi`, `wired`, `mobile`, `nat`, `satellite`, `dialup`, `absent`. | CT quality depends on the IP-intel classification. A mis-typed IP is compared with the wrong baseline. |
 | **Thresholds** | The detection-apps `automated-thresholds` cron runs daily at **16:00 UTC**. It runs the same circadian model as the global IP threshold, once per (key, CT), over 7 days of `session_setup` data. It writes `{ct: {short_term: T, long_term: 96·T}}` to conf-api → DynamoDB. | Thresholds can change daily. conf-api **replaces the whole map** on each write, so a CT that drops out of a run falls back to the IP-only threshold the next day. |
 | **Fallback** | If a (key, CT) pair has too little traffic, or the learned value is ≤ 10, no CT threshold is written. | The CT ratio and threshold fields are **empty** for those sessions, so the CT telltales cannot fire. Only the legacy IP-only telltales cover that traffic. |
-| **Trust level** | A strong velocity signal that is more precise than IP-only for shared-egress traffic. Like any velocity signal, it should be combined with other signals before hard enforcement. | Use multiplier tiers (1.5x / 2x / 3x) to pick severity. See [Recommended SOC Usage](#recommended-soc-usage). |
+| **Trust level** | A strong velocity signal that is more precise than IP-only for shared-egress traffic. Like any velocity signal, it should be combined with other signals before hard enforcement. | Use multiplier tiers (1.5x / 2x / 3x) to pick severity. See "Recommended SOC Usage". |
 
 > **VERIFY:** the per-CT long-term threshold is written as `96 × short-term`. The global IP
 > long-term threshold is `5 × short-term`. If that is intended, CT long-term thresholds are much
@@ -200,8 +201,8 @@ The 15 Oct Slack reply says THR still needs to promote them and correct some val
 
 Method: Snowflake `events.events_log`, `location = session_setup`, 14 Oct 2026 (UTC). The table
 covers keys with at least 5,000 sessions that day. A session counts as "covered" when
-`rta__ip_connection_type_velocity_short_term_threshold` is populated. The query is in
-[`queries/ip_ct_threshold_coverage.sql`](../queries/ip_ct_threshold_coverage.sql).
+`rta__ip_connection_type_velocity_short_term_threshold` is populated. A live version of this table is the
+[IP CT threshold coverage by key](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/explore/?slice_id=31921) chart on the IP Velocity Connection Type dashboard. It refreshes on yesterday's data.
 
 | Tier | Keys | Meaning |
 | --- | --- | --- |
@@ -398,15 +399,17 @@ Delete per key, and only once the coverage query shows FULL.
    `rta__ip_connection_type_velocity_short_term_threshold` in the session record.
    - Populated: a CT threshold applied to that connection type on that key.
    - Empty: nothing applied, and only `g-ip-velocity-*` could fire.
-2. **For one key:** run [`queries/ip_ct_threshold_coverage.sql`](../queries/ip_ct_threshold_coverage.sql)
-   in Superset SQL Lab (database **Snowflake**, id 14) with the `public_key` filter. It returns:
+2. **For all keys:** open the [IP CT threshold coverage by key](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/explore/?slice_id=31921) chart on the
+   [IP Velocity Connection Type dashboard](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/superset/dashboard/1663/).
+   It covers yesterday's `session_setup` traffic for keys with at least 1,000 sessions, and shows:
    - the coverage tier (FULL / PARTIAL / NONE);
    - which CTs have a threshold;
    - which CTs don't;
    - the IP-only threshold for comparison.
-3. **Across all keys:** run the same query without the key filter. **DECISION:** save it as a
-   Superset chart on the [IP Velocity Connection Type dashboard](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/superset/dashboard/1663/),
-   so SOC has one place to look and doesn't rely on this page's 14 Oct snapshot.
+
+   Filter it by `PUBLIC_KEY` for a single key.
+3. **For one key over a custom window:** run the query in the appendix in Superset SQL Lab
+   (database **Snowflake**). Change the dates and the `public_key` filter.
 4. **Re-check before every change.** The cron rewrites the CT map daily, so coverage can change
    from one day to the next. This is most likely on PARTIAL keys and right after a key is moved
    from manual to auto.
@@ -522,6 +525,76 @@ Delete per key, and only once the coverage query shows FULL.
 - [Proposal: IP Velocity Auto-Thresholding Improvements](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4259348630)
 - [Per-Connection-Type IP Velocity Thresholds Implementation Overview](https://arkoselabs.atlassian.net/wiki/spaces/EN/pages/4320722948)
 - [automated-thresholds (detection-apps)](https://arkoselabs.atlassian.net/wiki/spaces/DE/pages/4770234382)
+- [IP Velocity FP Triage: Connection-Type Analysis Workflow for SOC](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4287430702)
 - [IP Intelligence (RTA) Auto-Thresholds — Enabled vs Disabled — Oct 2026](https://arkoselabs.atlassian.net/wiki/spaces/EN/pages/4748836897)
 
 **Dashboard:** [IP Velocity Connection Type (Superset 1663)](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/superset/dashboard/1663/)
+
+---
+
+# Appendix — coverage query
+
+```sql
+-- IP connection-type (CT) velocity threshold coverage, per key.
+--
+-- Answers: "does this key have connection-type thresholds, and for which
+-- connection types?" A key+CT has a threshold only when detection-apps
+-- (automated-thresholds cron, daily 16:00 UTC) has written one to conf-api.
+-- When it has, detection-hub populates
+-- rta__ip_connection_type_velocity_short_term_threshold on the session.
+-- When it has not, that field (and the CT ratio fields) are empty and the
+-- g-ip-connection-type-velocity-* telltales cannot fire for that session.
+--
+-- Run in Superset SQL Lab against the "Snowflake" database (id 14).
+-- Change the date window and the public_key filter as needed.
+--
+-- coverage_tier:
+--   FULL    >= 90% of sessions have a CT threshold  -> CT telltales cover the key
+--   PARTIAL 1-89%                                   -> CT telltales cover some CTs only;
+--                                                      keep the legacy IP telltales
+--   NONE    0%                                      -> legacy IP telltales only
+
+WITH s AS (
+  SELECT
+    public_key,
+    COALESCE(connection_type, 'absent')                   AS ct,
+    rta__ip_connection_type_velocity_short_term_threshold AS ct_threshold,
+    rta_ip_velocity_short_term_threshold                  AS ip_threshold
+  FROM events.events_log
+  WHERE timestamp >= DATEADD(day, -1, CURRENT_DATE)
+    AND timestamp <  CURRENT_DATE
+    AND location = 'session_setup'
+    -- AND public_key = '<PUBLIC_KEY>'
+)
+SELECT
+  public_key,
+  COUNT(*)                                             AS sessions,
+  COUNT(ct_threshold)                                  AS sessions_with_ct_threshold,
+  ROUND(100 * COUNT(ct_threshold) / COUNT(*), 1)       AS pct_ct_covered,
+  CASE
+    WHEN COUNT(ct_threshold) = 0                 THEN 'NONE'
+    WHEN COUNT(ct_threshold) >= 0.9 * COUNT(*)   THEN 'FULL'
+    ELSE 'PARTIAL'
+  END                                                  AS coverage_tier,
+  LISTAGG(DISTINCT CASE WHEN ct_threshold IS NOT NULL THEN ct END, ',')
+                                                       AS cts_with_threshold,
+  LISTAGG(DISTINCT CASE WHEN ct_threshold IS NULL THEN ct END, ',')
+                                                       AS cts_without_threshold,
+  MAX(ip_threshold)                                    AS ip_short_term_threshold
+FROM s
+GROUP BY 1
+HAVING COUNT(*) >= 5000
+ORDER BY sessions DESC;
+
+-- Per connection type detail for one key (thresholds in force and traffic share):
+--
+-- SELECT COALESCE(connection_type, 'absent') AS ct,
+--        COUNT(*) AS sessions,
+--        MAX(rta__ip_connection_type_velocity_short_term_threshold) AS ct_short_term_threshold,
+--        MAX(rta__ip_connection_type_velocity_long_term_threshold)  AS ct_long_term_threshold,
+--        MAX(rta_ip_velocity_short_term_threshold)                  AS ip_short_term_threshold
+-- FROM events.events_log
+-- WHERE timestamp >= DATEADD(day, -1, CURRENT_DATE) AND timestamp < CURRENT_DATE
+--   AND location = 'session_setup' AND public_key = '<PUBLIC_KEY>'
+-- GROUP BY 1 ORDER BY sessions DESC;
+```

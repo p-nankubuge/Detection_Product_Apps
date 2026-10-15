@@ -9,7 +9,7 @@
 -- g-ip-connection-type-velocity-* telltales cannot fire for that session.
 --
 -- Run in Superset SQL Lab against the "Snowflake" database (id 14).
--- Change the date window and the :pk filter as needed.
+-- Change the date window and the public_key filter as needed.
 --
 -- coverage_tier:
 --   FULL    >= 90% of sessions have a CT threshold  -> CT telltales cover the key
