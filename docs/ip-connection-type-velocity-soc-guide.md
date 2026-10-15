@@ -115,6 +115,61 @@ Things to know before you build custom telltales:
 - Don't delete a key's CHNGE-5096 hand-built CT telltales until the key shows **FULL**.
 - Don't build on the ⚠ suspicion flags above until THR promotes them.
 
+# Rolling it out to accounts
+
+Rollout starts **week of Monday 26 October 2026**, account by account, with TSE.
+
+## Before 26 October (one-off)
+
+| # | Step | Owner |
+| --- | --- | --- |
+| 1 | SOC enablement session held; SOC has this page and the coverage chart | Detection |
+| 2 | THR promotes `wifi-15x`, `dialup-3x` and `long-term-abuse-wired` and adds the `g-global-telltales-enabled` include | THR |
+| 3 | Agree the starting pressure per tier (the CT globals are at risk score 0 today) | Detection + SOC |
+| 4 | Agree the account order (waves below) and a TSE owner per account | Detection + TSE |
+| 5 | Confirm the CHNGE route: one CHNGE per wave, or per account | Detection + SCOPE |
+
+## Proposed waves
+
+| Wave | Week of | Keys | Why this order |
+| --- | --- | --- | --- |
+| 1 | 26 Oct | FULL keys already being tested or with CHNGE-5096 telltales: AT&T Consumer Login (`FAD1C7FA`), Pinterest Login (`F5675B21`), Chime Login (`7BA04117`), Blizzard ROW Login (`CF5C61EE`), Citizens OLB (`4455454D`), Coinbase Sign In (`32FBE3BC`), TIAA Login (`942A102E`) | Known traffic, existing dashboards, SOC already familiar |
+| 2 | 2 Nov | Remaining FULL keys | Same playbook, higher volume |
+| 3 | 9 Nov | PARTIAL keys | Need both sets; more pressure tuning |
+| — | Separate track | NONE keys on manual thresholds (Uber SMS, Roblox, HP, AT&T, theLott, WBD, Microsoft). Wells Fargo stays manual. | Must move back to auto-thresholds first; CT thresholds appear only after that |
+
+**DECISION:** confirm the waves and dates with TSE.
+
+## Steps per account
+
+1. **Check coverage.** Look the key up in the coverage chart: tier, CTs with and without a threshold. Re-check the day before go-live.
+2. **Pre-checks with TSE:**
+   - The key is on IP auto-thresholds and has globals enabled (`g-global-telltales-enabled`).
+   - List the key's existing IP velocity telltales: legacy globals with pressure, custom IP velocity telltales, and any CHNGE-5096 hand-built CT telltales.
+   - Note anything the customer has asked for (fixed thresholds, a known promotion, contractual limits).
+   - Decide whether the customer needs to be told, and who tells them.
+3. **Baseline (last 7 days).** Firing counts, pressure and challenge or block rates for the key's current IP velocity telltales, so the change can be compared.
+4. **Shadow (2–3 days).** Create the key's custom CT telltales from the globals with **no pressure**. Compare their firing with the legacy telltales, and check verify rates, ISPs and connection types on what they catch.
+5. **Raise the CHNGE.** Include:
+   - the CT telltales and tiers to pressure, with values;
+   - what happens to legacy: FULL — may be disabled after validation; PARTIAL and NONE — stays on;
+   - any CHNGE-5096 telltales to delete (FULL keys only);
+   - the rollback (below).
+6. **Go live** in the agreed window: put pressure on the chosen CT tier(s).
+7. **Monitor.** Check at 24 h, 48 h and 7 days: firing, challenge and solve rates, pressure, FP tickets. TSE confirms with the customer where relevant.
+8. **Clean up.** After 7 clean days on a FULL key: disable legacy on the key if agreed, delete its CHNGE-5096 telltales, and mark the account done in the tracker.
+
+**Rollback:** remove pressure from (or disable) the key's custom CT telltales and re-enable anything disabled in step 8. The legacy telltales remain in place throughout, so there is no coverage gap.
+
+## Who does what
+
+| Role | Responsibilities |
+| --- | --- |
+| **Detection** | Coverage data, telltale definitions, pressure guidance, escalations |
+| **SOC** | Shadow telltales, analysis, CHNGE, go-live, monitoring |
+| **TSE** | Account readiness, customer context and comms, post-go-live check with the customer |
+| **THR** | Global telltale promotion and fixes |
+
 ---
 
 # FAQs
@@ -391,7 +446,7 @@ Snapshot only. Use the coverage chart for current values.
 | Keep the 1.5x/2x/3x tiers stacking, or band them like the legacy set? | THR | DECISION |
 | Several keys sit on an IP short-term threshold of exactly 300 (WBD Account Lookup, TVN, CNN, Games PN, Hornet, Alienvault, Citizens CPay, WCA Hosted Login, CTM UK WhiteLabel) — default or manual? | Detection | VERIFY |
 | Microsoft Azure Key 1 has no RTA threshold — edge key or RTA issue? | Detection | VERIFY |
-| Make IP velocity self-selecting: CT telltales on for all keys; add `rta__ip_connection_type_velocity_short_term_threshold NOT_EXISTS` to the legacy `g-ip-velocity-*` telltales so they only fire where no CT threshold applies. Removes the need for SOC to choose per key. | THR / Detection | DECISION |
+| Make IP velocity self-selecting: add `rta__ip_connection_type_velocity_short_term_threshold NOT_EXISTS` to the legacy `g-ip-velocity-*` telltales. The field is set per session, so legacy would fire only on sessions whose connection type has no CT threshold (e.g. wired, NAT, satellite on a key covered only for wifi and mobile). Removes per-key choices and double-firing. Not in scope for this rollout. | THR / Detection | Pending |
 | Context on keys on manual thresholds with no ticket (WBD, theLott, Roblox account exclusion, X, Microsoft) | SOC | Action |
 
 ---
