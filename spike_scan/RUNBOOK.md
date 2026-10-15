@@ -13,7 +13,8 @@ spike_scan/
   sql/03_track_exact_day.sql      tracking — EXACT per-key counts, one UTC day (~20s)
   render.py                   fills SQL templates (dates, vocab, combos)
   spike_report.py             ingest / keys / missing / report (stdlib only)
-  data/daily_key_counts.csv   exact history: day, public_key, key_total, combo_id, sessions
+  data/daily_key_counts.csv   exact all-key history: day, public_key, key_total, combo_id, sessions
+  data/chart_key_counts.csv   exact history for data/chart_keys.txt, with verified counts (per-key charts)
   data/key_names.json         public_key -> key/account name
   data/discovery_<day>.json   each run's discovery shortlist
   telltales/*.json            validated TT drafts (not created in Dataswan)
@@ -36,8 +37,9 @@ Work from the repo root, `cd spike_scan`.
 1. **Backfill exact counts.** `python3 spike_report.py missing --since <D-11>` lists the days that have
    no rows. For each day: `python3 render.py sql/03_track_exact_day.sql --win-start <day> --combos combos.json`,
    run the SQL via `execute_sql` (database_id 14, limit 5), then
-   `python3 spike_report.py ingest --day <day> --packed '<PACKED cell>'`. One day per query — a
-   multi-day exact query times out. If a combo was added since the last run, its history before
+   `python3 spike_report.py ingest --day <day> --packed '<PACKED cell>'`. A full-day all-key scan can
+   exceed the Superset timeout: run `--half am` then `--half pm` (ingest the second with `--add`), and
+   if a half still times out split it with `--hours 12-18` / `--hours 18-24`. If a combo was added since the last run, its history before
    today is missing: re-run 03 for the last 11 days (ingest replaces a day's rows, so it is safe).
 2. **Discovery, step 1.** `python3 render.py sql/01_single_flag_spikes.sql --win-start <D-4> --win-end <D> --limit 40`
    → `execute_sql`. Keep flags with `keys_spiking >= 3`.
@@ -65,11 +67,19 @@ Work from the repo root, `cd spike_scan`.
    **Never call `create_telltale`.** Creating/activating is the analyst's decision.
 6. **Key names.** For any `public_key` in the CSV that is not in `data/key_names.json`, call
    `lookup_key_names` (batch), save the result to a temp JSON and `python3 spike_report.py keys --names <file>`.
-7. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
+7. **Per-key charts (created vs verified).** Spiking keys of every combo go in `data/chart_keys.txt`
+   (add new spiking keys there). For each missing day:
+   `python3 render.py sql/03_track_exact_day.sql --win-start <day> --keys data/chart_keys.txt --combos combos.json`
+   → `execute_sql` → `python3 spike_report.py ingest --chart --day <day> --packed '<cell>'`. The key filter
+   makes a full day run in ~10-25s (no 12h split needed). Then per combo:
+   `python3 spike_report.py perkey --combo <id> --win-start <D-4> --win-end <D>`.
+   Read each chart: created ≫ verified = already mitigated; the lines on top of each other = getting through
+   (call those out first in the summary).
+8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)
    and look at it before committing.
-8. **Commit and push** `spike_scan/` with a message like `spike-scan: <Y> — N combos tracked, M new`.
+9. **Commit and push** `spike_scan/` with a message like `spike-scan: <Y> — N combos tracked, M new`.
 
 ## Known limits
 

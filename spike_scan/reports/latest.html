@@ -24,10 +24,10 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 #tip{position:fixed;pointer-events:none;background:var(--text-primary);color:var(--surface-1);font-size:12px;padding:4px 8px;border-radius:4px;display:none;z-index:9}
 </style></head><body><div class="viz-root">
 <h1>Suspicion-flag spike scan</h1>
-<p class="muted">Window <b>2026-10-10 → 2026-10-14</b> (5 days, UTC) vs 7-day baseline 2026-10-03 → 2026-10-09. Exact session counts from ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY (Production keys). A key is <i>hit</i> on a day at ≥1k sessions; <i>spiking</i> when also ≥3× its baseline daily mean. Generated 2026-10-15 01:51 UTC.</p>
+<p class="muted">Window <b>2026-10-10 → 2026-10-14</b> (5 days, UTC) vs 7-day baseline 2026-10-03 → 2026-10-09. Exact session counts from ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY (Production keys). A key is <i>hit</i> on a day at ≥1k sessions; <i>spiking</i> when also ≥3× its baseline daily mean. Generated 2026-10-15 02:51 UTC.</p>
 <div class="card"><h2>Tracked combinations</h2><table><tr><th>Combination</th><th>Status</th><th class="n">Keys spiking</th><th class="n">Max keys hit/day</th><th class="n">Volume on spiking keys</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl</td><td>live</td><td class="n">9</td><td class="n">11</td><td class="n">77%</td></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease</td><td>candidate</td><td class="n">11</td><td class="n">18</td><td class="n">57%</td></tr><tr><td>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x</td><td>candidate</td><td class="n">12</td><td class="n">12</td><td class="n">91%</td></tr></table></div>
 <div class="card"><h2>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
-<p class="muted"><code>g-page-level-biometrics-empty-or-null</code> + <code>cdn-header-order-ends-with-content-length</code> + <code>country-match-timezone-mismatch-no-vpn</code> + <code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code></p>
+<p class="muted"><code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>g-page-level-biometrics-empty-or-null</code> + <code>cdn-header-order-ends-with-content-length</code> + <code>country-match-timezone-mismatch-no-vpn</code></p>
 <div class="tiles"><div class="tile"><b>9</b><span>keys spiking in window</span></div><div class="tile"><b>11</b><span>max keys hit on one day</span></div><div class="tile"><b>4.2M</b><span>window sessions (exact)</span></div><div class="tile"><b>77%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k0-t">
 <title id="k0-t">Keys hit per day</title>
@@ -190,6 +190,10 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   },
   {
     &quot;operator&quot;: &quot;#INCLUDE&quot;,
+    &quot;value&quot;: &quot;susp-rfc-violation-cdn-header-order-content-type-before-content-length&quot;
+  },
+  {
+    &quot;operator&quot;: &quot;#INCLUDE&quot;,
     &quot;value&quot;: &quot;g-page-level-biometrics-empty-or-null&quot;
   },
   {
@@ -199,15 +203,11 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   {
     &quot;operator&quot;: &quot;#INCLUDE&quot;,
     &quot;value&quot;: &quot;country-match-timezone-mismatch-no-vpn&quot;
-  },
-  {
-    &quot;operator&quot;: &quot;#INCLUDE&quot;,
-    &quot;value&quot;: &quot;susp-rfc-violation-cdn-header-order-content-type-before-content-length&quot;
   }
 ]</pre></details>
 </div>
 <div class="card"><h2>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
-<p class="muted"><code>cdn-header-order-ends-with-content-length</code> + <code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>g--e-country-timezone-mismatch</code> + <code>client-hints-has-not-a-brand-grease</code></p>
+<p class="muted"><code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>cdn-header-order-ends-with-content-length</code> + <code>g--e-country-timezone-mismatch</code> + <code>client-hints-has-not-a-brand-grease</code></p>
 <div class="tiles"><div class="tile"><b>11</b><span>keys spiking in window</span></div><div class="tile"><b>18</b><span>max keys hit on one day</span></div><div class="tile"><b>6M</b><span>window sessions (exact)</span></div><div class="tile"><b>57%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k1-t">
 <title id="k1-t">Keys hit per day</title>

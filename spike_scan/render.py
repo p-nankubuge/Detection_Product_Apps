@@ -17,6 +17,9 @@ p.add_argument("--win-end", help="exclusive (defaults to win-start + 1 day)")
 p.add_argument("--vocab", help="file with one flag per line")
 p.add_argument("--max-arity", default="3")
 p.add_argument("--limit", default="25")
+p.add_argument("--half", choices=["am", "pm"], help="03_track_exact_day: 00-12h or 12-24h UTC")
+p.add_argument("--hours", help="03_track_exact_day: custom UTC hour slice, e.g. 12-18 (use when a half times out)")
+p.add_argument("--keys", help="03_track_exact_day: file with one public_key per line (per-key charts)")
 p.add_argument("--combos", help="combos.json (03_track_exact_day); uses --win-start as the day")
 a = p.parse_args()
 
@@ -37,15 +40,31 @@ if a.vocab:
 if a.combos:
     import json
     combos = json.loads(pathlib.Path(a.combos).read_text())["combos"]
-    cols = []
+    cols, bools = [], []
     for i, c in enumerate(combos):
         cond = " AND ".join("ARRAY_CONTAINS('%s'::VARIANT, flags)" % f for f in c["flags"])
-        cols.append("COUNT_IF(%s) AS c%d" % (cond, i))
+        bools.append("(%s) AS b%d" % (cond, i))
+        cols.append("COUNT_IF(b%d) AS c%d" % (i, i))
+        cols.append("COUNT_IF(b%d AND verified) AS v%d" % (i, i))
+    vals["anchors"] = " OR ".join(sorted({"ARRAY_CONTAINS('%s'::VARIANT, SUSPICION_FLAGS::ARRAY)" % c["flags"][0] for c in combos}))
+    vals["combo_bools"] = ",\n         ".join(bools)
     vals["combo_cols"] = ",\n         ".join(cols)
     vals["combo_max"] = ", ".join("c%d" % i for i in range(len(combos))) + (", 0" if len(combos) == 1 else "")
-    vals["combo_concat"] = " || ',' || ".join("c%d" % i for i in range(len(combos)))
+    vals["combo_concat"] = " || ',' || ".join("c%d || ',' || v%d" % (i, i) for i in range(len(combos)))
     vals["day"] = a.win_start
-    vals["next_day"] = str(ws + dt.timedelta(days=1))
+    vals["key_filter"], vals["min_sessions"] = "", "150"
+    if a.keys:
+        ks = [l.strip() for l in pathlib.Path(a.keys).read_text().splitlines() if l.strip()]
+        vals["key_filter"] = "\n    AND PUBLIC_KEY IN (%s)" % ",".join("'%s'" % k for k in ks)
+        vals["min_sessions"] = "1"
+    nd = str(ws + dt.timedelta(days=1))
+    if a.hours:
+        h0, h1 = (int(x) for x in a.hours.split("-"))
+        vals["ts_from"] = "%s %02d:00:00" % (a.win_start, h0)
+        vals["ts_to"] = nd if h1 == 24 else "%s %02d:00:00" % (a.win_start, h1)
+    else:
+      vals["ts_from"], vals["ts_to"] = {None: (a.win_start, nd), "am": (a.win_start, a.win_start + " 12:00:00"),
+                                      "pm": (a.win_start + " 12:00:00", nd)}[a.half]
 
 sql = "\n".join(l for l in pathlib.Path(a.template).read_text().splitlines()
                 if not l.lstrip().startswith("--"))

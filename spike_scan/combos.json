@@ -1,5 +1,5 @@
 {
-  "_doc": "Tracked flag combinations. The daily job counts each one exactly (unsampled) per key per day and appends to data/daily_key_counts.csv. status: live = TT exists in Dataswan; candidate = drafted, not created; Add new combos from the discovery scan here.",
+  "_doc": "Tracked flag combinations. The daily job counts each one exactly (unsampled) per key per day and appends to data/daily_key_counts.csv. status: live = TT exists in Dataswan; candidate = drafted, not created; Add new combos from the discovery scan here. The FIRST flag of each combo is the pre-filter anchor in 03_track_exact_day.sql: it must be a suspicion_flags-type flag (it is matched against SUSPICION_FLAGS only) and should be the rarest one.",
   "combos": [
     {
       "id": "pagebio_ends_cl_tz_novpn_ct_before_cl",
@@ -7,10 +7,10 @@
       "status": "live",
       "found": "2026-10-15",
       "flags": [
+        "susp-rfc-violation-cdn-header-order-content-type-before-content-length",
         "g-page-level-biometrics-empty-or-null",
         "cdn-header-order-ends-with-content-length",
-        "country-match-timezone-mismatch-no-vpn",
-        "susp-rfc-violation-cdn-header-order-content-type-before-content-length"
+        "country-match-timezone-mismatch-no-vpn"
       ]
     },
     {
@@ -19,8 +19,8 @@
       "status": "candidate",
       "found": "2026-10-15",
       "flags": [
-        "cdn-header-order-ends-with-content-length",
         "susp-rfc-violation-cdn-header-order-content-type-before-content-length",
+        "cdn-header-order-ends-with-content-length",
         "g--e-country-timezone-mismatch",
         "client-hints-has-not-a-brand-grease"
       ],
