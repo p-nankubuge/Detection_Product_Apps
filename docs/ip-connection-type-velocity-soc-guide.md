@@ -3,7 +3,7 @@
 **Status:** DRAFT for SOC enablement · **Author:** Patricia Nankubuge · **Data as of:** 15 Oct 2026
 **Confluence:** https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4771381280
 **Companion to:** [Residential Proxy IP — SOC Implementation & Support Guide](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4707778564)
-**Live key list:** [IP CT threshold coverage by key — account, key, which TTs to use](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/explore/?slice_id=31922) (on the [IP Velocity Connection Type dashboard](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/superset/dashboard/1663/))
+**Live key list:** [IP CT threshold coverage by key — account, key, which TTs to use](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/explore/?slice_id=31923) (on the [IP Velocity Connection Type dashboard](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/superset/dashboard/1663/))
 
 ---
 
@@ -40,7 +40,7 @@ Background: [Proposal: IP Velocity Auto-Thresholding Improvements](https://arkos
 
 ## Step 1 — Look up the key
 
-Open the [coverage chart](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/explore/?slice_id=31922)
+Open the [coverage chart](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/explore/?slice_id=31923)
 and search for the account, key name or public key. It refreshes on yesterday's traffic and shows,
 for each key:
 
@@ -57,15 +57,13 @@ for each key:
 | CT coverage | Meaning | Use | Don't use |
 | --- | --- | --- | --- |
 | **FULL** | 90% or more of the key's sessions have a CT threshold | **CT telltales** (`g-ip-connection-type-velocity-*`). The legacy IP velocity telltales can be disabled for the key once the CT telltales are validated. | — |
-| **PARTIAL** | Some connection types have a threshold, others don't | **Legacy IP velocity telltales** (`g-ip-velocity-*`, short-term IP threshold) | **Exclude the CT telltales** for this key. Don't mix the two sets. |
-| **NONE** | No connection type has a threshold | **Legacy IP velocity telltales** | CT telltales (they cannot fire) |
+| **PARTIAL** | Some connection types have a threshold, others don't | **Both:** CT telltales **and** legacy IP velocity telltales (`g-ip-velocity-*`). The CT telltales fire on the connection types that have a threshold; the legacy telltales cover the rest. | Don't disable the legacy telltales on this key. |
+| **NONE** | No connection type has a threshold | **Legacy IP velocity telltales** only | CT telltales (they cannot fire) |
 
-Why PARTIAL keys stay on the legacy set: on those keys the CT telltales would only see part of the
-traffic, so mixing them with the legacy telltales gives inconsistent coverage and double-firing.
-Keeping the whole key on one threshold set is simpler to reason about and to explain to the
-customer.
+On PARTIAL keys, a session on a covered connection type can fire both a CT telltale and a legacy
+telltale. Allow for that when you set pressure, so the two don't add up to more than you intend.
 
-## Step 3 — Pick the CT telltales (FULL keys only)
+## Step 3 — Pick the CT telltales (FULL and PARTIAL keys)
 
 `...` below = `g-ip-connection-type-velocity-short-term-abuse`. Names are exactly as they are in
 Dataswan.
@@ -91,7 +89,7 @@ Things to know before you build custom telltales:
   stop working.
 - They only evaluate at `session_setup` and `game_verify`, and only on keys with globals enabled.
 
-## Step 4 — Suggested enforcement posture (FULL keys)
+## Step 4 — Suggested enforcement posture (where a CT threshold applies)
 
 | Situation | Recommended posture |
 | --- | --- |
@@ -112,7 +110,8 @@ Things to know before you build custom telltales:
 
 ## Don'ts
 
-- Don't add CT telltales to PARTIAL or NONE keys.
+- Don't rely on CT telltales for NONE keys; they cannot fire there.
+- Don't disable the legacy IP velocity telltales on PARTIAL or NONE keys.
 - Don't delete a key's CHNGE-5096 hand-built CT telltales until the key shows **FULL**.
 - Don't build on the ⚠ suspicion flags above until THR promotes them.
 
@@ -122,7 +121,9 @@ Things to know before you build custom telltales:
 
 ## How do I know which public keys have connection-type thresholds, and for which connection types?
 
-Use the [coverage chart](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/explore/?slice_id=31922).
+Use the [coverage chart](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/explore/?slice_id=31923),
+or run the saved SQL Lab query [IP CT threshold coverage by key](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/sqllab?savedQueryId=1068)
+(uncomment the account or public key filter to narrow it).
 It lists every key with at least 1,000 `session_setup` sessions yesterday, with account, key name,
 coverage tier, which telltales to use, and the connection types with and without a threshold.
 Filter by account, key name or public key.
@@ -146,8 +147,9 @@ the same day.
 
 ## Which telltales should I use if a key has some connection types but not others?
 
-The legacy IP velocity telltales (`g-ip-velocity-*`, short-term IP threshold), and **exclude the CT
-telltales** for that key. See Step 2.
+**Both.** Use the CT telltales and keep the legacy IP velocity telltales (`g-ip-velocity-*`). The CT
+telltales fire where a connection-type threshold exists; the legacy telltales cover the connection
+types that don't have one. See Step 2.
 
 ## Why do some keys have no connection-type threshold at all?
 
@@ -287,9 +289,10 @@ investigation.
 
 ## A customer reports FPs on mobile or NAT traffic. What do I do?
 
-On a FULL key, check which tier fired. For shared-egress connection types, put pressure on 2x or 3x
-only, or use the `sf-shared-egress-carveout` variant once promoted. On PARTIAL or NONE keys, this is
-a legacy IP velocity question; follow the [IP Velocity FP Triage workflow](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4287430702).
+If a CT telltale fired, check which tier. For shared-egress connection types, put pressure on 2x or
+3x only, or use the `sf-shared-egress-carveout` variant once promoted. If a legacy telltale fired
+(NONE keys, or uncovered connection types on PARTIAL keys), follow the
+[IP Velocity FP Triage workflow](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4287430702).
 
 ## The CT threshold looks wrong or too low. What do I do?
 
@@ -335,7 +338,7 @@ Snapshot only. Use the coverage chart for current values.
 | Microsoft | Group Me - Registration Production - Key 4 | `49D02870` | 44,486 | 90% | wifi, wired |
 | TriNet | Zenefits - Login - Production - Key 1 | `FB46D6FD` | 18,432 | 91% | wifi, wired |
 
-**PARTIAL (39 keys with at least 5,000 sessions) — use the legacy IP velocity telltales:**
+**PARTIAL (39 keys with at least 5,000 sessions) — use CT and legacy IP velocity telltales:**
 
 | Account | Key | PK | Sessions (14 Oct) | Covered | CTs with threshold |
 | --- | --- | --- | --- | --- | --- |
@@ -388,6 +391,7 @@ Snapshot only. Use the coverage chart for current values.
 | Keep the 1.5x/2x/3x tiers stacking, or band them like the legacy set? | THR | DECISION |
 | Several keys sit on an IP short-term threshold of exactly 300 (WBD Account Lookup, TVN, CNN, Games PN, Hornet, Alienvault, Citizens CPay, WCA Hosted Login, CTM UK WhiteLabel) — default or manual? | Detection | VERIFY |
 | Microsoft Azure Key 1 has no RTA threshold — edge key or RTA issue? | Detection | VERIFY |
+| Make IP velocity self-selecting: CT telltales on for all keys; add `rta__ip_connection_type_velocity_short_term_threshold NOT_EXISTS` to the legacy `g-ip-velocity-*` telltales so they only fire where no CT threshold applies. Removes the need for SOC to choose per key. | THR / Detection | DECISION |
 | Context on keys on manual thresholds with no ticket (WBD, theLott, Roblox account exclusion, X, Microsoft) | SOC | Action |
 
 ---
@@ -413,7 +417,7 @@ Snapshot only. Use the coverage chart for current values.
 
 # Appendix — coverage query
 
-Same SQL as the coverage chart. Run in Superset SQL Lab (database **Snowflake**).
+Same SQL as the coverage chart and the [saved SQL Lab query](https://superset-snowflake-green.production-blue.us-east-2.internal.services.aws.arkoselabs.com/sqllab?savedQueryId=1068). Run in Superset SQL Lab (database **Snowflake**).
 
 ```sql
 -- IP connection-type (CT) velocity threshold coverage, per key.
@@ -426,78 +430,62 @@ Same SQL as the coverage chart. Run in Superset SQL Lab (database **Snowflake**)
 -- has not, that field (and the CT ratio fields) are empty and the
 -- g-ip-connection-type-velocity-* telltales cannot fire for that session.
 --
--- Same SQL as the Superset dataset "ip_ct_threshold_coverage_by_key_v2" behind the
--- "IP CT threshold coverage by key" chart (id 31922, dashboard 1663).
+-- Same SQL as the Superset saved query 1068 and the dataset
+-- "ip_ct_threshold_coverage_by_key_v3" behind chart 31923 (dashboard 1663).
+-- Written without CTEs because Superset could not wrap the WITH version.
 -- Run in Superset SQL Lab against the "Snowflake" database (id 14).
--- Change the date window, or uncomment the public_key filter, as needed.
+-- Change the date window, or uncomment a filter, as needed.
 --
 -- coverage_tier / use_telltales:
---   FULL    >= 90% of sessions have a CT threshold -> use the CT telltales
---   PARTIAL 1-89%                                  -> use the legacy IP velocity telltales,
---                                                     exclude the CT telltales
---   NONE    0%                                     -> use the legacy IP velocity telltales
+--   FULL    >= 90% of sessions have a CT threshold -> CT telltales (legacy optional)
+--   PARTIAL 1-89%                                  -> CT telltales + legacy IP velocity telltales
+--   NONE    0%                                     -> legacy IP velocity telltales only
 
-WITH s AS (
-  SELECT
-    public_key,
-    COALESCE(connection_type, 'absent')                   AS ct,
-    rta__ip_connection_type_velocity_short_term_threshold AS ct_threshold,
-    rta_ip_velocity_short_term_threshold                  AS ip_threshold
-  FROM events.events_log
-  WHERE timestamp >= DATEADD(day, -1, CURRENT_DATE)
-    AND timestamp <  CURRENT_DATE
-    AND location = 'session_setup'
-    AND public_key IS NOT NULL
-    -- AND public_key = '<PUBLIC_KEY>'
-),
-per_ct AS (
-  SELECT
-    public_key,
-    ct,
-    COUNT(*)            AS sessions,
-    COUNT(ct_threshold) AS sessions_with_ct_threshold,
-    MAX(ip_threshold)   AS ip_threshold
-  FROM s
-  GROUP BY 1, 2
-),
-agg AS (
-  SELECT
-    public_key,
-    SUM(sessions)                                                        AS sessions,
-    SUM(sessions_with_ct_threshold)                                      AS sessions_with_ct_threshold,
-    ROUND(100 * SUM(sessions_with_ct_threshold) / SUM(sessions), 1)      AS pct_ct_covered,
-    CASE
-      WHEN SUM(sessions_with_ct_threshold) = 0                 THEN 'NONE'
-      WHEN SUM(sessions_with_ct_threshold) >= 0.9 * SUM(sessions) THEN 'FULL'
-      ELSE 'PARTIAL'
-    END                                                                  AS coverage_tier,
-    LISTAGG(CASE WHEN sessions_with_ct_threshold > 0 THEN ct END, ', ')
-      WITHIN GROUP (ORDER BY sessions DESC)                              AS cts_with_threshold,
-    LISTAGG(CASE WHEN sessions_with_ct_threshold = 0 THEN ct END, ', ')
-      WITHIN GROUP (ORDER BY sessions DESC)                              AS cts_without_threshold,
-    MAX(ip_threshold)                                                    AS ip_short_term_threshold
-  FROM per_ct
-  GROUP BY 1
-  HAVING SUM(sessions) >= 1000
-)
 SELECT
   k.account_name,
-  k.name                    AS key_name,
+  k.name AS key_name,
   a.public_key,
-  k.key_type_name           AS key_type,
   a.coverage_tier,
-  CASE WHEN a.coverage_tier = 'FULL'
-       THEN 'Connection-type TTs'
-       ELSE 'Legacy IP velocity TTs (exclude CT TTs)'
-  END                       AS use_telltales,
+  CASE WHEN a.coverage_tier = 'NONE' THEN 'Legacy IP velocity TTs only'
+       WHEN a.coverage_tier = 'PARTIAL' THEN 'CT TTs + legacy IP velocity TTs'
+       ELSE 'CT TTs (legacy optional)' END AS use_telltales,
   a.pct_ct_covered,
   a.sessions,
-  a.sessions_with_ct_threshold,
   a.cts_with_threshold,
   a.cts_without_threshold,
-  a.ip_short_term_threshold
-FROM agg a
+  a.ip_short_term_threshold,
+  k.key_type_name AS key_type
+FROM (
+  SELECT
+    p.public_key,
+    SUM(p.sessions) AS sessions,
+    ROUND(100 * SUM(p.sessions_with_ct_threshold) / SUM(p.sessions), 1) AS pct_ct_covered,
+    CASE WHEN SUM(p.sessions_with_ct_threshold) = 0 THEN 'NONE'
+         WHEN SUM(p.sessions_with_ct_threshold) >= 0.9 * SUM(p.sessions) THEN 'FULL'
+         ELSE 'PARTIAL' END AS coverage_tier,
+    LISTAGG(CASE WHEN p.sessions_with_ct_threshold > 0 THEN p.ct END, ', ') WITHIN GROUP (ORDER BY p.sessions DESC) AS cts_with_threshold,
+    LISTAGG(CASE WHEN p.sessions_with_ct_threshold = 0 THEN p.ct END, ', ') WITHIN GROUP (ORDER BY p.sessions DESC) AS cts_without_threshold,
+    MAX(p.ip_threshold) AS ip_short_term_threshold
+  FROM (
+    SELECT
+      public_key,
+      COALESCE(connection_type, 'absent') AS ct,
+      COUNT(*) AS sessions,
+      COUNT(rta__ip_connection_type_velocity_short_term_threshold) AS sessions_with_ct_threshold,
+      MAX(rta_ip_velocity_short_term_threshold) AS ip_threshold
+    FROM events.events_log
+    WHERE timestamp >= DATEADD(day, -1, CURRENT_DATE)
+      AND timestamp < CURRENT_DATE
+      AND location = 'session_setup'
+      AND public_key IS NOT NULL
+      -- AND public_key = '<PUBLIC_KEY>'
+    GROUP BY 1, 2
+  ) p
+  GROUP BY 1
+  HAVING SUM(p.sessions) >= 1000
+) a
 LEFT JOIN dataswan.customer_keys k
   ON UPPER(k.public_key) = UPPER(a.public_key)
+-- WHERE k.account_name ILIKE '%pinterest%'
 ORDER BY a.sessions DESC
 ```
