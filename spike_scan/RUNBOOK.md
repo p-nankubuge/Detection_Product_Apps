@@ -75,6 +75,11 @@ Work from the repo root, `cd spike_scan`.
    `python3 spike_report.py perkey --combo <id> --win-start <D-4> --win-end <D>`.
    Read each chart: created ≫ verified = already mitigated; the lines on top of each other = getting through
    (call those out first in the summary).
+   **Still ongoing?** For yesterday and today-so-far, run `sql/05_hourly_by_key.sql` (same `--keys`/`--combos`
+   flags, one day per query) and save with `spike_report.py hourly --day <day> --packed '<cell>'`, then re-run
+   `perkey`. Each key gets an hourly panel and a status from the last 24 complete hours vs its baseline
+   daily mean: ongoing (≥3×), elevated (1.5–3×), subsided. The newest hour is dropped as partial. Lead the
+   summary with keys that are ongoing AND getting through (high verified share).
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)

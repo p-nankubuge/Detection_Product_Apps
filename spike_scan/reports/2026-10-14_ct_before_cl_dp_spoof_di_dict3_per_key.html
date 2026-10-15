@@ -22,12 +22,13 @@ table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:4px 8px;
 pre{background:var(--surface-1);border-radius:6px;padding:10px;overflow:auto;font-size:12px}
 details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 #tip{position:fixed;pointer-events:none;background:var(--text-primary);color:var(--surface-1);font-size:12px;padding:4px 8px;border-radius:4px;display:none;z-index:9}
-.baseline{stroke:var(--text-secondary);stroke-width:1.5;stroke-dasharray:4 3}.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}.kcard{background:var(--surface-2);border-radius:8px;padding:12px 16px}.kcard h3{margin:0;color:var(--text-primary)}.kstats{font-size:12px;color:var(--text-secondary);margin:2px 0 6px}.kstats b{color:var(--text-primary)}.tag{font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid var(--grid);margin-left:6px;color:var(--text-secondary)}</style></head><body><div class="viz-root">
+.baseline{stroke:var(--text-secondary);stroke-width:1.5;stroke-dasharray:4 3}.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}.kcard{background:var(--surface-2);border-radius:8px;padding:12px 16px}.kcard h3{margin:0;color:var(--text-primary)}.kstats{font-size:12px;color:var(--text-secondary);margin:2px 0 6px}.kstats b{color:var(--text-primary)}.tag{font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid var(--grid);margin-left:6px;color:var(--text-secondary)}.tag.ongoing{border-color:var(--text-primary);color:var(--text-primary);font-weight:600}.sub{font-size:11px;color:var(--text-muted);margin:8px 0 0}</style></head><body><div class="viz-root">
 <h1>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x — per key</h1>
 <p class="muted"><code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>g-device-parameter-spoofing</code> + <code>g-di-dict-3-match-short-term-threshold-exceeded-1x</code><br>Exact daily sessions per key carrying this combination, each chart on its own scale. <b>Created</b> = sessions with the signal; <b>verified</b> = of those, sessions that ended verified (<code>SESSIONS_VERIFIED &gt; 0</code>). A wide gap means the traffic is already being stopped; lines on top of each other mean it is getting through. Shaded = window 2026-10-10 → 2026-10-14; dashed = baseline daily mean of created (2026-10-03 → 2026-10-09). Hover a day for numbers. Sorted by peak ÷ baseline.</p>
+<div class="card"><b>Status as of 2026-10-15 01:00 UTC</b> — sessions with the signal in the last 24 complete hours vs the key's baseline daily mean (a rolling day, so daily-cycle attacks are not mistaken for finished)<br><b>Ongoing</b> (≥3× baseline): Tinder - Production - PreSMS - Key 3 (11.9k in last 24h vs 0/day), Adobe - Commerce - Production - Key 3 (5.3k in last 24h vs 49/day), TIAA - Login - Production Key 1 (3.2k in last 24h vs 447/day), Chime - Production - Key 2 - Registration (5.8k in last 24h vs 623/day), Roblox Signup - Key 2 (127.3k in last 24h vs 21.6k/day), AT&amp;T - Consumer Login Web - Production - Key 3 (4.1k in last 24h vs 1k/day)<br><b>Elevated</b> (1.5–3×): Adobe - Sign-in - Production - Key 5 (1.7k in last 24h vs 749/day)<br><b>Subsided</b>: Roblox - Prod - Game Join - Key 6 (0 in last 24h vs 1/day), Airbnb - Account Lookup - Production Key 6 (0 in last 24h vs 482/day), Microsoft - Identity - Account Signup - Production - Key 2 (0 in last 24h vs 2/day), Adobe - ARP FF - Production - Key 8 (15.7k in last 24h vs 17.4k/day), Roblox - Production - Login - Key 1 (1.1k in last 24h vs 16.9k/day)</div>
 <div class="legend"><span class="lg"><i class="sw s1"></i>sessions created (signal fired)</span><span class="lg"><i class="sw s2"></i>sessions verified</span></div>
 <div class="kgrid">
-<div class="kcard"><h3>Tinder - Production - PreSMS - Key 3<span class="tag">mostly blocked</span></h3><div class="kstats">Tinder · <code>B5B07C8C-F93F-44A8-A353-4A47B8AD5238</code></div><div class="kstats">baseline 0/day · window 2.4k/day · peak 11.9k (new (no baseline))</div><div class="kstats">window verified: <b>0 of 11,896 (0%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p0-t">
+<div class="kcard"><h3>Tinder - Production - PreSMS - Key 3<span class="tag ongoing">ongoing</span><span class="tag">mostly blocked</span></h3><div class="kstats">Tinder · <code>B5B07C8C-F93F-44A8-A353-4A47B8AD5238</code></div><div class="kstats">baseline 0/day · window 2.4k/day · peak 11.9k (new (no baseline))</div><div class="kstats">window verified: <b>0 of 11,896 (0%)</b> · last 24h: <b>11.9k</b> · last 6h: 0/h vs baseline 0/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p0-t">
 <title id="p0-t">Sessions created vs verified per day</title>
 <rect x="263.1" y="18" width="148.9" height="156" class="win"/>
 <line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
@@ -83,186 +84,52 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 0 · verified 0 (–)"/>
 <rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 0 · verified 0 (–)"/>
 <rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 11,896 · verified 0 (0%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h0-t">
+<title id="h0-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">3k</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">6k</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,86.2 208.2,105.7 222.7,124.3 237.3,97.9 251.8,123.0 266.4,123.3 281.0,126.0 295.5,126.0 310.1,28.6 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s1"/>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s2"/>
+<text x="418.0" y="130.0" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 0 · verified 0"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 0 · verified 0"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 0 · verified 0"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 0 · verified 0"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 0 · verified 0"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 0 · verified 0"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 0 · verified 0"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 0 · verified 0"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 0 · verified 0"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 0 · verified 0"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 2,450 · verified 0"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 1,254 · verified 0"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 106 · verified 0"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 1,734 · verified 0"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 186 · verified 0"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 164 · verified 0"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 0 · verified 0"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 0 · verified 0"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 6,002 · verified 0"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 0 · verified 0"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 0 · verified 0"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 0 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 0 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 0 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 0 · verified 0"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 0 · verified 0"/>
 </svg></div>
-<div class="kcard"><h3>Roblox - Prod - Game Join - Key 6<span class="tag">mostly blocked</span></h3><div class="kstats">Roblox Corporation · <code>CC30DB96-0C88-4DEB-86E5-6601927ACBB4</code></div><div class="kstats">baseline 1/day · window 1.9k/day · peak 6.8k (5258×)</div><div class="kstats">window verified: <b>8 of 9,713 (0%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p1-t">
+<div class="kcard"><h3>Adobe - Commerce - Production - Key 3<span class="tag ongoing">ongoing</span><span class="tag">mostly blocked</span></h3><div class="kstats">Adobe · <code>AD73B601-F0A9-459E-B619-838E01BA7EDB</code></div><div class="kstats">baseline 49/day · window 1.1k/day · peak 5.1k (102×)</div><div class="kstats">window verified: <b>197 of 5,331 (4%)</b> · last 24h: <b>5.3k</b> · last 6h: 224/h vs baseline 2/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p1-t">
 <title id="p1-t">Sessions created vs verified per day</title>
-<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
-<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
-<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
-<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
-<text x="42" y="110.2" class="axis" text-anchor="end">3.4k</text>
-<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
-<text x="42" y="42.3" class="axis" text-anchor="end">6.8k</text>
-<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
-<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
-<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
-<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
-<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
-<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
-<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
-<line x1="48" x2="412" y1="174.0" y2="174.0" class="baseline"/>
-<text x="52" y="170.0" class="axis">baseline avg 1</text>
-<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,174.0 246.5,173.8 279.6,141.7 312.7,148.0 345.8,38.3 378.9,173.1 412.0,174.0" class="line s1"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="114.2" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="147.3" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="180.4" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="213.5" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="246.5" cy="173.8" r="3.5" class="dot s1"/>
-<circle cx="279.6" cy="141.7" r="3.5" class="dot s1"/>
-<circle cx="312.7" cy="148.0" r="3.5" class="dot s1"/>
-<circle cx="345.8" cy="38.3" r="3.5" class="dot s1"/>
-<circle cx="378.9" cy="173.1" r="3.5" class="dot s1"/>
-<circle cx="412.0" cy="174.0" r="3.5" class="dot s1"/>
-<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,174.0 246.5,173.8 279.6,173.9 312.7,174.0 345.8,174.0 378.9,174.0 412.0,174.0" class="line s2"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="114.2" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="147.3" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="180.4" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="213.5" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="246.5" cy="173.8" r="3.5" class="dot s2"/>
-<circle cx="279.6" cy="173.9" r="3.5" class="dot s2"/>
-<circle cx="312.7" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="345.8" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="378.9" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
-<text x="418.0" y="178.0" class="axis">created</text>
-<text x="418.0" y="190.0" class="axis">verified</text>
-<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
-<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
-<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 0 · verified 0 (–)"/>
-<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 0 · verified 0 (–)"/>
-<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 0 · verified 0 (–)"/>
-<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 0 · verified 0 (–)"/>
-<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 9 · verified 8 (89%)"/>
-<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 1,608 · verified 7 (0%)"/>
-<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 1,298 · verified 0 (0%)"/>
-<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 6,760 · verified 1 (0%)"/>
-<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 47 · verified 0 (0%)"/>
-<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 0 · verified 0 (–)"/>
-</svg></div>
-<div class="kcard"><h3>Airbnb - Account Lookup - Production Key 6<span class="tag">mostly blocked</span></h3><div class="kstats">Airbnb Inc. · <code>513F48D7-3DCD-468D-8557-EFF418CF794D</code></div><div class="kstats">baseline 482/day · window 207.8k/day · peak 598.6k (1241×)</div><div class="kstats">window verified: <b>435 of 1,039,197 (0%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p2-t">
-<title id="p2-t">Sessions created vs verified per day</title>
-<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
-<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
-<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
-<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
-<text x="42" y="110.2" class="axis" text-anchor="end">299.3k</text>
-<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
-<text x="42" y="42.3" class="axis" text-anchor="end">598.6k</text>
-<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
-<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
-<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
-<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
-<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
-<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
-<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
-<line x1="48" x2="412" y1="173.9" y2="173.9" class="baseline"/>
-<text x="52" y="169.9" class="axis">baseline avg 482</text>
-<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,173.4 246.5,173.8 279.6,78.7 312.7,38.3 345.8,169.4 378.9,174.0 412.0,174.0" class="line s1"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="114.2" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="147.3" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="180.4" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="213.5" cy="173.4" r="3.5" class="dot s1"/>
-<circle cx="246.5" cy="173.8" r="3.5" class="dot s1"/>
-<circle cx="279.6" cy="78.7" r="3.5" class="dot s1"/>
-<circle cx="312.7" cy="38.3" r="3.5" class="dot s1"/>
-<circle cx="345.8" cy="169.4" r="3.5" class="dot s1"/>
-<circle cx="378.9" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="412.0" cy="174.0" r="3.5" class="dot s1"/>
-<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,173.9 246.5,174.0 279.6,174.0 312.7,173.9 345.8,174.0 378.9,174.0 412.0,174.0" class="line s2"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="114.2" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="147.3" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="180.4" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="213.5" cy="173.9" r="3.5" class="dot s2"/>
-<circle cx="246.5" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="279.6" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="312.7" cy="173.9" r="3.5" class="dot s2"/>
-<circle cx="345.8" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="378.9" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
-<text x="418.0" y="178.0" class="axis">created</text>
-<text x="418.0" y="190.0" class="axis">verified</text>
-<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
-<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
-<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 0 · verified 0 (–)"/>
-<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 16 · verified 11 (69%)"/>
-<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 0 · verified 0 (–)"/>
-<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 2,509 · verified 246 (10%)"/>
-<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 850 · verified 144 (17%)"/>
-<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 420,345 · verified 0 (0%)"/>
-<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 598,578 · verified 331 (0%)"/>
-<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 20,244 · verified 92 (0%)"/>
-<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 30 · verified 12 (40%)"/>
-<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 0 · verified 0 (–)"/>
-</svg></div>
-<div class="kcard"><h3>Microsoft - Identity - Account Signup - Production - Key 2<span class="tag">mostly blocked</span></h3><div class="kstats">Microsoft - Identity · <code>B7D8911C-5CC8-A9A3-35B0-554ACEE604DA</code></div><div class="kstats">baseline 2/day · window 585/day · peak 1.3k (530×)</div><div class="kstats">window verified: <b>0 of 2,926 (0%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p3-t">
-<title id="p3-t">Sessions created vs verified per day</title>
-<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
-<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
-<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
-<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
-<text x="42" y="110.2" class="axis" text-anchor="end">643</text>
-<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
-<text x="42" y="42.3" class="axis" text-anchor="end">1.3k</text>
-<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
-<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
-<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
-<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
-<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
-<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
-<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
-<line x1="48" x2="412" y1="173.7" y2="173.7" class="baseline"/>
-<text x="52" y="169.7" class="axis">baseline avg 2</text>
-<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,172.2 246.5,174.0 279.6,174.0 312.7,80.5 345.8,174.0 378.9,94.5 412.0,38.3" class="line s1"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="114.2" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="147.3" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="180.4" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="213.5" cy="172.2" r="3.5" class="dot s1"/>
-<circle cx="246.5" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="279.6" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="312.7" cy="80.5" r="3.5" class="dot s1"/>
-<circle cx="345.8" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="378.9" cy="94.5" r="3.5" class="dot s1"/>
-<circle cx="412.0" cy="38.3" r="3.5" class="dot s1"/>
-<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,174.0 246.5,174.0 279.6,174.0 312.7,174.0 345.8,174.0 378.9,174.0 412.0,174.0" class="line s2"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="114.2" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="147.3" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="180.4" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="213.5" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="246.5" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="279.6" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="312.7" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="345.8" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="378.9" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
-<text x="418.0" y="42.3" class="axis">created</text>
-<text x="418.0" y="178.0" class="axis">verified</text>
-<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
-<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
-<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 0 · verified 0 (–)"/>
-<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 0 · verified 0 (–)"/>
-<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 0 · verified 0 (–)"/>
-<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 17 · verified 0 (0%)"/>
-<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 0 · verified 0 (–)"/>
-<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 0 · verified 0 (–)"/>
-<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 886 · verified 0 (0%)"/>
-<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 0 · verified 0 (–)"/>
-<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 754 · verified 0 (0%)"/>
-<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 1,286 · verified 0 (0%)"/>
-</svg></div>
-<div class="kcard"><h3>Adobe - Commerce - Production - Key 3<span class="tag">mostly blocked</span></h3><div class="kstats">Adobe · <code>AD73B601-F0A9-459E-B619-838E01BA7EDB</code></div><div class="kstats">baseline 49/day · window 1.1k/day · peak 5.1k (102×)</div><div class="kstats">window verified: <b>197 of 5,331 (4%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p4-t">
-<title id="p4-t">Sessions created vs verified per day</title>
 <rect x="263.1" y="18" width="148.9" height="156" class="win"/>
 <line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
 <text x="42" y="178.0" class="axis" text-anchor="end">0</text>
@@ -319,68 +186,53 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 99 · verified 2 (2%)"/>
 <rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 39 · verified 4 (10%)"/>
 <rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 5,079 · verified 175 (3%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h1-t">
+<title id="h1-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">120</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">241</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="125.2" y2="125.2" class="baseline"/>
+<polyline points="48.0,126.0 62.6,40.7 77.1,34.3 91.7,34.7 106.2,35.1 120.8,37.1 135.4,41.9 149.9,32.6 164.5,44.4 179.0,41.5 193.6,39.9 208.2,36.7 222.7,45.2 237.3,39.1 251.8,34.3 266.4,34.7 281.0,28.6 295.5,37.1 310.1,36.7 324.6,32.6 339.2,34.3 353.8,33.5 368.3,34.3 382.9,36.3 397.4,37.1 412.0,35.9" class="line s1"/>
+<polyline points="48.0,126.0 62.6,123.6 77.1,122.0 91.7,122.4 106.2,123.6 120.8,122.4 135.4,123.6 149.9,123.6 164.5,124.4 179.0,124.0 193.6,124.0 208.2,124.8 222.7,123.6 237.3,124.0 251.8,123.2 266.4,123.2 281.0,119.9 295.5,120.7 310.1,121.6 324.6,122.8 339.2,122.4 353.8,124.0 368.3,122.0 382.9,122.0 397.4,122.8 412.0,122.0" class="line s2"/>
+<text x="418.0" y="39.9" class="axis">created</text>
+<text x="418.0" y="126.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 0 · verified 0"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 211 · verified 6"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 227 · verified 10"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 226 · verified 9"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 225 · verified 6"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 220 · verified 9"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 208 · verified 6"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 231 · verified 6"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 202 · verified 4"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 209 · verified 5"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 213 · verified 5"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 221 · verified 3"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 200 · verified 6"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 215 · verified 5"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 227 · verified 7"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 226 · verified 7"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 241 · verified 15"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 220 · verified 13"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 221 · verified 11"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 231 · verified 8"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 227 · verified 9"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 229 · verified 5"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 227 · verified 10"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 222 · verified 10"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 220 · verified 8"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 223 · verified 10"/>
 </svg></div>
-<div class="kcard"><h3>Adobe - Sign-in - Production - Key 5<span class="tag">partly blocked</span></h3><div class="kstats">Adobe · <code>430FF2C3-1AB1-40B7-8BE7-44FC683FE02C</code></div><div class="kstats">baseline 749/day · window 2.8k/day · peak 9.1k (12×)</div><div class="kstats">window verified: <b>4,696 of 14,186 (33%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p5-t">
-<title id="p5-t">Sessions created vs verified per day</title>
-<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
-<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
-<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
-<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
-<text x="42" y="110.2" class="axis" text-anchor="end">4.5k</text>
-<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
-<text x="42" y="42.3" class="axis" text-anchor="end">9.1k</text>
-<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
-<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
-<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
-<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
-<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
-<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
-<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
-<line x1="48" x2="412" y1="162.8" y2="162.8" class="baseline"/>
-<text x="52" y="158.8" class="axis">baseline avg 749</text>
-<polyline points="48.0,174.0 81.1,174.0 114.2,150.6 147.3,168.5 180.4,148.8 213.5,171.3 246.5,152.6 279.6,38.3 312.7,170.3 345.8,146.4 378.9,161.7 412.0,141.4" class="line s1"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="114.2" cy="150.6" r="3.5" class="dot s1"/>
-<circle cx="147.3" cy="168.5" r="3.5" class="dot s1"/>
-<circle cx="180.4" cy="148.8" r="3.5" class="dot s1"/>
-<circle cx="213.5" cy="171.3" r="3.5" class="dot s1"/>
-<circle cx="246.5" cy="152.6" r="3.5" class="dot s1"/>
-<circle cx="279.6" cy="38.3" r="3.5" class="dot s1"/>
-<circle cx="312.7" cy="170.3" r="3.5" class="dot s1"/>
-<circle cx="345.8" cy="146.4" r="3.5" class="dot s1"/>
-<circle cx="378.9" cy="161.7" r="3.5" class="dot s1"/>
-<circle cx="412.0" cy="141.4" r="3.5" class="dot s1"/>
-<polyline points="48.0,174.0 81.1,174.0 114.2,150.9 147.3,169.0 180.4,166.6 213.5,171.3 246.5,173.4 279.6,144.5 312.7,171.1 345.8,172.8 378.9,164.3 412.0,147.2" class="line s2"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="114.2" cy="150.9" r="3.5" class="dot s2"/>
-<circle cx="147.3" cy="169.0" r="3.5" class="dot s2"/>
-<circle cx="180.4" cy="166.6" r="3.5" class="dot s2"/>
-<circle cx="213.5" cy="171.3" r="3.5" class="dot s2"/>
-<circle cx="246.5" cy="173.4" r="3.5" class="dot s2"/>
-<circle cx="279.6" cy="144.5" r="3.5" class="dot s2"/>
-<circle cx="312.7" cy="171.1" r="3.5" class="dot s2"/>
-<circle cx="345.8" cy="172.8" r="3.5" class="dot s2"/>
-<circle cx="378.9" cy="164.3" r="3.5" class="dot s2"/>
-<circle cx="412.0" cy="147.2" r="3.5" class="dot s2"/>
-<text x="418.0" y="145.4" class="axis">created</text>
-<text x="418.0" y="157.4" class="axis">verified</text>
-<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
-<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
-<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 1,570 · verified 1,546 (98%)"/>
-<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 370 · verified 338 (91%)"/>
-<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 1,691 · verified 497 (29%)"/>
-<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 182 · verified 182 (100%)"/>
-<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 1,430 · verified 42 (3%)"/>
-<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 9,085 · verified 1,977 (22%)"/>
-<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 249 · verified 196 (79%)"/>
-<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 1,846 · verified 81 (4%)"/>
-<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 821 · verified 648 (79%)"/>
-<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 2,185 · verified 1,794 (82%)"/>
-</svg></div>
-<div class="kcard"><h3>TIAA - Login - Production Key 1<span class="tag">mostly blocked</span></h3><div class="kstats">TIAA · <code>942A102E-8D3A-4F0F-9ED3-13CA6D754952</code></div><div class="kstats">baseline 447/day · window 1.5k/day · peak 4.3k (10×)</div><div class="kstats">window verified: <b>947 of 7,660 (12%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p6-t">
-<title id="p6-t">Sessions created vs verified per day</title>
+<div class="kcard"><h3>TIAA - Login - Production Key 1<span class="tag ongoing">ongoing</span><span class="tag">mostly blocked</span></h3><div class="kstats">TIAA · <code>942A102E-8D3A-4F0F-9ED3-13CA6D754952</code></div><div class="kstats">baseline 447/day · window 1.5k/day · peak 4.3k (10×)</div><div class="kstats">window verified: <b>947 of 7,660 (12%)</b> · last 24h: <b>3.2k</b> · last 6h: 5/h vs baseline 18/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p2-t">
+<title id="p2-t">Sessions created vs verified per day</title>
 <rect x="263.1" y="18" width="148.9" height="156" class="win"/>
 <line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
 <text x="42" y="178.0" class="axis" text-anchor="end">0</text>
@@ -437,9 +289,53 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 145 · verified 136 (94%)"/>
 <rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 2,952 · verified 394 (13%)"/>
 <rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 4,285 · verified 365 (9%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h2-t">
+<title id="h2-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">271</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">543</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="122.7" y2="122.7" class="baseline"/>
+<polyline points="48.0,28.6 62.6,35.2 77.1,48.2 91.7,57.1 106.2,58.9 120.8,58.6 135.4,29.7 149.9,46.2 164.5,61.1 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,116.7 251.8,116.3 266.4,117.6 281.0,117.9 295.5,126.0 310.1,121.5 324.6,114.0 339.2,120.4 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s1"/>
+<polyline points="48.0,120.4 62.6,125.3 77.1,123.8 91.7,125.6 106.2,125.5 120.8,125.5 135.4,122.1 149.9,123.7 164.5,117.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,118.5 251.8,118.6 266.4,120.4 281.0,121.0 295.5,126.0 310.1,122.8 324.6,118.6 339.2,122.2 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s2"/>
+<text x="418.0" y="130.0" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 543 · verified 31"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 506 · verified 4"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 434 · verified 12"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 384 · verified 2"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 374 · verified 3"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 376 · verified 3"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 537 · verified 22"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 445 · verified 13"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 362 · verified 50"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 0 · verified 0"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 0 · verified 0"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 0 · verified 0"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 0 · verified 0"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 52 · verified 42"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 54 · verified 41"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 47 · verified 31"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 45 · verified 28"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 0 · verified 0"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 25 · verified 18"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 67 · verified 41"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 31 · verified 21"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 0 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 0 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 0 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 0 · verified 0"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 0 · verified 0"/>
 </svg></div>
-<div class="kcard"><h3>Chime - Production - Key 2 - Registration<span class="tag">getting through</span></h3><div class="kstats">Chime · <code>8F5905D7-1435-4252-87B2-F902B2C7FD74</code></div><div class="kstats">baseline 623/day · window 4.6k/day · peak 5.9k (9×)</div><div class="kstats">window verified: <b>19,646 of 23,039 (85%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p7-t">
-<title id="p7-t">Sessions created vs verified per day</title>
+<div class="kcard"><h3>Chime - Production - Key 2 - Registration<span class="tag ongoing">ongoing</span><span class="tag">getting through</span></h3><div class="kstats">Chime · <code>8F5905D7-1435-4252-87B2-F902B2C7FD74</code></div><div class="kstats">baseline 623/day · window 4.6k/day · peak 5.9k (9×)</div><div class="kstats">window verified: <b>19,646 of 23,039 (85%)</b> · last 24h: <b>5.8k</b> · last 6h: 0/h vs baseline 25/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p3-t">
+<title id="p3-t">Sessions created vs verified per day</title>
 <rect x="263.1" y="18" width="148.9" height="156" class="win"/>
 <line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
 <text x="42" y="178.0" class="axis" text-anchor="end">0</text>
@@ -496,68 +392,53 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 4,942 · verified 4,444 (90%)"/>
 <rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 5,411 · verified 3,797 (70%)"/>
 <rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 5,899 · verified 5,314 (90%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h3-t">
+<title id="h3-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">449</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">899</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="123.2" y2="123.2" class="baseline"/>
+<polyline points="48.0,126.0 62.6,116.6 77.1,95.2 91.7,86.8 106.2,109.9 120.8,91.7 135.4,54.0 149.9,50.2 164.5,34.8 179.0,28.6 193.6,69.2 208.2,84.6 222.7,94.9 237.3,102.3 251.8,114.5 266.4,126.0 281.0,126.0 295.5,126.0 310.1,121.8 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s1"/>
+<polyline points="48.0,126.0 62.6,116.6 77.1,97.8 91.7,91.3 106.2,111.3 120.8,95.7 135.4,60.4 149.9,57.0 164.5,45.0 179.0,39.3 193.6,75.2 208.2,89.1 222.7,97.2 237.3,103.7 251.8,115.1 266.4,126.0 281.0,126.0 295.5,126.0 310.1,122.6 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s2"/>
+<text x="418.0" y="130.0" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 0 · verified 0"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 87 · verified 87"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 284 · verified 260"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 362 · verified 320"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 149 · verified 136"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 317 · verified 280"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 665 · verified 606"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 700 · verified 637"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 842 · verified 748"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 899 · verified 800"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 524 · verified 469"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 382 · verified 341"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 287 · verified 266"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 219 · verified 206"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 106 · verified 101"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 0 · verified 0"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 0 · verified 0"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 0 · verified 0"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 39 · verified 31"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 0 · verified 0"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 0 · verified 0"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 0 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 0 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 0 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 0 · verified 0"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 0 · verified 0"/>
 </svg></div>
-<div class="kcard"><h3>Adobe - ARP FF - Production - Key 8<span class="tag">partly blocked</span></h3><div class="kstats">Adobe · <code>BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C</code></div><div class="kstats">baseline 17.4k/day · window 90.6k/day · peak 141.4k (8×)</div><div class="kstats">window verified: <b>196,922 of 453,146 (43%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p8-t">
-<title id="p8-t">Sessions created vs verified per day</title>
-<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
-<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
-<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
-<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
-<text x="42" y="110.2" class="axis" text-anchor="end">70.7k</text>
-<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
-<text x="42" y="42.3" class="axis" text-anchor="end">141.4k</text>
-<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
-<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
-<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
-<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
-<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
-<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
-<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
-<line x1="48" x2="412" y1="157.3" y2="157.3" class="baseline"/>
-<text x="52" y="153.3" class="axis">baseline avg 17.4k</text>
-<polyline points="48.0,172.5 81.1,122.2 114.2,144.2 147.3,164.9 180.4,165.6 213.5,166.5 246.5,164.9 279.6,67.4 312.7,96.8 345.8,38.3 378.9,74.3 412.0,158.5" class="line s1"/>
-<circle cx="48.0" cy="172.5" r="3.5" class="dot s1"/>
-<circle cx="81.1" cy="122.2" r="3.5" class="dot s1"/>
-<circle cx="114.2" cy="144.2" r="3.5" class="dot s1"/>
-<circle cx="147.3" cy="164.9" r="3.5" class="dot s1"/>
-<circle cx="180.4" cy="165.6" r="3.5" class="dot s1"/>
-<circle cx="213.5" cy="166.5" r="3.5" class="dot s1"/>
-<circle cx="246.5" cy="164.9" r="3.5" class="dot s1"/>
-<circle cx="279.6" cy="67.4" r="3.5" class="dot s1"/>
-<circle cx="312.7" cy="96.8" r="3.5" class="dot s1"/>
-<circle cx="345.8" cy="38.3" r="3.5" class="dot s1"/>
-<circle cx="378.9" cy="74.3" r="3.5" class="dot s1"/>
-<circle cx="412.0" cy="158.5" r="3.5" class="dot s1"/>
-<polyline points="48.0,173.9 81.1,131.0 114.2,156.4 147.3,173.0 180.4,173.2 213.5,173.2 246.5,171.7 279.6,109.9 312.7,170.1 345.8,103.2 378.9,125.8 412.0,172.0" class="line s2"/>
-<circle cx="48.0" cy="173.9" r="3.5" class="dot s2"/>
-<circle cx="81.1" cy="131.0" r="3.5" class="dot s2"/>
-<circle cx="114.2" cy="156.4" r="3.5" class="dot s2"/>
-<circle cx="147.3" cy="173.0" r="3.5" class="dot s2"/>
-<circle cx="180.4" cy="173.2" r="3.5" class="dot s2"/>
-<circle cx="213.5" cy="173.2" r="3.5" class="dot s2"/>
-<circle cx="246.5" cy="171.7" r="3.5" class="dot s2"/>
-<circle cx="279.6" cy="109.9" r="3.5" class="dot s2"/>
-<circle cx="312.7" cy="170.1" r="3.5" class="dot s2"/>
-<circle cx="345.8" cy="103.2" r="3.5" class="dot s2"/>
-<circle cx="378.9" cy="125.8" r="3.5" class="dot s2"/>
-<circle cx="412.0" cy="172.0" r="3.5" class="dot s2"/>
-<text x="418.0" y="162.5" class="axis">created</text>
-<text x="418.0" y="176.0" class="axis">verified</text>
-<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 1,543 · verified 92 (6%)"/>
-<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 53,977 · verified 44,799 (83%)"/>
-<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 31,070 · verified 18,364 (59%)"/>
-<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 9,453 · verified 1,064 (11%)"/>
-<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 8,706 · verified 868 (10%)"/>
-<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 7,858 · verified 830 (11%)"/>
-<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 9,454 · verified 2,433 (26%)"/>
-<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 111,143 · verified 66,823 (60%)"/>
-<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 80,495 · verified 4,069 (5%)"/>
-<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 141,412 · verified 73,757 (52%)"/>
-<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 103,942 · verified 50,205 (48%)"/>
-<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 16,154 · verified 2,068 (13%)"/>
-</svg></div>
-<div class="kcard"><h3>Roblox Signup - Key 2<span class="tag">mostly blocked</span></h3><div class="kstats">Roblox Corporation · <code>A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F</code></div><div class="kstats">baseline 21.6k/day · window 42.2k/day · peak 137.4k (6×)</div><div class="kstats">window verified: <b>4,481 of 210,806 (2%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p9-t">
-<title id="p9-t">Sessions created vs verified per day</title>
+<div class="kcard"><h3>Roblox Signup - Key 2<span class="tag ongoing">ongoing</span><span class="tag">mostly blocked</span></h3><div class="kstats">Roblox Corporation · <code>A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F</code></div><div class="kstats">baseline 21.6k/day · window 42.2k/day · peak 137.4k (6×)</div><div class="kstats">window verified: <b>4,481 of 210,806 (2%)</b> · last 24h: <b>127.3k</b> · last 6h: 752/h vs baseline 899/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p4-t">
+<title id="p4-t">Sessions created vs verified per day</title>
 <rect x="263.1" y="18" width="148.9" height="156" class="win"/>
 <line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
 <text x="42" y="178.0" class="axis" text-anchor="end">0</text>
@@ -614,68 +495,53 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 4,106 · verified 14 (0%)"/>
 <rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 26,247 · verified 360 (1%)"/>
 <rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 137,442 · verified 1,784 (1%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h4-t">
+<title id="h4-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">9k</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">18k</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="121.1" y2="121.1" class="baseline"/>
+<polyline points="48.0,96.8 62.6,94.3 77.1,92.9 91.7,105.3 106.2,106.4 120.8,94.0 135.4,94.3 149.9,99.7 164.5,102.2 179.0,109.1 193.6,99.4 208.2,103.1 222.7,103.8 237.3,107.9 251.8,108.1 266.4,39.4 281.0,48.4 295.5,65.3 310.1,28.6 324.6,96.7 339.2,119.2 353.8,124.2 368.3,125.1 382.9,117.4 397.4,122.7 412.0,122.9" class="line s1"/>
+<polyline points="48.0,125.9 62.6,125.5 77.1,126.0 91.7,126.0 106.2,126.0 120.8,124.7 135.4,124.1 149.9,125.1 164.5,125.0 179.0,126.0 193.6,125.6 208.2,126.0 222.7,126.0 237.3,126.0 251.8,125.8 266.4,125.6 281.0,125.3 295.5,125.4 310.1,124.8 324.6,125.5 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,125.9 412.0,125.7" class="line s2"/>
+<text x="418.0" y="126.9" class="axis">created</text>
+<text x="418.0" y="138.9" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 5,414 · verified 10"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 5,861 · verified 95"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 6,121 · verified 0"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 3,829 · verified 2"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 3,623 · verified 0"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 5,932 · verified 242"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 5,872 · verified 347"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 4,870 · verified 168"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 4,402 · verified 184"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 3,134 · verified 2"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 4,917 · verified 79"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 4,248 · verified 1"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 4,114 · verified 1"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 3,358 · verified 1"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 3,322 · verified 41"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 16,027 · verified 65"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 14,370 · verified 130"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 11,239 · verified 107"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 18,028 · verified 218"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 5,415 · verified 91"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 1,261 · verified 0"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 329 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 161 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 1,595 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 604 · verified 15"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 565 · verified 48"/>
 </svg></div>
-<div class="kcard"><h3>Roblox - Production - Login - Key 1<span class="tag">mostly blocked</span></h3><div class="kstats">Roblox Corporation · <code>476068BF-9607-4799-B53D-966BE98E2B81</code></div><div class="kstats">baseline 16.9k/day · window 39.2k/day · peak 102.6k (6×)</div><div class="kstats">window verified: <b>8 of 196,042 (0%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p10-t">
-<title id="p10-t">Sessions created vs verified per day</title>
-<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
-<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
-<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
-<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
-<text x="42" y="110.2" class="axis" text-anchor="end">51.3k</text>
-<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
-<text x="42" y="42.3" class="axis" text-anchor="end">102.6k</text>
-<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
-<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
-<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
-<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
-<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
-<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
-<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
-<line x1="48" x2="412" y1="151.7" y2="151.7" class="baseline"/>
-<text x="52" y="147.7" class="axis">baseline avg 16.9k</text>
-<polyline points="48.0,171.4 81.1,174.0 114.2,171.9 147.3,173.8 180.4,173.0 213.5,142.2 246.5,55.5 279.6,53.9 312.7,38.3 345.8,174.0 378.9,172.0 412.0,172.5" class="line s1"/>
-<circle cx="48.0" cy="171.4" r="3.5" class="dot s1"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="114.2" cy="171.9" r="3.5" class="dot s1"/>
-<circle cx="147.3" cy="173.8" r="3.5" class="dot s1"/>
-<circle cx="180.4" cy="173.0" r="3.5" class="dot s1"/>
-<circle cx="213.5" cy="142.2" r="3.5" class="dot s1"/>
-<circle cx="246.5" cy="55.5" r="3.5" class="dot s1"/>
-<circle cx="279.6" cy="53.9" r="3.5" class="dot s1"/>
-<circle cx="312.7" cy="38.3" r="3.5" class="dot s1"/>
-<circle cx="345.8" cy="174.0" r="3.5" class="dot s1"/>
-<circle cx="378.9" cy="172.0" r="3.5" class="dot s1"/>
-<circle cx="412.0" cy="172.5" r="3.5" class="dot s1"/>
-<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,174.0 246.5,174.0 279.6,174.0 312.7,174.0 345.8,174.0 378.9,174.0 412.0,174.0" class="line s2"/>
-<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="114.2" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="147.3" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="180.4" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="213.5" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="246.5" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="279.6" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="312.7" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="345.8" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="378.9" cy="174.0" r="3.5" class="dot s2"/>
-<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
-<text x="418.0" y="176.5" class="axis">created</text>
-<text x="418.0" y="188.5" class="axis">verified</text>
-<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 1,983 · verified 0 (0%)"/>
-<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
-<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 1,564 · verified 0 (0%)"/>
-<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 180 · verified 0 (0%)"/>
-<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 745 · verified 0 (0%)"/>
-<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 24,060 · verified 6 (0%)"/>
-<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 89,631 · verified 5 (0%)"/>
-<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 90,793 · verified 3 (0%)"/>
-<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 102,586 · verified 5 (0%)"/>
-<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 0 · verified 0 (–)"/>
-<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 1,527 · verified 0 (0%)"/>
-<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 1,136 · verified 0 (0%)"/>
-</svg></div>
-<div class="kcard"><h3>AT&amp;T - Consumer Login Web - Production - Key 3<span class="tag">partly blocked</span></h3><div class="kstats">AT&amp;T · <code>FAD1C7FA-A58F-4D30-93D5-87D1A4E3C641</code></div><div class="kstats">baseline 1k/day · window 4.8k/day · peak 6.1k (6×)</div><div class="kstats">window verified: <b>11,326 of 23,789 (48%)</b></div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p11-t">
-<title id="p11-t">Sessions created vs verified per day</title>
+<div class="kcard"><h3>AT&amp;T - Consumer Login Web - Production - Key 3<span class="tag ongoing">ongoing</span><span class="tag">partly blocked</span></h3><div class="kstats">AT&amp;T · <code>FAD1C7FA-A58F-4D30-93D5-87D1A4E3C641</code></div><div class="kstats">baseline 1k/day · window 4.8k/day · peak 6.1k (6×)</div><div class="kstats">window verified: <b>11,326 of 23,789 (48%)</b> · last 24h: <b>4.1k</b> · last 6h: 200/h vs baseline 42/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p5-t">
+<title id="p5-t">Sessions created vs verified per day</title>
 <rect x="263.1" y="18" width="148.9" height="156" class="win"/>
 <line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
 <text x="42" y="178.0" class="axis" text-anchor="end">0</text>
@@ -732,6 +598,668 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 5,565 · verified 2,732 (49%)"/>
 <rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 6,145 · verified 2,729 (44%)"/>
 <rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 4,188 · verified 2,908 (69%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h5-t">
+<title id="h5-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">205</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">411</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="116.0" y2="116.0" class="baseline"/>
+<polyline points="48.0,81.7 62.6,93.1 77.1,107.5 91.7,120.5 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,110.6 222.7,80.3 237.3,52.3 251.8,42.1 266.4,33.8 281.0,31.2 295.5,28.6 310.1,47.6 324.6,40.0 339.2,50.6 353.8,69.8 368.3,74.8 382.9,88.1 397.4,85.0 412.0,103.3" class="line s1"/>
+<polyline points="48.0,94.0 62.6,101.8 77.1,113.0 91.7,122.2 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,115.8 222.7,95.2 237.3,73.4 251.8,66.8 266.4,63.2 281.0,61.8 295.5,62.0 310.1,71.7 324.6,64.6 339.2,71.3 353.8,86.7 368.3,90.7 382.9,100.9 397.4,98.5 412.0,112.0" class="line s2"/>
+<text x="418.0" y="107.3" class="axis">created</text>
+<text x="418.0" y="119.3" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 187 · verified 135"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 139 · verified 102"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 78 · verified 55"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 23 · verified 16"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 0 · verified 0"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 0 · verified 0"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 0 · verified 0"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 0 · verified 0"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 0 · verified 0"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 0 · verified 0"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 0 · verified 0"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 65 · verified 43"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 193 · verified 130"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 311 · verified 222"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 354 · verified 250"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 389 · verified 265"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 400 · verified 271"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 411 · verified 270"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 331 · verified 229"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 363 · verified 259"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 318 · verified 231"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 237 · verified 166"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 216 · verified 149"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 160 · verified 106"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 173 · verified 116"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 96 · verified 59"/>
+</svg></div>
+<div class="kcard"><h3>Adobe - Sign-in - Production - Key 5<span class="tag elevated">elevated</span><span class="tag">partly blocked</span></h3><div class="kstats">Adobe · <code>430FF2C3-1AB1-40B7-8BE7-44FC683FE02C</code></div><div class="kstats">baseline 749/day · window 2.8k/day · peak 9.1k (12×)</div><div class="kstats">window verified: <b>4,696 of 14,186 (33%)</b> · last 24h: <b>1.7k</b> · last 6h: 0/h vs baseline 31/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p6-t">
+<title id="p6-t">Sessions created vs verified per day</title>
+<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">4.5k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">9.1k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
+<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
+<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
+<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
+<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
+<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
+<line x1="48" x2="412" y1="162.8" y2="162.8" class="baseline"/>
+<text x="52" y="158.8" class="axis">baseline avg 749</text>
+<polyline points="48.0,174.0 81.1,174.0 114.2,150.6 147.3,168.5 180.4,148.8 213.5,171.3 246.5,152.6 279.6,38.3 312.7,170.3 345.8,146.4 378.9,161.7 412.0,141.4" class="line s1"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="114.2" cy="150.6" r="3.5" class="dot s1"/>
+<circle cx="147.3" cy="168.5" r="3.5" class="dot s1"/>
+<circle cx="180.4" cy="148.8" r="3.5" class="dot s1"/>
+<circle cx="213.5" cy="171.3" r="3.5" class="dot s1"/>
+<circle cx="246.5" cy="152.6" r="3.5" class="dot s1"/>
+<circle cx="279.6" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="312.7" cy="170.3" r="3.5" class="dot s1"/>
+<circle cx="345.8" cy="146.4" r="3.5" class="dot s1"/>
+<circle cx="378.9" cy="161.7" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="141.4" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 81.1,174.0 114.2,150.9 147.3,169.0 180.4,166.6 213.5,171.3 246.5,173.4 279.6,144.5 312.7,171.1 345.8,172.8 378.9,164.3 412.0,147.2" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="114.2" cy="150.9" r="3.5" class="dot s2"/>
+<circle cx="147.3" cy="169.0" r="3.5" class="dot s2"/>
+<circle cx="180.4" cy="166.6" r="3.5" class="dot s2"/>
+<circle cx="213.5" cy="171.3" r="3.5" class="dot s2"/>
+<circle cx="246.5" cy="173.4" r="3.5" class="dot s2"/>
+<circle cx="279.6" cy="144.5" r="3.5" class="dot s2"/>
+<circle cx="312.7" cy="171.1" r="3.5" class="dot s2"/>
+<circle cx="345.8" cy="172.8" r="3.5" class="dot s2"/>
+<circle cx="378.9" cy="164.3" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="147.2" r="3.5" class="dot s2"/>
+<text x="418.0" y="145.4" class="axis">created</text>
+<text x="418.0" y="157.4" class="axis">verified</text>
+<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
+<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
+<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 1,570 · verified 1,546 (98%)"/>
+<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 370 · verified 338 (91%)"/>
+<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 1,691 · verified 497 (29%)"/>
+<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 182 · verified 182 (100%)"/>
+<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 1,430 · verified 42 (3%)"/>
+<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 9,085 · verified 1,977 (22%)"/>
+<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 249 · verified 196 (79%)"/>
+<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 1,846 · verified 81 (4%)"/>
+<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 821 · verified 648 (79%)"/>
+<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 2,185 · verified 1,794 (82%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h6-t">
+<title id="h6-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">148</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">297</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="115.8" y2="115.8" class="baseline"/>
+<polyline points="48.0,33.2 62.6,51.2 77.1,28.6 91.7,31.6 106.2,37.8 120.8,47.0 135.4,42.4 149.9,115.2 164.5,126.0 179.0,115.5 193.6,41.1 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s1"/>
+<polyline points="48.0,37.5 62.6,82.4 77.1,34.8 91.7,50.3 106.2,53.9 120.8,67.6 135.4,63.7 149.9,115.5 164.5,126.0 179.0,118.1 193.6,48.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s2"/>
+<text x="418.0" y="130.0" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 283 · verified 270"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 228 · verified 133"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 297 · verified 278"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 288 · verified 231"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 269 · verified 220"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 241 · verified 178"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 255 · verified 190"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 33 · verified 32"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 0 · verified 0"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 32 · verified 24"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 259 · verified 238"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 0 · verified 0"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 0 · verified 0"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 0 · verified 0"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 0 · verified 0"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 0 · verified 0"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 0 · verified 0"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 0 · verified 0"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 0 · verified 0"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 0 · verified 0"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 0 · verified 0"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 0 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 0 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 0 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 0 · verified 0"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 0 · verified 0"/>
+</svg></div>
+<div class="kcard"><h3>Roblox - Prod - Game Join - Key 6<span class="tag subsided">subsided</span><span class="tag">mostly blocked</span></h3><div class="kstats">Roblox Corporation · <code>CC30DB96-0C88-4DEB-86E5-6601927ACBB4</code></div><div class="kstats">baseline 1/day · window 1.9k/day · peak 6.8k (5258×)</div><div class="kstats">window verified: <b>8 of 9,713 (0%)</b> · last 24h: <b>0</b> · last 6h: 0/h vs baseline 0/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p7-t">
+<title id="p7-t">Sessions created vs verified per day</title>
+<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">3.4k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">6.8k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
+<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
+<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
+<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
+<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
+<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="baseline"/>
+<text x="52" y="170.0" class="axis">baseline avg 1</text>
+<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,174.0 246.5,173.8 279.6,141.7 312.7,148.0 345.8,38.3 378.9,173.1 412.0,174.0" class="line s1"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="114.2" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="147.3" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="180.4" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="213.5" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="246.5" cy="173.8" r="3.5" class="dot s1"/>
+<circle cx="279.6" cy="141.7" r="3.5" class="dot s1"/>
+<circle cx="312.7" cy="148.0" r="3.5" class="dot s1"/>
+<circle cx="345.8" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="378.9" cy="173.1" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,174.0 246.5,173.8 279.6,173.9 312.7,174.0 345.8,174.0 378.9,174.0 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="114.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="147.3" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="180.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="213.5" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="246.5" cy="173.8" r="3.5" class="dot s2"/>
+<circle cx="279.6" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="312.7" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="345.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="378.9" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="178.0" class="axis">created</text>
+<text x="418.0" y="190.0" class="axis">verified</text>
+<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
+<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
+<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 0 · verified 0 (–)"/>
+<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 0 · verified 0 (–)"/>
+<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 0 · verified 0 (–)"/>
+<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 0 · verified 0 (–)"/>
+<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 9 · verified 8 (89%)"/>
+<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 1,608 · verified 7 (0%)"/>
+<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 1,298 · verified 0 (0%)"/>
+<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 6,760 · verified 1 (0%)"/>
+<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 47 · verified 0 (0%)"/>
+<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 0 · verified 0 (–)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h7-t">
+<title id="h7-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">1</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="120.8" y2="120.8" class="baseline"/>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s1"/>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s2"/>
+<text x="418.0" y="130.0" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 0 · verified 0"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 0 · verified 0"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 0 · verified 0"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 0 · verified 0"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 0 · verified 0"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 0 · verified 0"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 0 · verified 0"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 0 · verified 0"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 0 · verified 0"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 0 · verified 0"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 0 · verified 0"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 0 · verified 0"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 0 · verified 0"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 0 · verified 0"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 0 · verified 0"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 0 · verified 0"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 0 · verified 0"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 0 · verified 0"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 0 · verified 0"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 0 · verified 0"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 0 · verified 0"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 0 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 0 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 0 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 0 · verified 0"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 0 · verified 0"/>
+</svg></div>
+<div class="kcard"><h3>Airbnb - Account Lookup - Production Key 6<span class="tag subsided">subsided</span><span class="tag">mostly blocked</span></h3><div class="kstats">Airbnb Inc. · <code>513F48D7-3DCD-468D-8557-EFF418CF794D</code></div><div class="kstats">baseline 482/day · window 207.8k/day · peak 598.6k (1241×)</div><div class="kstats">window verified: <b>435 of 1,039,197 (0%)</b> · last 24h: <b>0</b> · last 6h: 0/h vs baseline 20/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p8-t">
+<title id="p8-t">Sessions created vs verified per day</title>
+<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">299.3k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">598.6k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
+<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
+<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
+<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
+<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
+<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
+<line x1="48" x2="412" y1="173.9" y2="173.9" class="baseline"/>
+<text x="52" y="169.9" class="axis">baseline avg 482</text>
+<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,173.4 246.5,173.8 279.6,78.7 312.7,38.3 345.8,169.4 378.9,174.0 412.0,174.0" class="line s1"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="114.2" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="147.3" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="180.4" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="213.5" cy="173.4" r="3.5" class="dot s1"/>
+<circle cx="246.5" cy="173.8" r="3.5" class="dot s1"/>
+<circle cx="279.6" cy="78.7" r="3.5" class="dot s1"/>
+<circle cx="312.7" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="345.8" cy="169.4" r="3.5" class="dot s1"/>
+<circle cx="378.9" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,173.9 246.5,174.0 279.6,174.0 312.7,173.9 345.8,174.0 378.9,174.0 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="114.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="147.3" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="180.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="213.5" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="246.5" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="279.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="312.7" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="345.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="378.9" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="178.0" class="axis">created</text>
+<text x="418.0" y="190.0" class="axis">verified</text>
+<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
+<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
+<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 0 · verified 0 (–)"/>
+<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 16 · verified 11 (69%)"/>
+<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 0 · verified 0 (–)"/>
+<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 2,509 · verified 246 (10%)"/>
+<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 850 · verified 144 (17%)"/>
+<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 420,345 · verified 0 (0%)"/>
+<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 598,578 · verified 331 (0%)"/>
+<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 20,244 · verified 92 (0%)"/>
+<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 30 · verified 12 (40%)"/>
+<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 0 · verified 0 (–)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h8-t">
+<title id="h8-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">10</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">20</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="baseline"/>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s1"/>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s2"/>
+<text x="418.0" y="130.0" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 0 · verified 0"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 0 · verified 0"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 0 · verified 0"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 0 · verified 0"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 0 · verified 0"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 0 · verified 0"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 0 · verified 0"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 0 · verified 0"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 0 · verified 0"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 0 · verified 0"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 0 · verified 0"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 0 · verified 0"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 0 · verified 0"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 0 · verified 0"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 0 · verified 0"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 0 · verified 0"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 0 · verified 0"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 0 · verified 0"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 0 · verified 0"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 0 · verified 0"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 0 · verified 0"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 0 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 0 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 0 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 0 · verified 0"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 0 · verified 0"/>
+</svg></div>
+<div class="kcard"><h3>Microsoft - Identity - Account Signup - Production - Key 2<span class="tag subsided">subsided</span><span class="tag">mostly blocked</span></h3><div class="kstats">Microsoft - Identity · <code>B7D8911C-5CC8-A9A3-35B0-554ACEE604DA</code></div><div class="kstats">baseline 2/day · window 585/day · peak 1.3k (530×)</div><div class="kstats">window verified: <b>0 of 2,926 (0%)</b> · last 24h: <b>0</b> · last 6h: 0/h vs baseline 0/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p9-t">
+<title id="p9-t">Sessions created vs verified per day</title>
+<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">643</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">1.3k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
+<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
+<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
+<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
+<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
+<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
+<line x1="48" x2="412" y1="173.7" y2="173.7" class="baseline"/>
+<text x="52" y="169.7" class="axis">baseline avg 2</text>
+<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,172.2 246.5,174.0 279.6,174.0 312.7,80.5 345.8,174.0 378.9,94.5 412.0,38.3" class="line s1"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="114.2" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="147.3" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="180.4" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="213.5" cy="172.2" r="3.5" class="dot s1"/>
+<circle cx="246.5" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="279.6" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="312.7" cy="80.5" r="3.5" class="dot s1"/>
+<circle cx="345.8" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="378.9" cy="94.5" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="38.3" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,174.0 246.5,174.0 279.6,174.0 312.7,174.0 345.8,174.0 378.9,174.0 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="114.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="147.3" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="180.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="213.5" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="246.5" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="279.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="312.7" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="345.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="378.9" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="42.3" class="axis">created</text>
+<text x="418.0" y="178.0" class="axis">verified</text>
+<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
+<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
+<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 0 · verified 0 (–)"/>
+<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 0 · verified 0 (–)"/>
+<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 0 · verified 0 (–)"/>
+<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 17 · verified 0 (0%)"/>
+<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 0 · verified 0 (–)"/>
+<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 0 · verified 0 (–)"/>
+<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 886 · verified 0 (0%)"/>
+<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 0 · verified 0 (–)"/>
+<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 754 · verified 0 (0%)"/>
+<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 1,286 · verified 0 (0%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h9-t">
+<title id="h9-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">526</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">1.1k</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="baseline"/>
+<polyline points="48.0,28.6 62.6,104.4 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s1"/>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s2"/>
+<text x="418.0" y="130.0" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 1,053 · verified 0"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 233 · verified 0"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 0 · verified 0"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 0 · verified 0"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 0 · verified 0"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 0 · verified 0"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 0 · verified 0"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 0 · verified 0"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 0 · verified 0"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 0 · verified 0"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 0 · verified 0"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 0 · verified 0"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 0 · verified 0"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 0 · verified 0"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 0 · verified 0"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 0 · verified 0"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 0 · verified 0"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 0 · verified 0"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 0 · verified 0"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 0 · verified 0"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 0 · verified 0"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 0 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 0 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 0 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 0 · verified 0"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 0 · verified 0"/>
+</svg></div>
+<div class="kcard"><h3>Adobe - ARP FF - Production - Key 8<span class="tag subsided">subsided</span><span class="tag">partly blocked</span></h3><div class="kstats">Adobe · <code>BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C</code></div><div class="kstats">baseline 17.4k/day · window 90.6k/day · peak 141.4k (8×)</div><div class="kstats">window verified: <b>196,922 of 453,146 (43%)</b> · last 24h: <b>15.7k</b> · last 6h: 370/h vs baseline 726/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p10-t">
+<title id="p10-t">Sessions created vs verified per day</title>
+<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">70.7k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">141.4k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
+<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
+<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
+<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
+<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
+<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
+<line x1="48" x2="412" y1="157.3" y2="157.3" class="baseline"/>
+<text x="52" y="153.3" class="axis">baseline avg 17.4k</text>
+<polyline points="48.0,172.5 81.1,122.2 114.2,144.2 147.3,164.9 180.4,165.6 213.5,166.5 246.5,164.9 279.6,67.4 312.7,96.8 345.8,38.3 378.9,74.3 412.0,158.5" class="line s1"/>
+<circle cx="48.0" cy="172.5" r="3.5" class="dot s1"/>
+<circle cx="81.1" cy="122.2" r="3.5" class="dot s1"/>
+<circle cx="114.2" cy="144.2" r="3.5" class="dot s1"/>
+<circle cx="147.3" cy="164.9" r="3.5" class="dot s1"/>
+<circle cx="180.4" cy="165.6" r="3.5" class="dot s1"/>
+<circle cx="213.5" cy="166.5" r="3.5" class="dot s1"/>
+<circle cx="246.5" cy="164.9" r="3.5" class="dot s1"/>
+<circle cx="279.6" cy="67.4" r="3.5" class="dot s1"/>
+<circle cx="312.7" cy="96.8" r="3.5" class="dot s1"/>
+<circle cx="345.8" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="378.9" cy="74.3" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="158.5" r="3.5" class="dot s1"/>
+<polyline points="48.0,173.9 81.1,131.0 114.2,156.4 147.3,173.0 180.4,173.2 213.5,173.2 246.5,171.7 279.6,109.9 312.7,170.1 345.8,103.2 378.9,125.8 412.0,172.0" class="line s2"/>
+<circle cx="48.0" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="81.1" cy="131.0" r="3.5" class="dot s2"/>
+<circle cx="114.2" cy="156.4" r="3.5" class="dot s2"/>
+<circle cx="147.3" cy="173.0" r="3.5" class="dot s2"/>
+<circle cx="180.4" cy="173.2" r="3.5" class="dot s2"/>
+<circle cx="213.5" cy="173.2" r="3.5" class="dot s2"/>
+<circle cx="246.5" cy="171.7" r="3.5" class="dot s2"/>
+<circle cx="279.6" cy="109.9" r="3.5" class="dot s2"/>
+<circle cx="312.7" cy="170.1" r="3.5" class="dot s2"/>
+<circle cx="345.8" cy="103.2" r="3.5" class="dot s2"/>
+<circle cx="378.9" cy="125.8" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="172.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="162.5" class="axis">created</text>
+<text x="418.0" y="176.0" class="axis">verified</text>
+<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 1,543 · verified 92 (6%)"/>
+<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 53,977 · verified 44,799 (83%)"/>
+<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 31,070 · verified 18,364 (59%)"/>
+<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 9,453 · verified 1,064 (11%)"/>
+<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 8,706 · verified 868 (10%)"/>
+<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 7,858 · verified 830 (11%)"/>
+<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 9,454 · verified 2,433 (26%)"/>
+<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 111,143 · verified 66,823 (60%)"/>
+<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 80,495 · verified 4,069 (5%)"/>
+<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 141,412 · verified 73,757 (52%)"/>
+<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 103,942 · verified 50,205 (48%)"/>
+<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 16,154 · verified 2,068 (13%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h10-t">
+<title id="h10-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">546</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">1.1k</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="61.2" y2="61.2" class="baseline"/>
+<polyline points="48.0,86.1 62.6,86.0 77.1,74.7 91.7,87.0 106.2,78.6 120.8,82.4 135.4,68.7 149.9,53.7 164.5,52.5 179.0,55.2 193.6,49.7 208.2,41.5 222.7,40.7 237.3,28.6 251.8,30.2 266.4,40.2 281.0,66.9 295.5,68.0 310.1,67.6 324.6,76.1 339.2,73.6 353.8,80.6 368.3,96.7 382.9,98.1 397.4,106.2 412.0,102.9" class="line s1"/>
+<polyline points="48.0,122.7 62.6,122.4 77.1,120.0 91.7,114.6 106.2,117.6 120.8,119.4 135.4,112.3 149.9,112.6 164.5,116.9 179.0,118.2 193.6,117.2 208.2,115.6 222.7,115.9 237.3,113.1 251.8,113.7 266.4,117.8 281.0,121.1 295.5,119.5 310.1,120.8 324.6,118.4 339.2,119.0 353.8,122.3 368.3,123.6 382.9,124.9 397.4,124.3 412.0,124.6" class="line s2"/>
+<text x="418.0" y="106.9" class="axis">created</text>
+<text x="418.0" y="128.6" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 447 · verified 37"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 448 · verified 40"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 575 · verified 67"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 437 · verified 128"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 532 · verified 94"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 489 · verified 74"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 642 · verified 154"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 811 · verified 150"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 824 · verified 102"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 794 · verified 88"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 856 · verified 99"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 948 · verified 117"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 956 · verified 113"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 1,092 · verified 145"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 1,074 · verified 138"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 962 · verified 92"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 663 · verified 55"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 650 · verified 73"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 655 · verified 58"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 560 · verified 85"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 588 · verified 79"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 509 · verified 41"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 329 · verified 27"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 313 · verified 12"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 222 · verified 19"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 259 · verified 16"/>
+</svg></div>
+<div class="kcard"><h3>Roblox - Production - Login - Key 1<span class="tag subsided">subsided</span><span class="tag">mostly blocked</span></h3><div class="kstats">Roblox Corporation · <code>476068BF-9607-4799-B53D-966BE98E2B81</code></div><div class="kstats">baseline 16.9k/day · window 39.2k/day · peak 102.6k (6×)</div><div class="kstats">window verified: <b>8 of 196,042 (0%)</b> · last 24h: <b>1.1k</b> · last 6h: 0/h vs baseline 703/h</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p11-t">
+<title id="p11-t">Sessions created vs verified per day</title>
+<rect x="263.1" y="18" width="148.9" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">51.3k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">102.6k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">10-03</text>
+<text x="114.2" y="192" class="axis" text-anchor="middle">10-05</text>
+<text x="180.4" y="192" class="axis" text-anchor="middle">10-07</text>
+<text x="246.5" y="192" class="axis" text-anchor="middle">10-09</text>
+<text x="312.7" y="192" class="axis" text-anchor="middle">10-11</text>
+<text x="378.9" y="192" class="axis" text-anchor="middle">10-13</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-14</text>
+<line x1="48" x2="412" y1="151.7" y2="151.7" class="baseline"/>
+<text x="52" y="147.7" class="axis">baseline avg 16.9k</text>
+<polyline points="48.0,171.4 81.1,174.0 114.2,171.9 147.3,173.8 180.4,173.0 213.5,142.2 246.5,55.5 279.6,53.9 312.7,38.3 345.8,174.0 378.9,172.0 412.0,172.5" class="line s1"/>
+<circle cx="48.0" cy="171.4" r="3.5" class="dot s1"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="114.2" cy="171.9" r="3.5" class="dot s1"/>
+<circle cx="147.3" cy="173.8" r="3.5" class="dot s1"/>
+<circle cx="180.4" cy="173.0" r="3.5" class="dot s1"/>
+<circle cx="213.5" cy="142.2" r="3.5" class="dot s1"/>
+<circle cx="246.5" cy="55.5" r="3.5" class="dot s1"/>
+<circle cx="279.6" cy="53.9" r="3.5" class="dot s1"/>
+<circle cx="312.7" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="345.8" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="378.9" cy="172.0" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="172.5" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 81.1,174.0 114.2,174.0 147.3,174.0 180.4,174.0 213.5,174.0 246.5,174.0 279.6,174.0 312.7,174.0 345.8,174.0 378.9,174.0 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="81.1" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="114.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="147.3" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="180.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="213.5" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="246.5" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="279.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="312.7" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="345.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="378.9" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="176.5" class="axis">created</text>
+<text x="418.0" y="188.5" class="axis">verified</text>
+<rect x="31.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-03 · created 1,983 · verified 0 (0%)"/>
+<rect x="64.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
+<rect x="97.6" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-05 · created 1,564 · verified 0 (0%)"/>
+<rect x="130.7" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-06 · created 180 · verified 0 (0%)"/>
+<rect x="163.8" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-07 · created 745 · verified 0 (0%)"/>
+<rect x="196.9" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-08 · created 24,060 · verified 6 (0%)"/>
+<rect x="230.0" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-09 · created 89,631 · verified 5 (0%)"/>
+<rect x="263.1" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-10 · created 90,793 · verified 3 (0%)"/>
+<rect x="296.2" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-11 · created 102,586 · verified 5 (0%)"/>
+<rect x="329.3" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-12 · created 0 · verified 0 (–)"/>
+<rect x="362.4" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-13 · created 1,527 · verified 0 (0%)"/>
+<rect x="395.5" y="18" width="33.1" height="156" class="hit" data-tip="2026-10-14 · created 1,136 · verified 0 (0%)"/>
+</svg><div class="sub">Hourly, 2026-10-14 00 → 2026-10-15 01 UTC (dashed = baseline hourly rate)</div><svg viewBox="0 0 470 150" class="chart" role="img" aria-labelledby="h11-t">
+<title id="h11-t">Hourly sessions created vs verified</title>
+<rect x="331.9" y="14" width="80.1" height="112" class="win"/>
+<text x="339.2" y="24" class="axis">last 6h</text>
+<line x1="48" x2="412" y1="126.0" y2="126.0" class="grid"/>
+<text x="42" y="130.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="77.3" y2="77.3" class="grid"/>
+<text x="42" y="81.3" class="axis" text-anchor="end">351</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="grid"/>
+<text x="42" y="32.6" class="axis" text-anchor="end">703</text>
+<text x="48.0" y="144" class="axis" text-anchor="middle">10-14</text>
+<text x="222.7" y="144" class="axis" text-anchor="middle">12h</text>
+<text x="397.4" y="144" class="axis" text-anchor="middle">10-15</text>
+<line x1="48" x2="412" y1="28.6" y2="28.6" class="baseline"/>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,32.0 251.8,96.5 266.4,92.2 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s1"/>
+<polyline points="48.0,126.0 62.6,126.0 77.1,126.0 91.7,126.0 106.2,126.0 120.8,126.0 135.4,126.0 149.9,126.0 164.5,126.0 179.0,126.0 193.6,126.0 208.2,126.0 222.7,126.0 237.3,126.0 251.8,126.0 266.4,126.0 281.0,126.0 295.5,126.0 310.1,126.0 324.6,126.0 339.2,126.0 353.8,126.0 368.3,126.0 382.9,126.0 397.4,126.0 412.0,126.0" class="line s2"/>
+<text x="418.0" y="130.0" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="40.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 00:00 UTC · created 0 · verified 0"/>
+<rect x="55.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 01:00 UTC · created 0 · verified 0"/>
+<rect x="69.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 02:00 UTC · created 0 · verified 0"/>
+<rect x="84.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 03:00 UTC · created 0 · verified 0"/>
+<rect x="99.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 04:00 UTC · created 0 · verified 0"/>
+<rect x="113.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 05:00 UTC · created 0 · verified 0"/>
+<rect x="128.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 06:00 UTC · created 0 · verified 0"/>
+<rect x="142.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 07:00 UTC · created 0 · verified 0"/>
+<rect x="157.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 08:00 UTC · created 0 · verified 0"/>
+<rect x="171.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 09:00 UTC · created 0 · verified 0"/>
+<rect x="186.3" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 10:00 UTC · created 0 · verified 0"/>
+<rect x="200.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 11:00 UTC · created 0 · verified 0"/>
+<rect x="215.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 12:00 UTC · created 0 · verified 0"/>
+<rect x="230.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 13:00 UTC · created 679 · verified 0"/>
+<rect x="244.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 14:00 UTC · created 213 · verified 0"/>
+<rect x="259.1" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 15:00 UTC · created 244 · verified 0"/>
+<rect x="273.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 16:00 UTC · created 0 · verified 0"/>
+<rect x="288.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 17:00 UTC · created 0 · verified 0"/>
+<rect x="302.8" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 18:00 UTC · created 0 · verified 0"/>
+<rect x="317.4" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 19:00 UTC · created 0 · verified 0"/>
+<rect x="331.9" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 20:00 UTC · created 0 · verified 0"/>
+<rect x="346.5" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 21:00 UTC · created 0 · verified 0"/>
+<rect x="361.0" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 22:00 UTC · created 0 · verified 0"/>
+<rect x="375.6" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-14 23:00 UTC · created 0 · verified 0"/>
+<rect x="390.2" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 00:00 UTC · created 0 · verified 0"/>
+<rect x="404.7" y="14" width="14.6" height="112" class="hit" data-tip="2026-10-15 01:00 UTC · created 0 · verified 0"/>
 </svg></div>
 </div><div id="tip"></div><script>
 const tip=document.getElementById('tip');
