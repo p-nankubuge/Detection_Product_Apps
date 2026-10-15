@@ -31,8 +31,8 @@ WITH base AS (
         fp_has_fake_os, ua_mismatch,
         user_agent
     FROM arkoselabs.events_faster
-    WHERE ymdh >= 'YYYY/MM/DD/HH'
-      AND ymdh <  'YYYY/MM/DD/HH'
+    WHERE ymdh >= 'YYYY/MM/DD/HH'      -- ymdh is 'YYYY/MM/DD/HH' (no minutes): '2026/10/05/00'
+      AND ymdh <  'YYYY/MM/DD/HH'      -- a suffix like '00:00:00.000' shifts the window by 1h
       AND location = 'session_setup'
 ),
 flagged AS (
@@ -45,8 +45,12 @@ flagged AS (
                'H01_ios_non_apple_navigator_platform'),
             -- 2. WebKit on iOS has no User-Agent Client Hints: any CH value means a Chromium
             --    browser (or a hand-built header set) wearing an iOS UA.
+            --    Restricted to a non-Apple navigator.platform: CH/userAgentData alongside a genuine
+            --    iPhone/iPad platform is confined to a handful of keys with 0% fp_has_fake_os
+            --    (likely integration-specific) -> M06.
             IF(os IN ('iOS','iPadOS')
-               AND (ch IS NOT NULL OR ch_mobile IS NOT NULL OR user_agent_data_mobile IS NOT NULL),
+               AND (ch IS NOT NULL OR ch_mobile IS NOT NULL OR user_agent_data_mobile IS NOT NULL)
+               AND COALESCE(plat, '') NOT IN ('iPhone','iPad','iPod touch','iPod','MacIntel'),
                'H02_ios_with_client_hints'),
             -- 4. Android navigator.platform is always Linux* (or null) -- never Win/Mac/iPhone.
             --    (Android WebViews excluded: the host app can inject JS / UA metadata -> M05.)
@@ -129,7 +133,12 @@ flagged AS (
             IF(browser_name = 'Chrome Webview' AND (
                    plat IN ('Win32','Win64','MacIntel','iPhone','iPad')
                 OR (ch IS NOT NULL AND ch NOT IN ('Android') AND os = 'Android')),
-               'M05_android_webview_platform_mismatch')
+               'M05_android_webview_platform_mismatch'),
+            -- M6. iOS UA + Client Hints / userAgentData but a genuine Apple navigator.platform.
+            IF(os IN ('iOS','iPadOS')
+               AND (ch IS NOT NULL OR ch_mobile IS NOT NULL OR user_agent_data_mobile IS NOT NULL)
+               AND plat IN ('iPhone','iPad','iPod touch','iPod','MacIntel'),
+               'M06_ios_client_hints_apple_platform')
         ], x -> x IS NOT NULL) AS rules
     FROM base b
 ),
