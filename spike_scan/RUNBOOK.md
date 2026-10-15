@@ -90,6 +90,15 @@ Work from the repo root, `cd spike_scan`.
    render 03 with `--combos new.json` (all keys, 12h halves) and `ingest --combos new.json` — only those combo ids
    are replaced. A combo's first flag is its anchor and may be a suspicion flag or a `telltale`-type global
    (render.py matches it against both SUSPICION_FLAGS and TELLTALE_LIST_AT_ALL_EVENTS).
+7b. **Recurrence (does it come back?).** For every key that spiked on any tracked combo, keep the daily
+   key-scoped history in `data/chart_key_counts.csv` going back ≥2 weeks before the window, and list those
+   keys per combo in `data/recur_keys.json` (new spiking keys: add them there and backfill their earlier days
+   with the key-scoped query, one full day per call, ~15s). Then
+   `python3 spike_report.py recurrence --start <D-25> --end <D> --today <today>` writes
+   `reports/recurrence_<today>.html` (heat table per key, each row on its own scale) and
+   `data/recurrence_<today>.json`, which the main report reads for its per-combo burst-episode list.
+   Burst day = ≥1k sessions and ≥3× the key's median day; back-to-back days = one episode; ≥2 episodes = recurring.
+   Run this before step 8.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)
