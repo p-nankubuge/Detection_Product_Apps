@@ -1,5 +1,5 @@
 {
-  "_doc": "Tracked flag combinations. The daily job counts each one exactly (unsampled) per key per day and appends to data/daily_key_counts.csv. status: live = TT exists in Dataswan; candidate = drafted, not created; Add new combos from the discovery scan here. The FIRST flag of each combo is the pre-filter anchor in 03_track_exact_day.sql: it must be a suspicion_flags-type flag (it is matched against SUSPICION_FLAGS only) and should be the rarest one.",
+  "_doc": "Tracked flag combinations. The daily job counts each one exactly (unsampled) per key per day and appends to data/daily_key_counts.csv. status: live = TT exists in Dataswan; candidate = drafted, not created; Add new combos from the discovery scan here. The FIRST flag of each combo is the pre-filter anchor in 03_track_exact_day.sql: it is matched against SUSPICION_FLAGS and TELLTALE_LIST_AT_ALL_EVENTS and should be the rarest one.",
   "combos": [
     {
       "id": "pagebio_ends_cl_tz_novpn_ct_before_cl",
@@ -37,6 +37,39 @@
         "g-di-dict-3-match-short-term-threshold-exceeded-1x"
       ],
       "draft": "telltales/g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x.json"
+    },
+    {
+      "id": "rta_isp_velocity_pagebio",
+      "telltale_name": "g-rta-isp-velocity-lt-pagebio-null",
+      "status": "candidate",
+      "found": "2026-10-15",
+      "flags": [
+        "g-rta-isp-velocity-long-term-abuse",
+        "g-page-level-biometrics-empty-or-null"
+      ],
+      "draft": "telltales/g-rta-isp-velocity-lt-pagebio-null.json"
+    },
+    {
+      "id": "ends_te_dp_spoof",
+      "telltale_name": "g-cdn-ends-te-device-param-spoofing",
+      "status": "candidate",
+      "found": "2026-10-15",
+      "flags": [
+        "cdn-header-order-ends-with-te",
+        "g-device-parameter-spoofing"
+      ],
+      "draft": "telltales/g-cdn-ends-te-device-param-spoofing.json"
+    },
+    {
+      "id": "single_click_dp_spoof",
+      "telltale_name": "g-bio-mouse-single-click-device-param-spoofing",
+      "status": "candidate",
+      "found": "2026-10-15",
+      "flags": [
+        "g-biometrics-mouse-has-mouse-moves-but-only-a-single-click",
+        "g-device-parameter-spoofing"
+      ],
+      "draft": "telltales/g-bio-mouse-single-click-device-param-spoofing.json"
     }
   ],
   "retired": [

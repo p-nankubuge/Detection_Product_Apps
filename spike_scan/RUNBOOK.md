@@ -11,10 +11,12 @@ spike_scan/
   sql/01_single_flag_spikes.sql   discovery step 1 — single flags, 1% block sample (~15s)
   sql/02_combo_spikes.sql         discovery step 2 — 2-4 flag combos via bitmasks (~15s)
   sql/03_track_exact_day.sql      tracking — EXACT per-key counts, one UTC day (~20s)
+  sql/05_hourly_by_key.sql        hourly exact counts for the chart keys (status + hourly panel)
   render.py                   fills SQL templates (dates, vocab, combos)
   spike_report.py             ingest / keys / missing / report (stdlib only)
   data/daily_key_counts.csv   exact all-key history: day, public_key, key_total, combo_id, sessions
   data/chart_key_counts.csv   exact history for data/chart_keys.txt, with verified counts (per-key charts)
+  data/hourly_key_counts.csv  hourly exact counts for chart keys: ts_hour, public_key, combo_id, sessions, verified
   data/key_names.json         public_key -> key/account name
   data/discovery_<day>.json   each run's discovery shortlist
   telltales/*.json            validated TT drafts (not created in Dataswan)
@@ -59,7 +61,7 @@ Work from the repo root, `cd spike_scan`.
    smallest combo that keeps the share high. For each new one:
    - add it to `combos.json` with `status: candidate` (append to the end — `c<i>` columns are
      positional), and backfill 11 days with step 1;
-   - draft the TT: `location = session_setup` + `#INCLUDE` each flag, `telltale_type: suspicion_flags`,
+   - draft the TT: location row (`session_setup`, or `check_answer` when a flag only fires there) + `#INCLUDE` each flag, `telltale_type: suspicion_flags`,
      name `g-<short-flag-names>`; run `validate_telltale` and save the payload to
      `telltales/<name>.json` with the validation result in `_validated`. If an included telltale has a
      TTL (Ensemble ones do), validation requires a matching `degrade_time`.
@@ -67,19 +69,27 @@ Work from the repo root, `cd spike_scan`.
    **Never call `create_telltale`.** Creating/activating is the analyst's decision.
 6. **Key names.** For any `public_key` in the CSV that is not in `data/key_names.json`, call
    `lookup_key_names` (batch), save the result to a temp JSON and `python3 spike_report.py keys --names <file>`.
-7. **Per-key charts (created vs verified).** Spiking keys of every combo go in `data/chart_keys.txt`
-   (add new spiking keys there). For each missing day:
+7. **Per-key charts (created vs verified), from 4+ days before the spike through now.** Spiking keys of every
+   combo go in `data/chart_keys.txt` (add new spiking keys there). For each missing day:
    `python3 render.py sql/03_track_exact_day.sql --win-start <day> --keys data/chart_keys.txt --combos combos.json`
    → `execute_sql` → `python3 spike_report.py ingest --chart --day <day> --packed '<cell>'`. The key filter
-   makes a full day run in ~10-25s (no 12h split needed). Then per combo:
-   `python3 spike_report.py perkey --combo <id> --win-start <D-4> --win-end <D>`.
-   Read each chart: created ≫ verified = already mitigated; the lines on top of each other = getting through
-   (call those out first in the summary).
-   **Still ongoing?** For yesterday and today-so-far, run `sql/05_hourly_by_key.sql` (same `--keys`/`--combos`
-   flags, one day per query) and save with `spike_report.py hourly --day <day> --packed '<cell>'`, then re-run
-   `perkey`. Each key gets an hourly panel and a status from the last 24 complete hours vs its baseline
-   daily mean: ongoing (≥3×), elevated (1.5–3×), subsided. The newest hour is dropped as partial. Lead the
-   summary with keys that are ongoing AND getting through (high verified share).
+   makes a full day run in ~10-25s; run these one at a time (two in parallel time out).
+   **Hourly, D-4 00:00 → now.** For every day from D-4 to today run `sql/05_hourly_by_key.sql` (same `--keys`/`--combos`)
+   and save with `spike_report.py hourly --day <day> --packed '<cell>'`. If a day times out, slice it with
+   `--hours 0-12` / `--hours 12-24` (or 6h slices) on BOTH render.py and `hourly` — `hourly --hours` replaces only those hours.
+   Re-run today's slice right before rendering so the charts end at the latest hour. 05 emits 8-char key prefixes
+   (smaller response); `hourly` maps them back via `chart_keys.txt`, so keep that file current first.
+   Then per combo: `python3 spike_report.py perkey --combo <id> --win-start <D-4> --win-end <D>`. Each key card has
+   - a daily chart: 7-day baseline (D-11 .. D-5), the shaded window (D-4 .. Y) and **today so far** as a hollow point
+     (summed from today's hourly rows, label says up to which hour);
+   - an hourly chart from D-4 00:00 to the last complete hour; the shaded last 24h is the status window;
+   - status from the last 24 complete hours vs the baseline daily mean: ongoing (≥3×), elevated (1.5–3×), subsided.
+   Read each chart: created ≫ verified = already mitigated; lines on top of each other = getting through.
+   Lead the summary with keys that are ongoing AND getting through.
+   **Adding a combo later:** backfill only the new one with a temporary combos file holding just the new entries:
+   render 03 with `--combos new.json` (all keys, 12h halves) and `ingest --combos new.json` — only those combo ids
+   are replaced. A combo's first flag is its anchor and may be a suspicion flag or a `telltale`-type global
+   (render.py matches it against both SUSPICION_FLAGS and TELLTALE_LIST_AT_ALL_EVENTS).
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)

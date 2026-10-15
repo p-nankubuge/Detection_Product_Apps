@@ -31,8 +31,8 @@ ACTIVE_MIN = 1000
 SPIKE_X = 3
 
 
-def load_combos():
-    return json.loads(COMBOS.read_text())["combos"]
+def load_combos(path=None):
+    return json.loads(pathlib.Path(path or COMBOS).read_text())["combos"]
 
 
 def read_counts(path=None):
@@ -54,7 +54,8 @@ def write_counts(rows, path=None):
 
 
 def cmd_ingest(a):
-    combos = load_combos()
+    combos = load_combos(a.combos)
+    ids = {c["id"] for c in combos}
     new = []
     packed = a.packed.strip()
     for chunk in filter(None, packed.split(";")):
@@ -70,6 +71,8 @@ def cmd_ingest(a):
                             "combo_id": c["id"], "sessions": created, "verified": verified})
     path = CHART_COUNTS if a.chart else COUNTS
     old = read_counts(path)
+    keep = [r for r in old if r["combo_id"] not in ids]  # other combos' rows (when --combos is a subset)
+    old = [r for r in old if r["combo_id"] in ids]
     if a.add:  # second half of a split day: sum into what is there
         idx = {(r["public_key"], r["combo_id"]): r for r in old if r["day"] == a.day}
         tot_by_key = {}
@@ -84,19 +87,23 @@ def cmd_ingest(a):
             n["key_total"] = str(int(n["key_total"]) + tot_by_key.get(n["public_key"], 0))
         for prev in idx.values():  # key only in the first half
             new.append(prev)
-    rows = [r for r in old if r["day"] != a.day] + new
+    rows = keep + [r for r in old if r["day"] != a.day] + new
     write_counts(rows, path)
     print("ingested %d rows for %s (%d keys)" % (len(new), a.day, len(packed.split(";")) if packed else 0))
 
 
 def cmd_hourly(a):
-    combos = load_combos()
+    combos = load_combos(a.combos)
+    ids = {c["id"] for c in combos}
+    ck = ROOT / "data" / "chart_keys.txt"
+    full = {k[:8]: k for k in (ck.read_text().split() if ck.exists() else [])}  # 05 emits 8-char key prefixes
     new = []
     for chunk in filter(None, a.packed.strip().split(";")):
         parts = chunk.split(",")
         if len(parts) != 2 + 2 * len(combos):
             sys.exit("chunk has %d fields, expected %d: %s" % (len(parts), 2 + 2 * len(combos), chunk))
         key, hh, vals = parts[0], int(parts[1]), parts[2:]
+        key = full.get(key, key)
         for i, c in enumerate(combos):
             if int(vals[2 * i]) > 0:
                 new.append({"ts_hour": "%s %02d" % (a.day, hh), "public_key": key, "combo_id": c["id"],
@@ -104,7 +111,9 @@ def cmd_hourly(a):
     old = []
     if HOURLY.exists():
         with HOURLY.open() as f:
-            old = [r for r in csv.DictReader(f) if not r["ts_hour"].startswith(a.day)]
+            h0, h1 = (int(x) for x in (a.hours or "0-24").split("-"))
+            old = [r for r in csv.DictReader(f)
+                   if not (r["ts_hour"].startswith(a.day) and r["combo_id"] in ids and h0 <= int(r["ts_hour"][-2:]) < h1)]
     rows = sorted(old + new, key=lambda r: (r["ts_hour"], r["combo_id"], r["public_key"]))
     with HOURLY.open("w", newline="") as f:
         w = csv.DictWriter(f, HOURLY_FIELDS)
@@ -393,8 +402,9 @@ def cmd_report(a):
     print("wrote reports/%s.html and reports/latest.html" % name)
 
 
-def svg_key_lines(days, created, verified, base, win_start, uid):
-    """One key, one combo: daily sessions created vs verified (same unit, one axis), baseline dashed."""
+def svg_key_lines(days, created, verified, base, win_start, uid, partial=None):
+    """One key, one combo: daily sessions created vs verified (same unit, one axis), baseline dashed.
+    partial = label for the last point when it is today-so-far (drawn hollow, joined by a dashed segment)."""
     W, H, L, R, T, B = 470, 200, 48, 58, 18, 26
     pw, ph = W - L - R, H - T - B
     ymax = max(created + verified + [base, 1]) * 1.15
@@ -411,15 +421,20 @@ def svg_key_lines(days, created, verified, base, win_start, uid):
         out.append('<line x1="%d" x2="%d" y1="%.1f" y2="%.1f" class="grid"/>' % (L, W - R, y(v), y(v)))
         out.append('<text x="%d" y="%.1f" class="axis" text-anchor="end">%s</text>' % (L - 6, y(v) + 4, fmt(v)))
     for i, d in enumerate(days):
-        if i % 2 == 0 or i == len(days) - 1:
+        if (len(days) - 1 - i) % 2 == 0:  # count back from the newest day so its label never collides
             out.append('<text x="%.1f" y="%d" class="axis" text-anchor="middle">%s</text>' % (x(i), H - 8, d[5:]))
     if base > 0:
         out.append('<line x1="%d" x2="%d" y1="%.1f" y2="%.1f" class="baseline"/>' % (L, W - R, y(base), y(base)))
         out.append('<text x="%d" y="%.1f" class="axis">baseline avg %s</text>' % (L + 4, y(base) - 4, fmt(base)))
+    full = len(days) - (1 if partial else 0)
     for vals, cls in ((created, "s1"), (verified, "s2")):
-        out.append('<polyline points="%s" class="line %s"/>' % (" ".join("%.1f,%.1f" % (x(i), y(v)) for i, v in enumerate(vals)), cls))
+        out.append('<polyline points="%s" class="line %s"/>' % (" ".join("%.1f,%.1f" % (x(i), y(v)) for i, v in enumerate(vals[:full])), cls))
+        if partial and full >= 1:
+            out.append('<polyline points="%.1f,%.1f %.1f,%.1f" class="line %s partial"/>' % (x(full - 1), y(vals[full - 1]), x(full), y(vals[full]), cls))
         for i, v in enumerate(vals):
-            out.append('<circle cx="%.1f" cy="%.1f" r="3.5" class="dot %s"/>' % (x(i), y(v), cls))
+            out.append('<circle cx="%.1f" cy="%.1f" r="3.5" class="dot %s%s"/>' % (x(i), y(v), cls, " hollow" if partial and i == full else ""))
+    if partial:
+        out.append('<text x="%.1f" y="%d" class="axis" text-anchor="middle">so far</text>' % (x(full), T + 10))
     # direct labels at the line ends (2 series)
     ly = [y(created[-1]), y(verified[-1])]
     if abs(ly[0] - ly[1]) < 12:
@@ -428,7 +443,7 @@ def svg_key_lines(days, created, verified, base, win_start, uid):
     out.append('<text x="%.1f" y="%.1f" class="axis">verified</text>' % (x(len(days) - 1) + 6, ly[1] + 4))
     for i, d in enumerate(days):
         c, v = created[i], verified[i]
-        tip = "%s · created %s · verified %s (%s)" % (d, "{:,}".format(c), "{:,}".format(v), ("%.0f%%" % (100.0 * v / c)) if c else "–")
+        tip = "%s%s · created %s · verified %s (%s)" % (d, (" " + partial) if partial and i == full else "", "{:,}".format(c), "{:,}".format(v), ("%.0f%%" % (100.0 * v / c)) if c else "–")
         out.append('<rect x="%.1f" y="%d" width="%.1f" height="%d" class="hit" data-tip="%s"/>' % (x(i) - step / 2, T, step, ph, tip))
     out.append("</svg>")
     return "\n".join(out)
@@ -449,6 +464,20 @@ def load_hourly(combo_id):
             c[idx[r["ts_hour"]]] = int(r["sessions"])
             v[idx[r["ts_hour"]]] = int(r["verified"])
     return hours, dict(out)
+
+
+def load_today(combo_id, day):
+    """-> ({key: (created, verified)}, last_hour) summed over every hourly row of `day`, incl. the partial newest hour."""
+    if not HOURLY.exists():
+        return {}, None
+    with HOURLY.open() as f:
+        rows = [r for r in csv.DictReader(f) if r["ts_hour"].startswith(day)]
+    out = defaultdict(lambda: [0, 0])
+    for r in rows:
+        if r["combo_id"] == combo_id:
+            out[r["public_key"]][0] += int(r["sessions"])
+            out[r["public_key"]][1] += int(r["verified"])
+    return dict(out), (max(r["ts_hour"] for r in rows)[-2:] if rows else None)
 
 
 def ongoing_status(created, base_daily):
@@ -475,16 +504,17 @@ def svg_hourly(hours, created, verified, base_daily, uid):
     y = lambda v: T + ph - ph * v / ymax
     out = ['<svg viewBox="0 0 %d %d" class="chart" role="img" aria-labelledby="%s-t">' % (W, H, uid),
            '<title id="%s-t">Hourly sessions created vs verified</title>' % uid]
-    if len(hours) >= 6:
-        out.append('<rect x="%.1f" y="%d" width="%.1f" height="%d" class="win"/>' % (x(len(hours) - 6) - step / 2, T, W - R - x(len(hours) - 6) + step / 2, ph))
-        out.append('<text x="%.1f" y="%d" class="axis">last 6h</text>' % (x(len(hours) - 6), T + 10))
+    if len(hours) >= 24:  # the status window
+        out.append('<rect x="%.1f" y="%d" width="%.1f" height="%d" class="win"/>' % (x(len(hours) - 24) - step / 2, T, W - R - x(len(hours) - 24) + step / 2, ph))
+        out.append('<text x="%.1f" y="%d" class="axis">last 24h</text>' % (x(len(hours) - 24) + 2, T + 10))
     for f in (0, .5, 1):
         v = ymax / 1.15 * f
         out.append('<line x1="%d" x2="%d" y1="%.1f" y2="%.1f" class="grid"/>' % (L, W - R, y(v), y(v)))
         out.append('<text x="%d" y="%.1f" class="axis" text-anchor="end">%s</text>' % (L - 6, y(v) + 4, fmt(v)))
     for i, h in enumerate(hours):
-        if h.endswith(" 00") or h.endswith(" 12"):
+        if h.endswith(" 00") or (len(hours) <= 48 and h.endswith(" 12")):
             lab = h[5:10] if h.endswith(" 00") else "12h"
+            out.append('<line x1="%.1f" x2="%.1f" y1="%d" y2="%d" class="grid"/>' % (x(i), x(i), T, T + ph))
             out.append('<text x="%.1f" y="%d" class="axis" text-anchor="middle">%s</text>' % (x(i), H - 6, lab))
     if base_h > 0:
         out.append('<line x1="%d" x2="%d" y1="%.1f" y2="%.1f" class="baseline"/>' % (L, W - R, y(base_h), y(base_h)))
@@ -521,6 +551,9 @@ def cmd_perkey(a):
             ver[r["public_key"]][r["day"]] = int(r.get("verified") or 0)
     keys = [k for k in st if st[k]["spiking"]] if not a.all else [k for k in st if st[k]["peak"] >= ACTIVE_MIN]
     hours, hourly = load_hourly(c["id"])
+    today, today_hour = load_today(c["id"], str(we))  # today so far (we = window end = today when run daily)
+    cdays = days + ([str(we)] if today_hour else [])
+    partial = ("so far, to %s:59 UTC" % today_hour) if today_hour else None
     zero = [0] * len(hours)
     status = {k: ongoing_status(hourly.get(k, (zero, zero))[0], st[k]["base"]) for k in keys}
     order = {"ongoing": 0, "elevated": 1, "subsided": 2, "no hourly data": 3}
@@ -528,6 +561,7 @@ def cmd_perkey(a):
     title = c.get("telltale_name") or c["id"]
     parts = ['<!doctype html><html><head><meta charset="utf-8"><title>%s per key</title><style>%s'
              '.baseline{stroke:var(--text-secondary);stroke-width:1.5;stroke-dasharray:4 3}'
+             '.line.partial{stroke-dasharray:3 3}.dot.hollow.s1{fill:var(--surface-2);stroke:var(--series-1)}.dot.hollow.s2{fill:var(--surface-2);stroke:var(--series-2)}'
              '.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}'
              '.kcard{background:var(--surface-2);border-radius:8px;padding:12px 16px}.kcard h3{margin:0;color:var(--text-primary)}'
              '.kstats{font-size:12px;color:var(--text-secondary);margin:2px 0 6px}.kstats b{color:var(--text-primary)}'
@@ -539,8 +573,11 @@ def cmd_perkey(a):
     parts.append('<p class="muted">%s<br>Exact daily sessions per key carrying this combination, each chart on its own scale. '
                  '<b>Created</b> = sessions with the signal; <b>verified</b> = of those, sessions that ended verified '
                  '(<code>SESSIONS_VERIFIED &gt; 0</code>). A wide gap means the traffic is already being stopped; lines on top of each other mean it is getting through. '
-                 'Shaded = window %s → %s; dashed = baseline daily mean of created (%s → %s). Hover a day for numbers. Sorted by peak ÷ baseline.</p>'
-                 % (" + ".join("<code>%s</code>" % html.escape(f) for f in c["flags"]), ws, we - dt.timedelta(days=1), bs, ws - dt.timedelta(days=1)))
+                 'Daily chart: baseline %s → %s (dashed line = its daily mean), shaded window %s → %s, and %s as a hollow point. '
+                 'Hourly chart: every hour from %s to the last complete hour; the shaded last 24h is what the status uses. '
+                 'Hover for numbers. Ongoing keys first, then by peak ÷ baseline.</p>'
+                 % (" + ".join("<code>%s</code>" % html.escape(f) for f in c["flags"]), bs, ws - dt.timedelta(days=1), ws, we - dt.timedelta(days=1),
+                    ("today (%s, %s)" % (we, partial)) if partial else "today (no data yet)", hours[0] if hours else "–"))
     if hours:
         groups = defaultdict(list)
         for k in keys:
@@ -573,7 +610,9 @@ def cmd_perkey(a):
                      '<div class="kstats">%s</div><div class="kstats">window verified: <b>%s of %s (%.0f%%)</b> · last 24h: <b>%s</b> · last 6h: %s/h vs baseline %s/h</div>%s%s</div>'
                      % (html.escape(key_label(k, names)), stt.split()[0], stt, tag, html.escape(n.get("account_name", "")), k, stats,
                         "{:,}".format(wv), "{:,}".format(wc), vr, fmt(rate), fmt(last6), fmt(s["base"] / 24),
-                        svg_key_lines(days, s["series"], vser, s["base"], str(ws), "p%d" % i), hourly_svg))
+                        svg_key_lines(cdays, s["series"] + ([today.get(k, [0, 0])[0]] if partial else []),
+                                      vser + ([today.get(k, [0, 0])[1]] if partial else []), s["base"], str(ws), "p%d" % i, partial),
+                        hourly_svg))
     parts.append('</div><div id="tip"></div>%s</div></body></html>' % JS)
     rep = ROOT / "reports"
     rep.mkdir(exist_ok=True)
@@ -587,10 +626,13 @@ def main():
     i = sp.add_parser("ingest"); i.add_argument("--day", required=True); i.add_argument("--packed", required=True)
     i.add_argument("--add", action="store_true", help="sum into the day's existing rows (second 12h half)")
     i.add_argument("--chart", action="store_true", help="store in data/chart_key_counts.csv (query rendered with --keys)")
+    i.add_argument("--combos", help="combos file the query was rendered with (a subset of combos.json: only those combos' rows are replaced)")
     k = sp.add_parser("keys"); k.add_argument("--names", required=True)
     m = sp.add_parser("missing"); m.add_argument("--since", required=True)
     r = sp.add_parser("report"); r.add_argument("--win-start", required=True); r.add_argument("--win-end", required=True); r.add_argument("--discovery")
     hr = sp.add_parser("hourly"); hr.add_argument("--day", required=True); hr.add_argument("--packed", required=True)
+    hr.add_argument("--combos", help="combos file the query was rendered with (subset of combos.json)")
+    hr.add_argument("--hours", help="the --hours slice the query was rendered with (only those hours are replaced)")
     pk = sp.add_parser("perkey"); pk.add_argument("--combo", required=True); pk.add_argument("--win-start", required=True)
     pk.add_argument("--win-end", required=True); pk.add_argument("--all", action="store_true", help="every key with a >=1k day, not just spiking")
     a = p.parse_args()

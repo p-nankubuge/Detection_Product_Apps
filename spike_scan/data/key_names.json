@@ -47,6 +47,10 @@
   "account_name": "Roblox Corporation",
   "key_name": "Roblox - Production - Login - Key 1"
  },
+ "4D297134-67EC-B943-E0E9-79E2E0D9F8DB": {
+  "account_name": "Singapore Airlines",
+  "key_name": "Singapore Airlines - Key 1"
+ },
  "4DD22AF2-94A7-4F86-8A2B-C91DEB011C24": {
   "account_name": "AT&T",
   "key_name": "AT&T - Consumer SDK Android - Production - Key 4"
@@ -135,6 +139,10 @@
   "account_name": "Bumble",
   "key_name": "Bumble - SMS - Mobile - Production - Key 4"
  },
+ "CDB38584-ABDB-4342-BCED-6F5067CBC8DC": {
+  "account_name": "Sony Interactive Entertainment",
+  "key_name": "Sony - Production - Key 2 - Support Chat and Form"
+ },
  "CF5C61EE-F062-45DF-A32F-E9398E2B4E0D": {
   "account_name": "Blizzard Entertainment Inc.",
   "key_name": "Blizzard - Production - ROW Login - Key 5"
@@ -142,6 +150,10 @@
  "D1632BAF-6E1B-46C9-9FCF-EC19B49A4B4F": {
   "account_name": "Match.com",
   "key_name": "Match - Registration - Production - Key 2"
+ },
+ "DB4DC857-0913-46C5-8D96-E7EF9FBB83B2": {
+  "account_name": "Wells Fargo & Company",
+  "key_name": "Wells Fargo - Prod/Detect - Password Reset - Web - Key 5"
  },
  "DE24F792-2F8A-4CDC-BF2D-70F94BF1660A": {
   "account_name": "Doordash",

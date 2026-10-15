@@ -1,0 +1,33 @@
+{
+  "ticket": "DETCORE-4468",
+  "telltale_type": "suspicion_flags",
+  "cohort_category": "Suspicious",
+  "owner": "p.nankubuge@arkoselabs.com",
+  "owner_category": "User",
+  "risk_category": "CUSTOM",
+  "risk_score": 0,
+  "telltale_active": false,
+  "allow_others_to_include": true,
+  "life_cycle_management": "M",
+  "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+  "_validated": "2026-10-15 validate_telltale: valid",
+  "telltale_name": "g-cdn-ends-te-device-param-spoofing",
+  "location": "SESSION_SETUP",
+  "telltale_definition": [
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "cdn-header-order-ends-with-te"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-device-parameter-spoofing"
+    }
+  ],
+  "telltale_description": "Spike-scan 2026-10-15: CDN header order ends with TE + device parameter spoofing. Spiked on 10 keys Oct 11-14 (Uber SMS, Adobe ARP/Commerce, Tinder PreSMS, Chime, TIAA, Wells Fargo, AT&T, Roblox Signup, Microsoft Signup); 92% of window volume on spiking keys. Still ongoing on Oct 15 on TIAA, Tinder, Adobe, Wells Fargo, Chime."
+}

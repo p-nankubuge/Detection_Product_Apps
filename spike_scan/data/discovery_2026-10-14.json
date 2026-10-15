@@ -1,13 +1,100 @@
 {
-  "window": ["2026-10-10", "2026-10-14"],
-  "summary": "Discovery = 1% SYSTEM sample, Oct 10-13 vs Oct 3-9, run 2026-10-15. Step 1 (single flags) fed a 14-flag vocabulary into step 2 (all 2-4 flag combos). Excluded: g-h-device-spoofing-detected-verify-pressure (edited 2026-10-13, zero baseline = definition change, GAME_VERIFY only, not includable).",
-  "combos": [
-    {"combo": "cdn-header-order-ends-with-content-length + g--e-country-timezone-mismatch", "keys_spiking": 10, "spike_share": 0.39, "est_excess_per_day": 631157, "note": "pair core of the header-order family"},
-    {"combo": "cdn-header-order-ends-with-content-length + g--e-country-timezone-mismatch + susp-rfc-violation-cdn-header-order-content-type-before-content-length + client-hints-has-not-a-brand-grease", "keys_spiking": 8, "spike_share": 0.58, "est_excess_per_day": 627093, "note": "tracked as ends_cl_ct_before_cl_tz_grease"},
-    {"combo": "cdn-header-order-ends-with-content-length + country-match-timezone-mismatch-no-vpn + g-page-level-biometrics-empty-or-null (+ ct-before-cl)", "keys_spiking": 7, "spike_share": 0.61, "est_excess_per_day": 589921, "note": "your live TT g-pagebio-null-...-rfc-ct-before-cl"},
-    {"combo": "susp-rfc-violation-cdn-header-order-content-type-before-content-length + g-device-parameter-spoofing + g-di-dict-3-match-short-term-threshold-exceeded-1x", "keys_spiking": 7, "spike_share": 0.81, "est_excess_per_day": 405764, "note": "NEW cluster - tracked as ct_before_cl_dp_spoof_di_dict3"},
-    {"combo": "g-device-parameter-spoofing + client-hints-has-not-a-brand-grease + g-page-level-biometrics-empty-or-null", "keys_spiking": 7, "spike_share": 0.27, "est_excess_per_day": 694757, "note": "broad/steady - retired"},
-    {"combo": "susp-rfc-violation-cdn-header-order-content-type-before-content-length + g-ip-intel-asn-intel-reputation-medium-risk", "keys_spiking": 8, "spike_share": 0.05, "est_excess_per_day": 118764, "note": "too diluted (5%) - not tracked"},
-    {"combo": "g-h-device-spoofing-detected-verify-pressure + client-hints-has-not-a-brand-grease", "keys_spiking": 6, "spike_share": 0.87, "est_excess_per_day": 52450, "note": "ARTIFACT - TT edited 2026-10-13"}
-  ]
+ "window": [
+  "2026-10-11",
+  "2026-10-14"
+ ],
+ "summary": "Discovery = 1% SYSTEM sample, Oct 10-13 vs Oct 3-9, run 2026-10-15. Step 1 (single flags) fed a 14-flag vocabulary into step 2 (all 2-4 flag combos). Excluded: g-h-device-spoofing-detected-verify-pressure (edited 2026-10-13, zero baseline = definition change, GAME_VERIFY only, not includable). Second pass (Oct 11-14 vs Oct 4-10, 16-flag vocabulary without the header-order/ct-before-cl family): found 3 more combos, now tracked. Excluded as artifacts: g-ip-datacenter, g-ip-datacenter-with-fingerprint, g-ip-hosting-cloud-security, g-ip-connection-type-velocity-short-term-abuse-* and g-ip-asn-reputation-high-risk-with-session-signal (all created 2026-10-14, DETCORE-4371, Internal Test, so new definitions, not attacks); g-spoofing-math-fingerprint-chrome-windows-mismatch (edited 2026-10-06, inside baseline); g--e-g-ja4-suspicious-verification-patterns (Ensemble, re-dated daily).",
+ "combos": [
+  {
+   "combo": "cdn-header-order-ends-with-content-length + g--e-country-timezone-mismatch",
+   "keys_spiking": 10,
+   "spike_share": 0.39,
+   "est_excess_per_day": 631157,
+   "note": "pair core of the header-order family"
+  },
+  {
+   "combo": "cdn-header-order-ends-with-content-length + g--e-country-timezone-mismatch + susp-rfc-violation-cdn-header-order-content-type-before-content-length + client-hints-has-not-a-brand-grease",
+   "keys_spiking": 8,
+   "spike_share": 0.58,
+   "est_excess_per_day": 627093,
+   "note": "tracked as ends_cl_ct_before_cl_tz_grease"
+  },
+  {
+   "combo": "cdn-header-order-ends-with-content-length + country-match-timezone-mismatch-no-vpn + g-page-level-biometrics-empty-or-null (+ ct-before-cl)",
+   "keys_spiking": 7,
+   "spike_share": 0.61,
+   "est_excess_per_day": 589921,
+   "note": "your live TT g-pagebio-null-...-rfc-ct-before-cl"
+  },
+  {
+   "combo": "susp-rfc-violation-cdn-header-order-content-type-before-content-length + g-device-parameter-spoofing + g-di-dict-3-match-short-term-threshold-exceeded-1x",
+   "keys_spiking": 7,
+   "spike_share": 0.81,
+   "est_excess_per_day": 405764,
+   "note": "NEW cluster - tracked as ct_before_cl_dp_spoof_di_dict3"
+  },
+  {
+   "combo": "g-device-parameter-spoofing + client-hints-has-not-a-brand-grease + g-page-level-biometrics-empty-or-null",
+   "keys_spiking": 7,
+   "spike_share": 0.27,
+   "est_excess_per_day": 694757,
+   "note": "broad/steady - retired"
+  },
+  {
+   "combo": "susp-rfc-violation-cdn-header-order-content-type-before-content-length + g-ip-intel-asn-intel-reputation-medium-risk",
+   "keys_spiking": 8,
+   "spike_share": 0.05,
+   "est_excess_per_day": 118764,
+   "note": "too diluted (5%) - not tracked"
+  },
+  {
+   "combo": "g-h-device-spoofing-detected-verify-pressure + client-hints-has-not-a-brand-grease",
+   "keys_spiking": 6,
+   "spike_share": 0.87,
+   "est_excess_per_day": 52450,
+   "note": "ARTIFACT - TT edited 2026-10-13"
+  },
+  {
+   "combo": "g-rta-isp-velocity-long-term-abuse + g-page-level-biometrics-empty-or-null",
+   "keys_spiking": 7,
+   "spike_share": 0.94,
+   "est_excess_per_day": 48275,
+   "note": "NEW - tracked as rta_isp_velocity_pagebio (exact: 10 keys, 96%; one-day burst Oct 11 on every key, check RTA)"
+  },
+  {
+   "combo": "cdn-header-order-ends-with-te + g-device-parameter-spoofing",
+   "keys_spiking": 7,
+   "spike_share": 0.88,
+   "est_excess_per_day": 42096,
+   "note": "NEW - tracked as ends_te_dp_spoof (exact: 10 keys, 92%)"
+  },
+  {
+   "combo": "g-biometrics-mouse-has-mouse-moves-but-only-a-single-click + g-device-parameter-spoofing",
+   "keys_spiking": 5,
+   "spike_share": 0.75,
+   "est_excess_per_day": 86754,
+   "note": "NEW - tracked as single_click_dp_spoof (exact: 7 keys, 78%)"
+  },
+  {
+   "combo": "g-di-high-risk-signature-exceeding-2x-long-term-threshold + g-device-parameter-spoofing",
+   "keys_spiking": 6,
+   "spike_share": 0.41,
+   "est_excess_per_day": 346032,
+   "note": "not tracked - share < 0.5 (and the DI flag is already inside g-device-parameter-spoofing)"
+  },
+  {
+   "combo": "g-di-dict-31-match-short-term-threshold-exceeded-1x + g-device-parameter-spoofing",
+   "keys_spiking": 7,
+   "spike_share": 0.5,
+   "est_excess_per_day": 45561,
+   "note": "not tracked - borderline share; watch"
+  },
+  {
+   "combo": "g-spoofing-math-fingerprint-chrome-windows-mismatch + g-page-level-biometrics-empty-or-null",
+   "keys_spiking": 4,
+   "spike_share": 0.74,
+   "est_excess_per_day": 450575,
+   "note": "not tracked - math-fingerprint definition edited 2026-10-06"
+  }
+ ]
 }

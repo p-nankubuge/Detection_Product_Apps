@@ -46,7 +46,10 @@ if a.combos:
         bools.append("(%s) AS b%d" % (cond, i))
         cols.append("COUNT_IF(b%d) AS c%d" % (i, i))
         cols.append("COUNT_IF(b%d AND verified) AS v%d" % (i, i))
-    vals["anchors"] = " OR ".join(sorted({"ARRAY_CONTAINS('%s'::VARIANT, SUSPICION_FLAGS::ARRAY)" % c["flags"][0] for c in combos}))
+    # anchor = each combo's first flag; telltale-type globals (g-rta-*, g-di-*) live in TELLTALE_LIST_AT_ALL_EVENTS
+    vals["anchors"] = " OR ".join(sorted({"ARRAY_CONTAINS('{0}'::VARIANT, SUSPICION_FLAGS::ARRAY)"
+                                          " OR ARRAY_CONTAINS('{0}'::VARIANT, TELLTALE_LIST_AT_ALL_EVENTS::ARRAY)".format(c["flags"][0])
+                                          for c in combos}))
     vals["combo_bools"] = ",\n         ".join(bools)
     vals["combo_cols"] = ",\n         ".join(cols)
     vals["combo_max"] = ", ".join("c%d" % i for i in range(len(combos))) + (", 0" if len(combos) == 1 else "")
