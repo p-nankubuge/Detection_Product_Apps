@@ -1,0 +1,619 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Spike scan 2026-10-15</title><style>
+.viz-root{color-scheme:light;--surface-1:#fcfcfb;--surface-2:#f2f1ee;--text-primary:#0b0b0b;--text-secondary:#52514e;--text-muted:#77766f;--grid:#e4e3df;--win:#f3ece4;
+--series-1:#2a78d6;--series-2:#eb6834;--series-3:#1baf7a;--series-4:#eda100;--series-5:#e87ba4;--series-6:#008300;--series-7:#6250d6;--series-8:#e34948;}
+@media (prefers-color-scheme: dark){:root:where(:not([data-theme="light"])) .viz-root{color-scheme:dark;--surface-1:#1a1a19;--surface-2:#242422;--text-primary:#f0efec;--text-secondary:#c3c2b7;--text-muted:#9a998f;--grid:#33332f;--win:#2b2620;
+--series-1:#3987e5;--series-2:#d95926;--series-3:#199e70;--series-4:#c98500;--series-5:#d55181;--series-6:#008300;--series-7:#9085e9;--series-8:#e66767;}}
+body{margin:0;font-family:Outfit,system-ui,sans-serif}
+.viz-root{background:var(--surface-1);color:var(--text-primary);padding:24px 32px;min-height:100vh}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 4px}h3{font-size:14px;margin:16px 0 6px;color:var(--text-secondary)}
+p,li,td,th{font-size:13px;line-height:1.5}.muted{color:var(--text-secondary)}
+.card{background:var(--surface-2);border-radius:8px;padding:16px 20px;margin:14px 0}
+.tiles{display:flex;gap:28px;flex-wrap:wrap;margin:8px 0}.tile b{display:block;font-size:26px}.tile span{font-size:12px;color:var(--text-secondary)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:18px}
+.chart{width:100%;height:auto}.grid{stroke:var(--grid);stroke-width:1}.axis{fill:var(--text-muted);font-size:11px}
+.win{fill:var(--win)}.line{fill:none;stroke-width:2}.dot{stroke:var(--surface-2);stroke-width:2}
+.line.s1{stroke:var(--series-1)}.dot.s1{fill:var(--series-1)}.line.s2{stroke:var(--series-2)}.dot.s2{fill:var(--series-2)}
+.dlabel{fill:var(--text-primary);font-size:11px;text-anchor:end}.hit{fill:transparent}
+.seg{rx:2}.seg:hover,.hit:hover{opacity:.85;stroke:var(--text-primary);stroke-width:1}
+.c0{fill:var(--series-1)}.sw.c0{background:var(--series-1)}.c1{fill:var(--series-2)}.sw.c1{background:var(--series-2)}.c2{fill:var(--series-3)}.sw.c2{background:var(--series-3)}.c3{fill:var(--series-4)}.sw.c3{background:var(--series-4)}.c4{fill:var(--series-5)}.sw.c4{background:var(--series-5)}.c5{fill:var(--series-6)}.sw.c5{background:var(--series-6)}.c6{fill:var(--series-7)}.sw.c6{background:var(--series-7)}.sw.cother{background:var(--text-muted)} .cother{fill:var(--text-muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0}.lg{font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}.sw.s1{background:var(--series-1)}.sw.s2{background:var(--series-2)}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--grid)}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+pre{background:var(--surface-1);border-radius:6px;padding:10px;overflow:auto;font-size:12px}
+details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
+#tip{position:fixed;pointer-events:none;background:var(--text-primary);color:var(--surface-1);font-size:12px;padding:4px 8px;border-radius:4px;display:none;z-index:9}
+</style></head><body><div class="viz-root">
+<h1>Suspicion-flag spike scan</h1>
+<p class="muted">Window <b>2026-10-10 → 2026-10-14</b> (5 days, UTC) vs 7-day baseline 2026-10-03 → 2026-10-09. Exact session counts from ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY (Production keys). A key is <i>hit</i> on a day at ≥1k sessions; <i>spiking</i> when also ≥3× its baseline daily mean. Generated 2026-10-15 01:51 UTC.</p>
+<div class="card"><h2>Tracked combinations</h2><table><tr><th>Combination</th><th>Status</th><th class="n">Keys spiking</th><th class="n">Max keys hit/day</th><th class="n">Volume on spiking keys</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl</td><td>live</td><td class="n">9</td><td class="n">11</td><td class="n">77%</td></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease</td><td>candidate</td><td class="n">11</td><td class="n">18</td><td class="n">57%</td></tr><tr><td>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x</td><td>candidate</td><td class="n">12</td><td class="n">12</td><td class="n">91%</td></tr></table></div>
+<div class="card"><h2>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
+<p class="muted"><code>g-page-level-biometrics-empty-or-null</code> + <code>cdn-header-order-ends-with-content-length</code> + <code>country-match-timezone-mismatch-no-vpn</code> + <code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code></p>
+<div class="tiles"><div class="tile"><b>9</b><span>keys spiking in window</span></div><div class="tile"><b>11</b><span>max keys hit on one day</span></div><div class="tile"><b>4.2M</b><span>window sessions (exact)</span></div><div class="tile"><b>77%</b><span>of window volume on spiking keys</span></div></div>
+<div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k0-t">
+<title id="k0-t">Keys hit per day</title>
+<rect x="387.3" y="16" width="236.7" height="174" class="win"/>
+<text x="391.3" y="28" class="axis">scan window</text>
+<line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
+<text x="34" y="194.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="624" y1="149.8" y2="149.8" class="grid"/>
+<text x="34" y="153.8" class="axis" text-anchor="end">3</text>
+<line x1="40" x2="624" y1="109.7" y2="109.7" class="grid"/>
+<text x="34" y="113.7" class="axis" text-anchor="end">6</text>
+<line x1="40" x2="624" y1="69.5" y2="69.5" class="grid"/>
+<text x="34" y="73.5" class="axis" text-anchor="end">9</text>
+<line x1="40" x2="624" y1="29.4" y2="29.4" class="grid"/>
+<text x="34" y="33.4" class="axis" text-anchor="end">12</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-03</text>
+<text x="146.2" y="210" class="axis" text-anchor="middle">10-05</text>
+<text x="252.4" y="210" class="axis" text-anchor="middle">10-07</text>
+<text x="358.5" y="210" class="axis" text-anchor="middle">10-09</text>
+<text x="464.7" y="210" class="axis" text-anchor="middle">10-11</text>
+<text x="570.9" y="210" class="axis" text-anchor="middle">10-13</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
+<polyline points="40.0,29.4 93.1,56.2 146.2,82.9 199.3,82.9 252.4,82.9 305.5,56.2 358.5,82.9 411.6,56.2 464.7,42.8 517.8,42.8 570.9,69.5 624.0,42.8" class="line s1"/>
+<circle cx="40.0" cy="29.4" r="4" class="dot s1"/>
+<circle cx="93.1" cy="56.2" r="4" class="dot s1"/>
+<circle cx="146.2" cy="82.9" r="4" class="dot s1"/>
+<circle cx="199.3" cy="82.9" r="4" class="dot s1"/>
+<circle cx="252.4" cy="82.9" r="4" class="dot s1"/>
+<circle cx="305.5" cy="56.2" r="4" class="dot s1"/>
+<circle cx="358.5" cy="82.9" r="4" class="dot s1"/>
+<circle cx="411.6" cy="56.2" r="4" class="dot s1"/>
+<circle cx="464.7" cy="42.8" r="4" class="dot s1"/>
+<circle cx="517.8" cy="42.8" r="4" class="dot s1"/>
+<circle cx="570.9" cy="69.5" r="4" class="dot s1"/>
+<circle cx="624.0" cy="42.8" r="4" class="dot s1"/>
+<text x="620.0" y="34.8" class="dlabel">11</text>
+<polyline points="40.0,136.5 93.1,176.6 146.2,190.0 199.3,176.6 252.4,176.6 305.5,149.8 358.5,163.2 411.6,136.5 464.7,109.7 517.8,123.1 570.9,136.5 624.0,136.5" class="line s2"/>
+<circle cx="40.0" cy="136.5" r="4" class="dot s2"/>
+<circle cx="93.1" cy="176.6" r="4" class="dot s2"/>
+<circle cx="146.2" cy="190.0" r="4" class="dot s2"/>
+<circle cx="199.3" cy="176.6" r="4" class="dot s2"/>
+<circle cx="252.4" cy="176.6" r="4" class="dot s2"/>
+<circle cx="305.5" cy="149.8" r="4" class="dot s2"/>
+<circle cx="358.5" cy="163.2" r="4" class="dot s2"/>
+<circle cx="411.6" cy="136.5" r="4" class="dot s2"/>
+<circle cx="464.7" cy="109.7" r="4" class="dot s2"/>
+<circle cx="517.8" cy="123.1" r="4" class="dot s2"/>
+<circle cx="570.9" cy="136.5" r="4" class="dot s2"/>
+<circle cx="624.0" cy="136.5" r="4" class="dot s2"/>
+<text x="620.0" y="128.5" class="dlabel">4</text>
+<rect x="15.7" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-03 · hit: 12 keys · spiking: 4 keys"/>
+<rect x="68.8" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-04 · hit: 10 keys · spiking: 1 keys"/>
+<rect x="121.8" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-05 · hit: 8 keys · spiking: 0 keys"/>
+<rect x="174.9" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-06 · hit: 8 keys · spiking: 1 keys"/>
+<rect x="228.0" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-07 · hit: 8 keys · spiking: 1 keys"/>
+<rect x="281.1" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-08 · hit: 10 keys · spiking: 3 keys"/>
+<rect x="334.2" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-09 · hit: 8 keys · spiking: 2 keys"/>
+<rect x="387.3" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-10 · hit: 10 keys · spiking: 4 keys"/>
+<rect x="440.4" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-11 · hit: 11 keys · spiking: 6 keys"/>
+<rect x="493.5" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-12 · hit: 11 keys · spiking: 5 keys"/>
+<rect x="546.6" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-13 · hit: 9 keys · spiking: 4 keys"/>
+<rect x="599.7" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-14 · hit: 11 keys · spiking: 4 keys"/>
+</svg></div><div><h3>Daily sessions by key</h3><div class="legend"><span class="lg"><i class="sw c0"></i>Adobe - ARP FF - Production - Key 8</span><span class="lg"><i class="sw c1"></i>Airbnb - Account Lookup - Production Key 6</span><span class="lg"><i class="sw c2"></i>AT&amp;T - Consumer Login Web - Production - Key 3</span><span class="lg"><i class="sw c3"></i>Amazon - IDS - Production - Key 2</span><span class="lg"><i class="sw c4"></i>Amazon - Client - Production - Key 1</span><span class="lg"><i class="sw c5"></i>WBD Bolt/Beam - Login - Production - Key 8</span><span class="lg"><i class="sw c6"></i>Olo - Payments - Production - Key 3</span><span class="lg"><i class="sw cother"></i>Other (31 keys)</span></div><svg viewBox="0 0 640 260" class="chart" role="img" aria-labelledby="b0-t">
+<title id="b0-t">Daily sessions by key</title>
+<rect x="385.7" y="16" width="238.3" height="214" class="win"/>
+<line x1="52" x2="624" y1="230.0" y2="230.0" class="grid"/>
+<text x="46" y="234.0" class="axis" text-anchor="end">0</text>
+<line x1="52" x2="624" y1="181.4" y2="181.4" class="grid"/>
+<text x="46" y="185.4" class="axis" text-anchor="end">302.5k</text>
+<line x1="52" x2="624" y1="132.7" y2="132.7" class="grid"/>
+<text x="46" y="136.7" class="axis" text-anchor="end">605.1k</text>
+<line x1="52" x2="624" y1="84.1" y2="84.1" class="grid"/>
+<text x="46" y="88.1" class="axis" text-anchor="end">907.6k</text>
+<line x1="52" x2="624" y1="35.5" y2="35.5" class="grid"/>
+<text x="46" y="39.5" class="axis" text-anchor="end">1.2M</text>
+<rect x="60.6" y="229.4" width="30.5" height="0.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-03 · 3,984 sessions"/>
+<rect x="60.6" y="229.3" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-03 · 298 sessions"/>
+<rect x="60.6" y="229.3" width="30.5" height="0.5" class="seg c5" data-tip="WBD Bolt/Beam - Login - Production - Key 8 · 2026-10-03 · 196 sessions"/>
+<rect x="60.6" y="170.3" width="30.5" height="57.0" class="seg cother" data-tip="Other (31 keys) · 2026-10-03 · 366,889 sessions"/>
+<text x="75.8" y="250" class="axis" text-anchor="middle">10-03</text>
+<rect x="108.2" y="220.2" width="30.5" height="7.8" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-04 · 61,117 sessions"/>
+<rect x="108.2" y="220.2" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-04 · 70 sessions"/>
+<rect x="108.2" y="220.0" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-04 · 945 sessions"/>
+<rect x="108.2" y="220.0" width="30.5" height="0.5" class="seg c5" data-tip="WBD Bolt/Beam - Login - Production - Key 8 · 2026-10-04 · 188 sessions"/>
+<rect x="108.2" y="196.0" width="30.5" height="22.0" class="seg cother" data-tip="Other (31 keys) · 2026-10-04 · 149,232 sessions"/>
+<rect x="155.9" y="220.7" width="30.5" height="7.3" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-05 · 57,881 sessions"/>
+<rect x="155.9" y="220.7" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-05 · 206 sessions"/>
+<rect x="155.9" y="197.1" width="30.5" height="21.6" class="seg cother" data-tip="Other (31 keys) · 2026-10-05 · 146,624 sessions"/>
+<text x="171.2" y="250" class="axis" text-anchor="middle">10-05</text>
+<rect x="203.6" y="229.3" width="30.5" height="0.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-06 · 4,308 sessions"/>
+<rect x="203.6" y="229.3" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-06 · 281 sessions"/>
+<rect x="203.6" y="229.2" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-06 · 596 sessions"/>
+<rect x="203.6" y="229.1" width="30.5" height="0.5" class="seg c5" data-tip="WBD Bolt/Beam - Login - Production - Key 8 · 2026-10-06 · 262 sessions"/>
+<rect x="203.6" y="126.4" width="30.5" height="100.8" class="seg cother" data-tip="Other (31 keys) · 2026-10-06 · 639,187 sessions"/>
+<rect x="251.2" y="229.7" width="30.5" height="0.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-07 · 1,790 sessions"/>
+<rect x="251.2" y="228.8" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-07 · 5,487 sessions"/>
+<rect x="251.2" y="228.8" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-07 · 122 sessions"/>
+<rect x="251.2" y="228.8" width="30.5" height="0.5" class="seg c5" data-tip="WBD Bolt/Beam - Login - Production - Key 8 · 2026-10-07 · 79 sessions"/>
+<rect x="251.2" y="207.8" width="30.5" height="19.0" class="seg cother" data-tip="Other (31 keys) · 2026-10-07 · 130,500 sessions"/>
+<text x="266.5" y="250" class="axis" text-anchor="middle">10-07</text>
+<rect x="298.9" y="229.8" width="30.5" height="0.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-08 · 1,184 sessions"/>
+<rect x="298.9" y="229.4" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-08 · 2,689 sessions"/>
+<rect x="298.9" y="229.4" width="30.5" height="0.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-08 · 4 sessions"/>
+<rect x="298.9" y="229.3" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-08 · 499 sessions"/>
+<rect x="298.9" y="228.4" width="30.5" height="0.5" class="seg c6" data-tip="Olo - Payments - Production - Key 3 · 2026-10-08 · 5,605 sessions"/>
+<rect x="298.9" y="184.2" width="30.5" height="42.2" class="seg cother" data-tip="Other (31 keys) · 2026-10-08 · 275,208 sessions"/>
+<rect x="346.6" y="225.8" width="30.5" height="2.2" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-09 · 25,843 sessions"/>
+<rect x="346.6" y="225.7" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-09 · 961 sessions"/>
+<rect x="346.6" y="225.3" width="30.5" height="0.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-09 · 2,441 sessions"/>
+<rect x="346.6" y="224.7" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-09 · 3,690 sessions"/>
+<rect x="346.6" y="224.7" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-09 · 325 sessions"/>
+<rect x="346.6" y="159.8" width="30.5" height="62.8" class="seg cother" data-tip="Other (31 keys) · 2026-10-09 · 403,246 sessions"/>
+<text x="361.8" y="250" class="axis" text-anchor="middle">10-09</text>
+<rect x="394.2" y="201.1" width="30.5" height="26.9" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-10 · 179,560 sessions"/>
+<rect x="394.2" y="137.5" width="30.5" height="61.6" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-10 · 395,759 sessions"/>
+<rect x="394.2" y="137.5" width="30.5" height="0.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-10 · 12 sessions"/>
+<rect x="394.2" y="136.5" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-10 · 6,532 sessions"/>
+<rect x="394.2" y="136.2" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-10 · 1,495 sessions"/>
+<rect x="394.2" y="97.1" width="30.5" height="37.1" class="seg cother" data-tip="Other (31 keys) · 2026-10-10 · 243,221 sessions"/>
+<rect x="441.9" y="209.9" width="30.5" height="18.1" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-11 · 125,330 sessions"/>
+<rect x="441.9" y="119.0" width="30.5" height="88.9" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-11 · 565,399 sessions"/>
+<rect x="441.9" y="97.8" width="30.5" height="19.2" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-11 · 131,566 sessions"/>
+<rect x="441.9" y="96.4" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-11 · 8,923 sessions"/>
+<rect x="441.9" y="96.3" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-11 · 658 sessions"/>
+<rect x="441.9" y="95.3" width="30.5" height="0.5" class="seg c5" data-tip="WBD Bolt/Beam - Login - Production - Key 8 · 2026-10-11 · 6,211 sessions"/>
+<rect x="441.9" y="94.9" width="30.5" height="0.5" class="seg c6" data-tip="Olo - Payments - Production - Key 3 · 2026-10-11 · 2,479 sessions"/>
+<rect x="441.9" y="35.5" width="30.5" height="57.4" class="seg cother" data-tip="Other (31 keys) · 2026-10-11 · 369,605 sessions"/>
+<text x="457.2" y="250" class="axis" text-anchor="middle">10-11</text>
+<rect x="489.6" y="169.0" width="30.5" height="59.0" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-12 · 379,531 sessions"/>
+<rect x="489.6" y="165.9" width="30.5" height="1.1" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-12 · 19,142 sessions"/>
+<rect x="489.6" y="155.7" width="30.5" height="8.2" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-12 · 63,759 sessions"/>
+<rect x="489.6" y="155.1" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-12 · 3,769 sessions"/>
+<rect x="489.6" y="154.9" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-12 · 1,194 sessions"/>
+<rect x="489.6" y="154.8" width="30.5" height="0.5" class="seg c5" data-tip="WBD Bolt/Beam - Login - Production - Key 8 · 2026-10-12 · 605 sessions"/>
+<rect x="489.6" y="147.1" width="30.5" height="5.7" class="seg cother" data-tip="Other (31 keys) · 2026-10-12 · 47,885 sessions"/>
+<rect x="537.2" y="146.2" width="30.5" height="81.8" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-13 · 521,181 sessions"/>
+<rect x="537.2" y="146.2" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-13 · 246 sessions"/>
+<rect x="537.2" y="135.7" width="30.5" height="8.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-13 · 65,115 sessions"/>
+<rect x="537.2" y="135.6" width="30.5" height="0.5" class="seg c3" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-13 · 726 sessions"/>
+<rect x="537.2" y="135.4" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-13 · 893 sessions"/>
+<rect x="537.2" y="135.0" width="30.5" height="0.5" class="seg c5" data-tip="WBD Bolt/Beam - Login - Production - Key 8 · 2026-10-13 · 2,642 sessions"/>
+<rect x="537.2" y="134.5" width="30.5" height="0.5" class="seg c6" data-tip="Olo - Payments - Production - Key 3 · 2026-10-13 · 3,356 sessions"/>
+<rect x="537.2" y="108.6" width="30.5" height="23.8" class="seg cother" data-tip="Other (31 keys) · 2026-10-13 · 160,742 sessions"/>
+<text x="552.5" y="250" class="axis" text-anchor="middle">10-13</text>
+<rect x="584.9" y="113.4" width="30.5" height="114.6" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-14 · 725,109 sessions"/>
+<rect x="584.9" y="113.3" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-14 · 1,106 sessions"/>
+<rect x="584.9" y="113.2" width="30.5" height="0.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-14 · 92 sessions"/>
+<rect x="584.9" y="112.4" width="30.5" height="0.5" class="seg c4" data-tip="Amazon - Client - Production - Key 1 · 2026-10-14 · 5,251 sessions"/>
+<rect x="584.9" y="112.4" width="30.5" height="0.5" class="seg c6" data-tip="Olo - Payments - Production - Key 3 · 2026-10-14 · 232 sessions"/>
+<rect x="584.9" y="92.0" width="30.5" height="18.3" class="seg cother" data-tip="Other (31 keys) · 2026-10-14 · 126,497 sessions"/>
+<text x="600.2" y="250" class="axis" text-anchor="middle">10-14</text>
+</svg></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Adobe - ARP FF - Production - Key 8</td><td>Adobe</td><td class="n">22.3k</td><td class="n">386.1k</td><td class="n">725.1k</td><td class="n">33×</td></tr><tr><td>Airbnb - Account Lookup - Production Key 6</td><td>Airbnb Inc.</td><td class="n">1.3k</td><td class="n">196.3k</td><td class="n">565.4k</td><td class="n">433×</td></tr><tr><td>AT&amp;T - Consumer Login Web - Production - Key 3</td><td>AT&amp;T</td><td class="n">349</td><td class="n">52.1k</td><td class="n">131.6k</td><td class="n">377×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">666</td><td class="n">4k</td><td class="n">8.9k</td><td class="n">13×</td></tr><tr><td>WBD Bolt/Beam - Login - Production - Key 8</td><td>WBD</td><td class="n">103</td><td class="n">1.9k</td><td class="n">6.2k</td><td class="n">60×</td></tr><tr><td>Amazon - Client - Production - Key 1</td><td>Amazon.com, Inc.</td><td class="n">337</td><td class="n">1.9k</td><td class="n">5.3k</td><td class="n">16×</td></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">800</td><td class="n">1.2k</td><td class="n">3.4k</td><td class="n">4×</td></tr><tr><td>WBD Bolt/Beam - Account Lookup - Production - Key 20</td><td>WBD</td><td class="n">0</td><td class="n">621</td><td class="n">3.1k</td><td class="n">new</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">171</td><td class="n">481</td><td class="n">1.8k</td><td class="n">11×</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>[
+  {
+    &quot;key&quot;: &quot;location&quot;,
+    &quot;operator&quot;: &quot;TS_EQ&quot;,
+    &quot;value&quot;: &quot;session_setup&quot;,
+    &quot;type&quot;: &quot;string&quot;
+  },
+  {
+    &quot;operator&quot;: &quot;#INCLUDE&quot;,
+    &quot;value&quot;: &quot;g-page-level-biometrics-empty-or-null&quot;
+  },
+  {
+    &quot;operator&quot;: &quot;#INCLUDE&quot;,
+    &quot;value&quot;: &quot;cdn-header-order-ends-with-content-length&quot;
+  },
+  {
+    &quot;operator&quot;: &quot;#INCLUDE&quot;,
+    &quot;value&quot;: &quot;country-match-timezone-mismatch-no-vpn&quot;
+  },
+  {
+    &quot;operator&quot;: &quot;#INCLUDE&quot;,
+    &quot;value&quot;: &quot;susp-rfc-violation-cdn-header-order-content-type-before-content-length&quot;
+  }
+]</pre></details>
+</div>
+<div class="card"><h2>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<p class="muted"><code>cdn-header-order-ends-with-content-length</code> + <code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>g--e-country-timezone-mismatch</code> + <code>client-hints-has-not-a-brand-grease</code></p>
+<div class="tiles"><div class="tile"><b>11</b><span>keys spiking in window</span></div><div class="tile"><b>18</b><span>max keys hit on one day</span></div><div class="tile"><b>6M</b><span>window sessions (exact)</span></div><div class="tile"><b>57%</b><span>of window volume on spiking keys</span></div></div>
+<div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k1-t">
+<title id="k1-t">Keys hit per day</title>
+<rect x="387.3" y="16" width="236.7" height="174" class="win"/>
+<text x="391.3" y="28" class="axis">scan window</text>
+<line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
+<text x="34" y="194.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="624" y1="146.5" y2="146.5" class="grid"/>
+<text x="34" y="150.5" class="axis" text-anchor="end">5</text>
+<line x1="40" x2="624" y1="103.0" y2="103.0" class="grid"/>
+<text x="34" y="107.0" class="axis" text-anchor="end">10</text>
+<line x1="40" x2="624" y1="59.5" y2="59.5" class="grid"/>
+<text x="34" y="63.5" class="axis" text-anchor="end">15</text>
+<line x1="40" x2="624" y1="16.0" y2="16.0" class="grid"/>
+<text x="34" y="20.0" class="axis" text-anchor="end">20</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-03</text>
+<text x="146.2" y="210" class="axis" text-anchor="middle">10-05</text>
+<text x="252.4" y="210" class="axis" text-anchor="middle">10-07</text>
+<text x="358.5" y="210" class="axis" text-anchor="middle">10-09</text>
+<text x="464.7" y="210" class="axis" text-anchor="middle">10-11</text>
+<text x="570.9" y="210" class="axis" text-anchor="middle">10-13</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
+<polyline points="40.0,59.5 93.1,76.9 146.2,94.3 199.3,68.2 252.4,76.9 305.5,33.4 358.5,59.5 411.6,68.2 464.7,68.2 517.8,68.2 570.9,33.4 624.0,68.2" class="line s1"/>
+<circle cx="40.0" cy="59.5" r="4" class="dot s1"/>
+<circle cx="93.1" cy="76.9" r="4" class="dot s1"/>
+<circle cx="146.2" cy="94.3" r="4" class="dot s1"/>
+<circle cx="199.3" cy="68.2" r="4" class="dot s1"/>
+<circle cx="252.4" cy="76.9" r="4" class="dot s1"/>
+<circle cx="305.5" cy="33.4" r="4" class="dot s1"/>
+<circle cx="358.5" cy="59.5" r="4" class="dot s1"/>
+<circle cx="411.6" cy="68.2" r="4" class="dot s1"/>
+<circle cx="464.7" cy="68.2" r="4" class="dot s1"/>
+<circle cx="517.8" cy="68.2" r="4" class="dot s1"/>
+<circle cx="570.9" cy="33.4" r="4" class="dot s1"/>
+<circle cx="624.0" cy="68.2" r="4" class="dot s1"/>
+<text x="620.0" y="60.2" class="dlabel">14</text>
+<polyline points="40.0,155.2 93.1,172.6 146.2,190.0 199.3,172.6 252.4,190.0 305.5,146.5 358.5,163.9 411.6,155.2 464.7,129.1 517.8,155.2 570.9,129.1 624.0,155.2" class="line s2"/>
+<circle cx="40.0" cy="155.2" r="4" class="dot s2"/>
+<circle cx="93.1" cy="172.6" r="4" class="dot s2"/>
+<circle cx="146.2" cy="190.0" r="4" class="dot s2"/>
+<circle cx="199.3" cy="172.6" r="4" class="dot s2"/>
+<circle cx="252.4" cy="190.0" r="4" class="dot s2"/>
+<circle cx="305.5" cy="146.5" r="4" class="dot s2"/>
+<circle cx="358.5" cy="163.9" r="4" class="dot s2"/>
+<circle cx="411.6" cy="155.2" r="4" class="dot s2"/>
+<circle cx="464.7" cy="129.1" r="4" class="dot s2"/>
+<circle cx="517.8" cy="155.2" r="4" class="dot s2"/>
+<circle cx="570.9" cy="129.1" r="4" class="dot s2"/>
+<circle cx="624.0" cy="155.2" r="4" class="dot s2"/>
+<text x="620.0" y="147.2" class="dlabel">4</text>
+<rect x="15.7" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-03 · hit: 15 keys · spiking: 4 keys"/>
+<rect x="68.8" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-04 · hit: 13 keys · spiking: 2 keys"/>
+<rect x="121.8" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-05 · hit: 11 keys · spiking: 0 keys"/>
+<rect x="174.9" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-06 · hit: 14 keys · spiking: 2 keys"/>
+<rect x="228.0" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-07 · hit: 13 keys · spiking: 0 keys"/>
+<rect x="281.1" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-08 · hit: 18 keys · spiking: 5 keys"/>
+<rect x="334.2" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-09 · hit: 15 keys · spiking: 3 keys"/>
+<rect x="387.3" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-10 · hit: 14 keys · spiking: 4 keys"/>
+<rect x="440.4" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-11 · hit: 14 keys · spiking: 7 keys"/>
+<rect x="493.5" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-12 · hit: 14 keys · spiking: 4 keys"/>
+<rect x="546.6" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-13 · hit: 18 keys · spiking: 7 keys"/>
+<rect x="599.7" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-14 · hit: 14 keys · spiking: 4 keys"/>
+</svg></div><div><h3>Daily sessions by key</h3><div class="legend"><span class="lg"><i class="sw c0"></i>Adobe - ARP FF - Production - Key 8</span><span class="lg"><i class="sw c1"></i>Airbnb - Account Lookup - Production Key 6</span><span class="lg"><i class="sw c2"></i>AT&amp;T - Consumer Login Web - Production - Key 3</span><span class="lg"><i class="sw c3"></i>gtop100.com - Production</span><span class="lg"><i class="sw c4"></i>Coinbase - Email Verification - Prod - Key 2</span><span class="lg"><i class="sw c5"></i>Amazon - IDS - Production - Key 2</span><span class="lg"><i class="sw c6"></i>Adobe - Commerce - Production - Key 3</span><span class="lg"><i class="sw cother"></i>Other (35 keys)</span></div><svg viewBox="0 0 640 260" class="chart" role="img" aria-labelledby="b1-t">
+<title id="b1-t">Daily sessions by key</title>
+<rect x="385.7" y="16" width="238.3" height="214" class="win"/>
+<line x1="52" x2="624" y1="230.0" y2="230.0" class="grid"/>
+<text x="46" y="234.0" class="axis" text-anchor="end">0</text>
+<line x1="52" x2="624" y1="181.4" y2="181.4" class="grid"/>
+<text x="46" y="185.4" class="axis" text-anchor="end">472.7k</text>
+<line x1="52" x2="624" y1="132.7" y2="132.7" class="grid"/>
+<text x="46" y="136.7" class="axis" text-anchor="end">945.5k</text>
+<line x1="52" x2="624" y1="84.1" y2="84.1" class="grid"/>
+<text x="46" y="88.1" class="axis" text-anchor="end">1.4M</text>
+<line x1="52" x2="624" y1="35.5" y2="35.5" class="grid"/>
+<text x="46" y="39.5" class="axis" text-anchor="end">1.9M</text>
+<rect x="60.6" y="228.8" width="30.5" height="0.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-03 · 11,975 sessions"/>
+<rect x="60.6" y="228.7" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-03 · 1,030 sessions"/>
+<rect x="60.6" y="228.6" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-03 · 354 sessions"/>
+<rect x="60.6" y="169.8" width="30.5" height="56.8" class="seg cother" data-tip="Other (35 keys) · 2026-10-03 · 571,956 sessions"/>
+<text x="75.8" y="250" class="axis" text-anchor="middle">10-03</text>
+<rect x="108.2" y="222.8" width="30.5" height="5.2" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-04 · 69,585 sessions"/>
+<rect x="108.2" y="222.7" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-04 · 1,099 sessions"/>
+<rect x="108.2" y="222.7" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-04 · 9 sessions"/>
+<rect x="108.2" y="222.7" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-04 · 103 sessions"/>
+<rect x="108.2" y="189.6" width="30.5" height="31.1" class="seg cother" data-tip="Other (35 keys) · 2026-10-04 · 321,900 sessions"/>
+<rect x="155.9" y="223.2" width="30.5" height="4.8" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-05 · 66,270 sessions"/>
+<rect x="155.9" y="223.0" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-05 · 1,538 sessions"/>
+<rect x="155.9" y="223.0" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-05 · 237 sessions"/>
+<rect x="155.9" y="167.2" width="30.5" height="53.8" class="seg cother" data-tip="Other (35 keys) · 2026-10-05 · 542,469 sessions"/>
+<text x="171.2" y="250" class="axis" text-anchor="middle">10-05</text>
+<rect x="203.6" y="228.6" width="30.5" height="0.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-06 · 13,783 sessions"/>
+<rect x="203.6" y="228.4" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-06 · 1,716 sessions"/>
+<rect x="203.6" y="228.4" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-06 · 94 sessions"/>
+<rect x="203.6" y="228.4" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-06 · 314 sessions"/>
+<rect x="203.6" y="81.7" width="30.5" height="144.7" class="seg cother" data-tip="Other (35 keys) · 2026-10-06 · 1,425,839 sessions"/>
+<rect x="251.2" y="229.0" width="30.5" height="0.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-07 · 9,537 sessions"/>
+<rect x="251.2" y="229.0" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-07 · 63 sessions"/>
+<rect x="251.2" y="228.9" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-07 · 1,221 sessions"/>
+<rect x="251.2" y="228.6" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-07 · 2,430 sessions"/>
+<rect x="251.2" y="228.6" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-07 · 608 sessions"/>
+<rect x="251.2" y="155.5" width="30.5" height="71.1" class="seg cother" data-tip="Other (35 keys) · 2026-10-07 · 710,733 sessions"/>
+<text x="266.5" y="250" class="axis" text-anchor="middle">10-07</text>
+<rect x="298.9" y="229.1" width="30.5" height="0.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-08 · 8,905 sessions"/>
+<rect x="298.9" y="228.8" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-08 · 3,017 sessions"/>
+<rect x="298.9" y="228.8" width="30.5" height="0.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-08 · 86 sessions"/>
+<rect x="298.9" y="228.6" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-08 · 1,124 sessions"/>
+<rect x="298.9" y="227.9" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-08 · 7,322 sessions"/>
+<rect x="298.9" y="145.1" width="30.5" height="80.8" class="seg cother" data-tip="Other (35 keys) · 2026-10-08 · 805,224 sessions"/>
+<rect x="346.6" y="226.5" width="30.5" height="1.5" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-09 · 33,801 sessions"/>
+<rect x="346.6" y="226.4" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-09 · 1,128 sessions"/>
+<rect x="346.6" y="226.1" width="30.5" height="0.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-09 · 2,519 sessions"/>
+<rect x="346.6" y="226.0" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-09 · 1,121 sessions"/>
+<rect x="346.6" y="225.1" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-09 · 9,177 sessions"/>
+<rect x="346.6" y="224.6" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-09 · 4,645 sessions"/>
+<rect x="346.6" y="127.3" width="30.5" height="95.3" class="seg cother" data-tip="Other (35 keys) · 2026-10-09 · 946,231 sessions"/>
+<text x="361.8" y="250" class="axis" text-anchor="middle">10-09</text>
+<rect x="394.2" y="209.6" width="30.5" height="18.4" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-10 · 198,104 sessions"/>
+<rect x="394.2" y="166.3" width="30.5" height="41.3" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-10 · 420,958 sessions"/>
+<rect x="394.2" y="166.3" width="30.5" height="0.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-10 · 30 sessions"/>
+<rect x="394.2" y="166.2" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-10 · 1,225 sessions"/>
+<rect x="394.2" y="165.0" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-10 · 11,185 sessions"/>
+<rect x="394.2" y="164.1" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-10 · 8,795 sessions"/>
+<rect x="394.2" y="122.6" width="30.5" height="39.5" class="seg cother" data-tip="Other (35 keys) · 2026-10-10 · 403,481 sessions"/>
+<rect x="441.9" y="216.3" width="30.5" height="11.7" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-11 · 133,208 sessions"/>
+<rect x="441.9" y="154.7" width="30.5" height="59.6" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-11 · 598,934 sessions"/>
+<rect x="441.9" y="141.0" width="30.5" height="11.7" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-11 · 133,281 sessions"/>
+<rect x="441.9" y="140.4" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-11 · 5,484 sessions"/>
+<rect x="441.9" y="139.5" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-11 · 8,852 sessions"/>
+<rect x="441.9" y="138.4" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-11 · 11,026 sessions"/>
+<rect x="441.9" y="35.5" width="30.5" height="100.9" class="seg cother" data-tip="Other (35 keys) · 2026-10-11 · 1,000,196 sessions"/>
+<text x="457.2" y="250" class="axis" text-anchor="middle">10-11</text>
+<rect x="489.6" y="189.9" width="30.5" height="38.1" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-12 · 389,546 sessions"/>
+<rect x="489.6" y="187.8" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-12 · 20,452 sessions"/>
+<rect x="489.6" y="181.2" width="30.5" height="4.7" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-12 · 64,697 sessions"/>
+<rect x="489.6" y="180.8" width="30.5" height="0.5" class="seg c3" data-tip="gtop100.com - Production · 2026-10-12 · 3,672 sessions"/>
+<rect x="489.6" y="180.6" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-12 · 1,859 sessions"/>
+<rect x="489.6" y="180.1" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-12 · 4,369 sessions"/>
+<rect x="489.6" y="166.7" width="30.5" height="11.4" class="seg cother" data-tip="Other (35 keys) · 2026-10-12 · 130,399 sessions"/>
+<rect x="537.2" y="174.3" width="30.5" height="53.7" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-13 · 541,494 sessions"/>
+<rect x="537.2" y="174.2" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-13 · 598 sessions"/>
+<rect x="537.2" y="167.4" width="30.5" height="4.8" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-13 · 65,955 sessions"/>
+<rect x="537.2" y="164.7" width="30.5" height="0.8" class="seg c3" data-tip="gtop100.com - Production · 2026-10-13 · 26,811 sessions"/>
+<rect x="537.2" y="164.4" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-13 · 3,257 sessions"/>
+<rect x="537.2" y="164.3" width="30.5" height="0.5" class="seg c5" data-tip="Amazon - IDS - Production - Key 2 · 2026-10-13 · 746 sessions"/>
+<rect x="537.2" y="163.2" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Commerce - Production - Key 3 · 2026-10-13 · 10,479 sessions"/>
+<rect x="537.2" y="116.9" width="30.5" height="44.3" class="seg cother" data-tip="Other (35 keys) · 2026-10-13 · 450,428 sessions"/>
+<text x="552.5" y="250" class="axis" text-anchor="middle">10-13</text>
+<rect x="584.9" y="154.1" width="30.5" height="73.9" class="seg c0" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-14 · 737,387 sessions"/>
+<rect x="584.9" y="153.8" width="30.5" height="0.5" class="seg c1" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-14 · 2,986 sessions"/>
+<rect x="584.9" y="153.8" width="30.5" height="0.5" class="seg c2" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-14 · 119 sessions"/>
+<rect x="584.9" y="150.5" width="30.5" height="1.3" class="seg c3" data-tip="gtop100.com - Production · 2026-10-14 · 32,118 sessions"/>
+<rect x="584.9" y="150.3" width="30.5" height="0.5" class="seg c4" data-tip="Coinbase - Email Verification - Prod - Key 2 · 2026-10-14 · 2,097 sessions"/>
+<rect x="584.9" y="150.2" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Commerce - Production - Key 3 · 2026-10-14 · 1,291 sessions"/>
+<rect x="584.9" y="88.9" width="30.5" height="59.2" class="seg cother" data-tip="Other (35 keys) · 2026-10-14 · 595,051 sessions"/>
+<text x="600.2" y="250" class="axis" text-anchor="middle">10-14</text>
+</svg></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Adobe - ARP FF - Production - Key 8</td><td>Adobe</td><td class="n">30.6k</td><td class="n">399.9k</td><td class="n">737.4k</td><td class="n">24×</td></tr><tr><td>Airbnb - Account Lookup - Production Key 6</td><td>Airbnb Inc.</td><td class="n">601</td><td class="n">208.8k</td><td class="n">598.9k</td><td class="n">996×</td></tr><tr><td>AT&amp;T - Consumer Login Web - Production - Key 3</td><td>AT&amp;T</td><td class="n">372</td><td class="n">52.8k</td><td class="n">133.3k</td><td class="n">358×</td></tr><tr><td>gtop100.com - Production</td><td>Gtop100</td><td class="n">1.3k</td><td class="n">13.9k</td><td class="n">32.1k</td><td class="n">25×</td></tr><tr><td>Coinbase - Email Verification - Prod - Key 2</td><td>Coinbase</td><td class="n">2.7k</td><td class="n">5.5k</td><td class="n">11.2k</td><td class="n">4×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">894</td><td class="n">5k</td><td class="n">11k</td><td class="n">12×</td></tr><tr><td>Adobe - Commerce - Production - Key 3</td><td>Adobe</td><td class="n">0</td><td class="n">2.4k</td><td class="n">10.5k</td><td class="n">new</td></tr><tr><td>WBD Bolt/Beam - Login - Production - Key 8</td><td>WBD</td><td class="n">1.9k</td><td class="n">2k</td><td class="n">6.2k</td><td class="n">3×</td></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">6</td><td class="n">961</td><td class="n">4.5k</td><td class="n">695×</td></tr><tr><td>Tinder - Production - PreSMS - Key 3</td><td>Tinder</td><td class="n">221</td><td class="n">731</td><td class="n">3k</td><td class="n">14×</td></tr><tr><td>Air Canada - Login - Production -  Key 1</td><td>Air Canada</td><td class="n">0</td><td class="n">368</td><td class="n">1.8k</td><td class="n">new</td></tr></table>
+<details><summary>Telltale definition (draft — not created)</summary><pre>{
+  &quot;ticket&quot;: &quot;DETCORE-4468&quot;,
+  &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
+  &quot;location&quot;: &quot;SESSION_SETUP&quot;,
+  &quot;cohort_category&quot;: &quot;Suspicious&quot;,
+  &quot;owner&quot;: &quot;p.nankubuge@arkoselabs.com&quot;,
+  &quot;owner_category&quot;: &quot;User&quot;,
+  &quot;risk_category&quot;: &quot;CUSTOM&quot;,
+  &quot;risk_score&quot;: 0,
+  &quot;telltale_active&quot;: false,
+  &quot;allow_others_to_include&quot;: true,
+  &quot;life_cycle_management&quot;: &quot;M&quot;,
+  &quot;telltale_definition&quot;: [
+    {
+      &quot;key&quot;: &quot;location&quot;,
+      &quot;operator&quot;: &quot;TS_EQ&quot;,
+      &quot;value&quot;: &quot;session_setup&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;cdn-header-order-ends-with-content-length&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;susp-rfc-violation-cdn-header-order-content-type-before-content-length&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g--e-country-timezone-mismatch&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;client-hints-has-not-a-brand-grease&quot;
+    }
+  ],
+  &quot;degrade_time&quot;: &quot;2026-10-22T00:00:00Z&quot;,
+  &quot;degrade_action&quot;: 0,
+  &quot;manual_life_cycle_details&quot;: &quot;Spike-scan candidate from the daily suspicion-flag spike scan; degrade time matches the TTL on the included Ensemble telltale g--e-country-timezone-mismatch and must be extended alongside it.&quot;,
+  &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-15: sibling of g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl using the broader g--e-country-timezone-mismatch (VPN not excluded) and Chromium GREASE client hints instead of null page biometrics. Spiked on 11 keys Oct 10-14 incl. gtop100, Coinbase, Tinder, Air Canada which the pagebio tier misses.&quot;,
+  &quot;_validated&quot;: &quot;2026-10-15 validate_telltale: valid only WITH degrade_time &lt;= the TTL of g--e-country-timezone-mismatch (Ensemble-managed, re-dated daily). Without it: &#x27;Included telltale ... has a TTL that is shorter&#x27;.&quot;,
+  &quot;telltale_name&quot;: &quot;g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease&quot;
+}</pre></details>
+</div>
+<div class="card"><h2>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<p class="muted"><code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>g-device-parameter-spoofing</code> + <code>g-di-dict-3-match-short-term-threshold-exceeded-1x</code></p>
+<div class="tiles"><div class="tile"><b>12</b><span>keys spiking in window</span></div><div class="tile"><b>12</b><span>max keys hit on one day</span></div><div class="tile"><b>2.2M</b><span>window sessions (exact)</span></div><div class="tile"><b>91%</b><span>of window volume on spiking keys</span></div></div>
+<div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k2-t">
+<title id="k2-t">Keys hit per day</title>
+<rect x="387.3" y="16" width="236.7" height="174" class="win"/>
+<text x="391.3" y="28" class="axis">scan window</text>
+<line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
+<text x="34" y="194.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="624" y1="149.8" y2="149.8" class="grid"/>
+<text x="34" y="153.8" class="axis" text-anchor="end">3</text>
+<line x1="40" x2="624" y1="109.7" y2="109.7" class="grid"/>
+<text x="34" y="113.7" class="axis" text-anchor="end">6</text>
+<line x1="40" x2="624" y1="69.5" y2="69.5" class="grid"/>
+<text x="34" y="73.5" class="axis" text-anchor="end">9</text>
+<line x1="40" x2="624" y1="29.4" y2="29.4" class="grid"/>
+<text x="34" y="33.4" class="axis" text-anchor="end">12</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-03</text>
+<text x="146.2" y="210" class="axis" text-anchor="middle">10-05</text>
+<text x="252.4" y="210" class="axis" text-anchor="middle">10-07</text>
+<text x="358.5" y="210" class="axis" text-anchor="middle">10-09</text>
+<text x="464.7" y="210" class="axis" text-anchor="middle">10-11</text>
+<text x="570.9" y="210" class="axis" text-anchor="middle">10-13</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
+<polyline points="40.0,82.9 93.1,109.7 146.2,56.2 199.3,56.2 252.4,69.5 305.5,29.4 358.5,42.8 411.6,29.4 464.7,42.8 517.8,69.5 570.9,56.2 624.0,29.4" class="line s1"/>
+<circle cx="40.0" cy="82.9" r="4" class="dot s1"/>
+<circle cx="93.1" cy="109.7" r="4" class="dot s1"/>
+<circle cx="146.2" cy="56.2" r="4" class="dot s1"/>
+<circle cx="199.3" cy="56.2" r="4" class="dot s1"/>
+<circle cx="252.4" cy="69.5" r="4" class="dot s1"/>
+<circle cx="305.5" cy="29.4" r="4" class="dot s1"/>
+<circle cx="358.5" cy="42.8" r="4" class="dot s1"/>
+<circle cx="411.6" cy="29.4" r="4" class="dot s1"/>
+<circle cx="464.7" cy="42.8" r="4" class="dot s1"/>
+<circle cx="517.8" cy="69.5" r="4" class="dot s1"/>
+<circle cx="570.9" cy="56.2" r="4" class="dot s1"/>
+<circle cx="624.0" cy="29.4" r="4" class="dot s1"/>
+<text x="620.0" y="21.4" class="dlabel">12</text>
+<polyline points="40.0,149.8 93.1,163.2 146.2,176.6 199.3,149.8 252.4,190.0 305.5,149.8 358.5,149.8 411.6,109.7 464.7,109.7 517.8,123.1 570.9,136.5 624.0,96.3" class="line s2"/>
+<circle cx="40.0" cy="149.8" r="4" class="dot s2"/>
+<circle cx="93.1" cy="163.2" r="4" class="dot s2"/>
+<circle cx="146.2" cy="176.6" r="4" class="dot s2"/>
+<circle cx="199.3" cy="149.8" r="4" class="dot s2"/>
+<circle cx="252.4" cy="190.0" r="4" class="dot s2"/>
+<circle cx="305.5" cy="149.8" r="4" class="dot s2"/>
+<circle cx="358.5" cy="149.8" r="4" class="dot s2"/>
+<circle cx="411.6" cy="109.7" r="4" class="dot s2"/>
+<circle cx="464.7" cy="109.7" r="4" class="dot s2"/>
+<circle cx="517.8" cy="123.1" r="4" class="dot s2"/>
+<circle cx="570.9" cy="136.5" r="4" class="dot s2"/>
+<circle cx="624.0" cy="96.3" r="4" class="dot s2"/>
+<text x="620.0" y="88.3" class="dlabel">7</text>
+<rect x="15.7" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-03 · hit: 8 keys · spiking: 3 keys"/>
+<rect x="68.8" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-04 · hit: 6 keys · spiking: 2 keys"/>
+<rect x="121.8" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-05 · hit: 10 keys · spiking: 1 keys"/>
+<rect x="174.9" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-06 · hit: 10 keys · spiking: 3 keys"/>
+<rect x="228.0" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-07 · hit: 9 keys · spiking: 0 keys"/>
+<rect x="281.1" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-08 · hit: 12 keys · spiking: 3 keys"/>
+<rect x="334.2" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-09 · hit: 11 keys · spiking: 3 keys"/>
+<rect x="387.3" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-10 · hit: 12 keys · spiking: 6 keys"/>
+<rect x="440.4" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-11 · hit: 11 keys · spiking: 6 keys"/>
+<rect x="493.5" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-12 · hit: 9 keys · spiking: 5 keys"/>
+<rect x="546.6" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-13 · hit: 10 keys · spiking: 4 keys"/>
+<rect x="599.7" y="16" width="48.7" height="174" class="hit" data-tip="2026-10-14 · hit: 12 keys · spiking: 7 keys"/>
+</svg></div><div><h3>Daily sessions by key</h3><div class="legend"><span class="lg"><i class="sw c0"></i>Airbnb - Account Lookup - Production Key 6</span><span class="lg"><i class="sw c1"></i>Adobe - ARP FF - Production - Key 8</span><span class="lg"><i class="sw c2"></i>Roblox Signup - Key 2</span><span class="lg"><i class="sw c3"></i>Roblox - Production - Login - Key 1</span><span class="lg"><i class="sw c4"></i>AT&amp;T - Consumer Login Web - Production - Key 3</span><span class="lg"><i class="sw c5"></i>Chime - Production - Key 2 - Registration</span><span class="lg"><i class="sw c6"></i>Adobe - Sign-in - Production - Key 5</span><span class="lg"><i class="sw cother"></i>Other (29 keys)</span></div><svg viewBox="0 0 640 260" class="chart" role="img" aria-labelledby="b2-t">
+<title id="b2-t">Daily sessions by key</title>
+<rect x="385.7" y="16" width="238.3" height="214" class="win"/>
+<line x1="52" x2="624" y1="230.0" y2="230.0" class="grid"/>
+<text x="46" y="234.0" class="axis" text-anchor="end">0</text>
+<line x1="52" x2="624" y1="181.4" y2="181.4" class="grid"/>
+<text x="46" y="185.4" class="axis" text-anchor="end">209.1k</text>
+<line x1="52" x2="624" y1="132.7" y2="132.7" class="grid"/>
+<text x="46" y="136.7" class="axis" text-anchor="end">418.3k</text>
+<line x1="52" x2="624" y1="84.1" y2="84.1" class="grid"/>
+<text x="46" y="88.1" class="axis" text-anchor="end">627.4k</text>
+<line x1="52" x2="624" y1="35.5" y2="35.5" class="grid"/>
+<text x="46" y="39.5" class="axis" text-anchor="end">836.5k</text>
+<rect x="60.6" y="229.6" width="30.5" height="0.5" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-03 · 1,543 sessions"/>
+<rect x="60.6" y="223.3" width="30.5" height="4.3" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-03 · 27,217 sessions"/>
+<rect x="60.6" y="222.9" width="30.5" height="0.5" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-03 · 1,983 sessions"/>
+<rect x="60.6" y="129.4" width="30.5" height="91.5" class="seg cother" data-tip="Other (29 keys) · 2026-10-03 · 401,879 sessions"/>
+<text x="75.8" y="250" class="axis" text-anchor="middle">10-03</text>
+<rect x="108.2" y="217.4" width="30.5" height="10.6" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-04 · 53,977 sessions"/>
+<rect x="108.2" y="210.7" width="30.5" height="4.8" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-04 · 29,223 sessions"/>
+<rect x="108.2" y="195.4" width="30.5" height="13.2" class="seg cother" data-tip="Other (29 keys) · 2026-10-04 · 65,471 sessions"/>
+<rect x="155.9" y="222.8" width="30.5" height="5.2" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-05 · 31,070 sessions"/>
+<rect x="155.9" y="216.0" width="30.5" height="4.8" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-05 · 29,221 sessions"/>
+<rect x="155.9" y="215.6" width="30.5" height="0.5" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-05 · 1,564 sessions"/>
+<rect x="155.9" y="215.2" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-05 · 1,570 sessions"/>
+<rect x="155.9" y="185.0" width="30.5" height="28.2" class="seg cother" data-tip="Other (29 keys) · 2026-10-05 · 130,002 sessions"/>
+<text x="171.2" y="250" class="axis" text-anchor="middle">10-05</text>
+<rect x="203.6" y="227.8" width="30.5" height="0.5" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-06 · 9,453 sessions"/>
+<rect x="203.6" y="223.3" width="30.5" height="2.5" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-06 · 19,483 sessions"/>
+<rect x="203.6" y="223.2" width="30.5" height="0.5" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-06 · 180 sessions"/>
+<rect x="203.6" y="222.7" width="30.5" height="0.5" class="seg c5" data-tip="Chime - Production - Key 2 - Registration · 2026-10-06 · 2,176 sessions"/>
+<rect x="203.6" y="222.6" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-06 · 370 sessions"/>
+<rect x="203.6" y="197.8" width="30.5" height="22.8" class="seg cother" data-tip="Other (29 keys) · 2026-10-06 · 106,602 sessions"/>
+<rect x="251.2" y="228.0" width="30.5" height="0.5" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-07 · 8,706 sessions"/>
+<rect x="251.2" y="224.3" width="30.5" height="1.7" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-07 · 15,906 sessions"/>
+<rect x="251.2" y="224.1" width="30.5" height="0.5" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-07 · 745 sessions"/>
+<rect x="251.2" y="223.9" width="30.5" height="0.5" class="seg c5" data-tip="Chime - Production - Key 2 - Registration · 2026-10-07 · 868 sessions"/>
+<rect x="251.2" y="223.5" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-07 · 1,691 sessions"/>
+<rect x="251.2" y="202.0" width="30.5" height="19.5" class="seg cother" data-tip="Other (29 keys) · 2026-10-07 · 92,483 sessions"/>
+<text x="266.5" y="250" class="axis" text-anchor="middle">10-07</text>
+<rect x="298.9" y="229.4" width="30.5" height="0.5" class="seg c0" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-08 · 2,509 sessions"/>
+<rect x="298.9" y="227.6" width="30.5" height="0.5" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-08 · 7,858 sessions"/>
+<rect x="298.9" y="223.7" width="30.5" height="1.9" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-08 · 16,691 sessions"/>
+<rect x="298.9" y="218.1" width="30.5" height="3.6" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-08 · 24,060 sessions"/>
+<rect x="298.9" y="217.5" width="30.5" height="0.5" class="seg c4" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-08 · 2,460 sessions"/>
+<rect x="298.9" y="217.5" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-08 · 182 sessions"/>
+<rect x="298.9" y="199.5" width="30.5" height="16.0" class="seg cother" data-tip="Other (29 keys) · 2026-10-08 · 77,349 sessions"/>
+<rect x="346.6" y="229.8" width="30.5" height="0.5" class="seg c0" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-09 · 850 sessions"/>
+<rect x="346.6" y="227.6" width="30.5" height="0.5" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-09 · 9,454 sessions"/>
+<rect x="346.6" y="224.5" width="30.5" height="1.1" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-09 · 13,433 sessions"/>
+<rect x="346.6" y="203.6" width="30.5" height="18.8" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-09 · 89,631 sessions"/>
+<rect x="346.6" y="202.7" width="30.5" height="0.5" class="seg c4" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-09 · 4,123 sessions"/>
+<rect x="346.6" y="202.4" width="30.5" height="0.5" class="seg c5" data-tip="Chime - Production - Key 2 - Registration · 2026-10-09 · 1,312 sessions"/>
+<rect x="346.6" y="202.0" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-09 · 1,430 sessions"/>
+<rect x="346.6" y="190.3" width="30.5" height="9.7" class="seg cother" data-tip="Other (29 keys) · 2026-10-09 · 50,488 sessions"/>
+<text x="361.8" y="250" class="axis" text-anchor="middle">10-09</text>
+<rect x="394.2" y="132.2" width="30.5" height="95.8" class="seg c0" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-10 · 420,345 sessions"/>
+<rect x="394.2" y="106.4" width="30.5" height="23.8" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-10 · 111,143 sessions"/>
+<rect x="394.2" y="101.1" width="30.5" height="3.3" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-10 · 22,777 sessions"/>
+<rect x="394.2" y="80.0" width="30.5" height="19.1" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-10 · 90,793 sessions"/>
+<rect x="394.2" y="79.4" width="30.5" height="0.5" class="seg c4" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-10 · 2,553 sessions"/>
+<rect x="394.2" y="78.4" width="30.5" height="0.5" class="seg c5" data-tip="Chime - Production - Key 2 - Registration · 2026-10-10 · 4,354 sessions"/>
+<rect x="394.2" y="76.3" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-10 · 9,085 sessions"/>
+<rect x="394.2" y="62.1" width="30.5" height="12.2" class="seg cother" data-tip="Other (29 keys) · 2026-10-10 · 60,936 sessions"/>
+<rect x="441.9" y="90.8" width="30.5" height="137.2" class="seg c0" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-11 · 598,578 sessions"/>
+<rect x="441.9" y="72.1" width="30.5" height="16.7" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-11 · 80,495 sessions"/>
+<rect x="441.9" y="67.4" width="30.5" height="2.7" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-11 · 20,234 sessions"/>
+<rect x="441.9" y="43.5" width="30.5" height="21.9" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-11 · 102,586 sessions"/>
+<rect x="441.9" y="42.3" width="30.5" height="0.5" class="seg c4" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-11 · 5,338 sessions"/>
+<rect x="441.9" y="41.7" width="30.5" height="0.5" class="seg c5" data-tip="Chime - Production - Key 2 - Registration · 2026-10-11 · 2,433 sessions"/>
+<rect x="441.9" y="41.6" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-11 · 249 sessions"/>
+<rect x="441.9" y="35.5" width="30.5" height="4.2" class="seg cother" data-tip="Other (29 keys) · 2026-10-11 · 26,589 sessions"/>
+<text x="457.2" y="250" class="axis" text-anchor="middle">10-11</text>
+<rect x="489.6" y="225.3" width="30.5" height="2.7" class="seg c0" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-12 · 20,244 sessions"/>
+<rect x="489.6" y="192.4" width="30.5" height="30.9" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-12 · 141,412 sessions"/>
+<rect x="489.6" y="191.4" width="30.5" height="0.5" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-12 · 4,106 sessions"/>
+<rect x="489.6" y="190.2" width="30.5" height="0.5" class="seg c4" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-12 · 5,565 sessions"/>
+<rect x="489.6" y="189.0" width="30.5" height="0.5" class="seg c5" data-tip="Chime - Production - Key 2 - Registration · 2026-10-12 · 4,942 sessions"/>
+<rect x="489.6" y="188.6" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-12 · 1,846 sessions"/>
+<rect x="489.6" y="179.4" width="30.5" height="7.2" class="seg cother" data-tip="Other (29 keys) · 2026-10-12 · 39,584 sessions"/>
+<rect x="537.2" y="230.0" width="30.5" height="0.5" class="seg c0" data-tip="Airbnb - Account Lookup - Production Key 6 · 2026-10-13 · 30 sessions"/>
+<rect x="537.2" y="205.8" width="30.5" height="22.2" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-13 · 103,942 sessions"/>
+<rect x="537.2" y="199.7" width="30.5" height="4.1" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-13 · 26,247 sessions"/>
+<rect x="537.2" y="199.4" width="30.5" height="0.5" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-13 · 1,527 sessions"/>
+<rect x="537.2" y="197.9" width="30.5" height="0.5" class="seg c4" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-13 · 6,145 sessions"/>
+<rect x="537.2" y="196.7" width="30.5" height="0.5" class="seg c5" data-tip="Chime - Production - Key 2 - Registration · 2026-10-13 · 5,411 sessions"/>
+<rect x="537.2" y="196.5" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-13 · 821 sessions"/>
+<rect x="537.2" y="185.9" width="30.5" height="8.6" class="seg cother" data-tip="Other (29 keys) · 2026-10-13 · 45,503 sessions"/>
+<text x="552.5" y="250" class="axis" text-anchor="middle">10-13</text>
+<rect x="584.9" y="226.2" width="30.5" height="1.8" class="seg c1" data-tip="Adobe - ARP FF - Production - Key 8 · 2026-10-14 · 16,154 sessions"/>
+<rect x="584.9" y="194.3" width="30.5" height="30.0" class="seg c2" data-tip="Roblox Signup - Key 2 · 2026-10-14 · 137,442 sessions"/>
+<rect x="584.9" y="194.0" width="30.5" height="0.5" class="seg c3" data-tip="Roblox - Production - Login - Key 1 · 2026-10-14 · 1,136 sessions"/>
+<rect x="584.9" y="193.0" width="30.5" height="0.5" class="seg c4" data-tip="AT&amp;T - Consumer Login Web - Production - Key 3 · 2026-10-14 · 4,188 sessions"/>
+<rect x="584.9" y="191.7" width="30.5" height="0.5" class="seg c5" data-tip="Chime - Production - Key 2 - Registration · 2026-10-14 · 5,899 sessions"/>
+<rect x="584.9" y="191.2" width="30.5" height="0.5" class="seg c6" data-tip="Adobe - Sign-in - Production - Key 5 · 2026-10-14 · 2,185 sessions"/>
+<rect x="584.9" y="175.8" width="30.5" height="13.4" class="seg cother" data-tip="Other (29 keys) · 2026-10-14 · 66,150 sessions"/>
+<text x="600.2" y="250" class="axis" text-anchor="middle">10-14</text>
+</svg></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Airbnb - Account Lookup - Production Key 6</td><td>Airbnb Inc.</td><td class="n">479</td><td class="n">207.8k</td><td class="n">598.6k</td><td class="n">1247×</td></tr><tr><td>Adobe - ARP FF - Production - Key 8</td><td>Adobe</td><td class="n">17.4k</td><td class="n">90.6k</td><td class="n">141.4k</td><td class="n">8×</td></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">21.6k</td><td class="n">42.2k</td><td class="n">137.4k</td><td class="n">6×</td></tr><tr><td>Roblox - Production - Login - Key 1</td><td>Roblox Corporation</td><td class="n">16.9k</td><td class="n">39.2k</td><td class="n">102.6k</td><td class="n">6×</td></tr><tr><td>Tinder - Production - PreSMS - Key 3</td><td>Tinder</td><td class="n">0</td><td class="n">2.4k</td><td class="n">11.9k</td><td class="n">new</td></tr><tr><td>Adobe - Sign-in - Production - Key 5</td><td>Adobe</td><td class="n">749</td><td class="n">2.8k</td><td class="n">9.1k</td><td class="n">12×</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">1</td><td class="n">1.9k</td><td class="n">6.8k</td><td class="n">5258×</td></tr><tr><td>AT&amp;T - Consumer Login Web - Production - Key 3</td><td>AT&amp;T</td><td class="n">940</td><td class="n">4.8k</td><td class="n">6.1k</td><td class="n">7×</td></tr><tr><td>Chime - Production - Key 2 - Registration</td><td>Chime</td><td class="n">622</td><td class="n">4.6k</td><td class="n">5.9k</td><td class="n">9×</td></tr><tr><td>Adobe - Commerce - Production - Key 3</td><td>Adobe</td><td class="n">0</td><td class="n">1k</td><td class="n">5.1k</td><td class="n">new</td></tr><tr><td>TIAA - Login - Production Key 1</td><td>TIAA</td><td class="n">419</td><td class="n">1.4k</td><td class="n">4.3k</td><td class="n">10×</td></tr><tr><td>Microsoft - Identity - Account Signup - Production - Key 2</td><td>Microsoft - Identity</td><td class="n">0</td><td class="n">585</td><td class="n">1.3k</td><td class="n">new</td></tr></table>
+<details><summary>Telltale definition (draft — not created)</summary><pre>{
+  &quot;ticket&quot;: &quot;DETCORE-4468&quot;,
+  &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
+  &quot;location&quot;: &quot;SESSION_SETUP&quot;,
+  &quot;cohort_category&quot;: &quot;Suspicious&quot;,
+  &quot;owner&quot;: &quot;p.nankubuge@arkoselabs.com&quot;,
+  &quot;owner_category&quot;: &quot;User&quot;,
+  &quot;risk_category&quot;: &quot;CUSTOM&quot;,
+  &quot;risk_score&quot;: 0,
+  &quot;telltale_active&quot;: false,
+  &quot;allow_others_to_include&quot;: true,
+  &quot;life_cycle_management&quot;: &quot;M&quot;,
+  &quot;telltale_definition&quot;: [
+    {
+      &quot;key&quot;: &quot;location&quot;,
+      &quot;operator&quot;: &quot;TS_EQ&quot;,
+      &quot;value&quot;: &quot;session_setup&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;susp-rfc-violation-cdn-header-order-content-type-before-content-length&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-device-parameter-spoofing&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-di-dict-3-match-short-term-threshold-exceeded-1x&quot;
+    }
+  ],
+  &quot;manual_life_cycle_details&quot;: &quot;Spike-scan candidate; review after 14 days&quot;,
+  &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-15: content-type before content-length (non-Chromium header order) + device parameter spoofing + DI dict-3 short-term threshold. Spiked on 12 keys Oct 10-14 (Airbnb Account Lookup, Adobe ARP, Roblox Signup/Login, Chime, TIAA, Microsoft Signup); 91% of window volume on spiking keys.&quot;,
+  &quot;_validated&quot;: &quot;2026-10-15 validate_telltale: valid&quot;,
+  &quot;telltale_name&quot;: &quot;g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x&quot;
+}</pre></details>
+</div>
+<div class="card"><h2>Discovery scan (1% sample)</h2><p class="muted">Discovery = 1% SYSTEM sample, Oct 10-13 vs Oct 3-9, run 2026-10-15. Step 1 (single flags) fed a 14-flag vocabulary into step 2 (all 2-4 flag combos). Excluded: g-h-device-spoofing-detected-verify-pressure (edited 2026-10-13, zero baseline = definition change, GAME_VERIFY only, not includable).</p><table><tr><th>Combination</th><th class="n">Keys spiking</th><th class="n">Volume on spiking keys</th><th class="n">Est. excess sessions/day</th><th>Note</th></tr><tr><td>cdn-header-order-ends-with-content-length<br>g--e-country-timezone-mismatch</td><td class="n">10</td><td class="n">39%</td><td class="n">631.2k</td><td>pair core of the header-order family</td></tr><tr><td>cdn-header-order-ends-with-content-length<br>g--e-country-timezone-mismatch<br>susp-rfc-violation-cdn-header-order-content-type-before-content-length<br>client-hints-has-not-a-brand-grease</td><td class="n">8</td><td class="n">58%</td><td class="n">627.1k</td><td>tracked as ends_cl_ct_before_cl_tz_grease</td></tr><tr><td>cdn-header-order-ends-with-content-length<br>country-match-timezone-mismatch-no-vpn<br>g-page-level-biometrics-empty-or-null (+ ct-before-cl)</td><td class="n">7</td><td class="n">61%</td><td class="n">589.9k</td><td>your live TT g-pagebio-null-...-rfc-ct-before-cl</td></tr><tr><td>susp-rfc-violation-cdn-header-order-content-type-before-content-length<br>g-device-parameter-spoofing<br>g-di-dict-3-match-short-term-threshold-exceeded-1x</td><td class="n">7</td><td class="n">81%</td><td class="n">405.8k</td><td>NEW cluster - tracked as ct_before_cl_dp_spoof_di_dict3</td></tr><tr><td>g-device-parameter-spoofing<br>client-hints-has-not-a-brand-grease<br>g-page-level-biometrics-empty-or-null</td><td class="n">7</td><td class="n">27%</td><td class="n">694.8k</td><td>broad/steady - retired</td></tr><tr><td>susp-rfc-violation-cdn-header-order-content-type-before-content-length<br>g-ip-intel-asn-intel-reputation-medium-risk</td><td class="n">8</td><td class="n">5%</td><td class="n">118.8k</td><td>too diluted (5%) - not tracked</td></tr><tr><td>g-h-device-spoofing-detected-verify-pressure<br>client-hints-has-not-a-brand-grease</td><td class="n">6</td><td class="n">87%</td><td class="n">52.5k</td><td>ARTIFACT - TT edited 2026-10-13</td></tr></table></div>
+<div id="tip"></div><script>
+const tip=document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+ el.addEventListener('mousemove',e=>{tip.textContent=el.dataset.tip;tip.style.display='block';tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px'});
+ el.addEventListener('mouseleave',()=>tip.style.display='none')});
+</script></div></body></html>

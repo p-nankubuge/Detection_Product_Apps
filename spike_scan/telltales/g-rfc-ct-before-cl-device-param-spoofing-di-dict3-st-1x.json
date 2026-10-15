@@ -1,0 +1,37 @@
+{
+  "ticket": "DETCORE-4468",
+  "telltale_type": "suspicion_flags",
+  "location": "SESSION_SETUP",
+  "cohort_category": "Suspicious",
+  "owner": "p.nankubuge@arkoselabs.com",
+  "owner_category": "User",
+  "risk_category": "CUSTOM",
+  "risk_score": 0,
+  "telltale_active": false,
+  "allow_others_to_include": true,
+  "life_cycle_management": "M",
+  "telltale_definition": [
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "susp-rfc-violation-cdn-header-order-content-type-before-content-length"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-device-parameter-spoofing"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-di-dict-3-match-short-term-threshold-exceeded-1x"
+    }
+  ],
+  "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+  "telltale_description": "Spike-scan 2026-10-15: content-type before content-length (non-Chromium header order) + device parameter spoofing + DI dict-3 short-term threshold. Spiked on 12 keys Oct 10-14 (Airbnb Account Lookup, Adobe ARP, Roblox Signup/Login, Chime, TIAA, Microsoft Signup); 91% of window volume on spiking keys.",
+  "_validated": "2026-10-15 validate_telltale: valid",
+  "telltale_name": "g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x"
+}

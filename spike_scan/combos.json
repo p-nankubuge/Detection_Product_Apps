@@ -1,0 +1,53 @@
+{
+  "_doc": "Tracked flag combinations. The daily job counts each one exactly (unsampled) per key per day and appends to data/daily_key_counts.csv. status: live = TT exists in Dataswan; candidate = drafted, not created; Add new combos from the discovery scan here.",
+  "combos": [
+    {
+      "id": "pagebio_ends_cl_tz_novpn_ct_before_cl",
+      "telltale_name": "g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl",
+      "status": "live",
+      "found": "2026-10-15",
+      "flags": [
+        "g-page-level-biometrics-empty-or-null",
+        "cdn-header-order-ends-with-content-length",
+        "country-match-timezone-mismatch-no-vpn",
+        "susp-rfc-violation-cdn-header-order-content-type-before-content-length"
+      ]
+    },
+    {
+      "id": "ends_cl_ct_before_cl_tz_grease",
+      "telltale_name": "g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease",
+      "status": "candidate",
+      "found": "2026-10-15",
+      "flags": [
+        "cdn-header-order-ends-with-content-length",
+        "susp-rfc-violation-cdn-header-order-content-type-before-content-length",
+        "g--e-country-timezone-mismatch",
+        "client-hints-has-not-a-brand-grease"
+      ],
+      "draft": "telltales/g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease.json"
+    },
+    {
+      "id": "ct_before_cl_dp_spoof_di_dict3",
+      "telltale_name": "g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x",
+      "status": "candidate",
+      "found": "2026-10-15",
+      "flags": [
+        "susp-rfc-violation-cdn-header-order-content-type-before-content-length",
+        "g-device-parameter-spoofing",
+        "g-di-dict-3-match-short-term-threshold-exceeded-1x"
+      ],
+      "draft": "telltales/g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x.json"
+    }
+  ],
+  "retired": [
+    {
+      "id": "dp_spoof_grease_pagebio",
+      "flags": [
+        "g-device-parameter-spoofing",
+        "client-hints-has-not-a-brand-grease",
+        "g-page-level-biometrics-empty-or-null"
+      ],
+      "reason": "2026-10-15: fires broadly on 70+ keys at steady volume; only 27% of its window volume is on spiking keys. Not attack-specific."
+    }
+  ]
+}

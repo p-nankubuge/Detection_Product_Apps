@@ -1,0 +1,13 @@
+{
+  "window": ["2026-10-10", "2026-10-14"],
+  "summary": "Discovery = 1% SYSTEM sample, Oct 10-13 vs Oct 3-9, run 2026-10-15. Step 1 (single flags) fed a 14-flag vocabulary into step 2 (all 2-4 flag combos). Excluded: g-h-device-spoofing-detected-verify-pressure (edited 2026-10-13, zero baseline = definition change, GAME_VERIFY only, not includable).",
+  "combos": [
+    {"combo": "cdn-header-order-ends-with-content-length + g--e-country-timezone-mismatch", "keys_spiking": 10, "spike_share": 0.39, "est_excess_per_day": 631157, "note": "pair core of the header-order family"},
+    {"combo": "cdn-header-order-ends-with-content-length + g--e-country-timezone-mismatch + susp-rfc-violation-cdn-header-order-content-type-before-content-length + client-hints-has-not-a-brand-grease", "keys_spiking": 8, "spike_share": 0.58, "est_excess_per_day": 627093, "note": "tracked as ends_cl_ct_before_cl_tz_grease"},
+    {"combo": "cdn-header-order-ends-with-content-length + country-match-timezone-mismatch-no-vpn + g-page-level-biometrics-empty-or-null (+ ct-before-cl)", "keys_spiking": 7, "spike_share": 0.61, "est_excess_per_day": 589921, "note": "your live TT g-pagebio-null-...-rfc-ct-before-cl"},
+    {"combo": "susp-rfc-violation-cdn-header-order-content-type-before-content-length + g-device-parameter-spoofing + g-di-dict-3-match-short-term-threshold-exceeded-1x", "keys_spiking": 7, "spike_share": 0.81, "est_excess_per_day": 405764, "note": "NEW cluster - tracked as ct_before_cl_dp_spoof_di_dict3"},
+    {"combo": "g-device-parameter-spoofing + client-hints-has-not-a-brand-grease + g-page-level-biometrics-empty-or-null", "keys_spiking": 7, "spike_share": 0.27, "est_excess_per_day": 694757, "note": "broad/steady - retired"},
+    {"combo": "susp-rfc-violation-cdn-header-order-content-type-before-content-length + g-ip-intel-asn-intel-reputation-medium-risk", "keys_spiking": 8, "spike_share": 0.05, "est_excess_per_day": 118764, "note": "too diluted (5%) - not tracked"},
+    {"combo": "g-h-device-spoofing-detected-verify-pressure + client-hints-has-not-a-brand-grease", "keys_spiking": 6, "spike_share": 0.87, "est_excess_per_day": 52450, "note": "ARTIFACT - TT edited 2026-10-13"}
+  ]
+}
