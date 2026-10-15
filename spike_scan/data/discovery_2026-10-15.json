@@ -1,0 +1,48 @@
+{
+ "window": "2026-10-14 00:00 -> 2026-10-15 21:00 UTC vs 2026-10-07..13 (1% SYSTEM sample)",
+ "summary": "Re-run 2026-10-15 21:30 UTC. Step 1: 40 single flags with >=3 keys spiking. Dropped as artifacts (baseline ~0, TT edited Oct 14): g-ip-asn-reputation-high-risk-with-session-signal, g-ip-connection-type-velocity-short-term-abuse-cloud-asn, g-atm-all-agents, plus the g-ip-datacenter / hosting / shared-egress family already excluded on Oct 14. g--e-g-ja4-suspicious-verification-patterns is Ensemble (re-dated daily), kept. Step 2 over 16 flags found one new attack combination, now tracked: di-short-count-300-fp-pixel-ratio-1 + g-device-parameter-spoofing + ja4-dict-1-challenger. Separately, g-ip-residential-proxy-user-ip jumped ~3.5x on Oct 14 across ~50 keys at once (sampled 10k/day -> 35-38k/day) with no TT edit since Aug 3. A same-day step across that many keys looks like an IP-intel feed or list change rather than one attack. Check with the IP-intel owners before building on it; not tracked.",
+ "combos": [
+  {
+   "combo": "di-short-count-300-fp-pixel-ratio-1 + g-device-parameter-spoofing + ja4-dict-1-challenger",
+   "keys_spiking": 8,
+   "spike_share": 0.86,
+   "est_excess_per_day": 543529,
+   "note": "NEW - tracked as dishort300_dp_spoof_ja4_dict1. Recurring on Uber SMS; new today on GitLab and Wells Fargo; Pinterest likely a client change (98% verified)."
+  },
+  {
+   "combo": "di-short-count-300-fp-pixel-ratio-1 + g-device-parameter-spoofing + g-ip-velocity-short-term-abuse-4x",
+   "keys_spiking": 8,
+   "spike_share": 0.9,
+   "est_excess_per_day": 195164,
+   "note": "Same keys as the JA4 variant, smaller volume - not tracked separately."
+  },
+  {
+   "combo": "g-ip-residential-proxy-user-ip + window-tree-index-is-empty",
+   "keys_spiking": 39,
+   "spike_share": 0.83,
+   "est_excess_per_day": 2017857,
+   "note": "Probable feed change on Oct 14 (step across ~50 keys) - verify before use, not tracked."
+  },
+  {
+   "combo": "g-ip-residential-proxy-user-ip + g-page-level-biometrics-empty-or-null",
+   "keys_spiking": 31,
+   "spike_share": 0.82,
+   "est_excess_per_day": 1592093,
+   "note": "Same residential-proxy step - not tracked."
+  },
+  {
+   "combo": "g-device-parameter-spoofing + g-di-medium-risk-signature-exceeding-short-term-threshold",
+   "keys_spiking": 8,
+   "spike_share": 0.8,
+   "est_excess_per_day": 325257,
+   "note": "Overlaps the tracked DI combos (Adobe ARP, Roblox Signup) - watch."
+  },
+  {
+   "combo": "g--e-g-ja4-suspicious-verification-patterns + window-tree-index-is-empty",
+   "keys_spiking": 9,
+   "spike_share": 0.46,
+   "est_excess_per_day": 809493,
+   "note": "Too diluted (46%) - not tracked."
+  }
+ ]
+}

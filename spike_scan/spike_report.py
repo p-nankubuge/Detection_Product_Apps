@@ -551,9 +551,15 @@ def perkey_body(c, win_start, win_end, all_keys, uid, heading=True):
     for r in rows:
         if r["combo_id"] == c["id"]:
             ver[r["public_key"]][r["day"]] = int(r.get("verified") or 0)
-    keys = [k for k in st if st[k]["spiking"]] if not all_keys else [k for k in st if st[k]["peak"] >= ACTIVE_MIN]
     hours, hourly = load_hourly(c["id"])
     today, today_hour = load_today(c["id"], str(we))  # today so far (we = window end = today when run daily)
+    # spiking in the window, or bursting today (>= ACTIVE_MIN so far and >= SPIKE_X x baseline) -- a key hit for the
+    # first time today must still get a chart
+    for k, (tc, tv) in today.items():
+        if k not in st and tc >= ACTIVE_MIN:
+            st[k] = {"series": [0] * len(days), "base": 0, "win": 0, "peak": 0, "spiking": False}
+    today_burst = {k for k, (tc, tv) in today.items() if tc >= max(ACTIVE_MIN, SPIKE_X * st.get(k, {}).get("base", 0))}
+    keys = [k for k in st if st[k]["spiking"] or k in today_burst] if not all_keys else [k for k in st if st[k]["peak"] >= ACTIVE_MIN or k in today_burst]
     cdays = days + ([str(we)] if today_hour else [])
     partial = ("so far, to %s:59 UTC" % today_hour) if today_hour else None
     zero = [0] * len(hours)
@@ -810,6 +816,8 @@ def cmd_soc(a):
         sec = ['<section class="combo" id="%s"><h2 style="margin-top:0">%d. %s <span class="pill">%s</span><span class="pill %s">%s</span></h2>'
                % (anchor, ci + 1, html.escape(title), c["status"], ak, html.escape(c.get("action", "")))]
         sec.append('<div class="action %s"><b>Action:</b> %s</div>' % (ak, html.escape(c.get("action_detail", ""))))
+        if c.get("history_note"):
+            sec.append('<p class="muted"><b>Data note:</b> %s</p>' % html.escape(c["history_note"]))
         sec.append('<h3>Signal combination (all must be present on the session)</h3><ul class="flags">%s</ul>'
                    % "".join("<li><code>%s</code></li>" % html.escape(f) for f in c["flags"]))
         if meta:

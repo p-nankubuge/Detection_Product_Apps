@@ -3,6 +3,14 @@
   "account_name": "Coinbase",
   "key_name": "Coinbase - SMS - Prod - Key 1"
  },
+ "12D76D4C-5EDF-4EB4-A84D-042C497A9610": {
+  "account_name": "Gitlab Inc",
+  "key_name": "GitLab - Production - Sign Up & Identity Verification - Key 1"
+ },
+ "1A413285-A58D-4629-A9FD-B77170BBCBCE": {
+  "account_name": "The Lottery Corporation",
+  "key_name": "theLott - Login - Production - Key 2"
+ },
  "1B154715-ACB4-2706-19ED-0DC7E3F7D855": {
   "account_name": "Roblox Corporation",
   "key_name": "Roblox - Production - Monetization - Key 4"
@@ -75,6 +83,10 @@
   "account_name": "WBD",
   "key_name": "WBD Bolt/Beam - Account Lookup - Production - Key 20"
  },
+ "8A1EAD4C-ABA1-4A1D-87DD-87521C761AF4": {
+  "account_name": "Microsoft Azure",
+  "key_name": "Microsoft Azure - Production - Key 1"
+ },
  "8BAAFE0D-A867-4813-96D5-ABAF2C0D9B93": {
   "account_name": "Air Canada",
   "key_name": "Air Canada - Login - Production -  Key 1"
@@ -91,6 +103,10 @@
   "account_name": "TIAA",
   "key_name": "TIAA - Login - Production Key 1"
  },
+ "958652F9-1B3E-C23A-E908-CDFFFE508ECB": {
+  "account_name": "Microsoft - Learn",
+  "key_name": "Microsoft - Learn - Production - Key 3"
+ },
  "963556DD-38CC-4C84-B9D1-F70F6B881B7B": {
   "account_name": "Grab Inc",
   "key_name": "Grab - Login + Rego - Production - Key 1"
@@ -106,6 +122,10 @@
  "9C3260E3-AD4C-6719-E0A9-56D21BFB0BCD": {
   "account_name": "Blizzard Entertainment Inc.",
   "key_name": "Blizzard - Production - ROW Support Site  - Key 3"
+ },
+ "A207F8A1-ED09-4325-ACE6-C8E26A458FBA": {
+  "account_name": "Figma",
+  "key_name": "Figma - Registration - Production - Key 2"
  },
  "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F": {
   "account_name": "Roblox Corporation",
@@ -167,9 +187,17 @@
   "account_name": "Anthropic",
   "key_name": "Anthropic - Registration & Login - Production - Key 1"
  },
+ "F5675B21-025B-4843-983C-38D86DEB394B": {
+  "account_name": "Pinterest",
+  "key_name": "Pinterest - Login - Production - Key 1"
+ },
  "F5BFC1A8-941A-4092-B3F4-E494C9C7879A": {
   "account_name": "Bumble",
   "key_name": "ChatAndDate - Social - Web - Production - Key 10"
+ },
+ "F7C0768A-A5B0-422A-BC5F-5912456296EE": {
+  "account_name": "Pinterest",
+  "key_name": "Pinterest - Registration - Production - Key 2"
  },
  "F82162A1-2E05-485A-BD5E-C4DF6F7486FC": {
   "account_name": "Olo",

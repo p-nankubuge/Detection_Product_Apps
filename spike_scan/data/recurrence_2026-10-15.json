@@ -38,8 +38,8 @@
     5
    ],
    "today": [
-    133151,
-    64939
+    572971,
+    368090
    ],
    "today_burst": true,
    "n_episodes": 3,
@@ -173,10 +173,10 @@
     13
    ],
    "today": [
-    777,
-    8
+    4308,
+    40
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 3,
    "kind": "recurring"
   },
@@ -218,8 +218,8 @@
     16
    ],
    "today": [
-    0,
-    0
+    6,
+    2
    ],
    "today_burst": false,
    "n_episodes": 3,
@@ -383,8 +383,8 @@
     2
    ],
    "today": [
-    29,
-    29
+    644,
+    642
    ],
    "today_burst": false,
    "n_episodes": 3,
@@ -407,10 +407,24 @@
    ],
    "gaps_days": [],
    "today": [
-    26,
-    21
+    383,
+    169
    ],
    "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    2399,
+    377
+   ],
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   }
@@ -454,8 +468,8 @@
     6
    ],
    "today": [
-    135043,
-    65351
+    581205,
+    370434
    ],
    "today_burst": true,
    "n_episodes": 3,
@@ -534,8 +548,8 @@
     2
    ],
    "today": [
-    0,
-    0
+    13,
+    9
    ],
    "today_burst": false,
    "n_episodes": 3,
@@ -569,8 +583,8 @@
     2
    ],
    "today": [
-    6574,
-    5401
+    29997,
+    22636
    ],
    "today_burst": true,
    "n_episodes": 2,
@@ -604,8 +618,8 @@
     13
    ],
    "today": [
-    102,
-    21
+    577,
+    211
    ],
    "today_burst": false,
    "n_episodes": 2,
@@ -763,8 +777,8 @@
    ],
    "gaps_days": [],
    "today": [
-    28,
-    4
+    429,
+    12
    ],
    "today_burst": false,
    "n_episodes": 1,
@@ -791,6 +805,20 @@
     0
    ],
    "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    2474,
+    379
+   ],
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   }
@@ -859,11 +887,11 @@
     6
    ],
    "today": [
-    748,
-    93
+    161013,
+    110669
    ],
-   "today_burst": false,
-   "n_episodes": 2,
+   "today_burst": true,
+   "n_episodes": 3,
    "kind": "recurring"
   },
   {
@@ -894,8 +922,8 @@
     12
    ],
    "today": [
-    1708,
-    75
+    9704,
+    212
    ],
    "today_burst": false,
    "n_episodes": 2,
@@ -974,10 +1002,10 @@
     14
    ],
    "today": [
-    0,
-    0
+    6369,
+    1
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 2,
    "kind": "recurring"
   },
@@ -1009,11 +1037,11 @@
     14
    ],
    "today": [
-    0,
-    0
+    15202,
+    19
    ],
-   "today_burst": false,
-   "n_episodes": 2,
+   "today_burst": true,
+   "n_episodes": 3,
    "kind": "recurring"
   },
   {
@@ -1044,10 +1072,10 @@
     3
    ],
    "today": [
-    292,
-    267
+    3368,
+    3008
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 2,
    "kind": "recurring"
   },
@@ -1092,10 +1120,10 @@
    ],
    "gaps_days": [],
    "today": [
-    343,
-    227
+    1706,
+    1140
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   },
@@ -1116,10 +1144,10 @@
    ],
    "gaps_days": [],
    "today": [
-    641,
-    27
+    2450,
+    71
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   },
@@ -1140,8 +1168,8 @@
    ],
    "gaps_days": [],
    "today": [
-    0,
-    0
+    216,
+    149
    ],
    "today_burst": false,
    "n_episodes": 1,
@@ -1285,6 +1313,30 @@
    "kind": "recurring"
   },
   {
+   "key": "4D297134-67EC-B943-E0E9-79E2E0D9F8DB",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-12",
+     "days": 1,
+     "peak": 2653,
+     "peak_day": "2026-10-12",
+     "sessions": 2653,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    1597,
+    3
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
    "key": "513F48D7-3DCD-468D-8557-EFF418CF794D",
    "median": 0,
    "threshold": 1000,
@@ -1369,30 +1421,6 @@
      "peak_day": "2026-10-11",
      "sessions": 3966,
      "verified": 3966
-    }
-   ],
-   "gaps_days": [],
-   "today": [
-    0,
-    0
-   ],
-   "today_burst": false,
-   "n_episodes": 1,
-   "kind": "one-off"
-  },
-  {
-   "key": "4D297134-67EC-B943-E0E9-79E2E0D9F8DB",
-   "median": 0,
-   "threshold": 1000,
-   "episodes": [
-    {
-     "start": "2026-10-12",
-     "end": "2026-10-12",
-     "days": 1,
-     "peak": 2653,
-     "peak_day": "2026-10-12",
-     "sessions": 2653,
-     "verified": 0
     }
    ],
    "gaps_days": [],
@@ -1502,8 +1530,8 @@
     4
    ],
    "today": [
-    2028,
-    33
+    9430,
+    85
    ],
    "today_burst": true,
    "n_episodes": 4,
@@ -1526,8 +1554,8 @@
    ],
    "gaps_days": [],
    "today": [
-    12,
-    6
+    278,
+    128
    ],
    "today_burst": false,
    "n_episodes": 1,
@@ -1550,10 +1578,10 @@
    ],
    "gaps_days": [],
    "today": [
-    1025,
-    281
+    7928,
+    1320
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   },
@@ -1598,10 +1626,10 @@
    ],
    "gaps_days": [],
    "today": [
-    403,
-    370
+    3893,
+    3489
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   },
@@ -1622,8 +1650,8 @@
    ],
    "gaps_days": [],
    "today": [
-    0,
-    0
+    46,
+    38
    ],
    "today_burst": false,
    "n_episodes": 1,
@@ -1646,10 +1674,10 @@
    ],
    "gaps_days": [],
    "today": [
-    635,
-    27
+    2399,
+    63
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   },
@@ -1670,8 +1698,8 @@
    ],
    "gaps_days": [],
    "today": [
-    48,
-    30
+    515,
+    336
    ],
    "today_burst": false,
    "n_episodes": 1,
@@ -1694,10 +1722,10 @@
    ],
    "gaps_days": [],
    "today": [
-    427,
-    125
+    1583,
+    876
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   },
@@ -1718,10 +1746,24 @@
    ],
    "gaps_days": [],
    "today": [
-    0,
+    6391,
+    17
+   ],
+   "today_burst": true,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    31324,
     0
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   }
@@ -1775,10 +1817,10 @@
     3
    ],
    "today": [
-    279,
-    1
+    15023,
+    14
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 4,
    "kind": "recurring"
   },
@@ -1810,8 +1852,8 @@
     2
    ],
    "today": [
-    5070,
-    4906
+    21514,
+    20652
    ],
    "today_burst": true,
    "n_episodes": 2,
@@ -1855,8 +1897,8 @@
     3
    ],
    "today": [
-    129207,
-    117
+    132676,
+    269
    ],
    "today_burst": true,
    "n_episodes": 3,
@@ -1910,11 +1952,11 @@
     5
    ],
    "today": [
-    674,
-    32
+    5372,
+    1389
    ],
-   "today_burst": false,
-   "n_episodes": 4,
+   "today_burst": true,
+   "n_episodes": 5,
    "kind": "recurring"
   },
   {
@@ -1955,8 +1997,8 @@
     19
    ],
    "today": [
-    282,
-    14
+    886,
+    150
    ],
    "today_burst": false,
    "n_episodes": 3,
@@ -1979,10 +2021,10 @@
    ],
    "gaps_days": [],
    "today": [
-    6758,
-    270
+    88048,
+    42207
    ],
-   "today_burst": false,
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "persistent"
   },
@@ -2007,6 +2049,302 @@
     0
    ],
    "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  }
+ ],
+ "dishort300_dp_spoof_ja4_dict1": [
+  {
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "median": 500,
+   "threshold": 1500,
+   "episodes": [
+    {
+     "start": "2026-09-26",
+     "end": "2026-09-26",
+     "days": 1,
+     "peak": 155600,
+     "peak_day": "2026-09-26",
+     "sessions": 155600,
+     "verified": 141500
+    },
+    {
+     "start": "2026-09-28",
+     "end": "2026-09-28",
+     "days": 1,
+     "peak": 109900,
+     "peak_day": "2026-09-28",
+     "sessions": 109900,
+     "verified": 64000
+    },
+    {
+     "start": "2026-09-30",
+     "end": "2026-10-02",
+     "days": 3,
+     "peak": 24200,
+     "peak_day": "2026-09-30",
+     "sessions": 29700,
+     "verified": 11500
+    },
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-07",
+     "days": 4,
+     "peak": 300600,
+     "peak_day": "2026-10-05",
+     "sessions": 694200,
+     "verified": 598300
+    },
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-09",
+     "days": 1,
+     "peak": 1900,
+     "peak_day": "2026-10-09",
+     "sessions": 1900,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    2,
+    2,
+    4,
+    5
+   ],
+   "today": [
+    12585,
+    2181
+   ],
+   "today_burst": true,
+   "n_episodes": 6,
+   "kind": "recurring"
+  },
+  {
+   "key": "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-09-21",
+     "end": "2026-09-23",
+     "days": 3,
+     "peak": 129500,
+     "peak_day": "2026-09-22",
+     "sessions": 169700,
+     "verified": 150200
+    },
+    {
+     "start": "2026-09-28",
+     "end": "2026-09-29",
+     "days": 2,
+     "peak": 3900,
+     "peak_day": "2026-09-28",
+     "sessions": 7700,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 1983,
+     "peak_day": "2026-10-14",
+     "sessions": 1983,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    7,
+    16
+   ],
+   "today": [
+    1515,
+    2
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 30142,
+   "threshold": 90426,
+   "episodes": [
+    {
+     "start": "2026-09-29",
+     "end": "2026-09-29",
+     "days": 1,
+     "peak": 99100,
+     "peak_day": "2026-09-29",
+     "sessions": 99100,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-08",
+     "days": 1,
+     "peak": 104800,
+     "peak_day": "2026-10-08",
+     "sessions": 104800,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    9
+   ],
+   "today": [
+    54829,
+    257
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-09-20",
+     "end": "2026-09-22",
+     "days": 3,
+     "peak": 6700,
+     "peak_day": "2026-09-20",
+     "sessions": 14100,
+     "verified": 0
+    },
+    {
+     "start": "2026-09-26",
+     "end": "2026-09-26",
+     "days": 1,
+     "peak": 3200,
+     "peak_day": "2026-09-26",
+     "sessions": 3200,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    6
+   ],
+   "today": [
+    5073,
+    0
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "9B8ED233-984B-4DE5-A7B6-3A370D9FF48B",
+   "median": 1000,
+   "threshold": 3000,
+   "episodes": [
+    {
+     "start": "2026-09-21",
+     "end": "2026-09-21",
+     "days": 1,
+     "peak": 3200,
+     "peak_day": "2026-09-21",
+     "sessions": 3200,
+     "verified": 100
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    7885,
+    78
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "DE24F792-2F8A-4CDC-BF2D-70F94BF1660A",
+   "median": 39800,
+   "threshold": 119400,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    39369,
+    3
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "F5675B21-025B-4843-983C-38D86DEB394B",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 249444,
+     "peak_day": "2026-10-14",
+     "sessions": 249444,
+     "verified": 245584
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    635255,
+    623629
+   ],
+   "today_burst": true,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "F7C0768A-A5B0-422A-BC5F-5912456296EE",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 27733,
+     "peak_day": "2026-10-14",
+     "sessions": 27733,
+     "verified": 26169
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    77998,
+    72988
+   ],
+   "today_burst": true,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "12D76D4C-5EDF-4EB4-A84D-042C497A9610",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    17175,
+    0
+   ],
+   "today_burst": true,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "DB4DC857-0913-46C5-8D96-E7EF9FBB83B2",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    4476,
+    0
+   ],
+   "today_burst": true,
    "n_episodes": 1,
    "kind": "one-off"
   }
