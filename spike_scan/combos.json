@@ -18,7 +18,7 @@
     {
       "id": "ends_cl_ct_before_cl_tz_grease",
       "telltale_name": "g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease",
-      "status": "candidate",
+      "status": "live",
       "found": "2026-10-15",
       "flags": [
         "susp-rfc-violation-cdn-header-order-content-type-before-content-length",
@@ -27,13 +27,16 @@
         "client-hints-has-not-a-brand-grease"
       ],
       "draft": "telltales/g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease.json",
-      "action": "create",
-      "action_detail": "Weekend: same actor as the live TT, and still ongoing. Adobe ARP 965k / 1.43M / 907k on Oct 16-18 (59-75% verified). New keys on Oct 18: WBD Login (Key 8) 103k (77% verified) and WBD Account Lookup (Key 20) 79k (22% verified). Uber SMS is steady at ~90-110k/day (3-4% verified, so mostly blocked). gtop100 is back at 27k (61% verified). Adobe Sign-in (~400k/day at 97% verified, its normal level) dropped to ~40k/day on Oct 17-18, so exclude that key or watch it."
+      "action": "keep live + add pressure",
+      "action_detail": "LIVE since 2026-10-19 03:2x UTC (Dataswan id 14768610, Suspicious flag, risk 0, no action on its own). Pressure first on Adobe ARP, WBD Account Lookup (Key 20) and WBD Login (Key 8); not on Adobe Sign-in (normal ~400k/day at 97% verified). Tracking continues: watch whether verified share drops on the keys where pressure is added. Weekend before creation: same actor as the live TT, and still ongoing. Adobe ARP 965k / 1.43M / 907k on Oct 16-18 (59-75% verified). New keys on Oct 18: WBD Login (Key 8) 103k (77% verified) and WBD Account Lookup (Key 20) 79k (22% verified). Uber SMS is steady at ~90-110k/day (3-4% verified, so mostly blocked). gtop100 is back at 27k (61% verified). Adobe Sign-in (~400k/day at 97% verified, its normal level) dropped to ~40k/day on Oct 17-18, so exclude that key or watch it.",
+      "dataswan_id": 14768610,
+      "created": "2026-10-19",
+      "ticket": "DETCORE-4466"
     },
     {
       "id": "ct_before_cl_dp_spoof_di_dict3",
       "telltale_name": "g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x",
-      "status": "candidate",
+      "status": "live",
       "found": "2026-10-15",
       "flags": [
         "susp-rfc-violation-cdn-header-order-content-type-before-content-length",
@@ -41,52 +44,64 @@
         "g-di-dict-3-match-short-term-threshold-exceeded-1x"
       ],
       "draft": "telltales/g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x.json",
-      "action": "create",
-      "action_detail": "Weekend: Adobe ARP came back to its highest level yet, 251k on Oct 18 (74% verified; 103k/h at 12h). New key: AT&T Consumer SDK Android, 30k on Oct 18 at 0% verified (a 2-hour burst at 09-10h UTC). Roblox Signup 115k on Oct 16 (0% verified), then ~35-45k/day. Wells Fargo Login is steady at 13-31k/day (~73% verified, getting through). Olo Payments is new from Oct 17 (12k on Oct 18, 0% verified, ongoing). Adobe Sign-in 17-20k/day at 99% verified (likely benign)."
+      "action": "keep live + add pressure",
+      "action_detail": "LIVE since 2026-10-19 03:2x UTC (Dataswan id 14768848, Suspicious flag, risk 0, no action on its own). Pressure first on Adobe ARP, Roblox Signup/Login, AT&T SDK Android and Olo Payments; not on Adobe Sign-in (99% verified, likely benign). Tracking continues: watch whether verified share drops on the keys where pressure is added. Weekend before creation: Adobe ARP came back to its highest level yet, 251k on Oct 18 (74% verified; 103k/h at 12h). New key: AT&T Consumer SDK Android, 30k on Oct 18 at 0% verified (a 2-hour burst at 09-10h UTC). Roblox Signup 115k on Oct 16 (0% verified), then ~35-45k/day. Wells Fargo Login is steady at 13-31k/day (~73% verified, getting through). Olo Payments is new from Oct 17 (12k on Oct 18, 0% verified, ongoing). Adobe Sign-in 17-20k/day at 99% verified (likely benign).",
+      "dataswan_id": 14768848,
+      "created": "2026-10-19",
+      "ticket": "DETCORE-4466"
     },
     {
       "id": "rta_isp_velocity_pagebio",
       "telltale_name": "g-rta-isp-velocity-lt-pagebio-null",
-      "status": "candidate",
+      "status": "live",
       "found": "2026-10-15",
       "flags": [
         "g-rta-isp-velocity-long-term-abuse",
         "g-page-level-biometrics-empty-or-null"
       ],
       "draft": "telltales/g-rta-isp-velocity-lt-pagebio-null.json",
-      "action": "create (scoped)",
-      "action_detail": "Weekend: only GitLab Sign Up (43k on Oct 16 and 18k on Oct 17, 0% verified, the same GitLab attack as the ja4-dict1 combo), stopped by Oct 18. Nothing is live now. Keep scoped to Adobe Sign Up and Roblox Game Join (the recurring keys); low priority."
+      "action": "keep live (pressure scoped)",
+      "action_detail": "LIVE since 2026-10-19 03:2x UTC (Dataswan id 14769024, Suspicious flag, risk 0, no action on its own). Created GLOBAL (flag only); limit any pressure to Adobe Sign Up and Roblox Game Join. Tracking continues: watch whether verified share drops on the keys where pressure is added. Weekend before creation: only GitLab Sign Up (43k on Oct 16 and 18k on Oct 17, 0% verified, the same GitLab attack as the ja4-dict1 combo), stopped by Oct 18. Nothing is live now. Keep scoped to Adobe Sign Up and Roblox Game Join (the recurring keys); low priority.",
+      "dataswan_id": 14769024,
+      "created": "2026-10-19",
+      "ticket": "DETCORE-4466"
     },
     {
       "id": "ends_te_dp_spoof",
       "telltale_name": "g-cdn-ends-te-device-param-spoofing",
-      "status": "candidate",
+      "status": "live",
       "found": "2026-10-15",
       "flags": [
         "cdn-header-order-ends-with-te",
         "g-device-parameter-spoofing"
       ],
       "draft": "telltales/g-cdn-ends-te-device-param-spoofing.json",
-      "action": "create (scoped)",
-      "action_detail": "Weekend: Roblox Signup had its biggest wave so far, 209k on Oct 18 (19% verified). It ran 19-39k/h from 08 to 13h and again 6-12k/h from 18 to 23h UTC: its 6th burst since Sep 29. New key: Tinder PreSMS, 19k on Oct 17 and 3.7k on Oct 18, 0% verified. Roblox Game Join is quiet since its Oct 15 burst. Microsoft Signup is fading (2.5k, 0% verified). Scope to Roblox Signup + Game Join first."
+      "action": "keep live (pressure scoped)",
+      "action_detail": "LIVE since 2026-10-19 03:2x UTC (Dataswan id 14769092, Suspicious flag, risk 0, no action on its own). Created GLOBAL (flag only); limit any pressure to Roblox Signup and Roblox Game Join. Tracking continues: watch whether verified share drops on the keys where pressure is added. Weekend before creation: Roblox Signup had its biggest wave so far, 209k on Oct 18 (19% verified). It ran 19-39k/h from 08 to 13h and again 6-12k/h from 18 to 23h UTC: its 6th burst since Sep 29. New key: Tinder PreSMS, 19k on Oct 17 and 3.7k on Oct 18, 0% verified. Roblox Game Join is quiet since its Oct 15 burst. Microsoft Signup is fading (2.5k, 0% verified). Scope to Roblox Signup + Game Join first.",
+      "dataswan_id": 14769092,
+      "created": "2026-10-19",
+      "ticket": "DETCORE-4466"
     },
     {
       "id": "single_click_dp_spoof",
       "telltale_name": "g-bio-mouse-single-click-device-param-spoofing",
-      "status": "candidate",
+      "status": "live",
       "found": "2026-10-15",
       "flags": [
         "g-biometrics-mouse-has-mouse-moves-but-only-a-single-click",
         "g-device-parameter-spoofing"
       ],
       "draft": "telltales/g-bio-mouse-single-click-device-param-spoofing.json",
-      "action": "create",
-      "action_detail": "Weekend: Roblox Signup's Oct 15 wave (135k) faded to 30k on Oct 16 and 1.8k on Oct 17, then came back at 21k on Oct 18 (20% verified). Uber SMS is back to ~50k/day, but only 4% verified now (was 42% on Oct 15), so it is being stopped. New on Oct 18: Roblox Login 14k (1% verified) and Amazon IDS 11k (18% verified). gtop100 is steady at ~20k (83% verified)."
+      "action": "keep live + add pressure",
+      "action_detail": "LIVE since 2026-10-19 03:2x UTC (Dataswan id 14769203, Suspicious flag, risk 0, no action on its own). Pressure first on Roblox Signup, Roblox Game Join and Roblox Login. Tracking continues: watch whether verified share drops on the keys where pressure is added. Weekend before creation: Roblox Signup's Oct 15 wave (135k) faded to 30k on Oct 16 and 1.8k on Oct 17, then came back at 21k on Oct 18 (20% verified). Uber SMS is back to ~50k/day, but only 4% verified now (was 42% on Oct 15), so it is being stopped. New on Oct 18: Roblox Login 14k (1% verified) and Amazon IDS 11k (18% verified). gtop100 is steady at ~20k (83% verified).",
+      "dataswan_id": 14769203,
+      "created": "2026-10-19",
+      "ticket": "DETCORE-4466"
     },
     {
       "id": "dishort300_dp_spoof_ja4_dict1",
       "telltale_name": "g-di-short-300-pxr1-device-param-spoofing-ja4-dict1",
-      "status": "candidate",
+      "status": "live",
       "found": "2026-10-15",
       "flags": [
         "di-short-count-300-fp-pixel-ratio-1",
@@ -95,8 +110,11 @@
       ],
       "draft": "telltales/g-di-short-300-pxr1-device-param-spoofing-ja4-dict1.json",
       "history_note": "Daily history before 2026-10-11 for this combination is a 1% sample x100 (estimate); Oct 11 onward is exact.",
-      "action": "create (exclude Pinterest)",
-      "action_detail": "Weekend: GitLab Sign Up peaked at 361k on Oct 16 (0% verified; 10-31k/h) and stopped at Oct 17 10:00 UTC (mitigated or the attacker gave up). Pinterest matches stopped on Oct 16 ~05h, which confirms it was a client change, so keep Pinterest excluded. New keys: WBD Multi-Tenant Login (Key 18) 120k on Oct 16 (84% verified, a 1-hour 100k burst at 08h). Adobe Commerce 35-39k/day on Oct 16-17 and 19k on Oct 18 (0% verified, still running). Uber SMS 45k in one hour (Oct 18 06h, 92% verified), its 7th burst since Sep 26. Meta Login 5.7k on Oct 18 (0% verified). DoorDash steady at ~50k/day (0% verified). Daily history before Oct 11 is a 1% sample x100."
+      "action": "keep live (no pressure on Pinterest)",
+      "action_detail": "LIVE since 2026-10-19 03:2x UTC (Dataswan id 14769325, Suspicious flag, risk 0, no action on its own). Created GLOBAL with no Pinterest exclusion; Pinterest stopped matching Oct 16, but do not put pressure on Pinterest Login/Registration. Pressure first on Adobe Commerce and GitLab. Tracking continues: watch whether verified share drops on the keys where pressure is added. Weekend before creation: GitLab Sign Up peaked at 361k on Oct 16 (0% verified; 10-31k/h) and stopped at Oct 17 10:00 UTC (mitigated or the attacker gave up). Pinterest matches stopped on Oct 16 ~05h, which confirms it was a client change, so keep Pinterest excluded. New keys: WBD Multi-Tenant Login (Key 18) 120k on Oct 16 (84% verified, a 1-hour 100k burst at 08h). Adobe Commerce 35-39k/day on Oct 16-17 and 19k on Oct 18 (0% verified, still running). Uber SMS 45k in one hour (Oct 18 06h, 92% verified), its 7th burst since Sep 26. Meta Login 5.7k on Oct 18 (0% verified). DoorDash steady at ~50k/day (0% verified). Daily history before Oct 11 is a 1% sample x100.",
+      "dataswan_id": 14769325,
+      "created": "2026-10-19",
+      "ticket": "DETCORE-4466"
     }
   ],
   "retired": [

@@ -823,8 +823,9 @@ def cmd_soc(a):
         sec.append('<h3>Signal combination (all must be present on the session)</h3><ul class="flags">%s</ul>'
                    % "".join("<li><code>%s</code></li>" % html.escape(f) for f in c["flags"]))
         if meta:
-            sec.append('<p class="muted">Draft: location <b>%s</b> · type %s · cohort %s · ticket %s · %s · not created in Dataswan.</p>'
-                       % tuple(html.escape(str(meta.get(k, "–"))) for k in ("location", "telltale_type", "cohort_category", "ticket", "_validated")))
+            where = ("<b>live in Dataswan</b> (id %s, created %s)" % (c["dataswan_id"], c.get("created", "–"))) if c.get("dataswan_id") else "not created in Dataswan"
+            sec.append('<p class="muted">%s: location <b>%s</b> · type %s · cohort %s · ticket %s · %s · %s.</p>'
+                       % (("Definition" if c.get("dataswan_id") else "Draft",) + tuple(html.escape(str(meta.get(k, "–"))) for k in ("location", "telltale_type", "cohort_category", "ticket", "_validated")) + (where,)))
         sec.append('<details%s><summary>Telltale definition JSON</summary><pre>%s</pre></details>'
                    % ("" if c["status"] == "live" else " open", html.escape(json.dumps(defn, indent=2))))
         sec.append('<h3 class="sec">Does it come back? Daily bursts per key, %s → %s</h3>' % (rdays[0], today))

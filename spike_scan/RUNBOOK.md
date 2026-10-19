@@ -99,6 +99,11 @@ Work from the repo root, `cd spike_scan`.
    `data/recurrence_<today>.json`, which the main report reads for its per-combo burst-episode list.
    Burst day = ≥1k sessions and ≥3× the key's median day; back-to-back days = one episode; ≥2 episodes = recurring.
    Run this before step 8.
+   **TTs created 2026-10-19** (grease, di-dict3, rta, ends-te, single-click, ja4-dict1): their names now appear in
+   `TELLTALE_LIST_AT_ALL_EVENTS` from a zero baseline, so step 1 will show them as spiking on every key they fire on.
+   Exclude them from step 1 until 2026-10-26 (same as the Oct 14-edited TTs). Tracking is unchanged, because it
+   matches the raw flags, not the TT name. Daily check for live combos: a falling verified share on keys that have
+   pressure means the action works; created dropping to ~0 means the attacker moved, so look for a new combo on that key in step 2.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)
