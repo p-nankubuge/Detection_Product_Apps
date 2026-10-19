@@ -552,6 +552,8 @@ def perkey_body(c, win_start, win_end, all_keys, uid, heading=True):
         if r["combo_id"] == c["id"]:
             ver[r["public_key"]][r["day"]] = int(r.get("verified") or 0)
     hours, hourly = load_hourly(c["id"])
+    cut = next((i for i, h in enumerate(hours) if h >= win_start), len(hours))  # hourly chart covers the window only
+    hours, hourly = hours[cut:], {k: (cv[cut:], vv[cut:]) for k, (cv, vv) in hourly.items()}
     today, today_hour = load_today(c["id"], str(we))  # today so far (we = window end = today when run daily)
     # spiking in the window, or bursting today (>= ACTIVE_MIN so far and >= SPIKE_X x baseline) -- a key hit for the
     # first time today must still get a chart
@@ -843,6 +845,10 @@ def cmd_soc(a):
             'lines on top of each other mean it is getting through.</p>' % (gen, ws, we - dt.timedelta(days=1), rdays[0], today),
             '<div class="card"><h2 style="margin-top:0">What to do</h2><table class="toc"><tr><th>Telltale</th><th>Status</th><th>Action</th><th class="n">Spiking keys</th>'
             '<th class="n">Recurring keys</th><th>Ongoing now (last 24h ≥3× baseline)</th></tr>%s</table></div>' % "".join(srows)]
+    if a.summary:
+        sm = json.loads(pathlib.Path(a.summary).read_text())
+        head.insert(3, '<div class="card"><h2 style="margin-top:0">%s</h2>%s</div>' % (html.escape(sm["title"]), "".join(
+            '<h3>%s</h3><ul>%s</ul>' % (html.escape(x["h"]), "".join("<li>%s</li>" % html.escape(i) for i in x["items"])) for x in sm["sections"])))
     disc = json.loads(pathlib.Path(a.discovery).read_text()) if a.discovery else None
     tail = []
     if disc:
@@ -877,6 +883,7 @@ def main():
     rc.add_argument("--today", help="also show this (partial) day from data/hourly_key_counts.csv")
     so = sp.add_parser("soc"); so.add_argument("--win-start", required=True); so.add_argument("--win-end", required=True, help="today (exclusive end of full days)")
     so.add_argument("--recur-start", required=True, help="first day of the recurrence history"); so.add_argument("--discovery")
+    so.add_argument("--summary", help="JSON {title, sections: [{h, items: [text]}]} shown as a card above the action table")
     a = p.parse_args()
     {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc}[a.cmd](a)
 

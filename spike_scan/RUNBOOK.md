@@ -109,6 +109,12 @@ Work from the repo root, `cd spike_scan`.
    -> `reports/soc_<D>.html` + `reports/soc_latest.html`: one self-contained file with the action summary and, per TT
    combination (live and candidates), the signals, TT definition, recurrence table and per-key time series.
    Send this file to SOC; the other reports are working views.
+   Optional `--summary data/summary_<D>.json` (`{title, sections: [{h, items: [text]}]}`) adds a top card: what is still
+   ongoing, new keys, what was mitigated. Use it for catch-up runs (e.g. after a weekend).
+   Catch-up runs: pull hourly per chart key with `05_hourly_by_key.sql` in 6-12h slices (12h works when the warehouse
+   is quiet), then build that range's daily `chart_key_counts` rows by summing the hourly rows. The hourly query uses
+   HAVING >= 40/hour, so small counts are slightly undercounted. Pairs with no baseline rows get Oct 11-14-style fills
+   from hourly sums so that status is not judged against a 0 baseline. The hourly chart in the pack starts at --win-start.
 9. **Commit and push** `spike_scan/` with a message like `spike-scan: <Y> — N combos tracked, M new`.
 
 ## Known limits

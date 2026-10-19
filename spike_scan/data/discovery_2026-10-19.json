@@ -1,0 +1,26 @@
+{
+ "window": "2026-10-16 00:00 -> 2026-10-19 00:00 UTC vs 2026-10-09..15 (1% SYSTEM sample)",
+ "summary": "Weekend re-run, 2026-10-19 01:30 UTC. Step 1: 40 single flags or global TTs had >=3 keys spiking. Dropped as already known: the g-ip-datacenter / hosting / shared-egress / connection-type-velocity family and g-ip-asn-reputation-high-risk-with-session-signal (artifacts excluded on Oct 14-15). Most of the rest are the parts of attacks already tracked here, on keys already charted. Examples: g-pagebio-null-...-rfc-ct-before-cl (live TT) on 11 keys, led by Adobe ARP, WBD Account Lookup and WBD Login. di-short-300 / ja4-dict-1 / g-di-dict-1-5x on GitLab, Adobe Commerce and WBD Multi-Tenant. cdn-header-order-does-not-contain-origin / header-ua-ua-mismatch / g-operating-system-spoofing on WBD Account Lookup and GitLab, i.e. the same sessions. g--e-ja4-global-cluster-strict: Pinterest ~1.2M/day from a zero baseline, high verified, same as the Pinterest client change seen on Oct 14-16. Not an attack. One new candidate: g-spoofing-user-agent + g-di-bad-signature-list-match + g-device-parameter-spoofing on Uber SMS only (~30-55k on Oct 18, ~30-50% verified, ~0 before Oct 17). It is a single key and a single day so far, overlapping the Oct 18 06h Uber ja4-dict1 burst, so it is watched, not proposed. No new key beyond those charted reached the burst bar. Steady 0%-verified streams: Blizzard ROW Support (~15k/day on the grease + di-dict3 combos) and Bumble SMS (~10k/day on the live TT) are already blocked.",
+ "combos": [
+  {
+   "combo": "pagebio-null + ends-with-content-length + tz-mismatch-no-vpn + rfc-ct-before-cl (LIVE TT)",
+   "keys_spiking": 11,
+   "note": "Adobe ARP 0.9-1.4M/day at 59-75% verified. New: WBD Account Lookup, WBD Login. The TT fires but does not stop it."
+  },
+  {
+   "combo": "di-short-count-300-fp-pixel-ratio-1 + g-device-parameter-spoofing + ja4-dict-1-challenger",
+   "keys_spiking": 5,
+   "note": "GitLab (stopped Oct 17 10h), Adobe Commerce (ongoing, 0% verified), WBD Multi-Tenant (1h burst)."
+  },
+  {
+   "combo": "g-spoofing-user-agent + g-di-bad-signature-list-match + g-device-parameter-spoofing",
+   "keys_spiking": 1,
+   "note": "NEW, watch only: Uber SMS, Oct 17-18, ~30-55k/day, ~30-50% verified. Not proposed (one key, one day)."
+  },
+  {
+   "combo": "g--e-ja4-global-cluster-strict",
+   "keys_spiking": 4,
+   "note": "Pinterest client change (zero baseline, mostly verified). Not an attack."
+  }
+ ]
+}

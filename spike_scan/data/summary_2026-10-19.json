@@ -1,0 +1,23 @@
+{"title": "Weekend update, Oct 16-18 (data to Oct 19 00:00 UTC)",
+ "sections": [
+  {"h": "Still ongoing, not mitigated", "items": [
+   "Adobe ARP FF (Key 8), on the live TT and the grease combo: 959k (Oct 16), 1.42M (Oct 17) and 902k (Oct 18) per day, with 59-75% verified. It peaked at 168k/h on Oct 18 12:00 UTC. The live TT fires but most of it gets through, so the action on this key needs changing. The di-dict3 combo also hit a new high on this key: 251k on Oct 18 (74% verified).",
+   "Roblox Signup (Key 2) on ends-te + device-param-spoofing: its biggest wave so far, 209k on Oct 18 (19% verified), its 6th burst since Sep 29. It is also on single-click (21k) and di-dict3 (45k).",
+   "Adobe Commerce (Key 3) on the new ja4-dict1 combo: 35-39k/day since Oct 16, 0% verified, still running.",
+   "Uber SMS (Key 1): the grease combo is steady at ~90k/day, but only 4% verified (being stopped). A ja4-dict1 burst of 45k in 1 hour on Oct 18 06h was 92% verified."]},
+  {"h": "New keys hit this weekend", "items": [
+   "WBD Account Lookup (Key 20): 435k on Oct 18 on the live TT (23% verified), with a 188k/h peak at 19h UTC, plus 79k on the grease combo.",
+   "WBD Login (Key 8): 203k on Oct 18 on the live TT (39% verified) and 103k on grease (77% verified), with ~54k/h at 21-22h UTC.",
+   "AT&T Consumer SDK Android (Key 4): 30k on di-dict3 on Oct 18 09-10h, 0% verified.",
+   "WBD Multi-Tenant Login (Key 18): 120k on ja4-dict1 in a 1-hour burst on Oct 16 08h (84% verified), then 11k on the live TT on Oct 17.",
+   "Tinder PreSMS (Key 3): 19k on ends-te on Oct 17, 0% verified.",
+   "Olo Payments (Key 3): di-dict3 and the live TT since Oct 17 (10-12k/day, 0-5% verified, still running).",
+   "Smaller: Roblox Login (14k on single-click, 1% verified), Amazon IDS (11k on single-click) and Meta Login (5.7k on ja4-dict1, 0% verified)."]},
+  {"h": "Mitigated or stopped", "items": [
+   "GitLab Sign Up: the ja4-dict1 attack peaked at 361k on Oct 16 (0% verified) and stopped at Oct 17 10:00 UTC. The rta combo on GitLab stopped at the same time.",
+   "Pinterest Login and Registration stopped matching ja4-dict1 on Oct 16 ~05h, which confirms it was a client change. Keep Pinterest excluded.",
+   "Roblox Game Join (Key 6) has been quiet since its Oct 15 burst. The Microsoft Signup bursts are fading (2.5k, 0% verified).",
+   "Adobe Sign-in (Key 5): its normal ~400k/day on the grease combo dropped to ~40k from Oct 17."]},
+  {"h": "New attack discovery", "items": [
+   "No new combination is proposed. Weekend single-flag spikes are the same attacks on the keys above.",
+   "Watch: g-spoofing-user-agent + g-di-bad-signature-list-match + g-device-parameter-spoofing appeared only on Uber SMS, Oct 17-18 (~30-55k/day, 30-50% verified). It is one key and one day so far, so it is not proposed yet."]}]}

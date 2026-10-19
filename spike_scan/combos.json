@@ -12,8 +12,8 @@
         "cdn-header-order-ends-with-content-length",
         "country-match-timezone-mismatch-no-vpn"
       ],
-      "action": "keep live",
-      "action_detail": "Still ongoing as of Oct 15 20:00 UTC. Adobe ARP: 573k today (3rd wave since Sep 30, running since Oct 9), and 64% of it is verified, up from ~50%, so most of it is getting through. Review the action on this key first. WBD Account Lookup burst again today (4.3k, 0% verified; 4th time since Sep 28). New key: Roblox Game Join (2.4k). AT&T and Airbnb are quiet today but have repeated before (AT&T every ~3 weeks, Sunday to Sunday)."
+      "action": "keep live + review action",
+      "action_detail": "Weekend, Oct 16-18: NOT mitigated. Adobe ARP grew to 959k (Oct 16), 1.42M (Oct 17) and 902k (Oct 18), with 59-75% verified. The TT fires, but most of the traffic still gets through. It peaked at 168k/h on Oct 18 12:00 UTC (83% verified) and was down to ~3-4k/h by midnight. This is the top ask: change the action on this key. New keys: WBD Account Lookup (Key 20) 435k on Oct 18 (23% verified; bursts at 06h, 08-09h and 18-20h with a 188k/h peak). WBD Login (Key 8) 203k on Oct 18 (39% verified; 40k/h at 18h and 54k/h at 21-22h). Olo Payments 10k (5% verified, still running). Roblox Signup is steady at ~40k/day."
     },
     {
       "id": "ends_cl_ct_before_cl_tz_grease",
@@ -28,7 +28,7 @@
       ],
       "draft": "telltales/g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease.json",
       "action": "create",
-      "action_detail": "Same actor as the live TT, broader coverage. Today: Adobe ARP 581k (63% verified, ongoing) and gtop100 30k (75% verified, 3rd day running). 8 of 11 keys have come back at least twice since Sep 20. Adobe Sign-in also matches (~345k/day at 97% verified) but that is its normal daily level, not a spike. Exclude that key or watch it for false positives."
+      "action_detail": "Weekend: same actor as the live TT, and still ongoing. Adobe ARP 965k / 1.43M / 907k on Oct 16-18 (59-75% verified). New keys on Oct 18: WBD Login (Key 8) 103k (77% verified) and WBD Account Lookup (Key 20) 79k (22% verified). Uber SMS is steady at ~90-110k/day (3-4% verified, so mostly blocked). gtop100 is back at 27k (61% verified). Adobe Sign-in (~400k/day at 97% verified, its normal level) dropped to ~40k/day on Oct 17-18, so exclude that key or watch it."
     },
     {
       "id": "ct_before_cl_dp_spoof_di_dict3",
@@ -42,7 +42,7 @@
       ],
       "draft": "telltales/g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x.json",
       "action": "create",
-      "action_detail": "Recurs every 6-12 days on Roblox Login (Sep 20, Oct 2, Oct 8). Today it hit new highs on 3 keys: Adobe ARP 161k (68% verified), Roblox Game Join 15k (0% verified, a single-hour burst at 10:00 UTC) and Microsoft Account Signup 6.4k (0% verified). Also active today on Chime, AT&T and Adobe Commerce."
+      "action_detail": "Weekend: Adobe ARP came back to its highest level yet, 251k on Oct 18 (74% verified; 103k/h at 12h). New key: AT&T Consumer SDK Android, 30k on Oct 18 at 0% verified (a 2-hour burst at 09-10h UTC). Roblox Signup 115k on Oct 16 (0% verified), then ~35-45k/day. Wells Fargo Login is steady at 13-31k/day (~73% verified, getting through). Olo Payments is new from Oct 17 (12k on Oct 18, 0% verified, ongoing). Adobe Sign-in 17-20k/day at 99% verified (likely benign)."
     },
     {
       "id": "rta_isp_velocity_pagebio",
@@ -55,7 +55,7 @@
       ],
       "draft": "telltales/g-rta-isp-velocity-lt-pagebio-null.json",
       "action": "create (scoped)",
-      "action_detail": "Quiet today: only Singapore Airlines, 1.6k. The keys that keep coming back are Adobe Sign Up (Sep 25-28, Oct 7, Oct 11-12) and Roblox Game Join (4 bursts). Scope the TT to those two keys. Lower priority because nothing is live right now."
+      "action_detail": "Weekend: only GitLab Sign Up (43k on Oct 16 and 18k on Oct 17, 0% verified, the same GitLab attack as the ja4-dict1 combo), stopped by Oct 18. Nothing is live now. Keep scoped to Adobe Sign Up and Roblox Game Join (the recurring keys); low priority."
     },
     {
       "id": "ends_te_dp_spoof",
@@ -68,7 +68,7 @@
       ],
       "draft": "telltales/g-cdn-ends-te-device-param-spoofing.json",
       "action": "create (scoped)",
-      "action_detail": "Upgraded from hold. Today it fired on 7 keys: Roblox Game Join 31k (NEW key, 0% verified, the same 10:00 UTC burst as the DI combo), Roblox Signup 9.4k (0% verified, its 5th burst since Sep 29), Adobe ARP 7.9k, Microsoft Signup 6.4k, Chime 3.9k, Adobe Commerce and Wells Fargo Password Reset. Scope to Roblox Signup + Game Join first. Note: Roblox Game Join history before Oct 4 was not backfilled for this combo."
+      "action_detail": "Weekend: Roblox Signup had its biggest wave so far, 209k on Oct 18 (19% verified). It ran 19-39k/h from 08 to 13h and again 6-12k/h from 18 to 23h UTC: its 6th burst since Sep 29. New key: Tinder PreSMS, 19k on Oct 17 and 3.7k on Oct 18, 0% verified. Roblox Game Join is quiet since its Oct 15 burst. Microsoft Signup is fading (2.5k, 0% verified). Scope to Roblox Signup + Game Join first."
     },
     {
       "id": "single_click_dp_spoof",
@@ -81,7 +81,7 @@
       ],
       "draft": "telltales/g-bio-mouse-single-click-device-param-spoofing.json",
       "action": "create",
-      "action_detail": "Live attack. Roblox Signup: 133k today, 0% verified (4th wave since Oct 2). Uber SMS: new high, 88k, 47% verified. Also active today on gtop100 (21.5k, 95% verified), Roblox Game Join (15k, 0% verified) and Adobe Sign Up (5.4k). 5 of 7 keys have come back at least twice since Sep 20."
+      "action_detail": "Weekend: Roblox Signup's Oct 15 wave (135k) faded to 30k on Oct 16 and 1.8k on Oct 17, then came back at 21k on Oct 18 (20% verified). Uber SMS is back to ~50k/day, but only 4% verified now (was 42% on Oct 15), so it is being stopped. New on Oct 18: Roblox Login 14k (1% verified) and Amazon IDS 11k (18% verified). gtop100 is steady at ~20k (83% verified)."
     },
     {
       "id": "dishort300_dp_spoof_ja4_dict1",
@@ -96,7 +96,7 @@
       "draft": "telltales/g-di-short-300-pxr1-device-param-spoofing-ja4-dict1.json",
       "history_note": "Daily history before 2026-10-11 for this combination is a 1% sample x100 (estimate); Oct 11 onward is exact.",
       "action": "create (exclude Pinterest)",
-      "action_detail": "NEW, found in today's discovery run. Uber SMS has had 6 bursts since Sep 26 (Sep 26, Sep 28, Oct 4-7, today), mostly verified, so it is getting through. A new attack started today at 15-20h UTC on GitLab Sign Up (17k, 0% verified), Wells Fargo Login (7.9k, 1% verified) and Wells Fargo Password Reset (4.5k, 0% verified), all starting within the same few hours. Pinterest Login and Registration (~700k/day) have matched since exactly Oct 14 16:00 UTC, steadily, with a normal day/night pattern and 93-98% verified. That looks like a Pinterest client change, not an attack: exclude Pinterest or review it before activating. DoorDash (~45k/day) and Adobe Sign Up (~50k/day) sit at a steady level with 0% verified. Daily history before Oct 11 is a 1% sample x100."
+      "action_detail": "Weekend: GitLab Sign Up peaked at 361k on Oct 16 (0% verified; 10-31k/h) and stopped at Oct 17 10:00 UTC (mitigated or the attacker gave up). Pinterest matches stopped on Oct 16 ~05h, which confirms it was a client change, so keep Pinterest excluded. New keys: WBD Multi-Tenant Login (Key 18) 120k on Oct 16 (84% verified, a 1-hour 100k burst at 08h). Adobe Commerce 35-39k/day on Oct 16-17 and 19k on Oct 18 (0% verified, still running). Uber SMS 45k in one hour (Oct 18 06h, 92% verified), its 7th burst since Sep 26. Meta Login 5.7k on Oct 18 (0% verified). DoorDash steady at ~50k/day (0% verified). Daily history before Oct 11 is a 1% sample x100."
     }
   ],
   "retired": [
