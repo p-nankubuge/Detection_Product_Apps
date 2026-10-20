@@ -536,7 +536,7 @@ def cmd_perkey(a):
     print("wrote", out.relative_to(ROOT), "(%d keys)" % n)
 
 
-def perkey_body(c, win_start, win_end, all_keys, uid, heading=True, chart_start=None):
+def perkey_body(c, win_start, win_end, all_keys, uid, heading=True, chart_start=None, extra_keys=()):
     """-> (html parts, n keys, {key: status}) — per-key daily + hourly charts for one combo, no page wrapper."""
     names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
     rows = read_counts(CHART_COUNTS)
@@ -563,6 +563,8 @@ def perkey_body(c, win_start, win_end, all_keys, uid, heading=True, chart_start=
             st[k] = {"series": [0] * len(days), "base": 0, "win": 0, "peak": 0, "spiking": False}
     today_burst = {k for k, (tc, tv) in today.items() if tc >= max(ACTIVE_MIN, SPIKE_X * st.get(k, {}).get("base", 0))}
     keys = [k for k in st if st[k]["spiking"] or k in today_burst] if not all_keys else [k for k in st if st[k]["peak"] >= ACTIVE_MIN or k in today_burst]
+    # keys shown in the recurrence table always get a chart, even when steadily high (not "spiking" vs their own last 7 days)
+    keys += [k for k in extra_keys if k in st and k not in keys and max(st[k]["series"]) >= ACTIVE_MIN]
     cdays = days + ([str(we)] if today_hour else [])
     partial = ("so far, to %s:59 UTC" % today_hour) if today_hour else None
     zero = [0] * len(hours)
@@ -809,8 +811,9 @@ def cmd_soc(a):
         title = c.get("telltale_name") or c["id"]
         anchor = "tt-%s" % c["id"]
         ak = _akind(c.get("action", "hold"))
-        body, nkeys, status = perkey_body(c, a.win_start, a.win_end, False, "c%d" % ci, heading=False, chart_start=a.chart_start)
         krows = recur.get(c["id"], [])
+        body, nkeys, status = perkey_body(c, a.win_start, a.win_end, False, "c%d" % ci, heading=False, chart_start=a.chart_start,
+                                          extra_keys=[r["key"] for r in krows if r["kind"] != "none"])
         rec = [r for r in krows if r["kind"] == "recurring"]
         ongoing = [k for k, v in status.items() if v[0] == "ongoing"]
         srows.append('<tr><td><a href="#%s">%s</a></td><td>%s</td><td><span class="pill %s">%s</span></td><td class="n">%d</td><td class="n">%d / %d</td><td>%s</td></tr>'
@@ -838,7 +841,7 @@ def cmd_soc(a):
         sec.append('<p class="muted">%d of %d keys had ≥2 separate bursts, %d episodes in total. %s</p>'
                    % (len(rec), len(krows), sum(r["n_episodes"] for r in krows), RECUR_INTRO % (fmt(ACTIVE_MIN), SPIKE_X, fmt(ACTIVE_MIN))))
         sec += recurrence_body(krows, rdays, today, names) if krows else ['<p class="muted">No backfilled history for this combination.</p>']
-        sec.append('<h3 class="sec">Is it still going on? Per-key time series (%d spiking keys)</h3>' % nkeys)
+        sec.append('<h3 class="sec">Is it still going on? Per-key time series (%d keys: spiking now or in the recurrence table)</h3>' % nkeys)
         sec += body
         sec.append("</section>")
         sections.append("\n".join(sec))
@@ -850,7 +853,7 @@ def cmd_soc(a):
             'Exact session counts from <code>ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY</code> (Production keys). '
             '<b>Created</b> = sessions carrying the signal combination; <b>verified</b> = of those, sessions that ended verified — a wide gap means it is being stopped, '
             'lines on top of each other mean it is getting through.</p>' % (gen, ws, we - dt.timedelta(days=1), rdays[0], today),
-            '<div class="card"><h2 style="margin-top:0">What to do</h2><table class="toc"><tr><th>Telltale</th><th>Status</th><th>Action</th><th class="n">Spiking keys</th>'
+            '<div class="card"><h2 style="margin-top:0">What to do</h2><table class="toc"><tr><th>Telltale</th><th>Status</th><th>Action</th><th class="n">Keys charted</th>'
             '<th class="n">Recurring keys</th><th>Ongoing now (last 24h ≥3× baseline)</th></tr>%s</table></div>' % "".join(srows)]
     todo = [c for c in combos if c["status"] != "live"]
     if todo:
