@@ -1,0 +1,37 @@
+{
+  "ticket": "DETCORE-4466",
+  "telltale_type": "suspicion_flags",
+  "cohort_category": "Suspicious",
+  "owner": "p.nankubuge@arkoselabs.com",
+  "owner_category": "User",
+  "risk_category": "CUSTOM",
+  "risk_score": 0,
+  "telltale_active": false,
+  "allow_others_to_include": true,
+  "life_cycle_management": "M",
+  "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+  "_validated": "not yet validated (Dataswan unavailable on 2026-10-20)",
+  "telltale_name": "g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest",
+  "location": "SESSION_SETUP",
+  "telltale_definition": [
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-os-impersonation-appleos"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-device-parameter-spoofing"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "capi-anomaly-header-sec-fetch-dest-not-empty"
+    }
+  ],
+  "telltale_description": "Spike-scan 2026-10-20: Apple OS impersonation + device parameter spoofing + CAPI sec-fetch-dest not empty. New Oct 18-19 on WBD Account Lookup and Olo Payments at ~0% verified; overlaps the live pagebio/rfc TT."
+}

@@ -114,6 +114,9 @@ Work from the repo root, `cd spike_scan`.
    -> `reports/soc_<D>.html` + `reports/soc_latest.html`: one self-contained file with the action summary and, per TT
    combination (live and candidates), the signals, TT definition, recurrence table and per-key time series.
    Send this file to SOC; the other reports are working views.
+   Optional `--chart-start 2026-09-20` stretches the per-key daily charts back to the start of the history (status and
+   baseline still use --win-start). Candidate combos with `status` != live are listed in a highlighted
+   "not created yet" card at the top, with their flags marked. `hourly_keys` on a combo limits status to keys with exact hourly data.
    Optional `--summary data/summary_<D>.json` (`{title, sections: [{h, items: [text]}]}`) adds a top card: what is still
    ongoing, new keys, what was mitigated. Use it for catch-up runs (e.g. after a weekend).
    Catch-up runs: pull hourly per chart key with `05_hourly_by_key.sql` in 6-12h slices (12h works when the warehouse

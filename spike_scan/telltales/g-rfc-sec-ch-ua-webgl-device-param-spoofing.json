@@ -1,0 +1,33 @@
+{
+  "ticket": "DETCORE-4466",
+  "telltale_type": "suspicion_flags",
+  "cohort_category": "Suspicious",
+  "owner": "p.nankubuge@arkoselabs.com",
+  "owner_category": "User",
+  "risk_category": "CUSTOM",
+  "risk_score": 0,
+  "telltale_active": false,
+  "allow_others_to_include": true,
+  "life_cycle_management": "M",
+  "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+  "_validated": "not yet validated (Dataswan unavailable on 2026-10-20)",
+  "telltale_name": "g-rfc-sec-ch-ua-webgl-device-param-spoofing",
+  "location": "SESSION_SETUP",
+  "telltale_definition": [
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "susp-rfc-violations-sec-ch-ua-before-user-agent-content-length-before-sec-ch-ua-anomalous-not-brand-token-webkit-webgl"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-device-parameter-spoofing"
+    }
+  ],
+  "telltale_description": "Spike-scan 2026-10-20: RFC header-order violation (sec-ch-ua before user-agent, content-length before sec-ch-ua, anomalous not-brand token, webkit webgl) + device parameter spoofing. Recurring on Uber SMS (Oct 9-11, 14, 16-18, mostly verified). New on Roblox Signup Oct 19. Steady on gtop100 and Adobe ARP. Adobe Sign-in ~2k/day at 100% verified: exclude."
+}

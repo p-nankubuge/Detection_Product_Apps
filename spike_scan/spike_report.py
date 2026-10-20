@@ -400,7 +400,7 @@ def svg_key_lines(days, created, verified, base, win_start, uid, partial=None):
         out.append('<line x1="%d" x2="%d" y1="%.1f" y2="%.1f" class="grid"/>' % (L, W - R, y(v), y(v)))
         out.append('<text x="%d" y="%.1f" class="axis" text-anchor="end">%s</text>' % (L - 6, y(v) + 4, fmt(v)))
     for i, d in enumerate(days):
-        if (len(days) - 1 - i) % 2 == 0:  # count back from the newest day so its label never collides
+        if (len(days) - 1 - i) % max(2, -(-len(days) // 8)) == 0:  # count back from the newest day so its label never collides
             out.append('<text x="%.1f" y="%d" class="axis" text-anchor="middle">%s</text>' % (x(i), H - 8, d[5:]))
     if base > 0:
         out.append('<line x1="%d" x2="%d" y1="%.1f" y2="%.1f" class="baseline"/>' % (L, W - R, y(base), y(base)))
@@ -411,7 +411,7 @@ def svg_key_lines(days, created, verified, base, win_start, uid, partial=None):
         if partial and full >= 1:
             out.append('<polyline points="%.1f,%.1f %.1f,%.1f" class="line %s partial"/>' % (x(full - 1), y(vals[full - 1]), x(full), y(vals[full]), cls))
         for i, v in enumerate(vals):
-            out.append('<circle cx="%.1f" cy="%.1f" r="3.5" class="dot %s%s"/>' % (x(i), y(v), cls, " hollow" if partial and i == full else ""))
+            out.append('<circle cx="%.1f" cy="%.1f" r="%s" class="dot %s%s"/>' % (x(i), y(v), 3.5 if len(days) <= 16 else 2.2, cls, " hollow" if partial and i == full else ""))
     if partial:
         out.append('<text x="%.1f" y="%d" class="axis" text-anchor="middle">so far</text>' % (x(full), T + 10))
     # direct labels at the line ends (2 series)
@@ -536,7 +536,7 @@ def cmd_perkey(a):
     print("wrote", out.relative_to(ROOT), "(%d keys)" % n)
 
 
-def perkey_body(c, win_start, win_end, all_keys, uid, heading=True):
+def perkey_body(c, win_start, win_end, all_keys, uid, heading=True, chart_start=None):
     """-> (html parts, n keys, {key: status}) — per-key daily + hourly charts for one combo, no page wrapper."""
     names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
     rows = read_counts(CHART_COUNTS)
@@ -544,7 +544,8 @@ def perkey_body(c, win_start, win_end, all_keys, uid, heading=True):
         sys.exit("data/chart_key_counts.csv is empty -- run 03_track_exact_day.sql with --keys and ingest --chart")
     ws, we = dt.date.fromisoformat(win_start), dt.date.fromisoformat(win_end)
     bs = ws - dt.timedelta(days=7)
-    days = days_between(bs, we)
+    cs = min(bs, dt.date.fromisoformat(chart_start)) if chart_start else bs  # daily chart can reach further back than the baseline
+    days = days_between(cs, we)
     win_days, base_days = days_between(ws, we), days_between(bs, ws)
     st = combo_stats(c["id"], rows, days, win_days, base_days)
     ver = defaultdict(dict)
@@ -565,7 +566,8 @@ def perkey_body(c, win_start, win_end, all_keys, uid, heading=True):
     cdays = days + ([str(we)] if today_hour else [])
     partial = ("so far, to %s:59 UTC" % today_hour) if today_hour else None
     zero = [0] * len(hours)
-    status = {k: ongoing_status(hourly.get(k, (zero, zero))[0], st[k]["base"]) for k in keys}
+    hk = c.get("hourly_keys")  # combos added later only have hourly data for these keys
+    status = {k: (("no hourly data", 0.0) if hk is not None and k not in hk else ongoing_status(hourly.get(k, (zero, zero))[0], st[k]["base"])) for k in keys}
     order = {"ongoing": 0, "elevated": 1, "subsided": 2, "no hourly data": 3}
     keys.sort(key=lambda k: (order[status[k][0]], -(st[k]["peak"] / max(st[k]["base"], 1))))
     title = c.get("telltale_name") or c["id"]
@@ -607,7 +609,9 @@ def perkey_body(c, win_start, win_end, all_keys, uid, heading=True):
         hc, hv = hourly.get(k, (zero, zero))
         last6 = sum(hc[-6:]) / 6.0 if hc else 0
         hourly_svg = ('<div class="sub">Hourly, %s → %s UTC (dashed = baseline hourly rate)</div>%s'
-                      % (hours[0], hours[-1], svg_hourly(hours, hc, hv, s["base"], "%sh%d" % (uid, i)))) if hours else ""
+                      % (hours[0], hours[-1], svg_hourly(hours, hc, hv, s["base"], "%sh%d" % (uid, i)))) if hours and stt != "no hourly data" else \
+                     '<div class="sub">No exact hourly data for this key yet: daily points are a 1% sample ×100.</div>'
+
         parts.append('<div class="kcard"><h3>%s<span class="tag %s">%s</span><span class="tag">%s</span></h3><div class="kstats">%s · <code>%s</code></div>'
                      '<div class="kstats">%s</div><div class="kstats">window verified: <b>%s of %s (%.0f%%)</b> · last 24h: <b>%s</b> · last 6h: %s/h vs baseline %s/h</div>%s%s</div>'
                      % (html.escape(key_label(k, names)), stt.split()[0], stt, tag, html.escape(n.get("account_name", "")), k, stats,
@@ -772,6 +776,8 @@ RECUR_CSS = """
 
 
 SOC_CSS = """
+.newflag{background:#fff1c2;color:#4a3700;border:1px solid #d9a800;border-radius:4px;padding:1px 5px;display:inline-block;margin:2px 0}
+.newflag.fresh{background:#ffd54a;border-color:#a77d00;font-weight:600}.card.todo{border:2px solid #d9a800}
 .toc td a{color:var(--text-primary)}.pill{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;border:1px solid var(--grid);margin-left:6px;vertical-align:middle;color:var(--text-secondary)}
 .pill.create{background:var(--series-2);border-color:var(--series-2);color:#fff;font-weight:600}.pill.keep{background:var(--series-1);border-color:var(--series-1);color:#fff;font-weight:600}
 .action{border-left:4px solid var(--series-2);padding:8px 14px;background:var(--surface-1);border-radius:4px;margin:10px 0;font-size:13px}
@@ -803,7 +809,7 @@ def cmd_soc(a):
         title = c.get("telltale_name") or c["id"]
         anchor = "tt-%s" % c["id"]
         ak = _akind(c.get("action", "hold"))
-        body, nkeys, status = perkey_body(c, a.win_start, a.win_end, False, "c%d" % ci, heading=False)
+        body, nkeys, status = perkey_body(c, a.win_start, a.win_end, False, "c%d" % ci, heading=False, chart_start=a.chart_start)
         krows = recur.get(c["id"], [])
         rec = [r for r in krows if r["kind"] == "recurring"]
         ongoing = [k for k, v in status.items() if v[0] == "ongoing"]
@@ -821,7 +827,7 @@ def cmd_soc(a):
         if c.get("history_note"):
             sec.append('<p class="muted"><b>Data note:</b> %s</p>' % html.escape(c["history_note"]))
         sec.append('<h3>Signal combination (all must be present on the session)</h3><ul class="flags">%s</ul>'
-                   % "".join("<li><code>%s</code></li>" % html.escape(f) for f in c["flags"]))
+                   % "".join(("<li><code>%s</code></li>" if c["status"] == "live" else '<li><code class="newflag">%s</code> <span class="muted">not created yet</span></li>') % html.escape(f) for f in c["flags"]))
         if meta:
             where = ("<b>live in Dataswan</b> (id %s, created %s)" % (c["dataswan_id"], c.get("created", "–"))) if c.get("dataswan_id") else "not created in Dataswan"
             sec.append('<p class="muted">%s: location <b>%s</b> · type %s · cohort %s · ticket %s · %s · %s.</p>'
@@ -846,6 +852,18 @@ def cmd_soc(a):
             'lines on top of each other mean it is getting through.</p>' % (gen, ws, we - dt.timedelta(days=1), rdays[0], today),
             '<div class="card"><h2 style="margin-top:0">What to do</h2><table class="toc"><tr><th>Telltale</th><th>Status</th><th>Action</th><th class="n">Spiking keys</th>'
             '<th class="n">Recurring keys</th><th>Ongoing now (last 24h ≥3× baseline)</th></tr>%s</table></div>' % "".join(srows)]
+    todo = [c for c in combos if c["status"] != "live"]
+    if todo:
+        live_flags = {f for c in combos if c["status"] == "live" for f in c["flags"]}
+        rows_ = "".join('<tr><td><a href="#tt-%s">%s</a></td><td>%s</td><td><span class="pill %s">%s</span></td><td>%s</td></tr>'
+                        % (c["id"], html.escape(c.get("telltale_name") or c["id"]),
+                           "".join('<code class="newflag%s">%s</code> ' % ("" if f in live_flags else " fresh", html.escape(f)) for f in c["flags"]),
+                           _akind(c.get("action", "hold")), html.escape(c.get("action", "")), html.escape(c.get("action_detail", "")[:260] + ("…" if len(c.get("action_detail", "")) > 260 else "")))
+                        for c in todo)
+        head.insert(3, '<div class="card todo"><h2 style="margin-top:0">New signals — not created in Dataswan yet</h2>'
+                    '<p class="muted">Highlighted flags make up each proposed telltale. <code class="newflag fresh">Darker</code> = a flag that no live telltale here uses yet; '
+                    '<code class="newflag">lighter</code> = already part of a live combination. Full definition, recurrence and per-key charts are in each section below.</p>'
+                    '<table><tr><th>Proposed telltale</th><th>Suspicion flags (all must be present)</th><th>Action</th><th>Why</th></tr>%s</table></div>' % rows_)
     if a.summary:
         sm = json.loads(pathlib.Path(a.summary).read_text())
         head.insert(3, '<div class="card"><h2 style="margin-top:0">%s</h2>%s</div>' % (html.escape(sm["title"]), "".join(
@@ -884,6 +902,7 @@ def main():
     rc.add_argument("--today", help="also show this (partial) day from data/hourly_key_counts.csv")
     so = sp.add_parser("soc"); so.add_argument("--win-start", required=True); so.add_argument("--win-end", required=True, help="today (exclusive end of full days)")
     so.add_argument("--recur-start", required=True, help="first day of the recurrence history"); so.add_argument("--discovery")
+    so.add_argument("--chart-start", help="first day of the per-key daily charts (default: 7 days before --win-start)")
     so.add_argument("--summary", help="JSON {title, sections: [{h, items: [text]}]} shown as a card above the action table")
     a = p.parse_args()
     {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc}[a.cmd](a)

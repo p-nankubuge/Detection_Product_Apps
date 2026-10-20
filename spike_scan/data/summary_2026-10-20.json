@@ -1,0 +1,17 @@
+{"title": "Update to Oct 19 23:59 UTC — first day with the new telltales live",
+ "sections": [
+  {"h": "Working: verified share dropped after the Oct 19 telltales went live", "items": [
+   "Roblox Signup (Key 2), ends-te + device-param-spoofing: ~1% verified all day Oct 19 (was 19% on Oct 18), even though volume stayed high (up to 28k/h at 13h UTC).",
+   "WBD Account Lookup (Key 20), live pagebio TT: 562k on Oct 19 at ~0% verified (23% on Oct 18).",
+   "WBD Login (Key 8): 50k burst at 11h UTC on Oct 19, 1% verified (39% on Oct 18).",
+   "Adobe ARP FF (Key 8): still 60-90% verified through the morning (85k-96k/h at 01-02h UTC), then fell to ~5% verified by 23h UTC. Something was changed late on Oct 19. Confirm it holds today."]},
+  {"h": "Still getting through", "items": [
+   "Uber SMS (Key 1): a new burst on the live TT and grease at 14-20h UTC on Oct 19 (15-21k/h), 50-99% verified. Uber SMS needs pressure on the live TT and grease combos.",
+   "Wells Fargo Login (Key 1), di-dict3: 2-3k/h all afternoon, ~75% verified (steady since Oct 15).",
+   "Adobe Sign-in (Key 5): the grease combo jumped to 5k/h at 08-09h and 15h UTC; verified share varies from 6% to 99%."]},
+  {"h": "New signals found today (not created yet: see the highlighted table below)", "items": [
+   "di-dict-7 + di-short-300 + DI high-risk signature: recurring on Roblox Signup and Roblox Login since Oct 1 (93k on Oct 19, 0% verified).",
+   "sec-ch-ua/webgl RFC violation + device-param-spoofing: recurring on Uber SMS (Oct 9-11, Oct 14, Oct 16-18, mostly verified). New on Roblox Signup on Oct 19 (186k, 1% verified).",
+   "AppleOS impersonation + device-param-spoofing + sec-fetch-dest: new on Oct 18-19 on WBD Account Lookup (714k) and Olo Payments (105k), 0% verified. Already covered by the live TT, so on hold.",
+   "Not an attack: g-browser-automation-basic-render, g-browser-automation-swiftshader and g-spoofing-webgl-dimensions appeared on Oct 19 on 23-41 keys at once from a zero baseline. That looks like a new detection rollout. Check with the owners before using them.",
+   "The Uber UA-spoof combo on watch (g-spoofing-user-agent + g-di-bad-signature-list-match + g-device-parameter-spoofing) is gone on Oct 19, so it's dropped."]}]}

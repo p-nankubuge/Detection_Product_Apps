@@ -1,0 +1,37 @@
+{
+  "ticket": "DETCORE-4466",
+  "telltale_type": "suspicion_flags",
+  "cohort_category": "Suspicious",
+  "owner": "p.nankubuge@arkoselabs.com",
+  "owner_category": "User",
+  "risk_category": "CUSTOM",
+  "risk_score": 0,
+  "telltale_active": false,
+  "allow_others_to_include": true,
+  "life_cycle_management": "M",
+  "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+  "_validated": "not yet validated (Dataswan unavailable on 2026-10-20)",
+  "telltale_name": "g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st",
+  "location": "SESSION_SETUP",
+  "telltale_definition": [
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-di-dict-7-match-short-term-threshold-exceeded-1x"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "di-short-count-300-fp-pixel-ratio-1"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-di-high-risk-signature-exceeding-short-term-threshold"
+    }
+  ],
+  "telltale_description": "Spike-scan 2026-10-20: DI dict-7 short-term 1x + DI short-count-300 (pixel ratio 1) + DI high-risk signature over short-term threshold. Recurring every ~3-6 days on Roblox Signup and Roblox Login since Oct 1, ~0-1% verified."
+}
