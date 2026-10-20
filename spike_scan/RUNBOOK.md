@@ -101,6 +101,7 @@ Work from the repo root, `cd spike_scan`.
    Run this before step 8.
    **TTs created 2026-10-19** (grease, di-dict3, rta, ends-te, single-click, ja4-dict1): their names now appear in
    `TELLTALE_LIST_AT_ALL_EVENTS` from a zero baseline, so step 1 will show them as spiking on every key they fire on.
+   Same for the 2 created 2026-10-20 (g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st, g-rfc-sec-ch-ua-webgl-device-param-spoofing) until 2026-10-27.
    Exclude them from step 1 until 2026-10-26 (same as the Oct 14-edited TTs). Tracking is unchanged, because it
    matches the raw flags, not the TT name. Daily check for live combos: a falling verified share on keys that have
    pressure means the action works; created dropping to ~0 means the attacker moved, so look for a new combo on that key in step 2.

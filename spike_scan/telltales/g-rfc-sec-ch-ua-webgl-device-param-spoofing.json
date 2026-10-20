@@ -10,7 +10,7 @@
   "allow_others_to_include": true,
   "life_cycle_management": "M",
   "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
-  "_validated": "not yet validated (Dataswan unavailable on 2026-10-20)",
+  "_validated": "created in Dataswan 2026-10-20 (definition matches)",
   "telltale_name": "g-rfc-sec-ch-ua-webgl-device-param-spoofing",
   "location": "SESSION_SETUP",
   "telltale_definition": [
