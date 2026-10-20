@@ -1,0 +1,1002 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Payoneer: candidate signals</title><style>
+.viz-root{color-scheme:light;--surface-1:#fcfcfb;--surface-2:#f2f1ee;--text-primary:#0b0b0b;--text-secondary:#52514e;--text-muted:#77766f;--grid:#e4e3df;--win:#f3ece4;
+--series-1:#2a78d6;--series-2:#eb6834;--series-3:#1baf7a;--series-4:#eda100;--series-5:#e87ba4;--series-6:#008300;--series-7:#6250d6;--series-8:#e34948;}
+@media (prefers-color-scheme: dark){:root:where(:not([data-theme="light"])) .viz-root{color-scheme:dark;--surface-1:#1a1a19;--surface-2:#242422;--text-primary:#f0efec;--text-secondary:#c3c2b7;--text-muted:#9a998f;--grid:#33332f;--win:#2b2620;
+--series-1:#3987e5;--series-2:#d95926;--series-3:#199e70;--series-4:#c98500;--series-5:#d55181;--series-6:#008300;--series-7:#9085e9;--series-8:#e66767;}}
+body{margin:0;font-family:Outfit,system-ui,sans-serif}
+.viz-root{background:var(--surface-1);color:var(--text-primary);padding:24px 32px;min-height:100vh}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 4px}h3{font-size:14px;margin:16px 0 6px;color:var(--text-secondary)}
+p,li,td,th{font-size:13px;line-height:1.5}.muted{color:var(--text-secondary)}
+.card{background:var(--surface-2);border-radius:8px;padding:16px 20px;margin:14px 0}
+.tiles{display:flex;gap:28px;flex-wrap:wrap;margin:8px 0}.tile b{display:block;font-size:26px}.tile span{font-size:12px;color:var(--text-secondary)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:18px}
+.chart{width:100%;height:auto}.grid{stroke:var(--grid);stroke-width:1}.axis{fill:var(--text-muted);font-size:11px}
+.win{fill:var(--win)}.line{fill:none;stroke-width:2}.dot{stroke:var(--surface-2);stroke-width:2}
+.line.s1{stroke:var(--series-1)}.dot.s1{fill:var(--series-1)}.line.s2{stroke:var(--series-2)}.dot.s2{fill:var(--series-2)}
+.dlabel{fill:var(--text-primary);font-size:11px;text-anchor:end}.hit{fill:transparent}
+.seg{rx:2}.seg:hover,.hit:hover{opacity:.85;stroke:var(--text-primary);stroke-width:1}
+.c0{fill:var(--series-1)}.sw.c0{background:var(--series-1)}.c1{fill:var(--series-2)}.sw.c1{background:var(--series-2)}.c2{fill:var(--series-3)}.sw.c2{background:var(--series-3)}.c3{fill:var(--series-4)}.sw.c3{background:var(--series-4)}.c4{fill:var(--series-5)}.sw.c4{background:var(--series-5)}.c5{fill:var(--series-6)}.sw.c5{background:var(--series-6)}.c6{fill:var(--series-7)}.sw.c6{background:var(--series-7)}.sw.cother{background:var(--text-muted)} .cother{fill:var(--text-muted)}
+.eps{margin:4px 0 8px;padding-left:18px}.eps li{font-size:12px;margin:2px 0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0}.lg{font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}.sw.s1{background:var(--series-1)}.sw.s2{background:var(--series-2)}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--grid)}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+pre{background:var(--surface-1);border-radius:6px;padding:10px;overflow:auto;font-size:12px}
+details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
+#tip{position:fixed;pointer-events:none;background:var(--text-primary);color:var(--surface-1);font-size:12px;padding:4px 8px;border-radius:4px;display:none;z-index:9}
+.baseline{stroke:var(--text-secondary);stroke-width:1.5;stroke-dasharray:4 3}.line.partial{stroke-dasharray:3 3}.dot.hollow.s1{fill:var(--surface-2);stroke:var(--series-1)}.dot.hollow.s2{fill:var(--surface-2);stroke:var(--series-2)}.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}.kcard{background:var(--surface-2);border-radius:8px;padding:12px 16px}.kcard h3{margin:0;color:var(--text-primary)}.kstats{font-size:12px;color:var(--text-secondary);margin:2px 0 6px}.kstats b{color:var(--text-primary)}.tag{font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid var(--grid);margin-left:6px;color:var(--text-secondary)}.tag.ongoing{border-color:var(--text-primary);color:var(--text-primary);font-weight:600}.sub{font-size:11px;color:var(--text-muted);margin:8px 0 0}.refband{fill:var(--text-muted);opacity:.18;stroke:none}.sw.refsw{background:var(--text-muted);opacity:.35}.newflag{background:#fff1c2;color:#4a3700;border:1px solid #d9a800;border-radius:4px;padding:1px 5px}</style></head><body><div class="viz-root">
+<h1>Payoneer: are these attacks, or organic traffic?</h1>
+<p class="muted">Generated 2026-10-20 23:09 UTC. Exact session counts from <code>ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY</code> for Payoneer CLM Registration, Login and Registration keys. <b>Created</b> = sessions carrying the signal; <b>verified</b> = of those, sessions that ended verified. Daily chart: 2026-09-20 → 2026-10-20 (Oct 20 is partial, to 22:00 UTC; dashed line = median day). Hourly chart: the signal against the key's own traffic. Organic traffic follows the grey band; an attack either bursts on its own schedule or keeps a tighter shift pattern than real users. The registration key (Key 1) had no matches for either signal.</p>
+<section class="combo"><h2 style="margin-top:0">1. Headless browser on a VM</h2><ul class="flags"><li><code class="newflag">g-bot-headless-browser-vm</code></li></ul><p class="muted">Mostly hotmail.com, CN / Windows / Chrome. Inside the CN/HK/JP/KR exclusion on the Payoneer CLM telltales.</p><div class="legend"><span class="lg"><i class="sw s1"></i>sessions with the signal</span><span class="lg"><i class="sw s2"></i>of those, verified</span><span class="lg"><i class="sw refsw"></i>key total traffic (hourly chart)</span></div><div class="kgrid"><div class="kcard"><h3>Payoneer - CLM - Registration - Key 3<span class="tag ongoing">shift pattern</span><span class="tag">99% verified</span></h3><div class="kstats">Payoneer · <code>E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF</code></div><div class="kstats">2026-09-20 → 2026-10-20: <b>138</b> sessions on <b>11 of 31 days</b> · median day 0 · peak day 56 · verified <b>137 of 138</b></div><div class="kstats">Oct 17–20 hourly: correlation with key traffic <b>r = 0.46</b> · peak hour <b>8.9×</b> the average hour · 96% of matches in 06–15h UTC (key traffic: 51%) → <b>shift pattern</b>: concentrated in working hours, more tightly than the key's own traffic</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p0E3EFEFBF-t">
+<title id="p0E3EFEFBF-t">Sessions created vs verified per day</title>
+<rect x="357.4" y="18" width="54.6" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">28</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">56</text>
+<text x="72.3" y="192" class="axis" text-anchor="middle">09-22</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">09-26</text>
+<text x="169.3" y="192" class="axis" text-anchor="middle">09-30</text>
+<text x="217.9" y="192" class="axis" text-anchor="middle">10-04</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">10-08</text>
+<text x="314.9" y="192" class="axis" text-anchor="middle">10-12</text>
+<text x="363.5" y="192" class="axis" text-anchor="middle">10-16</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-20</text>
+<polyline points="48.0,174.0 60.1,174.0 72.3,174.0 84.4,174.0 96.5,174.0 108.7,174.0 120.8,174.0 132.9,174.0 145.1,174.0 157.2,174.0 169.3,154.6 181.5,171.6 193.6,174.0 205.7,161.9 217.9,174.0 230.0,157.0 242.1,174.0 254.3,161.9 266.4,169.2 278.5,174.0 290.7,174.0 302.8,174.0 314.9,174.0 327.1,174.0 339.2,174.0 351.3,169.2 363.5,169.2 375.6,164.3 387.7,174.0 399.9,62.6" class="line s1"/>
+<polyline points="399.9,62.6 412.0,38.3" class="line s1 partial"/>
+<circle cx="48.0" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="60.1" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="72.3" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="84.4" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="96.5" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="108.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="120.8" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="132.9" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="145.1" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="157.2" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="169.3" cy="154.6" r="2.2" class="dot s1"/>
+<circle cx="181.5" cy="171.6" r="2.2" class="dot s1"/>
+<circle cx="193.6" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="205.7" cy="161.9" r="2.2" class="dot s1"/>
+<circle cx="217.9" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="230.0" cy="157.0" r="2.2" class="dot s1"/>
+<circle cx="242.1" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="254.3" cy="161.9" r="2.2" class="dot s1"/>
+<circle cx="266.4" cy="169.2" r="2.2" class="dot s1"/>
+<circle cx="278.5" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="290.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="302.8" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="314.9" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="327.1" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="339.2" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="351.3" cy="169.2" r="2.2" class="dot s1"/>
+<circle cx="363.5" cy="169.2" r="2.2" class="dot s1"/>
+<circle cx="375.6" cy="164.3" r="2.2" class="dot s1"/>
+<circle cx="387.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="399.9" cy="62.6" r="2.2" class="dot s1"/>
+<circle cx="412.0" cy="38.3" r="2.2" class="dot s1 hollow"/>
+<polyline points="48.0,174.0 60.1,174.0 72.3,174.0 84.4,174.0 96.5,174.0 108.7,174.0 120.8,174.0 132.9,174.0 145.1,174.0 157.2,174.0 169.3,157.0 181.5,171.6 193.6,174.0 205.7,161.9 217.9,174.0 230.0,157.0 242.1,174.0 254.3,161.9 266.4,169.2 278.5,174.0 290.7,174.0 302.8,174.0 314.9,174.0 327.1,174.0 339.2,174.0 351.3,169.2 363.5,169.2 375.6,164.3 387.7,174.0 399.9,62.6" class="line s2"/>
+<polyline points="399.9,62.6 412.0,38.3" class="line s2 partial"/>
+<circle cx="48.0" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="60.1" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="72.3" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="96.5" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="108.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="120.8" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="132.9" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="145.1" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="157.2" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="169.3" cy="157.0" r="2.2" class="dot s2"/>
+<circle cx="181.5" cy="171.6" r="2.2" class="dot s2"/>
+<circle cx="193.6" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="205.7" cy="161.9" r="2.2" class="dot s2"/>
+<circle cx="217.9" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="230.0" cy="157.0" r="2.2" class="dot s2"/>
+<circle cx="242.1" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="254.3" cy="161.9" r="2.2" class="dot s2"/>
+<circle cx="266.4" cy="169.2" r="2.2" class="dot s2"/>
+<circle cx="278.5" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="290.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="314.9" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="327.1" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="339.2" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="351.3" cy="169.2" r="2.2" class="dot s2"/>
+<circle cx="363.5" cy="169.2" r="2.2" class="dot s2"/>
+<circle cx="375.6" cy="164.3" r="2.2" class="dot s2"/>
+<circle cx="387.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="399.9" cy="62.6" r="2.2" class="dot s2"/>
+<circle cx="412.0" cy="38.3" r="2.2" class="dot s2 hollow"/>
+<text x="412.0" y="28" class="axis" text-anchor="middle">so far</text>
+<text x="418.0" y="42.3" class="axis">created</text>
+<text x="418.0" y="54.3" class="axis">verified</text>
+<rect x="41.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-20 · created 0 · verified 0 (–)"/>
+<rect x="54.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-21 · created 0 · verified 0 (–)"/>
+<rect x="66.2" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-22 · created 0 · verified 0 (–)"/>
+<rect x="78.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-23 · created 0 · verified 0 (–)"/>
+<rect x="90.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-24 · created 0 · verified 0 (–)"/>
+<rect x="102.6" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-25 · created 0 · verified 0 (–)"/>
+<rect x="114.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-26 · created 0 · verified 0 (–)"/>
+<rect x="126.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-27 · created 0 · verified 0 (–)"/>
+<rect x="139.0" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-28 · created 0 · verified 0 (–)"/>
+<rect x="151.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-29 · created 0 · verified 0 (–)"/>
+<rect x="163.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-30 · created 8 · verified 7 (88%)"/>
+<rect x="175.4" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-01 · created 1 · verified 1 (100%)"/>
+<rect x="187.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-02 · created 0 · verified 0 (–)"/>
+<rect x="199.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-03 · created 5 · verified 5 (100%)"/>
+<rect x="211.8" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
+<rect x="223.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-05 · created 7 · verified 7 (100%)"/>
+<rect x="236.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-06 · created 0 · verified 0 (–)"/>
+<rect x="248.2" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-07 · created 5 · verified 5 (100%)"/>
+<rect x="260.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-08 · created 2 · verified 2 (100%)"/>
+<rect x="272.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-09 · created 0 · verified 0 (–)"/>
+<rect x="284.6" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-10 · created 0 · verified 0 (–)"/>
+<rect x="296.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-11 · created 0 · verified 0 (–)"/>
+<rect x="308.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-12 · created 0 · verified 0 (–)"/>
+<rect x="321.0" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-13 · created 0 · verified 0 (–)"/>
+<rect x="333.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-14 · created 0 · verified 0 (–)"/>
+<rect x="345.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-15 · created 2 · verified 2 (100%)"/>
+<rect x="357.4" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-16 · created 2 · verified 2 (100%)"/>
+<rect x="369.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-17 · created 4 · verified 4 (100%)"/>
+<rect x="381.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-18 · created 0 · verified 0 (–)"/>
+<rect x="393.8" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-19 · created 46 · verified 46 (100%)"/>
+<rect x="405.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-20 so far, to 22:00 UTC · created 56 · verified 56 (100%)"/>
+</svg><div class="sub">Hourly, 2026-10-17 00 → 2026-10-20 21 UTC. Grey band = all sessions on the key (own scale), the organic day/night shape.</div><svg viewBox="0 0 470 170" class="chart" role="img" aria-labelledby="q0E3EFEFBF-t">
+<title id="q0E3EFEFBF-t">Hourly sessions with the signal vs the key total traffic</title>
+<polygon points="40.0,146 40.0,90.9 44.0,91.7 48.0,86.1 52.0,84.1 56.0,77.3 60.0,74.5 64.0,60.1 68.0,52.9 72.0,54.6 76.0,43.3 80.0,39.4 84.0,48.8 88.0,37.0 92.0,38.5 96.0,33.3 100.0,45.5 104.0,39.4 108.0,52.2 112.0,54.3 116.0,63.9 120.0,69.9 124.0,74.1 128.0,90.0 132.0,94.3 136.0,94.8 140.0,96.6 144.0,93.0 148.0,86.1 152.0,85.7 156.0,70.1 160.0,62.6 164.0,58.9 168.0,51.0 172.0,46.5 176.0,38.1 180.0,45.8 184.0,37.6 188.0,34.6 192.0,37.0 196.0,38.0 200.0,43.4 204.0,53.9 208.0,53.1 212.0,63.0 216.0,75.8 220.0,77.2 224.0,86.5 228.0,89.0 232.0,92.1 236.0,90.8 240.0,86.6 244.0,77.8 248.0,71.9 252.0,69.1 256.0,50.0 260.0,45.5 264.0,33.0 268.0,28.7 272.0,27.9 276.0,28.5 280.0,28.1 284.0,26.8 288.0,25.6 292.0,20.3 296.0,24.5 300.0,30.3 304.0,35.7 308.0,52.3 312.0,66.8 316.0,71.8 320.0,79.5 324.0,89.0 328.0,86.5 332.0,81.6 336.0,79.5 340.0,73.8 344.0,64.2 348.0,70.8 352.0,49.7 356.0,42.0 360.0,38.6 364.0,31.3 368.0,24.2 372.0,38.8 376.0,37.9 380.0,22.7 384.0,30.3 388.0,39.1 392.0,43.8 396.0,42.7 400.0,47.7 404.0,56.3 408.0,77.5 412.0,77.8 412.0,146" class="refband"/>
+<line x1="40" x2="412" y1="146.0" y2="146.0" class="grid"/>
+<text x="34" y="150.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="412" y1="88.6" y2="88.6" class="grid"/>
+<text x="34" y="92.6" class="axis" text-anchor="end">5</text>
+<line x1="40" x2="412" y1="31.2" y2="31.2" class="grid"/>
+<text x="34" y="35.2" class="axis" text-anchor="end">10</text>
+<line x1="40.0" x2="40.0" y1="14" y2="146" class="grid"/>
+<text x="40.0" y="164" class="axis" text-anchor="middle">10-17</text>
+<line x1="88.0" x2="88.0" y1="14" y2="146" class="grid"/>
+<text x="88.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="136.0" x2="136.0" y1="14" y2="146" class="grid"/>
+<text x="136.0" y="164" class="axis" text-anchor="middle">10-18</text>
+<line x1="184.0" x2="184.0" y1="14" y2="146" class="grid"/>
+<text x="184.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="232.0" x2="232.0" y1="14" y2="146" class="grid"/>
+<text x="232.0" y="164" class="axis" text-anchor="middle">10-19</text>
+<line x1="280.0" x2="280.0" y1="14" y2="146" class="grid"/>
+<text x="280.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="328.0" x2="328.0" y1="14" y2="146" class="grid"/>
+<text x="328.0" y="164" class="axis" text-anchor="middle">10-20</text>
+<line x1="376.0" x2="376.0" y1="14" y2="146" class="grid"/>
+<text x="376.0" y="164" class="axis" text-anchor="middle">12h</text>
+<polyline points="40.0,146.0 44.0,146.0 48.0,146.0 52.0,146.0 56.0,146.0 60.0,146.0 64.0,146.0 68.0,146.0 72.0,146.0 76.0,146.0 80.0,100.1 84.0,146.0 88.0,146.0 92.0,146.0 96.0,146.0 100.0,146.0 104.0,146.0 108.0,146.0 112.0,146.0 116.0,146.0 120.0,146.0 124.0,146.0 128.0,146.0 132.0,146.0 136.0,146.0 140.0,146.0 144.0,146.0 148.0,146.0 152.0,146.0 156.0,146.0 160.0,146.0 164.0,146.0 168.0,146.0 172.0,146.0 176.0,146.0 180.0,146.0 184.0,146.0 188.0,146.0 192.0,146.0 196.0,146.0 200.0,146.0 204.0,146.0 208.0,146.0 212.0,146.0 216.0,146.0 220.0,146.0 224.0,146.0 228.0,146.0 232.0,146.0 236.0,146.0 240.0,146.0 244.0,146.0 248.0,146.0 252.0,146.0 256.0,123.0 260.0,146.0 264.0,54.2 268.0,77.1 272.0,54.2 276.0,54.2 280.0,77.1 284.0,54.2 288.0,146.0 292.0,146.0 296.0,146.0 300.0,146.0 304.0,146.0 308.0,146.0 312.0,146.0 316.0,146.0 320.0,146.0 324.0,146.0 328.0,146.0 332.0,146.0 336.0,100.1 340.0,146.0 344.0,146.0 348.0,146.0 352.0,100.1 356.0,54.2 360.0,77.1 364.0,31.2 368.0,134.5 372.0,77.1 376.0,77.1 380.0,65.7 384.0,100.1 388.0,146.0 392.0,146.0 396.0,146.0 400.0,146.0 404.0,146.0 408.0,146.0 412.0,146.0" class="line s1"/>
+<polyline points="40.0,146.0 44.0,146.0 48.0,146.0 52.0,146.0 56.0,146.0 60.0,146.0 64.0,146.0 68.0,146.0 72.0,146.0 76.0,146.0 80.0,100.1 84.0,146.0 88.0,146.0 92.0,146.0 96.0,146.0 100.0,146.0 104.0,146.0 108.0,146.0 112.0,146.0 116.0,146.0 120.0,146.0 124.0,146.0 128.0,146.0 132.0,146.0 136.0,146.0 140.0,146.0 144.0,146.0 148.0,146.0 152.0,146.0 156.0,146.0 160.0,146.0 164.0,146.0 168.0,146.0 172.0,146.0 176.0,146.0 180.0,146.0 184.0,146.0 188.0,146.0 192.0,146.0 196.0,146.0 200.0,146.0 204.0,146.0 208.0,146.0 212.0,146.0 216.0,146.0 220.0,146.0 224.0,146.0 228.0,146.0 232.0,146.0 236.0,146.0 240.0,146.0 244.0,146.0 248.0,146.0 252.0,146.0 256.0,123.0 260.0,146.0 264.0,54.2 268.0,77.1 272.0,54.2 276.0,54.2 280.0,77.1 284.0,54.2 288.0,146.0 292.0,146.0 296.0,146.0 300.0,146.0 304.0,146.0 308.0,146.0 312.0,146.0 316.0,146.0 320.0,146.0 324.0,146.0 328.0,146.0 332.0,146.0 336.0,100.1 340.0,146.0 344.0,146.0 348.0,146.0 352.0,100.1 356.0,54.2 360.0,77.1 364.0,31.2 368.0,134.5 372.0,77.1 376.0,77.1 380.0,65.7 384.0,100.1 388.0,146.0 392.0,146.0 396.0,146.0 400.0,146.0 404.0,146.0 408.0,146.0 412.0,146.0" class="line s2"/>
+<text x="418.0" y="150.0" class="axis">signal</text>
+<text x="418.0" y="24" class="axis">key traffic</text>
+<rect x="38.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 00:00 UTC · signal 0 · verified 0 · key total 1,703"/>
+<rect x="42.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 01:00 UTC · signal 0 · verified 0 · key total 1,679"/>
+<rect x="46.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 02:00 UTC · signal 0 · verified 0 · key total 1,852"/>
+<rect x="50.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 03:00 UTC · signal 0 · verified 0 · key total 1,913"/>
+<rect x="54.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 04:00 UTC · signal 0 · verified 0 · key total 2,123"/>
+<rect x="58.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 05:00 UTC · signal 0 · verified 0 · key total 2,211"/>
+<rect x="62.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 06:00 UTC · signal 0 · verified 0 · key total 2,656"/>
+<rect x="66.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 07:00 UTC · signal 0 · verified 0 · key total 2,877"/>
+<rect x="70.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 08:00 UTC · signal 0 · verified 0 · key total 2,825"/>
+<rect x="74.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 09:00 UTC · signal 0 · verified 0 · key total 3,175"/>
+<rect x="78.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 10:00 UTC · signal 4 · verified 4 · key total 3,295"/>
+<rect x="82.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 11:00 UTC · signal 0 · verified 0 · key total 3,004"/>
+<rect x="86.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 12:00 UTC · signal 0 · verified 0 · key total 3,369"/>
+<rect x="90.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 13:00 UTC · signal 0 · verified 0 · key total 3,322"/>
+<rect x="94.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 14:00 UTC · signal 0 · verified 0 · key total 3,484"/>
+<rect x="98.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 15:00 UTC · signal 0 · verified 0 · key total 3,108"/>
+<rect x="102.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 16:00 UTC · signal 0 · verified 0 · key total 3,294"/>
+<rect x="106.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 17:00 UTC · signal 0 · verified 0 · key total 2,901"/>
+<rect x="110.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 18:00 UTC · signal 0 · verified 0 · key total 2,836"/>
+<rect x="114.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 19:00 UTC · signal 0 · verified 0 · key total 2,537"/>
+<rect x="118.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 20:00 UTC · signal 0 · verified 0 · key total 2,351"/>
+<rect x="122.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 21:00 UTC · signal 0 · verified 0 · key total 2,224"/>
+<rect x="126.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 22:00 UTC · signal 0 · verified 0 · key total 1,732"/>
+<rect x="130.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 23:00 UTC · signal 0 · verified 0 · key total 1,597"/>
+<rect x="134.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 00:00 UTC · signal 0 · verified 0 · key total 1,584"/>
+<rect x="138.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 01:00 UTC · signal 0 · verified 0 · key total 1,527"/>
+<rect x="142.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 02:00 UTC · signal 0 · verified 0 · key total 1,639"/>
+<rect x="146.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 03:00 UTC · signal 0 · verified 0 · key total 1,852"/>
+<rect x="150.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 04:00 UTC · signal 0 · verified 0 · key total 1,865"/>
+<rect x="154.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 05:00 UTC · signal 0 · verified 0 · key total 2,347"/>
+<rect x="158.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 06:00 UTC · signal 0 · verified 0 · key total 2,577"/>
+<rect x="162.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 07:00 UTC · signal 0 · verified 0 · key total 2,693"/>
+<rect x="166.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 08:00 UTC · signal 0 · verified 0 · key total 2,936"/>
+<rect x="170.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 09:00 UTC · signal 0 · verified 0 · key total 3,075"/>
+<rect x="174.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 10:00 UTC · signal 0 · verified 0 · key total 3,334"/>
+<rect x="178.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 11:00 UTC · signal 0 · verified 0 · key total 3,098"/>
+<rect x="182.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 12:00 UTC · signal 0 · verified 0 · key total 3,352"/>
+<rect x="186.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 13:00 UTC · signal 0 · verified 0 · key total 3,442"/>
+<rect x="190.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 14:00 UTC · signal 0 · verified 0 · key total 3,368"/>
+<rect x="194.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 15:00 UTC · signal 0 · verified 0 · key total 3,337"/>
+<rect x="198.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 16:00 UTC · signal 0 · verified 0 · key total 3,171"/>
+<rect x="202.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 17:00 UTC · signal 0 · verified 0 · key total 2,847"/>
+<rect x="206.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 18:00 UTC · signal 0 · verified 0 · key total 2,871"/>
+<rect x="210.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 19:00 UTC · signal 0 · verified 0 · key total 2,566"/>
+<rect x="214.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 20:00 UTC · signal 0 · verified 0 · key total 2,171"/>
+<rect x="218.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 21:00 UTC · signal 0 · verified 0 · key total 2,126"/>
+<rect x="222.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 22:00 UTC · signal 0 · verified 0 · key total 1,840"/>
+<rect x="226.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 23:00 UTC · signal 0 · verified 0 · key total 1,763"/>
+<rect x="230.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 00:00 UTC · signal 0 · verified 0 · key total 1,666"/>
+<rect x="234.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 01:00 UTC · signal 0 · verified 0 · key total 1,706"/>
+<rect x="238.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 02:00 UTC · signal 0 · verified 0 · key total 1,837"/>
+<rect x="242.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 03:00 UTC · signal 0 · verified 0 · key total 2,108"/>
+<rect x="246.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 04:00 UTC · signal 0 · verified 0 · key total 2,289"/>
+<rect x="250.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 05:00 UTC · signal 0 · verified 0 · key total 2,376"/>
+<rect x="254.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 06:00 UTC · signal 2 · verified 2 · key total 2,968"/>
+<rect x="258.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 07:00 UTC · signal 0 · verified 0 · key total 3,106"/>
+<rect x="262.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 08:00 UTC · signal 8 · verified 8 · key total 3,493"/>
+<rect x="266.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 09:00 UTC · signal 6 · verified 6 · key total 3,625"/>
+<rect x="270.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 10:00 UTC · signal 8 · verified 8 · key total 3,652"/>
+<rect x="274.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 11:00 UTC · signal 8 · verified 8 · key total 3,632"/>
+<rect x="278.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 12:00 UTC · signal 6 · verified 6 · key total 3,644"/>
+<rect x="282.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 13:00 UTC · signal 8 · verified 8 · key total 3,686"/>
+<rect x="286.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 14:00 UTC · signal 0 · verified 0 · key total 3,722"/>
+<rect x="290.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 15:00 UTC · signal 0 · verified 0 · key total 3,886"/>
+<rect x="294.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 16:00 UTC · signal 0 · verified 0 · key total 3,755"/>
+<rect x="298.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 17:00 UTC · signal 0 · verified 0 · key total 3,575"/>
+<rect x="302.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 18:00 UTC · signal 0 · verified 0 · key total 3,411"/>
+<rect x="306.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 19:00 UTC · signal 0 · verified 0 · key total 2,897"/>
+<rect x="310.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 20:00 UTC · signal 0 · verified 0 · key total 2,448"/>
+<rect x="314.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 21:00 UTC · signal 0 · verified 0 · key total 2,293"/>
+<rect x="318.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 22:00 UTC · signal 0 · verified 0 · key total 2,055"/>
+<rect x="322.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 23:00 UTC · signal 0 · verified 0 · key total 1,762"/>
+<rect x="326.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 00:00 UTC · signal 0 · verified 0 · key total 1,838"/>
+<rect x="330.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 01:00 UTC · signal 0 · verified 0 · key total 1,992"/>
+<rect x="334.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 02:00 UTC · signal 4 · verified 4 · key total 2,057"/>
+<rect x="338.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 03:00 UTC · signal 0 · verified 0 · key total 2,231"/>
+<rect x="342.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 04:00 UTC · signal 0 · verified 0 · key total 2,530"/>
+<rect x="346.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 05:00 UTC · signal 0 · verified 0 · key total 2,324"/>
+<rect x="350.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 06:00 UTC · signal 4 · verified 4 · key total 2,977"/>
+<rect x="354.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 07:00 UTC · signal 8 · verified 8 · key total 3,216"/>
+<rect x="358.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 08:00 UTC · signal 6 · verified 6 · key total 3,321"/>
+<rect x="362.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 09:00 UTC · signal 10 · verified 10 · key total 3,546"/>
+<rect x="366.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 10:00 UTC · signal 1 · verified 1 · key total 3,765"/>
+<rect x="370.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 11:00 UTC · signal 6 · verified 6 · key total 3,315"/>
+<rect x="374.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 12:00 UTC · signal 6 · verified 6 · key total 3,340"/>
+<rect x="378.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 13:00 UTC · signal 7 · verified 7 · key total 3,810"/>
+<rect x="382.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 14:00 UTC · signal 4 · verified 4 · key total 3,576"/>
+<rect x="386.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 15:00 UTC · signal 0 · verified 0 · key total 3,303"/>
+<rect x="390.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 16:00 UTC · signal 0 · verified 0 · key total 3,158"/>
+<rect x="394.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 17:00 UTC · signal 0 · verified 0 · key total 3,193"/>
+<rect x="398.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 18:00 UTC · signal 0 · verified 0 · key total 3,040"/>
+<rect x="402.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 19:00 UTC · signal 0 · verified 0 · key total 2,773"/>
+<rect x="406.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 20:00 UTC · signal 0 · verified 0 · key total 2,117"/>
+<rect x="410.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 21:00 UTC · signal 0 · verified 0 · key total 2,108"/>
+</svg></div><div class="kcard"><h3>Payoneer - Login - Prod - Key 2<span class="tag ongoing">low & slow</span><span class="tag">99% verified</span></h3><div class="kstats">Payoneer · <code>EE844FC3-499D-4A4D-A643-D7400F0FD4DE</code></div><div class="kstats">2026-09-20 → 2026-10-20: <b>546</b> sessions on <b>24 of 31 days</b> · median day 13 · peak day 65 · verified <b>539 of 546</b></div><div class="kstats">Oct 17–20 hourly: correlation with key traffic <b>r = 0.45</b> · peak hour <b>7.8×</b> the average hour · 62% of matches in 06–15h UTC (key traffic: 52%) → <b>low & slow</b>: steady trickle with small bursts; weakly tied to the key's day/night cycle</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p0EE844FC3-t">
+<title id="p0EE844FC3-t">Sessions created vs verified per day</title>
+<rect x="357.4" y="18" width="54.6" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">32</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">65</text>
+<text x="72.3" y="192" class="axis" text-anchor="middle">09-22</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">09-26</text>
+<text x="169.3" y="192" class="axis" text-anchor="middle">09-30</text>
+<text x="217.9" y="192" class="axis" text-anchor="middle">10-04</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">10-08</text>
+<text x="314.9" y="192" class="axis" text-anchor="middle">10-12</text>
+<text x="363.5" y="192" class="axis" text-anchor="middle">10-16</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-20</text>
+<line x1="48" x2="412" y1="146.9" y2="146.9" class="baseline"/>
+<text x="52" y="142.9" class="axis">baseline avg 13</text>
+<polyline points="48.0,174.0 60.1,174.0 72.3,174.0 84.4,174.0 96.5,174.0 108.7,174.0 120.8,174.0 132.9,146.9 145.1,126.0 157.2,128.1 169.3,132.3 181.5,155.2 193.6,146.9 205.7,151.0 217.9,167.7 230.0,132.3 242.1,119.7 254.3,130.2 266.4,67.6 278.5,115.6 290.7,161.5 302.8,159.4 314.9,90.5 327.1,140.6 339.2,107.2 351.3,115.6 363.5,123.9 375.6,151.0 387.7,153.1 399.9,75.9" class="line s1"/>
+<polyline points="399.9,75.9 412.0,38.3" class="line s1 partial"/>
+<circle cx="48.0" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="60.1" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="72.3" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="84.4" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="96.5" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="108.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="120.8" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="132.9" cy="146.9" r="2.2" class="dot s1"/>
+<circle cx="145.1" cy="126.0" r="2.2" class="dot s1"/>
+<circle cx="157.2" cy="128.1" r="2.2" class="dot s1"/>
+<circle cx="169.3" cy="132.3" r="2.2" class="dot s1"/>
+<circle cx="181.5" cy="155.2" r="2.2" class="dot s1"/>
+<circle cx="193.6" cy="146.9" r="2.2" class="dot s1"/>
+<circle cx="205.7" cy="151.0" r="2.2" class="dot s1"/>
+<circle cx="217.9" cy="167.7" r="2.2" class="dot s1"/>
+<circle cx="230.0" cy="132.3" r="2.2" class="dot s1"/>
+<circle cx="242.1" cy="119.7" r="2.2" class="dot s1"/>
+<circle cx="254.3" cy="130.2" r="2.2" class="dot s1"/>
+<circle cx="266.4" cy="67.6" r="2.2" class="dot s1"/>
+<circle cx="278.5" cy="115.6" r="2.2" class="dot s1"/>
+<circle cx="290.7" cy="161.5" r="2.2" class="dot s1"/>
+<circle cx="302.8" cy="159.4" r="2.2" class="dot s1"/>
+<circle cx="314.9" cy="90.5" r="2.2" class="dot s1"/>
+<circle cx="327.1" cy="140.6" r="2.2" class="dot s1"/>
+<circle cx="339.2" cy="107.2" r="2.2" class="dot s1"/>
+<circle cx="351.3" cy="115.6" r="2.2" class="dot s1"/>
+<circle cx="363.5" cy="123.9" r="2.2" class="dot s1"/>
+<circle cx="375.6" cy="151.0" r="2.2" class="dot s1"/>
+<circle cx="387.7" cy="153.1" r="2.2" class="dot s1"/>
+<circle cx="399.9" cy="75.9" r="2.2" class="dot s1"/>
+<circle cx="412.0" cy="38.3" r="2.2" class="dot s1 hollow"/>
+<polyline points="48.0,174.0 60.1,174.0 72.3,174.0 84.4,174.0 96.5,174.0 108.7,174.0 120.8,174.0 132.9,149.0 145.1,126.0 157.2,128.1 169.3,132.3 181.5,155.2 193.6,146.9 205.7,151.0 217.9,167.7 230.0,132.3 242.1,119.7 254.3,130.2 266.4,71.7 278.5,115.6 290.7,161.5 302.8,159.4 314.9,90.5 327.1,142.7 339.2,107.2 351.3,117.7 363.5,128.1 375.6,151.0 387.7,153.1 399.9,75.9" class="line s2"/>
+<polyline points="399.9,75.9 412.0,38.3" class="line s2 partial"/>
+<circle cx="48.0" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="60.1" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="72.3" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="96.5" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="108.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="120.8" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="132.9" cy="149.0" r="2.2" class="dot s2"/>
+<circle cx="145.1" cy="126.0" r="2.2" class="dot s2"/>
+<circle cx="157.2" cy="128.1" r="2.2" class="dot s2"/>
+<circle cx="169.3" cy="132.3" r="2.2" class="dot s2"/>
+<circle cx="181.5" cy="155.2" r="2.2" class="dot s2"/>
+<circle cx="193.6" cy="146.9" r="2.2" class="dot s2"/>
+<circle cx="205.7" cy="151.0" r="2.2" class="dot s2"/>
+<circle cx="217.9" cy="167.7" r="2.2" class="dot s2"/>
+<circle cx="230.0" cy="132.3" r="2.2" class="dot s2"/>
+<circle cx="242.1" cy="119.7" r="2.2" class="dot s2"/>
+<circle cx="254.3" cy="130.2" r="2.2" class="dot s2"/>
+<circle cx="266.4" cy="71.7" r="2.2" class="dot s2"/>
+<circle cx="278.5" cy="115.6" r="2.2" class="dot s2"/>
+<circle cx="290.7" cy="161.5" r="2.2" class="dot s2"/>
+<circle cx="302.8" cy="159.4" r="2.2" class="dot s2"/>
+<circle cx="314.9" cy="90.5" r="2.2" class="dot s2"/>
+<circle cx="327.1" cy="142.7" r="2.2" class="dot s2"/>
+<circle cx="339.2" cy="107.2" r="2.2" class="dot s2"/>
+<circle cx="351.3" cy="117.7" r="2.2" class="dot s2"/>
+<circle cx="363.5" cy="128.1" r="2.2" class="dot s2"/>
+<circle cx="375.6" cy="151.0" r="2.2" class="dot s2"/>
+<circle cx="387.7" cy="153.1" r="2.2" class="dot s2"/>
+<circle cx="399.9" cy="75.9" r="2.2" class="dot s2"/>
+<circle cx="412.0" cy="38.3" r="2.2" class="dot s2 hollow"/>
+<text x="412.0" y="28" class="axis" text-anchor="middle">so far</text>
+<text x="418.0" y="42.3" class="axis">created</text>
+<text x="418.0" y="54.3" class="axis">verified</text>
+<rect x="41.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-20 · created 0 · verified 0 (–)"/>
+<rect x="54.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-21 · created 0 · verified 0 (–)"/>
+<rect x="66.2" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-22 · created 0 · verified 0 (–)"/>
+<rect x="78.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-23 · created 0 · verified 0 (–)"/>
+<rect x="90.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-24 · created 0 · verified 0 (–)"/>
+<rect x="102.6" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-25 · created 0 · verified 0 (–)"/>
+<rect x="114.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-26 · created 0 · verified 0 (–)"/>
+<rect x="126.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-27 · created 13 · verified 12 (92%)"/>
+<rect x="139.0" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-28 · created 23 · verified 23 (100%)"/>
+<rect x="151.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-29 · created 22 · verified 22 (100%)"/>
+<rect x="163.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-30 · created 20 · verified 20 (100%)"/>
+<rect x="175.4" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-01 · created 9 · verified 9 (100%)"/>
+<rect x="187.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-02 · created 13 · verified 13 (100%)"/>
+<rect x="199.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-03 · created 11 · verified 11 (100%)"/>
+<rect x="211.8" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-04 · created 3 · verified 3 (100%)"/>
+<rect x="223.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-05 · created 20 · verified 20 (100%)"/>
+<rect x="236.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-06 · created 26 · verified 26 (100%)"/>
+<rect x="248.2" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-07 · created 21 · verified 21 (100%)"/>
+<rect x="260.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-08 · created 51 · verified 49 (96%)"/>
+<rect x="272.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-09 · created 28 · verified 28 (100%)"/>
+<rect x="284.6" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-10 · created 6 · verified 6 (100%)"/>
+<rect x="296.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-11 · created 7 · verified 7 (100%)"/>
+<rect x="308.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-12 · created 40 · verified 40 (100%)"/>
+<rect x="321.0" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-13 · created 16 · verified 15 (94%)"/>
+<rect x="333.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-14 · created 32 · verified 32 (100%)"/>
+<rect x="345.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-15 · created 28 · verified 27 (96%)"/>
+<rect x="357.4" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-16 · created 24 · verified 22 (92%)"/>
+<rect x="369.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-17 · created 11 · verified 11 (100%)"/>
+<rect x="381.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-18 · created 10 · verified 10 (100%)"/>
+<rect x="393.8" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-19 · created 47 · verified 47 (100%)"/>
+<rect x="405.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-20 so far, to 22:00 UTC · created 65 · verified 65 (100%)"/>
+</svg><div class="sub">Hourly, 2026-10-17 00 → 2026-10-20 21 UTC. Grey band = all sessions on the key (own scale), the organic day/night shape.</div><svg viewBox="0 0 470 170" class="chart" role="img" aria-labelledby="q0EE844FC3-t">
+<title id="q0EE844FC3-t">Hourly sessions with the signal vs the key total traffic</title>
+<polygon points="40.0,146 40.0,117.2 44.0,115.2 48.0,115.3 52.0,114.5 56.0,113.2 60.0,108.0 64.0,102.6 68.0,95.0 72.0,94.0 76.0,93.9 80.0,94.9 84.0,94.8 88.0,92.2 92.0,91.7 96.0,91.5 100.0,92.8 104.0,94.6 108.0,98.7 112.0,103.0 116.0,107.6 120.0,112.3 124.0,116.9 128.0,122.1 132.0,124.3 136.0,123.4 140.0,123.2 144.0,123.3 148.0,121.4 152.0,119.5 156.0,113.9 160.0,109.4 164.0,103.9 168.0,100.3 172.0,100.2 176.0,100.3 180.0,99.5 184.0,97.3 188.0,95.4 192.0,94.7 196.0,96.0 200.0,97.1 204.0,98.3 208.0,102.8 212.0,107.0 216.0,111.4 220.0,116.3 224.0,119.9 228.0,120.6 232.0,116.0 236.0,101.9 240.0,97.7 244.0,101.8 248.0,99.7 252.0,93.0 256.0,80.4 260.0,72.4 264.0,69.2 268.0,61.0 272.0,66.9 276.0,68.7 280.0,65.2 284.0,62.1 288.0,61.1 292.0,62.6 296.0,53.7 300.0,53.4 304.0,70.8 308.0,84.1 312.0,93.8 316.0,101.1 320.0,109.1 324.0,112.6 328.0,109.3 332.0,98.9 336.0,97.7 340.0,98.4 344.0,102.2 348.0,93.5 352.0,81.0 356.0,75.0 360.0,71.9 364.0,62.9 368.0,20.3 372.0,66.0 376.0,64.6 380.0,30.5 384.0,63.7 388.0,66.8 392.0,26.9 396.0,40.7 400.0,79.4 404.0,90.1 408.0,98.7 412.0,101.3 412.0,146" class="refband"/>
+<line x1="40" x2="412" y1="146.0" y2="146.0" class="grid"/>
+<text x="34" y="150.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="412" y1="88.6" y2="88.6" class="grid"/>
+<text x="34" y="92.6" class="axis" text-anchor="end">5</text>
+<line x1="40" x2="412" y1="31.2" y2="31.2" class="grid"/>
+<text x="34" y="35.2" class="axis" text-anchor="end">11</text>
+<line x1="40.0" x2="40.0" y1="14" y2="146" class="grid"/>
+<text x="40.0" y="164" class="axis" text-anchor="middle">10-17</text>
+<line x1="88.0" x2="88.0" y1="14" y2="146" class="grid"/>
+<text x="88.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="136.0" x2="136.0" y1="14" y2="146" class="grid"/>
+<text x="136.0" y="164" class="axis" text-anchor="middle">10-18</text>
+<line x1="184.0" x2="184.0" y1="14" y2="146" class="grid"/>
+<text x="184.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="232.0" x2="232.0" y1="14" y2="146" class="grid"/>
+<text x="232.0" y="164" class="axis" text-anchor="middle">10-19</text>
+<line x1="280.0" x2="280.0" y1="14" y2="146" class="grid"/>
+<text x="280.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="328.0" x2="328.0" y1="14" y2="146" class="grid"/>
+<text x="328.0" y="164" class="axis" text-anchor="middle">10-20</text>
+<line x1="376.0" x2="376.0" y1="14" y2="146" class="grid"/>
+<text x="376.0" y="164" class="axis" text-anchor="middle">12h</text>
+<polyline points="40.0,135.6 44.0,104.3 48.0,146.0 52.0,146.0 56.0,146.0 60.0,114.7 64.0,146.0 68.0,146.0 72.0,146.0 76.0,135.6 80.0,135.6 84.0,135.6 88.0,146.0 92.0,146.0 96.0,146.0 100.0,146.0 104.0,146.0 108.0,146.0 112.0,146.0 116.0,146.0 120.0,146.0 124.0,146.0 128.0,146.0 132.0,146.0 136.0,146.0 140.0,146.0 144.0,146.0 148.0,135.6 152.0,146.0 156.0,135.6 160.0,146.0 164.0,146.0 168.0,146.0 172.0,146.0 176.0,135.6 180.0,146.0 184.0,146.0 188.0,135.6 192.0,146.0 196.0,146.0 200.0,146.0 204.0,146.0 208.0,146.0 212.0,146.0 216.0,146.0 220.0,93.8 224.0,135.6 228.0,146.0 232.0,146.0 236.0,146.0 240.0,62.5 244.0,125.1 248.0,114.7 252.0,146.0 256.0,135.6 260.0,125.1 264.0,114.7 268.0,83.4 272.0,104.3 276.0,93.8 280.0,104.3 284.0,104.3 288.0,104.3 292.0,146.0 296.0,135.6 300.0,146.0 304.0,146.0 308.0,146.0 312.0,146.0 316.0,146.0 320.0,146.0 324.0,146.0 328.0,135.6 332.0,146.0 336.0,31.2 340.0,104.3 344.0,135.6 348.0,125.1 352.0,125.1 356.0,62.5 360.0,93.8 364.0,114.7 368.0,62.5 372.0,146.0 376.0,104.3 380.0,41.7 384.0,114.7 388.0,135.6 392.0,146.0 396.0,125.1 400.0,146.0 404.0,146.0 408.0,146.0 412.0,146.0" class="line s1"/>
+<polyline points="40.0,135.6 44.0,104.3 48.0,146.0 52.0,146.0 56.0,146.0 60.0,114.7 64.0,146.0 68.0,146.0 72.0,146.0 76.0,135.6 80.0,135.6 84.0,135.6 88.0,146.0 92.0,146.0 96.0,146.0 100.0,146.0 104.0,146.0 108.0,146.0 112.0,146.0 116.0,146.0 120.0,146.0 124.0,146.0 128.0,146.0 132.0,146.0 136.0,146.0 140.0,146.0 144.0,146.0 148.0,135.6 152.0,146.0 156.0,135.6 160.0,146.0 164.0,146.0 168.0,146.0 172.0,146.0 176.0,135.6 180.0,146.0 184.0,146.0 188.0,135.6 192.0,146.0 196.0,146.0 200.0,146.0 204.0,146.0 208.0,146.0 212.0,146.0 216.0,146.0 220.0,93.8 224.0,135.6 228.0,146.0 232.0,146.0 236.0,146.0 240.0,62.5 244.0,125.1 248.0,114.7 252.0,146.0 256.0,135.6 260.0,125.1 264.0,114.7 268.0,83.4 272.0,104.3 276.0,93.8 280.0,104.3 284.0,104.3 288.0,104.3 292.0,146.0 296.0,135.6 300.0,146.0 304.0,146.0 308.0,146.0 312.0,146.0 316.0,146.0 320.0,146.0 324.0,146.0 328.0,135.6 332.0,146.0 336.0,31.2 340.0,104.3 344.0,135.6 348.0,125.1 352.0,125.1 356.0,62.5 360.0,93.8 364.0,114.7 368.0,62.5 372.0,146.0 376.0,104.3 380.0,41.7 384.0,114.7 388.0,135.6 392.0,146.0 396.0,125.1 400.0,146.0 404.0,146.0 408.0,146.0 412.0,146.0" class="line s2"/>
+<text x="418.0" y="150.0" class="axis">signal</text>
+<text x="418.0" y="24" class="axis">key traffic</text>
+<rect x="38.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 00:00 UTC · signal 1 · verified 1 · key total 10,665"/>
+<rect x="42.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 01:00 UTC · signal 4 · verified 4 · key total 11,378"/>
+<rect x="46.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 02:00 UTC · signal 0 · verified 0 · key total 11,359"/>
+<rect x="50.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 03:00 UTC · signal 0 · verified 0 · key total 11,650"/>
+<rect x="54.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 04:00 UTC · signal 0 · verified 0 · key total 12,118"/>
+<rect x="58.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 05:00 UTC · signal 3 · verified 3 · key total 14,071"/>
+<rect x="62.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 06:00 UTC · signal 0 · verified 0 · key total 16,062"/>
+<rect x="66.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 07:00 UTC · signal 0 · verified 0 · key total 18,862"/>
+<rect x="70.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 08:00 UTC · signal 0 · verified 0 · key total 19,225"/>
+<rect x="74.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 09:00 UTC · signal 1 · verified 1 · key total 19,262"/>
+<rect x="78.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 10:00 UTC · signal 1 · verified 1 · key total 18,915"/>
+<rect x="82.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 11:00 UTC · signal 1 · verified 1 · key total 18,939"/>
+<rect x="86.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 12:00 UTC · signal 0 · verified 0 · key total 19,904"/>
+<rect x="90.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 13:00 UTC · signal 0 · verified 0 · key total 20,108"/>
+<rect x="94.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 14:00 UTC · signal 0 · verified 0 · key total 20,174"/>
+<rect x="98.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 15:00 UTC · signal 0 · verified 0 · key total 19,680"/>
+<rect x="102.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 16:00 UTC · signal 0 · verified 0 · key total 19,025"/>
+<rect x="106.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 17:00 UTC · signal 0 · verified 0 · key total 17,489"/>
+<rect x="110.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 18:00 UTC · signal 0 · verified 0 · key total 15,912"/>
+<rect x="114.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 19:00 UTC · signal 0 · verified 0 · key total 14,197"/>
+<rect x="118.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 20:00 UTC · signal 0 · verified 0 · key total 12,480"/>
+<rect x="122.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 21:00 UTC · signal 0 · verified 0 · key total 10,762"/>
+<rect x="126.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 22:00 UTC · signal 0 · verified 0 · key total 8,856"/>
+<rect x="130.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 23:00 UTC · signal 0 · verified 0 · key total 8,044"/>
+<rect x="134.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 00:00 UTC · signal 0 · verified 0 · key total 8,368"/>
+<rect x="138.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 01:00 UTC · signal 0 · verified 0 · key total 8,444"/>
+<rect x="142.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 02:00 UTC · signal 0 · verified 0 · key total 8,393"/>
+<rect x="146.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 03:00 UTC · signal 1 · verified 1 · key total 9,119"/>
+<rect x="150.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 04:00 UTC · signal 0 · verified 0 · key total 9,791"/>
+<rect x="154.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 05:00 UTC · signal 1 · verified 1 · key total 11,871"/>
+<rect x="158.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 06:00 UTC · signal 0 · verified 0 · key total 13,538"/>
+<rect x="162.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 07:00 UTC · signal 0 · verified 0 · key total 15,561"/>
+<rect x="166.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 08:00 UTC · signal 0 · verified 0 · key total 16,915"/>
+<rect x="170.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 09:00 UTC · signal 0 · verified 0 · key total 16,948"/>
+<rect x="174.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 10:00 UTC · signal 1 · verified 1 · key total 16,925"/>
+<rect x="178.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 11:00 UTC · signal 0 · verified 0 · key total 17,191"/>
+<rect x="182.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 12:00 UTC · signal 0 · verified 0 · key total 18,007"/>
+<rect x="186.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 13:00 UTC · signal 1 · verified 1 · key total 18,739"/>
+<rect x="190.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 14:00 UTC · signal 0 · verified 0 · key total 18,976"/>
+<rect x="194.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 15:00 UTC · signal 0 · verified 0 · key total 18,492"/>
+<rect x="198.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 16:00 UTC · signal 0 · verified 0 · key total 18,080"/>
+<rect x="202.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 17:00 UTC · signal 0 · verified 0 · key total 17,635"/>
+<rect x="206.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 18:00 UTC · signal 0 · verified 0 · key total 15,982"/>
+<rect x="210.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 19:00 UTC · signal 0 · verified 0 · key total 14,429"/>
+<rect x="214.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 20:00 UTC · signal 0 · verified 0 · key total 12,786"/>
+<rect x="218.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 21:00 UTC · signal 5 · verified 5 · key total 10,987"/>
+<rect x="222.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 22:00 UTC · signal 1 · verified 1 · key total 9,650"/>
+<rect x="226.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 23:00 UTC · signal 0 · verified 0 · key total 9,408"/>
+<rect x="230.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 00:00 UTC · signal 0 · verified 0 · key total 11,109"/>
+<rect x="234.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 01:00 UTC · signal 0 · verified 0 · key total 16,335"/>
+<rect x="238.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 02:00 UTC · signal 8 · verified 8 · key total 17,887"/>
+<rect x="242.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 03:00 UTC · signal 2 · verified 2 · key total 16,338"/>
+<rect x="246.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 04:00 UTC · signal 3 · verified 3 · key total 17,142"/>
+<rect x="250.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 05:00 UTC · signal 0 · verified 0 · key total 19,606"/>
+<rect x="254.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 06:00 UTC · signal 1 · verified 1 · key total 24,284"/>
+<rect x="258.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 07:00 UTC · signal 2 · verified 2 · key total 27,250"/>
+<rect x="262.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 08:00 UTC · signal 3 · verified 3 · key total 28,431"/>
+<rect x="266.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 09:00 UTC · signal 6 · verified 6 · key total 31,457"/>
+<rect x="270.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 10:00 UTC · signal 4 · verified 4 · key total 29,259"/>
+<rect x="274.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 11:00 UTC · signal 5 · verified 5 · key total 28,610"/>
+<rect x="278.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 12:00 UTC · signal 4 · verified 4 · key total 29,893"/>
+<rect x="282.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 13:00 UTC · signal 4 · verified 4 · key total 31,056"/>
+<rect x="286.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 14:00 UTC · signal 4 · verified 4 · key total 31,413"/>
+<rect x="290.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 15:00 UTC · signal 0 · verified 0 · key total 30,855"/>
+<rect x="294.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 16:00 UTC · signal 1 · verified 1 · key total 34,136"/>
+<rect x="298.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 17:00 UTC · signal 0 · verified 0 · key total 34,252"/>
+<rect x="302.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 18:00 UTC · signal 0 · verified 0 · key total 27,810"/>
+<rect x="306.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 19:00 UTC · signal 0 · verified 0 · key total 22,896"/>
+<rect x="310.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 20:00 UTC · signal 0 · verified 0 · key total 19,308"/>
+<rect x="314.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 21:00 UTC · signal 0 · verified 0 · key total 16,627"/>
+<rect x="318.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 22:00 UTC · signal 0 · verified 0 · key total 13,651"/>
+<rect x="322.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 23:00 UTC · signal 0 · verified 0 · key total 12,365"/>
+<rect x="326.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 00:00 UTC · signal 1 · verified 1 · key total 13,590"/>
+<rect x="330.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 01:00 UTC · signal 0 · verified 0 · key total 17,441"/>
+<rect x="334.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 02:00 UTC · signal 11 · verified 11 · key total 17,881"/>
+<rect x="338.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 03:00 UTC · signal 4 · verified 4 · key total 17,600"/>
+<rect x="342.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 04:00 UTC · signal 1 · verified 1 · key total 16,211"/>
+<rect x="346.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 05:00 UTC · signal 2 · verified 2 · key total 19,419"/>
+<rect x="350.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 06:00 UTC · signal 2 · verified 2 · key total 24,060"/>
+<rect x="354.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 07:00 UTC · signal 8 · verified 8 · key total 26,259"/>
+<rect x="358.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 08:00 UTC · signal 5 · verified 5 · key total 27,406"/>
+<rect x="362.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 09:00 UTC · signal 3 · verified 3 · key total 30,753"/>
+<rect x="366.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 10:00 UTC · signal 8 · verified 8 · key total 46,515"/>
+<rect x="370.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 11:00 UTC · signal 0 · verified 0 · key total 29,599"/>
+<rect x="374.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 12:00 UTC · signal 4 · verified 4 · key total 30,132"/>
+<rect x="378.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 13:00 UTC · signal 10 · verified 10 · key total 42,718"/>
+<rect x="382.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 14:00 UTC · signal 3 · verified 3 · key total 30,458"/>
+<rect x="386.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 15:00 UTC · signal 1 · verified 1 · key total 29,295"/>
+<rect x="390.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 16:00 UTC · signal 0 · verified 0 · key total 44,052"/>
+<rect x="394.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 17:00 UTC · signal 2 · verified 2 · key total 38,958"/>
+<rect x="398.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 18:00 UTC · signal 0 · verified 0 · key total 24,633"/>
+<rect x="402.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 19:00 UTC · signal 0 · verified 0 · key total 20,675"/>
+<rect x="406.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 20:00 UTC · signal 0 · verified 0 · key total 17,502"/>
+<rect x="410.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 21:00 UTC · signal 0 · verified 0 · key total 16,534"/>
+</svg></div></div></section>
+<section class="combo"><h2 style="margin-top:0">2. Device-parameter spoofing (invalid resolution + spoofed browser values)</h2><ul class="flags"><li><code class="newflag">g-dp-invalid-resolution</code></li><li><code class="newflag">g-dp-spoofing-browser-values</code></li></ul><p class="muted">Almost all outlook.com / hotmail.com, Firefox on Windows and macOS, CN and JP. Also inside the country exclusion.</p><div class="legend"><span class="lg"><i class="sw s1"></i>sessions with the signal</span><span class="lg"><i class="sw s2"></i>of those, verified</span><span class="lg"><i class="sw refsw"></i>key total traffic (hourly chart)</span></div><div class="kgrid"><div class="kcard"><h3>Payoneer - CLM - Registration - Key 3<span class="tag ongoing">bursty</span><span class="tag">94% verified</span></h3><div class="kstats">Payoneer · <code>E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF</code></div><div class="kstats">2026-09-20 → 2026-10-20: <b>622</b> sessions on <b>17 of 31 days</b> · median day 2 · peak day 94 · verified <b>584 of 622</b></div><div class="kstats">Oct 17–20 hourly: correlation with key traffic <b>r = -0.16</b> · peak hour <b>13.3×</b> the average hour · 29% of matches in 06–15h UTC (key traffic: 51%) → <b>bursty</b>: spikes on its own schedule, not the key's day/night cycle</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p1E3EFEFBF-t">
+<title id="p1E3EFEFBF-t">Sessions created vs verified per day</title>
+<rect x="357.4" y="18" width="54.6" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">47</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">94</text>
+<text x="72.3" y="192" class="axis" text-anchor="middle">09-22</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">09-26</text>
+<text x="169.3" y="192" class="axis" text-anchor="middle">09-30</text>
+<text x="217.9" y="192" class="axis" text-anchor="middle">10-04</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">10-08</text>
+<text x="314.9" y="192" class="axis" text-anchor="middle">10-12</text>
+<text x="363.5" y="192" class="axis" text-anchor="middle">10-16</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-20</text>
+<line x1="48" x2="412" y1="171.1" y2="171.1" class="baseline"/>
+<text x="52" y="167.1" class="axis">baseline avg 2</text>
+<polyline points="48.0,174.0 60.1,174.0 72.3,174.0 84.4,174.0 96.5,174.0 108.7,174.0 120.8,165.3 132.9,174.0 145.1,171.1 157.2,104.7 169.3,96.1 181.5,158.1 193.6,174.0 205.7,174.0 217.9,174.0 230.0,136.5 242.1,174.0 254.3,174.0 266.4,127.8 278.5,171.1 290.7,143.7 302.8,174.0 314.9,171.1 327.1,104.7 339.2,38.3 351.3,44.1 363.5,150.9 375.6,165.3 387.7,174.0 399.9,39.8" class="line s1"/>
+<polyline points="399.9,39.8 412.0,71.5" class="line s1 partial"/>
+<circle cx="48.0" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="60.1" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="72.3" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="84.4" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="96.5" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="108.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="120.8" cy="165.3" r="2.2" class="dot s1"/>
+<circle cx="132.9" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="145.1" cy="171.1" r="2.2" class="dot s1"/>
+<circle cx="157.2" cy="104.7" r="2.2" class="dot s1"/>
+<circle cx="169.3" cy="96.1" r="2.2" class="dot s1"/>
+<circle cx="181.5" cy="158.1" r="2.2" class="dot s1"/>
+<circle cx="193.6" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="205.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="217.9" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="230.0" cy="136.5" r="2.2" class="dot s1"/>
+<circle cx="242.1" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="254.3" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="266.4" cy="127.8" r="2.2" class="dot s1"/>
+<circle cx="278.5" cy="171.1" r="2.2" class="dot s1"/>
+<circle cx="290.7" cy="143.7" r="2.2" class="dot s1"/>
+<circle cx="302.8" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="314.9" cy="171.1" r="2.2" class="dot s1"/>
+<circle cx="327.1" cy="104.7" r="2.2" class="dot s1"/>
+<circle cx="339.2" cy="38.3" r="2.2" class="dot s1"/>
+<circle cx="351.3" cy="44.1" r="2.2" class="dot s1"/>
+<circle cx="363.5" cy="150.9" r="2.2" class="dot s1"/>
+<circle cx="375.6" cy="165.3" r="2.2" class="dot s1"/>
+<circle cx="387.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="399.9" cy="39.8" r="2.2" class="dot s1"/>
+<circle cx="412.0" cy="71.5" r="2.2" class="dot s1 hollow"/>
+<polyline points="48.0,174.0 60.1,174.0 72.3,174.0 84.4,174.0 96.5,174.0 108.7,174.0 120.8,166.8 132.9,174.0 145.1,171.1 157.2,109.1 169.3,107.6 181.5,159.6 193.6,174.0 205.7,174.0 217.9,174.0 230.0,136.5 242.1,174.0 254.3,174.0 266.4,132.1 278.5,171.1 290.7,143.7 302.8,174.0 314.9,171.1 327.1,107.6 339.2,45.6 351.3,47.0 363.5,152.4 375.6,165.3 387.7,174.0 399.9,45.6" class="line s2"/>
+<polyline points="399.9,45.6 412.0,83.1" class="line s2 partial"/>
+<circle cx="48.0" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="60.1" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="72.3" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="96.5" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="108.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="120.8" cy="166.8" r="2.2" class="dot s2"/>
+<circle cx="132.9" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="145.1" cy="171.1" r="2.2" class="dot s2"/>
+<circle cx="157.2" cy="109.1" r="2.2" class="dot s2"/>
+<circle cx="169.3" cy="107.6" r="2.2" class="dot s2"/>
+<circle cx="181.5" cy="159.6" r="2.2" class="dot s2"/>
+<circle cx="193.6" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="205.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="217.9" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="230.0" cy="136.5" r="2.2" class="dot s2"/>
+<circle cx="242.1" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="254.3" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="266.4" cy="132.1" r="2.2" class="dot s2"/>
+<circle cx="278.5" cy="171.1" r="2.2" class="dot s2"/>
+<circle cx="290.7" cy="143.7" r="2.2" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="314.9" cy="171.1" r="2.2" class="dot s2"/>
+<circle cx="327.1" cy="107.6" r="2.2" class="dot s2"/>
+<circle cx="339.2" cy="45.6" r="2.2" class="dot s2"/>
+<circle cx="351.3" cy="47.0" r="2.2" class="dot s2"/>
+<circle cx="363.5" cy="152.4" r="2.2" class="dot s2"/>
+<circle cx="375.6" cy="165.3" r="2.2" class="dot s2"/>
+<circle cx="387.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="399.9" cy="45.6" r="2.2" class="dot s2"/>
+<circle cx="412.0" cy="83.1" r="2.2" class="dot s2 hollow"/>
+<text x="412.0" y="28" class="axis" text-anchor="middle">so far</text>
+<text x="418.0" y="75.5" class="axis">created</text>
+<text x="418.0" y="87.5" class="axis">verified</text>
+<rect x="41.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-20 · created 0 · verified 0 (–)"/>
+<rect x="54.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-21 · created 0 · verified 0 (–)"/>
+<rect x="66.2" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-22 · created 0 · verified 0 (–)"/>
+<rect x="78.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-23 · created 0 · verified 0 (–)"/>
+<rect x="90.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-24 · created 0 · verified 0 (–)"/>
+<rect x="102.6" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-25 · created 0 · verified 0 (–)"/>
+<rect x="114.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-26 · created 6 · verified 5 (83%)"/>
+<rect x="126.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-27 · created 0 · verified 0 (–)"/>
+<rect x="139.0" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-28 · created 2 · verified 2 (100%)"/>
+<rect x="151.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-29 · created 48 · verified 45 (94%)"/>
+<rect x="163.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-30 · created 54 · verified 46 (85%)"/>
+<rect x="175.4" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-01 · created 11 · verified 10 (91%)"/>
+<rect x="187.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-02 · created 0 · verified 0 (–)"/>
+<rect x="199.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
+<rect x="211.8" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-04 · created 0 · verified 0 (–)"/>
+<rect x="223.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-05 · created 26 · verified 26 (100%)"/>
+<rect x="236.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-06 · created 0 · verified 0 (–)"/>
+<rect x="248.2" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-07 · created 0 · verified 0 (–)"/>
+<rect x="260.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-08 · created 32 · verified 29 (91%)"/>
+<rect x="272.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-09 · created 2 · verified 2 (100%)"/>
+<rect x="284.6" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-10 · created 21 · verified 21 (100%)"/>
+<rect x="296.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-11 · created 0 · verified 0 (–)"/>
+<rect x="308.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-12 · created 2 · verified 2 (100%)"/>
+<rect x="321.0" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-13 · created 48 · verified 46 (96%)"/>
+<rect x="333.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-14 · created 94 · verified 89 (95%)"/>
+<rect x="345.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-15 · created 90 · verified 88 (98%)"/>
+<rect x="357.4" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-16 · created 16 · verified 15 (94%)"/>
+<rect x="369.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-17 · created 6 · verified 6 (100%)"/>
+<rect x="381.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-18 · created 0 · verified 0 (–)"/>
+<rect x="393.8" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-19 · created 93 · verified 89 (96%)"/>
+<rect x="405.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-20 so far, to 22:00 UTC · created 71 · verified 63 (89%)"/>
+</svg><div class="sub">Hourly, 2026-10-17 00 → 2026-10-20 21 UTC. Grey band = all sessions on the key (own scale), the organic day/night shape.</div><svg viewBox="0 0 470 170" class="chart" role="img" aria-labelledby="q1E3EFEFBF-t">
+<title id="q1E3EFEFBF-t">Hourly sessions with the signal vs the key total traffic</title>
+<polygon points="40.0,146 40.0,90.9 44.0,91.7 48.0,86.1 52.0,84.1 56.0,77.3 60.0,74.5 64.0,60.1 68.0,52.9 72.0,54.6 76.0,43.3 80.0,39.4 84.0,48.8 88.0,37.0 92.0,38.5 96.0,33.3 100.0,45.5 104.0,39.4 108.0,52.2 112.0,54.3 116.0,63.9 120.0,69.9 124.0,74.1 128.0,90.0 132.0,94.3 136.0,94.8 140.0,96.6 144.0,93.0 148.0,86.1 152.0,85.7 156.0,70.1 160.0,62.6 164.0,58.9 168.0,51.0 172.0,46.5 176.0,38.1 180.0,45.8 184.0,37.6 188.0,34.6 192.0,37.0 196.0,38.0 200.0,43.4 204.0,53.9 208.0,53.1 212.0,63.0 216.0,75.8 220.0,77.2 224.0,86.5 228.0,89.0 232.0,92.1 236.0,90.8 240.0,86.6 244.0,77.8 248.0,71.9 252.0,69.1 256.0,50.0 260.0,45.5 264.0,33.0 268.0,28.7 272.0,27.9 276.0,28.5 280.0,28.1 284.0,26.8 288.0,25.6 292.0,20.3 296.0,24.5 300.0,30.3 304.0,35.7 308.0,52.3 312.0,66.8 316.0,71.8 320.0,79.5 324.0,89.0 328.0,86.5 332.0,81.6 336.0,79.5 340.0,73.8 344.0,64.2 348.0,70.8 352.0,49.7 356.0,42.0 360.0,38.6 364.0,31.3 368.0,24.2 372.0,38.8 376.0,37.9 380.0,22.7 384.0,30.3 388.0,39.1 392.0,43.8 396.0,42.7 400.0,47.7 404.0,56.3 408.0,77.5 412.0,77.8 412.0,146" class="refband"/>
+<line x1="40" x2="412" y1="146.0" y2="146.0" class="grid"/>
+<text x="34" y="150.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="412" y1="88.6" y2="88.6" class="grid"/>
+<text x="34" y="92.6" class="axis" text-anchor="end">12</text>
+<line x1="40" x2="412" y1="31.2" y2="31.2" class="grid"/>
+<text x="34" y="35.2" class="axis" text-anchor="end">24</text>
+<line x1="40.0" x2="40.0" y1="14" y2="146" class="grid"/>
+<text x="40.0" y="164" class="axis" text-anchor="middle">10-17</text>
+<line x1="88.0" x2="88.0" y1="14" y2="146" class="grid"/>
+<text x="88.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="136.0" x2="136.0" y1="14" y2="146" class="grid"/>
+<text x="136.0" y="164" class="axis" text-anchor="middle">10-18</text>
+<line x1="184.0" x2="184.0" y1="14" y2="146" class="grid"/>
+<text x="184.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="232.0" x2="232.0" y1="14" y2="146" class="grid"/>
+<text x="232.0" y="164" class="axis" text-anchor="middle">10-19</text>
+<line x1="280.0" x2="280.0" y1="14" y2="146" class="grid"/>
+<text x="280.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="328.0" x2="328.0" y1="14" y2="146" class="grid"/>
+<text x="328.0" y="164" class="axis" text-anchor="middle">10-20</text>
+<line x1="376.0" x2="376.0" y1="14" y2="146" class="grid"/>
+<text x="376.0" y="164" class="axis" text-anchor="middle">12h</text>
+<polyline points="40.0,146.0 44.0,117.3 48.0,146.0 52.0,146.0 56.0,146.0 60.0,146.0 64.0,146.0 68.0,146.0 72.0,146.0 76.0,146.0 80.0,146.0 84.0,146.0 88.0,146.0 92.0,146.0 96.0,146.0 100.0,146.0 104.0,146.0 108.0,146.0 112.0,146.0 116.0,146.0 120.0,146.0 124.0,146.0 128.0,146.0 132.0,146.0 136.0,146.0 140.0,146.0 144.0,146.0 148.0,146.0 152.0,146.0 156.0,146.0 160.0,146.0 164.0,146.0 168.0,146.0 172.0,146.0 176.0,146.0 180.0,146.0 184.0,146.0 188.0,146.0 192.0,146.0 196.0,146.0 200.0,146.0 204.0,146.0 208.0,146.0 212.0,146.0 216.0,146.0 220.0,146.0 224.0,146.0 228.0,146.0 232.0,88.6 236.0,93.4 240.0,146.0 244.0,79.0 248.0,117.3 252.0,79.0 256.0,146.0 260.0,74.3 264.0,131.7 268.0,59.9 272.0,146.0 276.0,146.0 280.0,146.0 284.0,146.0 288.0,146.0 292.0,146.0 296.0,146.0 300.0,146.0 304.0,146.0 308.0,146.0 312.0,146.0 316.0,146.0 320.0,146.0 324.0,146.0 328.0,79.0 332.0,136.4 336.0,146.0 340.0,59.9 344.0,146.0 348.0,31.2 352.0,122.1 356.0,107.7 360.0,146.0 364.0,146.0 368.0,146.0 372.0,146.0 376.0,146.0 380.0,146.0 384.0,146.0 388.0,146.0 392.0,146.0 396.0,146.0 400.0,146.0 404.0,146.0 408.0,146.0 412.0,146.0" class="line s1"/>
+<polyline points="40.0,146.0 44.0,117.3 48.0,146.0 52.0,146.0 56.0,146.0 60.0,146.0 64.0,146.0 68.0,146.0 72.0,146.0 76.0,146.0 80.0,146.0 84.0,146.0 88.0,146.0 92.0,146.0 96.0,146.0 100.0,146.0 104.0,146.0 108.0,146.0 112.0,146.0 116.0,146.0 120.0,146.0 124.0,146.0 128.0,146.0 132.0,146.0 136.0,146.0 140.0,146.0 144.0,146.0 148.0,146.0 152.0,146.0 156.0,146.0 160.0,146.0 164.0,146.0 168.0,146.0 172.0,146.0 176.0,146.0 180.0,146.0 184.0,146.0 188.0,146.0 192.0,146.0 196.0,146.0 200.0,146.0 204.0,146.0 208.0,146.0 212.0,146.0 216.0,146.0 220.0,146.0 224.0,146.0 228.0,146.0 232.0,88.6 236.0,93.4 240.0,146.0 244.0,83.8 248.0,117.3 252.0,79.0 256.0,146.0 260.0,79.0 264.0,131.7 268.0,69.5 272.0,146.0 276.0,146.0 280.0,146.0 284.0,146.0 288.0,146.0 292.0,146.0 296.0,146.0 300.0,146.0 304.0,146.0 308.0,146.0 312.0,146.0 316.0,146.0 320.0,146.0 324.0,146.0 328.0,79.0 332.0,136.4 336.0,146.0 340.0,59.9 344.0,146.0 348.0,64.7 352.0,126.9 356.0,107.7 360.0,146.0 364.0,146.0 368.0,146.0 372.0,146.0 376.0,146.0 380.0,146.0 384.0,146.0 388.0,146.0 392.0,146.0 396.0,146.0 400.0,146.0 404.0,146.0 408.0,146.0 412.0,146.0" class="line s2"/>
+<text x="418.0" y="150.0" class="axis">signal</text>
+<text x="418.0" y="24" class="axis">key traffic</text>
+<rect x="38.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 00:00 UTC · signal 0 · verified 0 · key total 1,703"/>
+<rect x="42.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 01:00 UTC · signal 6 · verified 6 · key total 1,679"/>
+<rect x="46.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 02:00 UTC · signal 0 · verified 0 · key total 1,852"/>
+<rect x="50.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 03:00 UTC · signal 0 · verified 0 · key total 1,913"/>
+<rect x="54.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 04:00 UTC · signal 0 · verified 0 · key total 2,123"/>
+<rect x="58.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 05:00 UTC · signal 0 · verified 0 · key total 2,211"/>
+<rect x="62.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 06:00 UTC · signal 0 · verified 0 · key total 2,656"/>
+<rect x="66.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 07:00 UTC · signal 0 · verified 0 · key total 2,877"/>
+<rect x="70.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 08:00 UTC · signal 0 · verified 0 · key total 2,825"/>
+<rect x="74.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 09:00 UTC · signal 0 · verified 0 · key total 3,175"/>
+<rect x="78.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 10:00 UTC · signal 0 · verified 0 · key total 3,295"/>
+<rect x="82.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 11:00 UTC · signal 0 · verified 0 · key total 3,004"/>
+<rect x="86.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 12:00 UTC · signal 0 · verified 0 · key total 3,369"/>
+<rect x="90.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 13:00 UTC · signal 0 · verified 0 · key total 3,322"/>
+<rect x="94.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 14:00 UTC · signal 0 · verified 0 · key total 3,484"/>
+<rect x="98.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 15:00 UTC · signal 0 · verified 0 · key total 3,108"/>
+<rect x="102.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 16:00 UTC · signal 0 · verified 0 · key total 3,294"/>
+<rect x="106.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 17:00 UTC · signal 0 · verified 0 · key total 2,901"/>
+<rect x="110.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 18:00 UTC · signal 0 · verified 0 · key total 2,836"/>
+<rect x="114.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 19:00 UTC · signal 0 · verified 0 · key total 2,537"/>
+<rect x="118.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 20:00 UTC · signal 0 · verified 0 · key total 2,351"/>
+<rect x="122.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 21:00 UTC · signal 0 · verified 0 · key total 2,224"/>
+<rect x="126.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 22:00 UTC · signal 0 · verified 0 · key total 1,732"/>
+<rect x="130.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 23:00 UTC · signal 0 · verified 0 · key total 1,597"/>
+<rect x="134.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 00:00 UTC · signal 0 · verified 0 · key total 1,584"/>
+<rect x="138.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 01:00 UTC · signal 0 · verified 0 · key total 1,527"/>
+<rect x="142.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 02:00 UTC · signal 0 · verified 0 · key total 1,639"/>
+<rect x="146.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 03:00 UTC · signal 0 · verified 0 · key total 1,852"/>
+<rect x="150.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 04:00 UTC · signal 0 · verified 0 · key total 1,865"/>
+<rect x="154.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 05:00 UTC · signal 0 · verified 0 · key total 2,347"/>
+<rect x="158.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 06:00 UTC · signal 0 · verified 0 · key total 2,577"/>
+<rect x="162.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 07:00 UTC · signal 0 · verified 0 · key total 2,693"/>
+<rect x="166.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 08:00 UTC · signal 0 · verified 0 · key total 2,936"/>
+<rect x="170.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 09:00 UTC · signal 0 · verified 0 · key total 3,075"/>
+<rect x="174.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 10:00 UTC · signal 0 · verified 0 · key total 3,334"/>
+<rect x="178.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 11:00 UTC · signal 0 · verified 0 · key total 3,098"/>
+<rect x="182.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 12:00 UTC · signal 0 · verified 0 · key total 3,352"/>
+<rect x="186.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 13:00 UTC · signal 0 · verified 0 · key total 3,442"/>
+<rect x="190.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 14:00 UTC · signal 0 · verified 0 · key total 3,368"/>
+<rect x="194.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 15:00 UTC · signal 0 · verified 0 · key total 3,337"/>
+<rect x="198.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 16:00 UTC · signal 0 · verified 0 · key total 3,171"/>
+<rect x="202.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 17:00 UTC · signal 0 · verified 0 · key total 2,847"/>
+<rect x="206.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 18:00 UTC · signal 0 · verified 0 · key total 2,871"/>
+<rect x="210.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 19:00 UTC · signal 0 · verified 0 · key total 2,566"/>
+<rect x="214.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 20:00 UTC · signal 0 · verified 0 · key total 2,171"/>
+<rect x="218.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 21:00 UTC · signal 0 · verified 0 · key total 2,126"/>
+<rect x="222.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 22:00 UTC · signal 0 · verified 0 · key total 1,840"/>
+<rect x="226.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 23:00 UTC · signal 0 · verified 0 · key total 1,763"/>
+<rect x="230.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 00:00 UTC · signal 12 · verified 12 · key total 1,666"/>
+<rect x="234.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 01:00 UTC · signal 11 · verified 11 · key total 1,706"/>
+<rect x="238.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 02:00 UTC · signal 0 · verified 0 · key total 1,837"/>
+<rect x="242.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 03:00 UTC · signal 14 · verified 13 · key total 2,108"/>
+<rect x="246.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 04:00 UTC · signal 6 · verified 6 · key total 2,289"/>
+<rect x="250.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 05:00 UTC · signal 14 · verified 14 · key total 2,376"/>
+<rect x="254.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 06:00 UTC · signal 0 · verified 0 · key total 2,968"/>
+<rect x="258.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 07:00 UTC · signal 15 · verified 14 · key total 3,106"/>
+<rect x="262.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 08:00 UTC · signal 3 · verified 3 · key total 3,493"/>
+<rect x="266.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 09:00 UTC · signal 18 · verified 16 · key total 3,625"/>
+<rect x="270.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 10:00 UTC · signal 0 · verified 0 · key total 3,652"/>
+<rect x="274.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 11:00 UTC · signal 0 · verified 0 · key total 3,632"/>
+<rect x="278.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 12:00 UTC · signal 0 · verified 0 · key total 3,644"/>
+<rect x="282.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 13:00 UTC · signal 0 · verified 0 · key total 3,686"/>
+<rect x="286.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 14:00 UTC · signal 0 · verified 0 · key total 3,722"/>
+<rect x="290.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 15:00 UTC · signal 0 · verified 0 · key total 3,886"/>
+<rect x="294.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 16:00 UTC · signal 0 · verified 0 · key total 3,755"/>
+<rect x="298.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 17:00 UTC · signal 0 · verified 0 · key total 3,575"/>
+<rect x="302.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 18:00 UTC · signal 0 · verified 0 · key total 3,411"/>
+<rect x="306.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 19:00 UTC · signal 0 · verified 0 · key total 2,897"/>
+<rect x="310.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 20:00 UTC · signal 0 · verified 0 · key total 2,448"/>
+<rect x="314.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 21:00 UTC · signal 0 · verified 0 · key total 2,293"/>
+<rect x="318.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 22:00 UTC · signal 0 · verified 0 · key total 2,055"/>
+<rect x="322.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 23:00 UTC · signal 0 · verified 0 · key total 1,762"/>
+<rect x="326.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 00:00 UTC · signal 14 · verified 14 · key total 1,838"/>
+<rect x="330.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 01:00 UTC · signal 2 · verified 2 · key total 1,992"/>
+<rect x="334.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 02:00 UTC · signal 0 · verified 0 · key total 2,057"/>
+<rect x="338.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 03:00 UTC · signal 18 · verified 18 · key total 2,231"/>
+<rect x="342.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 04:00 UTC · signal 0 · verified 0 · key total 2,530"/>
+<rect x="346.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 05:00 UTC · signal 24 · verified 17 · key total 2,324"/>
+<rect x="350.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 06:00 UTC · signal 5 · verified 4 · key total 2,977"/>
+<rect x="354.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 07:00 UTC · signal 8 · verified 8 · key total 3,216"/>
+<rect x="358.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 08:00 UTC · signal 0 · verified 0 · key total 3,321"/>
+<rect x="362.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 09:00 UTC · signal 0 · verified 0 · key total 3,546"/>
+<rect x="366.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 10:00 UTC · signal 0 · verified 0 · key total 3,765"/>
+<rect x="370.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 11:00 UTC · signal 0 · verified 0 · key total 3,315"/>
+<rect x="374.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 12:00 UTC · signal 0 · verified 0 · key total 3,340"/>
+<rect x="378.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 13:00 UTC · signal 0 · verified 0 · key total 3,810"/>
+<rect x="382.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 14:00 UTC · signal 0 · verified 0 · key total 3,576"/>
+<rect x="386.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 15:00 UTC · signal 0 · verified 0 · key total 3,303"/>
+<rect x="390.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 16:00 UTC · signal 0 · verified 0 · key total 3,158"/>
+<rect x="394.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 17:00 UTC · signal 0 · verified 0 · key total 3,193"/>
+<rect x="398.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 18:00 UTC · signal 0 · verified 0 · key total 3,040"/>
+<rect x="402.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 19:00 UTC · signal 0 · verified 0 · key total 2,773"/>
+<rect x="406.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 20:00 UTC · signal 0 · verified 0 · key total 2,117"/>
+<rect x="410.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 21:00 UTC · signal 0 · verified 0 · key total 2,108"/>
+</svg></div><div class="kcard"><h3>Payoneer - Login - Prod - Key 2<span class="tag ongoing">low & slow</span><span class="tag">95% verified</span></h3><div class="kstats">Payoneer · <code>EE844FC3-499D-4A4D-A643-D7400F0FD4DE</code></div><div class="kstats">2026-09-20 → 2026-10-20: <b>443</b> sessions on <b>24 of 31 days</b> · median day 9 · peak day 68 · verified <b>423 of 443</b></div><div class="kstats">Oct 17–20 hourly: correlation with key traffic <b>r = 0.42</b> · peak hour <b>7.2×</b> the average hour · 75% of matches in 06–15h UTC (key traffic: 52%) → <b>low & slow</b>: steady trickle with small bursts; weakly tied to the key's day/night cycle</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="p1EE844FC3-t">
+<title id="p1EE844FC3-t">Sessions created vs verified per day</title>
+<rect x="357.4" y="18" width="54.6" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">34</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">68</text>
+<text x="72.3" y="192" class="axis" text-anchor="middle">09-22</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">09-26</text>
+<text x="169.3" y="192" class="axis" text-anchor="middle">09-30</text>
+<text x="217.9" y="192" class="axis" text-anchor="middle">10-04</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">10-08</text>
+<text x="314.9" y="192" class="axis" text-anchor="middle">10-12</text>
+<text x="363.5" y="192" class="axis" text-anchor="middle">10-16</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">10-20</text>
+<line x1="48" x2="412" y1="156.0" y2="156.0" class="baseline"/>
+<text x="52" y="152.0" class="axis">baseline avg 9</text>
+<polyline points="48.0,174.0 60.1,174.0 72.3,174.0 84.4,174.0 96.5,174.0 108.7,174.0 120.8,172.0 132.9,168.0 145.1,154.1 157.2,126.1 169.3,96.2 181.5,138.1 193.6,172.0 205.7,174.0 217.9,170.0 230.0,120.1 242.1,152.1 254.3,170.0 266.4,140.1 278.5,152.1 290.7,154.1 302.8,172.0 314.9,170.0 327.1,154.1 339.2,96.2 351.3,38.3 363.5,114.2 375.6,156.0 387.7,166.0 399.9,82.2" class="line s1"/>
+<polyline points="399.9,82.2 412.0,58.3" class="line s1 partial"/>
+<circle cx="48.0" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="60.1" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="72.3" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="84.4" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="96.5" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="108.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="120.8" cy="172.0" r="2.2" class="dot s1"/>
+<circle cx="132.9" cy="168.0" r="2.2" class="dot s1"/>
+<circle cx="145.1" cy="154.1" r="2.2" class="dot s1"/>
+<circle cx="157.2" cy="126.1" r="2.2" class="dot s1"/>
+<circle cx="169.3" cy="96.2" r="2.2" class="dot s1"/>
+<circle cx="181.5" cy="138.1" r="2.2" class="dot s1"/>
+<circle cx="193.6" cy="172.0" r="2.2" class="dot s1"/>
+<circle cx="205.7" cy="174.0" r="2.2" class="dot s1"/>
+<circle cx="217.9" cy="170.0" r="2.2" class="dot s1"/>
+<circle cx="230.0" cy="120.1" r="2.2" class="dot s1"/>
+<circle cx="242.1" cy="152.1" r="2.2" class="dot s1"/>
+<circle cx="254.3" cy="170.0" r="2.2" class="dot s1"/>
+<circle cx="266.4" cy="140.1" r="2.2" class="dot s1"/>
+<circle cx="278.5" cy="152.1" r="2.2" class="dot s1"/>
+<circle cx="290.7" cy="154.1" r="2.2" class="dot s1"/>
+<circle cx="302.8" cy="172.0" r="2.2" class="dot s1"/>
+<circle cx="314.9" cy="170.0" r="2.2" class="dot s1"/>
+<circle cx="327.1" cy="154.1" r="2.2" class="dot s1"/>
+<circle cx="339.2" cy="96.2" r="2.2" class="dot s1"/>
+<circle cx="351.3" cy="38.3" r="2.2" class="dot s1"/>
+<circle cx="363.5" cy="114.2" r="2.2" class="dot s1"/>
+<circle cx="375.6" cy="156.0" r="2.2" class="dot s1"/>
+<circle cx="387.7" cy="166.0" r="2.2" class="dot s1"/>
+<circle cx="399.9" cy="82.2" r="2.2" class="dot s1"/>
+<circle cx="412.0" cy="58.3" r="2.2" class="dot s1 hollow"/>
+<polyline points="48.0,174.0 60.1,174.0 72.3,174.0 84.4,174.0 96.5,174.0 108.7,174.0 120.8,172.0 132.9,168.0 145.1,154.1 157.2,126.1 169.3,118.1 181.5,138.1 193.6,172.0 205.7,174.0 217.9,170.0 230.0,122.1 242.1,152.1 254.3,170.0 266.4,142.1 278.5,152.1 290.7,154.1 302.8,172.0 314.9,170.0 327.1,154.1 339.2,96.2 351.3,48.3 363.5,116.1 375.6,156.0 387.7,166.0 399.9,82.2" class="line s2"/>
+<polyline points="399.9,82.2 412.0,60.3" class="line s2 partial"/>
+<circle cx="48.0" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="60.1" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="72.3" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="96.5" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="108.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="120.8" cy="172.0" r="2.2" class="dot s2"/>
+<circle cx="132.9" cy="168.0" r="2.2" class="dot s2"/>
+<circle cx="145.1" cy="154.1" r="2.2" class="dot s2"/>
+<circle cx="157.2" cy="126.1" r="2.2" class="dot s2"/>
+<circle cx="169.3" cy="118.1" r="2.2" class="dot s2"/>
+<circle cx="181.5" cy="138.1" r="2.2" class="dot s2"/>
+<circle cx="193.6" cy="172.0" r="2.2" class="dot s2"/>
+<circle cx="205.7" cy="174.0" r="2.2" class="dot s2"/>
+<circle cx="217.9" cy="170.0" r="2.2" class="dot s2"/>
+<circle cx="230.0" cy="122.1" r="2.2" class="dot s2"/>
+<circle cx="242.1" cy="152.1" r="2.2" class="dot s2"/>
+<circle cx="254.3" cy="170.0" r="2.2" class="dot s2"/>
+<circle cx="266.4" cy="142.1" r="2.2" class="dot s2"/>
+<circle cx="278.5" cy="152.1" r="2.2" class="dot s2"/>
+<circle cx="290.7" cy="154.1" r="2.2" class="dot s2"/>
+<circle cx="302.8" cy="172.0" r="2.2" class="dot s2"/>
+<circle cx="314.9" cy="170.0" r="2.2" class="dot s2"/>
+<circle cx="327.1" cy="154.1" r="2.2" class="dot s2"/>
+<circle cx="339.2" cy="96.2" r="2.2" class="dot s2"/>
+<circle cx="351.3" cy="48.3" r="2.2" class="dot s2"/>
+<circle cx="363.5" cy="116.1" r="2.2" class="dot s2"/>
+<circle cx="375.6" cy="156.0" r="2.2" class="dot s2"/>
+<circle cx="387.7" cy="166.0" r="2.2" class="dot s2"/>
+<circle cx="399.9" cy="82.2" r="2.2" class="dot s2"/>
+<circle cx="412.0" cy="60.3" r="2.2" class="dot s2 hollow"/>
+<text x="412.0" y="28" class="axis" text-anchor="middle">so far</text>
+<text x="418.0" y="62.3" class="axis">created</text>
+<text x="418.0" y="74.3" class="axis">verified</text>
+<rect x="41.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-20 · created 0 · verified 0 (–)"/>
+<rect x="54.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-21 · created 0 · verified 0 (–)"/>
+<rect x="66.2" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-22 · created 0 · verified 0 (–)"/>
+<rect x="78.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-23 · created 0 · verified 0 (–)"/>
+<rect x="90.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-24 · created 0 · verified 0 (–)"/>
+<rect x="102.6" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-25 · created 0 · verified 0 (–)"/>
+<rect x="114.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-26 · created 1 · verified 1 (100%)"/>
+<rect x="126.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-27 · created 3 · verified 3 (100%)"/>
+<rect x="139.0" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-28 · created 10 · verified 10 (100%)"/>
+<rect x="151.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-29 · created 24 · verified 24 (100%)"/>
+<rect x="163.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-09-30 · created 39 · verified 28 (72%)"/>
+<rect x="175.4" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-01 · created 18 · verified 18 (100%)"/>
+<rect x="187.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-02 · created 1 · verified 1 (100%)"/>
+<rect x="199.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-03 · created 0 · verified 0 (–)"/>
+<rect x="211.8" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-04 · created 2 · verified 2 (100%)"/>
+<rect x="223.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-05 · created 27 · verified 26 (96%)"/>
+<rect x="236.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-06 · created 11 · verified 11 (100%)"/>
+<rect x="248.2" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-07 · created 2 · verified 2 (100%)"/>
+<rect x="260.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-08 · created 17 · verified 16 (94%)"/>
+<rect x="272.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-09 · created 11 · verified 11 (100%)"/>
+<rect x="284.6" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-10 · created 10 · verified 10 (100%)"/>
+<rect x="296.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-11 · created 1 · verified 1 (100%)"/>
+<rect x="308.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-12 · created 2 · verified 2 (100%)"/>
+<rect x="321.0" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-13 · created 10 · verified 10 (100%)"/>
+<rect x="333.1" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-14 · created 39 · verified 39 (100%)"/>
+<rect x="345.3" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-15 · created 68 · verified 63 (93%)"/>
+<rect x="357.4" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-16 · created 30 · verified 29 (97%)"/>
+<rect x="369.5" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-17 · created 9 · verified 9 (100%)"/>
+<rect x="381.7" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-18 · created 4 · verified 4 (100%)"/>
+<rect x="393.8" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-19 · created 46 · verified 46 (100%)"/>
+<rect x="405.9" y="18" width="12.1" height="156" class="hit" data-tip="2026-10-20 so far, to 22:00 UTC · created 58 · verified 57 (98%)"/>
+</svg><div class="sub">Hourly, 2026-10-17 00 → 2026-10-20 21 UTC. Grey band = all sessions on the key (own scale), the organic day/night shape.</div><svg viewBox="0 0 470 170" class="chart" role="img" aria-labelledby="q1EE844FC3-t">
+<title id="q1EE844FC3-t">Hourly sessions with the signal vs the key total traffic</title>
+<polygon points="40.0,146 40.0,117.2 44.0,115.2 48.0,115.3 52.0,114.5 56.0,113.2 60.0,108.0 64.0,102.6 68.0,95.0 72.0,94.0 76.0,93.9 80.0,94.9 84.0,94.8 88.0,92.2 92.0,91.7 96.0,91.5 100.0,92.8 104.0,94.6 108.0,98.7 112.0,103.0 116.0,107.6 120.0,112.3 124.0,116.9 128.0,122.1 132.0,124.3 136.0,123.4 140.0,123.2 144.0,123.3 148.0,121.4 152.0,119.5 156.0,113.9 160.0,109.4 164.0,103.9 168.0,100.3 172.0,100.2 176.0,100.3 180.0,99.5 184.0,97.3 188.0,95.4 192.0,94.7 196.0,96.0 200.0,97.1 204.0,98.3 208.0,102.8 212.0,107.0 216.0,111.4 220.0,116.3 224.0,119.9 228.0,120.6 232.0,116.0 236.0,101.9 240.0,97.7 244.0,101.8 248.0,99.7 252.0,93.0 256.0,80.4 260.0,72.4 264.0,69.2 268.0,61.0 272.0,66.9 276.0,68.7 280.0,65.2 284.0,62.1 288.0,61.1 292.0,62.6 296.0,53.7 300.0,53.4 304.0,70.8 308.0,84.1 312.0,93.8 316.0,101.1 320.0,109.1 324.0,112.6 328.0,109.3 332.0,98.9 336.0,97.7 340.0,98.4 344.0,102.2 348.0,93.5 352.0,81.0 356.0,75.0 360.0,71.9 364.0,62.9 368.0,20.3 372.0,66.0 376.0,64.6 380.0,30.5 384.0,63.7 388.0,66.8 392.0,26.9 396.0,40.7 400.0,79.4 404.0,90.1 408.0,98.7 412.0,101.3 412.0,146" class="refband"/>
+<line x1="40" x2="412" y1="146.0" y2="146.0" class="grid"/>
+<text x="34" y="150.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="412" y1="88.6" y2="88.6" class="grid"/>
+<text x="34" y="92.6" class="axis" text-anchor="end">4</text>
+<line x1="40" x2="412" y1="31.2" y2="31.2" class="grid"/>
+<text x="34" y="35.2" class="axis" text-anchor="end">9</text>
+<line x1="40.0" x2="40.0" y1="14" y2="146" class="grid"/>
+<text x="40.0" y="164" class="axis" text-anchor="middle">10-17</text>
+<line x1="88.0" x2="88.0" y1="14" y2="146" class="grid"/>
+<text x="88.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="136.0" x2="136.0" y1="14" y2="146" class="grid"/>
+<text x="136.0" y="164" class="axis" text-anchor="middle">10-18</text>
+<line x1="184.0" x2="184.0" y1="14" y2="146" class="grid"/>
+<text x="184.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="232.0" x2="232.0" y1="14" y2="146" class="grid"/>
+<text x="232.0" y="164" class="axis" text-anchor="middle">10-19</text>
+<line x1="280.0" x2="280.0" y1="14" y2="146" class="grid"/>
+<text x="280.0" y="164" class="axis" text-anchor="middle">12h</text>
+<line x1="328.0" x2="328.0" y1="14" y2="146" class="grid"/>
+<text x="328.0" y="164" class="axis" text-anchor="middle">10-20</text>
+<line x1="376.0" x2="376.0" y1="14" y2="146" class="grid"/>
+<text x="376.0" y="164" class="axis" text-anchor="middle">12h</text>
+<polyline points="40.0,146.0 44.0,133.2 48.0,146.0 52.0,146.0 56.0,146.0 60.0,146.0 64.0,146.0 68.0,133.2 72.0,146.0 76.0,146.0 80.0,146.0 84.0,133.2 88.0,146.0 92.0,133.2 96.0,133.2 100.0,95.0 104.0,146.0 108.0,146.0 112.0,146.0 116.0,146.0 120.0,146.0 124.0,146.0 128.0,146.0 132.0,146.0 136.0,146.0 140.0,146.0 144.0,146.0 148.0,146.0 152.0,146.0 156.0,146.0 160.0,146.0 164.0,146.0 168.0,146.0 172.0,133.2 176.0,146.0 180.0,146.0 184.0,146.0 188.0,146.0 192.0,107.7 196.0,146.0 200.0,146.0 204.0,146.0 208.0,146.0 212.0,146.0 216.0,146.0 220.0,146.0 224.0,146.0 228.0,146.0 232.0,107.7 236.0,82.2 240.0,133.2 244.0,146.0 248.0,95.0 252.0,146.0 256.0,133.2 260.0,82.2 264.0,82.2 268.0,95.0 272.0,56.7 276.0,82.2 280.0,107.7 284.0,133.2 288.0,146.0 292.0,146.0 296.0,146.0 300.0,146.0 304.0,146.0 308.0,146.0 312.0,146.0 316.0,146.0 320.0,146.0 324.0,120.5 328.0,146.0 332.0,107.7 336.0,146.0 340.0,133.2 344.0,82.2 348.0,120.5 352.0,44.0 356.0,120.5 360.0,31.2 364.0,44.0 368.0,31.2 372.0,107.7 376.0,95.0 380.0,120.5 384.0,146.0 388.0,146.0 392.0,146.0 396.0,146.0 400.0,146.0 404.0,133.2 408.0,146.0 412.0,133.2" class="line s1"/>
+<polyline points="40.0,146.0 44.0,133.2 48.0,146.0 52.0,146.0 56.0,146.0 60.0,146.0 64.0,146.0 68.0,133.2 72.0,146.0 76.0,146.0 80.0,146.0 84.0,133.2 88.0,146.0 92.0,133.2 96.0,133.2 100.0,95.0 104.0,146.0 108.0,146.0 112.0,146.0 116.0,146.0 120.0,146.0 124.0,146.0 128.0,146.0 132.0,146.0 136.0,146.0 140.0,146.0 144.0,146.0 148.0,146.0 152.0,146.0 156.0,146.0 160.0,146.0 164.0,146.0 168.0,146.0 172.0,133.2 176.0,146.0 180.0,146.0 184.0,146.0 188.0,146.0 192.0,107.7 196.0,146.0 200.0,146.0 204.0,146.0 208.0,146.0 212.0,146.0 216.0,146.0 220.0,146.0 224.0,146.0 228.0,146.0 232.0,107.7 236.0,82.2 240.0,133.2 244.0,146.0 248.0,95.0 252.0,146.0 256.0,133.2 260.0,82.2 264.0,82.2 268.0,95.0 272.0,56.7 276.0,82.2 280.0,107.7 284.0,133.2 288.0,146.0 292.0,146.0 296.0,146.0 300.0,146.0 304.0,146.0 308.0,146.0 312.0,146.0 316.0,146.0 320.0,146.0 324.0,120.5 328.0,146.0 332.0,107.7 336.0,146.0 340.0,133.2 344.0,82.2 348.0,120.5 352.0,44.0 356.0,120.5 360.0,31.2 364.0,44.0 368.0,31.2 372.0,120.5 376.0,95.0 380.0,120.5 384.0,146.0 388.0,146.0 392.0,146.0 396.0,146.0 400.0,146.0 404.0,133.2 408.0,146.0 412.0,133.2" class="line s2"/>
+<text x="418.0" y="137.2" class="axis">signal</text>
+<text x="418.0" y="24" class="axis">key traffic</text>
+<rect x="38.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 00:00 UTC · signal 0 · verified 0 · key total 10,665"/>
+<rect x="42.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 01:00 UTC · signal 1 · verified 1 · key total 11,378"/>
+<rect x="46.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 02:00 UTC · signal 0 · verified 0 · key total 11,359"/>
+<rect x="50.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 03:00 UTC · signal 0 · verified 0 · key total 11,650"/>
+<rect x="54.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 04:00 UTC · signal 0 · verified 0 · key total 12,118"/>
+<rect x="58.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 05:00 UTC · signal 0 · verified 0 · key total 14,071"/>
+<rect x="62.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 06:00 UTC · signal 0 · verified 0 · key total 16,062"/>
+<rect x="66.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 07:00 UTC · signal 1 · verified 1 · key total 18,862"/>
+<rect x="70.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 08:00 UTC · signal 0 · verified 0 · key total 19,225"/>
+<rect x="74.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 09:00 UTC · signal 0 · verified 0 · key total 19,262"/>
+<rect x="78.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 10:00 UTC · signal 0 · verified 0 · key total 18,915"/>
+<rect x="82.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 11:00 UTC · signal 1 · verified 1 · key total 18,939"/>
+<rect x="86.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 12:00 UTC · signal 0 · verified 0 · key total 19,904"/>
+<rect x="90.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 13:00 UTC · signal 1 · verified 1 · key total 20,108"/>
+<rect x="94.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 14:00 UTC · signal 1 · verified 1 · key total 20,174"/>
+<rect x="98.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 15:00 UTC · signal 4 · verified 4 · key total 19,680"/>
+<rect x="102.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 16:00 UTC · signal 0 · verified 0 · key total 19,025"/>
+<rect x="106.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 17:00 UTC · signal 0 · verified 0 · key total 17,489"/>
+<rect x="110.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 18:00 UTC · signal 0 · verified 0 · key total 15,912"/>
+<rect x="114.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 19:00 UTC · signal 0 · verified 0 · key total 14,197"/>
+<rect x="118.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 20:00 UTC · signal 0 · verified 0 · key total 12,480"/>
+<rect x="122.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 21:00 UTC · signal 0 · verified 0 · key total 10,762"/>
+<rect x="126.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 22:00 UTC · signal 0 · verified 0 · key total 8,856"/>
+<rect x="130.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-17 23:00 UTC · signal 0 · verified 0 · key total 8,044"/>
+<rect x="134.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 00:00 UTC · signal 0 · verified 0 · key total 8,368"/>
+<rect x="138.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 01:00 UTC · signal 0 · verified 0 · key total 8,444"/>
+<rect x="142.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 02:00 UTC · signal 0 · verified 0 · key total 8,393"/>
+<rect x="146.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 03:00 UTC · signal 0 · verified 0 · key total 9,119"/>
+<rect x="150.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 04:00 UTC · signal 0 · verified 0 · key total 9,791"/>
+<rect x="154.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 05:00 UTC · signal 0 · verified 0 · key total 11,871"/>
+<rect x="158.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 06:00 UTC · signal 0 · verified 0 · key total 13,538"/>
+<rect x="162.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 07:00 UTC · signal 0 · verified 0 · key total 15,561"/>
+<rect x="166.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 08:00 UTC · signal 0 · verified 0 · key total 16,915"/>
+<rect x="170.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 09:00 UTC · signal 1 · verified 1 · key total 16,948"/>
+<rect x="174.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 10:00 UTC · signal 0 · verified 0 · key total 16,925"/>
+<rect x="178.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 11:00 UTC · signal 0 · verified 0 · key total 17,191"/>
+<rect x="182.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 12:00 UTC · signal 0 · verified 0 · key total 18,007"/>
+<rect x="186.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 13:00 UTC · signal 0 · verified 0 · key total 18,739"/>
+<rect x="190.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 14:00 UTC · signal 3 · verified 3 · key total 18,976"/>
+<rect x="194.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 15:00 UTC · signal 0 · verified 0 · key total 18,492"/>
+<rect x="198.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 16:00 UTC · signal 0 · verified 0 · key total 18,080"/>
+<rect x="202.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 17:00 UTC · signal 0 · verified 0 · key total 17,635"/>
+<rect x="206.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 18:00 UTC · signal 0 · verified 0 · key total 15,982"/>
+<rect x="210.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 19:00 UTC · signal 0 · verified 0 · key total 14,429"/>
+<rect x="214.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 20:00 UTC · signal 0 · verified 0 · key total 12,786"/>
+<rect x="218.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 21:00 UTC · signal 0 · verified 0 · key total 10,987"/>
+<rect x="222.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 22:00 UTC · signal 0 · verified 0 · key total 9,650"/>
+<rect x="226.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-18 23:00 UTC · signal 0 · verified 0 · key total 9,408"/>
+<rect x="230.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 00:00 UTC · signal 3 · verified 3 · key total 11,109"/>
+<rect x="234.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 01:00 UTC · signal 5 · verified 5 · key total 16,335"/>
+<rect x="238.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 02:00 UTC · signal 1 · verified 1 · key total 17,887"/>
+<rect x="242.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 03:00 UTC · signal 0 · verified 0 · key total 16,338"/>
+<rect x="246.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 04:00 UTC · signal 4 · verified 4 · key total 17,142"/>
+<rect x="250.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 05:00 UTC · signal 0 · verified 0 · key total 19,606"/>
+<rect x="254.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 06:00 UTC · signal 1 · verified 1 · key total 24,284"/>
+<rect x="258.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 07:00 UTC · signal 5 · verified 5 · key total 27,250"/>
+<rect x="262.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 08:00 UTC · signal 5 · verified 5 · key total 28,431"/>
+<rect x="266.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 09:00 UTC · signal 4 · verified 4 · key total 31,457"/>
+<rect x="270.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 10:00 UTC · signal 7 · verified 7 · key total 29,259"/>
+<rect x="274.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 11:00 UTC · signal 5 · verified 5 · key total 28,610"/>
+<rect x="278.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 12:00 UTC · signal 3 · verified 3 · key total 29,893"/>
+<rect x="282.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 13:00 UTC · signal 1 · verified 1 · key total 31,056"/>
+<rect x="286.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 14:00 UTC · signal 0 · verified 0 · key total 31,413"/>
+<rect x="290.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 15:00 UTC · signal 0 · verified 0 · key total 30,855"/>
+<rect x="294.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 16:00 UTC · signal 0 · verified 0 · key total 34,136"/>
+<rect x="298.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 17:00 UTC · signal 0 · verified 0 · key total 34,252"/>
+<rect x="302.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 18:00 UTC · signal 0 · verified 0 · key total 27,810"/>
+<rect x="306.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 19:00 UTC · signal 0 · verified 0 · key total 22,896"/>
+<rect x="310.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 20:00 UTC · signal 0 · verified 0 · key total 19,308"/>
+<rect x="314.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 21:00 UTC · signal 0 · verified 0 · key total 16,627"/>
+<rect x="318.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 22:00 UTC · signal 0 · verified 0 · key total 13,651"/>
+<rect x="322.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-19 23:00 UTC · signal 2 · verified 2 · key total 12,365"/>
+<rect x="326.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 00:00 UTC · signal 0 · verified 0 · key total 13,590"/>
+<rect x="330.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 01:00 UTC · signal 3 · verified 3 · key total 17,441"/>
+<rect x="334.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 02:00 UTC · signal 0 · verified 0 · key total 17,881"/>
+<rect x="338.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 03:00 UTC · signal 1 · verified 1 · key total 17,600"/>
+<rect x="342.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 04:00 UTC · signal 5 · verified 5 · key total 16,211"/>
+<rect x="346.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 05:00 UTC · signal 2 · verified 2 · key total 19,419"/>
+<rect x="350.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 06:00 UTC · signal 8 · verified 8 · key total 24,060"/>
+<rect x="354.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 07:00 UTC · signal 2 · verified 2 · key total 26,259"/>
+<rect x="358.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 08:00 UTC · signal 9 · verified 9 · key total 27,406"/>
+<rect x="362.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 09:00 UTC · signal 8 · verified 8 · key total 30,753"/>
+<rect x="366.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 10:00 UTC · signal 9 · verified 9 · key total 46,515"/>
+<rect x="370.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 11:00 UTC · signal 3 · verified 2 · key total 29,599"/>
+<rect x="374.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 12:00 UTC · signal 4 · verified 4 · key total 30,132"/>
+<rect x="378.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 13:00 UTC · signal 2 · verified 2 · key total 42,718"/>
+<rect x="382.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 14:00 UTC · signal 0 · verified 0 · key total 30,458"/>
+<rect x="386.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 15:00 UTC · signal 0 · verified 0 · key total 29,295"/>
+<rect x="390.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 16:00 UTC · signal 0 · verified 0 · key total 44,052"/>
+<rect x="394.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 17:00 UTC · signal 0 · verified 0 · key total 38,958"/>
+<rect x="398.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 18:00 UTC · signal 0 · verified 0 · key total 24,633"/>
+<rect x="402.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 19:00 UTC · signal 1 · verified 1 · key total 20,675"/>
+<rect x="406.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 20:00 UTC · signal 0 · verified 0 · key total 17,502"/>
+<rect x="410.0" y="14" width="4.0" height="132" class="hit" data-tip="2026-10-20 21:00 UTC · signal 1 · verified 1 · key total 16,534"/>
+</svg></div></div></section>
+<div id="tip"></div><script>
+const tip=document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+ el.addEventListener('mousemove',e=>{tip.textContent=el.dataset.tip;tip.style.display='block';tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px'});
+ el.addEventListener('mouseleave',()=>tip.style.display='none')});
+</script></div></body></html>
