@@ -9,14 +9,35 @@
   "telltale_active": false,
   "life_cycle_management": "M",
   "manual_life_cycle_details": "Domain-level control for the walletliving.com actor; review after 30 days",
-  "_validated": "2026-10-21 validate_telltale: valid (regex and exact-value variants). Not created. email__domain_mx is 'Upcoming' in the data dictionary with 0 active telltales: confirm it is populated at evaluation time and that TS_REGEX matches list[string] elements before relying on it.",
+  "_validated": "created in Dataswan 2026-10-21 as suspicion flag (id 14814762); definition matches",
   "telltale_name": "payoneere3ef-h-email-mx-supermails-ru",
   "location": "SESSION_SETUP",
   "telltale_definition": [
-    {"key": "public_key", "operator": "TS_EQ", "value": "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF", "type": "string"},
-    {"key": "location", "operator": "TS_EQ", "value": "session_setup", "type": "string"},
-    {"key": "email__domain_mx", "operator": "TS_REGEX", "value": "/(^|\\.)supermails\\.ru:|:77\\.238\\.237\\.144:/", "type": "string"}
+    {
+      "key": "public_key",
+      "operator": "TS_EQ",
+      "value": "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+      "type": "string"
+    },
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "key": "email__domain_mx",
+      "operator": "TS_REGEX",
+      "value": "/(^|\\.)supermails\\.ru:|:77\\.238\\.237\\.144:/",
+      "type": "string"
+    }
   ],
-  "_alternative_exact_match": {"key": "email__domain_mx", "operator": "TS_CONTAINS", "value": "mx1.mail.supermails.ru:supermails.ru:77.238.237.144:10", "type": "string", "note": "also add the mx2 ...:20 value; brittle if the priority or IP changes"},
+  "_alternative_exact_match": {
+    "key": "email__domain_mx",
+    "operator": "TS_CONTAINS",
+    "value": "mx1.mail.supermails.ru:supermails.ru:77.238.237.144:10",
+    "type": "string",
+    "note": "also add the mx2 ...:20 value; brittle if the priority or IP changes"
+  },
   "telltale_description": "Email domain MX on supermails.ru (77.238.237.144). The walletliving.com actor used this mail host in both waves on Payoneer CLM Registration (Sep 20-28, peak 3.1k/day 66% verified; Oct 13-15, 0.7-1.7k/day 35-49% verified) while the session fingerprint changed. Across Arkose (5% sample, Oct 7-21) this MX was seen only on walletliving.com plus one session on Adobe Sign Up, so FP risk is very low."
 }

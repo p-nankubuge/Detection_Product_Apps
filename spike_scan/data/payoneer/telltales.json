@@ -1,0 +1,32 @@
+{
+ "created_2026-10-21": [
+  {
+   "telltale_name": "payoneere3ef-h-email-mx-supermails-ru",
+   "dataswan_id": 14814762,
+   "type": "suspicion_flags",
+   "risk_score": 0
+  },
+  {
+   "telltale_name": "payoneere3ef-h-dp-invalid-resolution-spoofing-browser-values",
+   "dataswan_id": 14815124,
+   "type": "suspicion_flags",
+   "risk_score": 0
+  },
+  {
+   "telltale_name": "payoneeree84-h-dp-invalid-resolution-spoofing-browser-values",
+   "dataswan_id": 14815155,
+   "type": "suspicion_flags",
+   "risk_score": 0
+  }
+ ],
+ "candidates_not_created": [
+  {
+   "signal": "g-bot-headless-browser-vm",
+   "keys": [
+    "E3EFEFBF (CLM Registration)",
+    "EE844FC3 (Login)"
+   ],
+   "note": "99% verified; Login steady since Sep 27, CLM shift-pattern blocks since Oct 19"
+  }
+ ]
+}
