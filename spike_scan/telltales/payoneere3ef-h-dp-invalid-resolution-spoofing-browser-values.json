@@ -1,0 +1,36 @@
+{
+  "ticket": "DETCORE-4466",
+  "telltale_type": "suspicion_flags",
+  "cohort_category": "Suspicious",
+  "owner": "p.nankubuge@arkoselabs.com",
+  "owner_category": "User",
+  "risk_category": "CUSTOM",
+  "risk_score": 0,
+  "telltale_active": false,
+  "_validated": "2026-10-21 validate_telltale: valid. Not created.",
+  "telltale_name": "payoneere3ef-h-dp-invalid-resolution-spoofing-browser-values",
+  "location": "SESSION_SETUP",
+  "telltale_definition": [
+    {
+      "key": "public_key",
+      "operator": "TS_EQ",
+      "value": "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+      "type": "string"
+    },
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-dp-invalid-resolution"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-dp-spoofing-browser-values"
+    }
+  ],
+  "telltale_description": "Device spoofing: invalid screen resolution + spoofed browser values. Recurring bursts on Payoneer CLM since Sep 29, ~94% verified, mostly outlook/hotmail on Firefox from CN/JP."
+}
