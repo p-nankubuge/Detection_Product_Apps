@@ -213,8 +213,8 @@
    ],
    "draft": "telltales/g-di-dict3-st-1x-di-short-300-pxr1.json",
    "history_note": "Added 2026-10-23; exact history from 2026-10-12.",
-   "action": "create",
-   "action_detail": "TBD after exact counts"
+   "action": "create (scoped)",
+   "action_detail": "NEW 2026-10-23, not created. Validated draft: telltales/g-di-dict3-st-1x-di-short-300-pxr1.json. Apply to: Microsoft Identity Signup (Key 2): 31k Oct 21 -> 166k Oct 22 at 0% verified, still ~11k/h on Oct 23. Roblox Signup (Key 2): 213k Oct 19 -> 26k Oct 22, ~1% verified. Watch: Adobe Sign Up (Key 2): 32k on Oct 21 at 87% verified (baseline ~3k/day); the same Oct 21 burst shows on the ct-before-cl/dict-3 (62k, 84%) and ja4-dict1 (27k, 85%) combos, so it got through on several signatures. Not on: Adobe ARP FF (Key 8, ~97% verified), Wells Fargo Login (5-9k/day, 46-80% verified, steady), Chime Login / Amazon IDS / Highlight AI (small, mixed). History before Oct 12 not loaded."
   },
   {
    "id": "os_spoof_pagebio",
@@ -227,8 +227,8 @@
    ],
    "draft": "telltales/g-os-spoofing-pagebio-null.json",
    "history_note": "Added 2026-10-23; exact history from 2026-10-12.",
-   "action": "create",
-   "action_detail": "TBD after exact counts"
+   "action": "hold",
+   "action_detail": "NEW 2026-10-23, not created. Validated draft: telltales/g-os-spoofing-pagebio-null.json. The spike is almost all WBD Account Lookup (Key 20): 952k Oct 21 / 1.12M Oct 22, 1-8% verified, ~24k/h on Oct 23; the live pagebio TT and the appleos candidate already cover it. Otherwise it fires steadily on many keys: Adobe Sign-in (62-104k/day, 64-87% verified, normal traffic), DoorDash Website (17-44k/day, ~55%), Amazon IDS (~55-63k/day, 14-20%), Uber SMS (~30-36k/day, <1%), Adobe Commerce (~20k/day, 0%). Too broad to create globally. One burst got through: Tinder PreSMS (Key 3) 26.7k on Oct 19 at 99% verified, then ~0. History before Oct 12 not loaded."
   }
  ],
  "retired": [

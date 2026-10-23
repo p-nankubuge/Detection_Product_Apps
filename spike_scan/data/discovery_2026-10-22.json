@@ -1,0 +1,8 @@
+{
+ "window": "2026-10-19 00:00 -> 2026-10-23 00:00 UTC vs 2026-10-12..18 (1% SYSTEM sample)",
+ "summary": "Daily run 2026-10-23. Step 1: 40 flags with >=3 keys spiking. Dropped as definition changes, not attacks: g-browser-automation-swiftshader / -basic-render / g-spoofing-webgl-dimensions (created Oct 19, THR-1289, not includable), g-ip-timezone-same-country-wrong-zone (created Oct 20), g-h-capi-version-suspicious and g--e-cope-anomaly-wrong-build-id-for-capi-version(-4-6-0/-4-6-1) (CAPI 4.6.1 release Oct 20), g-ip-connection-type-velocity-* wired (edited Oct 21), g-ip-asn-reputation-high-risk-with-session-signal (created Oct 14, partial baseline), and the 8 spike-scan TTs created Oct 19-20. g--e-g-ja4-suspicious-verification-patterns + page-bio null hit 31 keys, but the Ensemble detector rewrites its JA4 list ~4x/day and it grew from 3-11 hashes to 25 on Oct 22, so it is treated as a definition change. Step 2 (16-flag vocab) found two new combos: g-di-dict-3 1x + di-short-300 pxr1 (10 keys, share 0.84) and g-operating-system-spoofing + page-bio null (9 keys, share 0.75). Both added as candidates with validated drafts.",
+ "candidates": [
+  "didict3_dishort300",
+  "os_spoof_pagebio"
+ ]
+}

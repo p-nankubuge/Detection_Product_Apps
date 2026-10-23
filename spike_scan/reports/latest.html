@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Spike scan 2026-10-15</title><style>
+<!doctype html><html><head><meta charset="utf-8"><title>Spike scan 2026-10-23</title><style>
 .viz-root{color-scheme:light;--surface-1:#fcfcfb;--surface-2:#f2f1ee;--text-primary:#0b0b0b;--text-secondary:#52514e;--text-muted:#77766f;--grid:#e4e3df;--win:#f3ece4;
 --series-1:#2a78d6;--series-2:#eb6834;--series-3:#1baf7a;--series-4:#eda100;--series-5:#e87ba4;--series-6:#008300;--series-7:#6250d6;--series-8:#e34948;}
 @media (prefers-color-scheme: dark){:root:where(:not([data-theme="light"])) .viz-root{color-scheme:dark;--surface-1:#1a1a19;--surface-2:#242422;--text-primary:#f0efec;--text-secondary:#c3c2b7;--text-muted:#9a998f;--grid:#33332f;--win:#2b2620;
@@ -25,70 +25,70 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 #tip{position:fixed;pointer-events:none;background:var(--text-primary);color:var(--surface-1);font-size:12px;padding:4px 8px;border-radius:4px;display:none;z-index:9}
 </style></head><body><div class="viz-root">
 <h1>Suspicion-flag spike scan</h1>
-<p class="muted">Window <b>2026-10-11 → 2026-10-14</b> (4 days, UTC) vs 7-day baseline 2026-10-04 → 2026-10-10. Exact session counts from ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY (Production keys). A key is <i>hit</i> on a day at ≥1k sessions; <i>spiking</i> when also ≥3× its baseline daily mean. Generated 2026-10-15 21:40 UTC.</p>
-<div class="card"><h2>Tracked combinations</h2><table><tr><th>Combination</th><th>Status</th><th class="n">Keys spiking</th><th class="n">Max keys hit/day</th><th class="n">Volume on spiking keys</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl</td><td>live</td><td class="n">9</td><td class="n">11</td><td class="n">79%</td></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease</td><td>candidate</td><td class="n">10</td><td class="n">18</td><td class="n">56%</td></tr><tr><td>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x</td><td>candidate</td><td class="n">11</td><td class="n">12</td><td class="n">90%</td></tr><tr><td>g-rta-isp-velocity-lt-pagebio-null</td><td>candidate</td><td class="n">10</td><td class="n">10</td><td class="n">96%</td></tr><tr><td>g-cdn-ends-te-device-param-spoofing</td><td>candidate</td><td class="n">10</td><td class="n">10</td><td class="n">92%</td></tr><tr><td>g-bio-mouse-single-click-device-param-spoofing</td><td>candidate</td><td class="n">7</td><td class="n">13</td><td class="n">78%</td></tr><tr><td>g-di-short-300-pxr1-device-param-spoofing-ja4-dict1</td><td>candidate</td><td class="n">0</td><td class="n">0</td><td class="n">0%</td></tr></table></div>
+<p class="muted">Window <b>2026-10-19 → 2026-10-22</b> (4 days, UTC) vs 7-day baseline 2026-10-12 → 2026-10-18. Exact session counts from ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY (Production keys). A key is <i>hit</i> on a day at ≥1k sessions; <i>spiking</i> when also ≥3× its baseline daily mean. Generated 2026-10-23 02:53 UTC.</p>
+<div class="card"><h2>Tracked combinations</h2><table><tr><th>Combination</th><th>Status</th><th class="n">Keys spiking</th><th class="n">Max keys hit/day</th><th class="n">Volume on spiking keys</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl</td><td>live</td><td class="n">8</td><td class="n">12</td><td class="n">79%</td></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease</td><td>live</td><td class="n">9</td><td class="n">17</td><td class="n">8%</td></tr><tr><td>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x</td><td>live</td><td class="n">4</td><td class="n">10</td><td class="n">26%</td></tr><tr><td>g-rta-isp-velocity-lt-pagebio-null</td><td>live</td><td class="n">2</td><td class="n">2</td><td class="n">29%</td></tr><tr><td>g-cdn-ends-te-device-param-spoofing</td><td>live</td><td class="n">6</td><td class="n">8</td><td class="n">97%</td></tr><tr><td>g-bio-mouse-single-click-device-param-spoofing</td><td>live</td><td class="n">8</td><td class="n">13</td><td class="n">78%</td></tr><tr><td>g-di-short-300-pxr1-device-param-spoofing-ja4-dict1</td><td>live</td><td class="n">7</td><td class="n">7</td><td class="n">61%</td></tr><tr><td>g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st</td><td>live</td><td class="n">2</td><td class="n">3</td><td class="n">91%</td></tr><tr><td>g-rfc-sec-ch-ua-webgl-device-param-spoofing</td><td>live</td><td class="n">9</td><td class="n">12</td><td class="n">69%</td></tr><tr><td>g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest</td><td>candidate</td><td class="n">2</td><td class="n">2</td><td class="n">100%</td></tr><tr><td>g-di-dict3-st-1x-di-short-300-pxr1</td><td>candidate</td><td class="n">11</td><td class="n">10</td><td class="n">84%</td></tr><tr><td>g-os-spoofing-pagebio-null</td><td>candidate</td><td class="n">12</td><td class="n">24</td><td class="n">74%</td></tr></table></div>
 <div class="card"><h2>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
 <p class="muted"><code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>g-page-level-biometrics-empty-or-null</code> + <code>cdn-header-order-ends-with-content-length</code> + <code>country-match-timezone-mismatch-no-vpn</code></p>
-<div class="tiles"><div class="tile"><b>9</b><span>keys spiking in window</span></div><div class="tile"><b>11</b><span>max keys hit on one day</span></div><div class="tile"><b>3.3M</b><span>window sessions (exact)</span></div><div class="tile"><b>79%</b><span>of window volume on spiking keys</span></div></div>
+<div class="tiles"><div class="tile"><b>8</b><span>keys spiking in window</span></div><div class="tile"><b>12</b><span>max keys hit on one day</span></div><div class="tile"><b>3.5M</b><span>window sessions (exact)</span></div><div class="tile"><b>79%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k0-t">
 <title id="k0-t">Keys hit per day</title>
 <rect x="422.3" y="16" width="201.7" height="174" class="win"/>
 <text x="426.3" y="28" class="axis">scan window</text>
 <line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
 <text x="34" y="194.0" class="axis" text-anchor="end">0</text>
-<line x1="40" x2="624" y1="146.5" y2="146.5" class="grid"/>
-<text x="34" y="150.5" class="axis" text-anchor="end">3</text>
-<line x1="40" x2="624" y1="103.0" y2="103.0" class="grid"/>
-<text x="34" y="107.0" class="axis" text-anchor="end">6</text>
-<line x1="40" x2="624" y1="59.5" y2="59.5" class="grid"/>
-<text x="34" y="63.5" class="axis" text-anchor="end">9</text>
-<line x1="40" x2="624" y1="16.0" y2="16.0" class="grid"/>
-<text x="34" y="20.0" class="axis" text-anchor="end">12</text>
-<text x="40.0" y="210" class="axis" text-anchor="middle">10-04</text>
-<text x="156.8" y="210" class="axis" text-anchor="middle">10-06</text>
-<text x="273.6" y="210" class="axis" text-anchor="middle">10-08</text>
-<text x="390.4" y="210" class="axis" text-anchor="middle">10-10</text>
-<text x="507.2" y="210" class="axis" text-anchor="middle">10-12</text>
-<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
-<polyline points="40.0,45.0 98.4,74.0 156.8,74.0 215.2,74.0 273.6,45.0 332.0,74.0 390.4,45.0 448.8,30.5 507.2,30.5 565.6,59.5 624.0,30.5" class="line s1"/>
-<circle cx="40.0" cy="45.0" r="4" class="dot s1"/>
-<circle cx="98.4" cy="74.0" r="4" class="dot s1"/>
-<circle cx="156.8" cy="74.0" r="4" class="dot s1"/>
-<circle cx="215.2" cy="74.0" r="4" class="dot s1"/>
-<circle cx="273.6" cy="45.0" r="4" class="dot s1"/>
-<circle cx="332.0" cy="74.0" r="4" class="dot s1"/>
-<circle cx="390.4" cy="45.0" r="4" class="dot s1"/>
-<circle cx="448.8" cy="30.5" r="4" class="dot s1"/>
-<circle cx="507.2" cy="30.5" r="4" class="dot s1"/>
-<circle cx="565.6" cy="59.5" r="4" class="dot s1"/>
-<circle cx="624.0" cy="30.5" r="4" class="dot s1"/>
-<text x="620.0" y="22.5" class="dlabel">11</text>
-<polyline points="40.0,146.5 98.4,161.0 156.8,175.5 215.2,190.0 273.6,146.5 332.0,175.5 390.4,146.5 448.8,117.5 507.2,161.0 565.6,132.0 624.0,132.0" class="line s2"/>
-<circle cx="40.0" cy="146.5" r="4" class="dot s2"/>
-<circle cx="98.4" cy="161.0" r="4" class="dot s2"/>
-<circle cx="156.8" cy="175.5" r="4" class="dot s2"/>
+<line x1="40" x2="624" y1="149.8" y2="149.8" class="grid"/>
+<text x="34" y="153.8" class="axis" text-anchor="end">3</text>
+<line x1="40" x2="624" y1="109.7" y2="109.7" class="grid"/>
+<text x="34" y="113.7" class="axis" text-anchor="end">6</text>
+<line x1="40" x2="624" y1="69.5" y2="69.5" class="grid"/>
+<text x="34" y="73.5" class="axis" text-anchor="end">9</text>
+<line x1="40" x2="624" y1="29.4" y2="29.4" class="grid"/>
+<text x="34" y="33.4" class="axis" text-anchor="end">12</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,42.8 98.4,69.5 156.8,42.8 215.2,69.5 273.6,69.5 332.0,29.4 390.4,42.8 448.8,29.4 507.2,42.8 565.6,42.8 624.0,42.8" class="line s1"/>
+<circle cx="40.0" cy="42.8" r="4" class="dot s1"/>
+<circle cx="98.4" cy="69.5" r="4" class="dot s1"/>
+<circle cx="156.8" cy="42.8" r="4" class="dot s1"/>
+<circle cx="215.2" cy="69.5" r="4" class="dot s1"/>
+<circle cx="273.6" cy="69.5" r="4" class="dot s1"/>
+<circle cx="332.0" cy="29.4" r="4" class="dot s1"/>
+<circle cx="390.4" cy="42.8" r="4" class="dot s1"/>
+<circle cx="448.8" cy="29.4" r="4" class="dot s1"/>
+<circle cx="507.2" cy="42.8" r="4" class="dot s1"/>
+<circle cx="565.6" cy="42.8" r="4" class="dot s1"/>
+<circle cx="624.0" cy="42.8" r="4" class="dot s1"/>
+<text x="620.0" y="34.8" class="dlabel">11</text>
+<polyline points="40.0,149.8 98.4,163.2 156.8,163.2 215.2,190.0 273.6,190.0 332.0,149.8 390.4,149.8 448.8,136.5 507.2,123.1 565.6,149.8 624.0,163.2" class="line s2"/>
+<circle cx="40.0" cy="149.8" r="4" class="dot s2"/>
+<circle cx="98.4" cy="163.2" r="4" class="dot s2"/>
+<circle cx="156.8" cy="163.2" r="4" class="dot s2"/>
 <circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
-<circle cx="273.6" cy="146.5" r="4" class="dot s2"/>
-<circle cx="332.0" cy="175.5" r="4" class="dot s2"/>
-<circle cx="390.4" cy="146.5" r="4" class="dot s2"/>
-<circle cx="448.8" cy="117.5" r="4" class="dot s2"/>
-<circle cx="507.2" cy="161.0" r="4" class="dot s2"/>
-<circle cx="565.6" cy="132.0" r="4" class="dot s2"/>
-<circle cx="624.0" cy="132.0" r="4" class="dot s2"/>
-<text x="620.0" y="124.0" class="dlabel">4</text>
-<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-04 · hit: 10 keys · spiking: 3 keys"/>
-<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-05 · hit: 8 keys · spiking: 2 keys"/>
-<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-06 · hit: 8 keys · spiking: 1 keys"/>
-<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-07 · hit: 8 keys · spiking: 0 keys"/>
-<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-08 · hit: 10 keys · spiking: 3 keys"/>
-<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-09 · hit: 8 keys · spiking: 1 keys"/>
-<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-10 · hit: 10 keys · spiking: 3 keys"/>
-<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-11 · hit: 11 keys · spiking: 5 keys"/>
-<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 11 keys · spiking: 2 keys"/>
-<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 9 keys · spiking: 4 keys"/>
-<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 11 keys · spiking: 4 keys"/>
-</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Adobe - ARP FF - Production - Key 8</b> · recurring · 09-30 (23.3k), 10-04+1d (61.1k), 10-09+5d (725.1k) + today (573k)</li><li><b>Airbnb - Account Lookup - Production Key 6</b> · recurring · 10-07+1d (5.5k), 10-10+2d (565.4k), 10-14 (1.1k)</li><li><b>AT&amp;T - Consumer Login Web - Production - Key 3</b> · recurring · 09-20 (414k), 10-09 (2.4k), 10-11+2d (131.6k)</li><li><b>WBD Bolt/Beam - Account Lookup - Production - Key 20</b> · recurring · 09-28+1d (1.7k), 10-01 (11.3k), 10-14 (3.1k) + today (4.3k)</li><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 09-26 (1.5k), 09-28+1d (9.3k), 10-14 (1.8k)</li><li><b>WBD Bolt/Beam - Login - Production - Key 8</b> · recurring · 09-29 (1.5k), 10-11 (6.2k), 10-13 (2.6k)</li><li><b>Olo - Payments - Production - Key 3</b> · recurring · 09-22 (2.2k), 09-24 (1.2k), 09-30+1d (4.1k), 10-08 (5.6k), 10-11 (2.5k), 10-13 (3.4k)</li><li><b>Amazon - Client - Production - Key 1</b> · recurring · 10-10 (1.5k), 10-12 (1.2k), 10-14 (5.3k)</li><li><b>Amazon - IDS - Production - Key 2</b> · one-off · 10-09+3d (8.9k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · one-off ·  + today (2.4k)</li></ul><p><a href="2026-10-14_pagebio_ends_cl_tz_novpn_ct_before_cl_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-15.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
-<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Adobe - ARP FF - Production - Key 8</td><td>Adobe</td><td class="n">47.4k</td><td class="n">437.8k</td><td class="n">725.1k</td><td class="n">15×</td></tr><tr><td>Airbnb - Account Lookup - Production Key 6</td><td>Airbnb Inc.</td><td class="n">57.8k</td><td class="n">146.5k</td><td class="n">565.4k</td><td class="n">10×</td></tr><tr><td>AT&amp;T - Consumer Login Web - Production - Key 3</td><td>AT&amp;T</td><td class="n">351</td><td class="n">65.1k</td><td class="n">131.6k</td><td class="n">375×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">1.6k</td><td class="n">3.4k</td><td class="n">8.9k</td><td class="n">6×</td></tr><tr><td>WBD Bolt/Beam - Login - Production - Key 8</td><td>WBD</td><td class="n">75</td><td class="n">2.4k</td><td class="n">6.2k</td><td class="n">82×</td></tr><tr><td>Amazon - Client - Production - Key 1</td><td>Amazon.com, Inc.</td><td class="n">551</td><td class="n">2k</td><td class="n">5.3k</td><td class="n">10×</td></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">800</td><td class="n">1.5k</td><td class="n">3.4k</td><td class="n">4×</td></tr><tr><td>WBD Bolt/Beam - Account Lookup - Production - Key 20</td><td>WBD</td><td class="n">0</td><td class="n">776</td><td class="n">3.1k</td><td class="n">new</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">159</td><td class="n">598</td><td class="n">1.8k</td><td class="n">11×</td></tr></table>
+<circle cx="273.6" cy="190.0" r="4" class="dot s2"/>
+<circle cx="332.0" cy="149.8" r="4" class="dot s2"/>
+<circle cx="390.4" cy="149.8" r="4" class="dot s2"/>
+<circle cx="448.8" cy="136.5" r="4" class="dot s2"/>
+<circle cx="507.2" cy="123.1" r="4" class="dot s2"/>
+<circle cx="565.6" cy="149.8" r="4" class="dot s2"/>
+<circle cx="624.0" cy="163.2" r="4" class="dot s2"/>
+<text x="620.0" y="155.2" class="dlabel">2</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 11 keys · spiking: 3 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 9 keys · spiking: 2 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 11 keys · spiking: 2 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 9 keys · spiking: 0 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 9 keys · spiking: 0 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 12 keys · spiking: 3 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 11 keys · spiking: 3 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 12 keys · spiking: 4 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 11 keys · spiking: 5 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 11 keys · spiking: 3 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 11 keys · spiking: 2 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>WBD Bolt/Beam - Account Lookup - Production - Key 20</b> · recurring · 09-28+1d (1.7k), 10-01 (11.3k), 10-14+2d (5.2k), 10-18+4d (647k)</li><li><b>Airbnb - Account Lookup - Production Key 6</b> · recurring · 10-07+1d (5.5k), 10-10+2d (565.4k), 10-14 (1.1k)</li><li><b>WBD Bolt/Beam - Login - Production - Key 8</b> · recurring · 09-29 (1.5k), 10-11 (6.2k), 10-13 (2.6k), 10-17+5d (202.8k)</li><li><b>AT&amp;T - Consumer Login Web - Production - Key 3</b> · recurring · 10-09 (2.4k), 10-11+2d (131.6k)</li><li><b>Olo - Payments - Production - Key 3</b> · recurring · 09-30+1d (4.1k), 10-08 (5.6k), 10-11 (2.5k), 10-13 (3.4k), 10-17+3d (72.8k)</li><li><b>Amazon - IDS - Production - Key 2</b> · recurring · 10-09+3d (8.9k), 10-18 (2.3k), 10-21+1d (23.6k)</li><li><b>Adobe - Sign-in - Production - Key 5</b> · recurring · 10-04+1d (8.8k), 10-14 (4.5k), 10-17+5d (20k)</li><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 09-28+1d (9.3k), 10-14 (1.8k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 10-15+2d (6.4k), 10-19+2d (7.3k)</li><li><b>Amazon - Client - Production - Key 1</b> · recurring · 10-10 (1.5k), 10-12 (1.2k), 10-14 (5.3k), 10-19 (1.4k), 10-22 (1.1k)</li><li><b>Adobe - ARP FF - Production - Key 8</b> · persistent · 10-12+7d (1.4M)</li></ul><p><a href="2026-10-22_pagebio_ends_cl_tz_novpn_ct_before_cl_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>WBD Bolt/Beam - Account Lookup - Production - Key 20</td><td>WBD</td><td class="n">63.5k</td><td class="n">460.2k</td><td class="n">647k</td><td class="n">10×</td></tr><tr><td>Uber - SMS - Production - Key 1</td><td>Uber Inc</td><td class="n">39.2k</td><td class="n">105.9k</td><td class="n">182.8k</td><td class="n">5×</td></tr><tr><td>WBD Bolt/Beam - Login - Production - Key 8</td><td>WBD</td><td class="n">30.2k</td><td class="n">28.5k</td><td class="n">90.6k</td><td class="n">3×</td></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">20k</td><td class="n">52.2k</td><td class="n">74.9k</td><td class="n">4×</td></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">2.2k</td><td class="n">23.9k</td><td class="n">72.8k</td><td class="n">33×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">1.2k</td><td class="n">9.2k</td><td class="n">23.6k</td><td class="n">20×</td></tr><tr><td>Adobe - Sign-in - Production - Key 5</td><td>Adobe</td><td class="n">5k</td><td class="n">16k</td><td class="n">20k</td><td class="n">4×</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">1.8k</td><td class="n">2.9k</td><td class="n">7.3k</td><td class="n">4×</td></tr></table>
 <details><summary>Telltale definition (live in Dataswan)</summary><pre>[
   {
     &quot;key&quot;: &quot;location&quot;,
@@ -114,9 +114,9 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   }
 ]</pre></details>
 </div>
-<div class="card"><h2>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<div class="card"><h2>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
 <p class="muted"><code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>cdn-header-order-ends-with-content-length</code> + <code>g--e-country-timezone-mismatch</code> + <code>client-hints-has-not-a-brand-grease</code></p>
-<div class="tiles"><div class="tile"><b>10</b><span>keys spiking in window</span></div><div class="tile"><b>18</b><span>max keys hit on one day</span></div><div class="tile"><b>5M</b><span>window sessions (exact)</span></div><div class="tile"><b>56%</b><span>of window volume on spiking keys</span></div></div>
+<div class="tiles"><div class="tile"><b>9</b><span>keys spiking in window</span></div><div class="tile"><b>17</b><span>max keys hit on one day</span></div><div class="tile"><b>2M</b><span>window sessions (exact)</span></div><div class="tile"><b>8%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k1-t">
 <title id="k1-t">Keys hit per day</title>
 <rect x="422.3" y="16" width="201.7" height="174" class="win"/>
@@ -131,52 +131,52 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <text x="34" y="63.5" class="axis" text-anchor="end">15</text>
 <line x1="40" x2="624" y1="16.0" y2="16.0" class="grid"/>
 <text x="34" y="20.0" class="axis" text-anchor="end">20</text>
-<text x="40.0" y="210" class="axis" text-anchor="middle">10-04</text>
-<text x="156.8" y="210" class="axis" text-anchor="middle">10-06</text>
-<text x="273.6" y="210" class="axis" text-anchor="middle">10-08</text>
-<text x="390.4" y="210" class="axis" text-anchor="middle">10-10</text>
-<text x="507.2" y="210" class="axis" text-anchor="middle">10-12</text>
-<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
-<polyline points="40.0,76.9 98.4,94.3 156.8,68.2 215.2,76.9 273.6,33.4 332.0,59.5 390.4,68.2 448.8,68.2 507.2,68.2 565.6,33.4 624.0,68.2" class="line s1"/>
-<circle cx="40.0" cy="76.9" r="4" class="dot s1"/>
-<circle cx="98.4" cy="94.3" r="4" class="dot s1"/>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,68.2 98.4,33.4 156.8,68.2 215.2,85.6 273.6,76.9 332.0,85.6 390.4,68.2 448.8,42.1 507.2,59.5 565.6,76.9 624.0,59.5" class="line s1"/>
+<circle cx="40.0" cy="68.2" r="4" class="dot s1"/>
+<circle cx="98.4" cy="33.4" r="4" class="dot s1"/>
 <circle cx="156.8" cy="68.2" r="4" class="dot s1"/>
-<circle cx="215.2" cy="76.9" r="4" class="dot s1"/>
-<circle cx="273.6" cy="33.4" r="4" class="dot s1"/>
-<circle cx="332.0" cy="59.5" r="4" class="dot s1"/>
+<circle cx="215.2" cy="85.6" r="4" class="dot s1"/>
+<circle cx="273.6" cy="76.9" r="4" class="dot s1"/>
+<circle cx="332.0" cy="85.6" r="4" class="dot s1"/>
 <circle cx="390.4" cy="68.2" r="4" class="dot s1"/>
-<circle cx="448.8" cy="68.2" r="4" class="dot s1"/>
-<circle cx="507.2" cy="68.2" r="4" class="dot s1"/>
-<circle cx="565.6" cy="33.4" r="4" class="dot s1"/>
-<circle cx="624.0" cy="68.2" r="4" class="dot s1"/>
-<text x="620.0" y="60.2" class="dlabel">14</text>
-<polyline points="40.0,163.9 98.4,190.0 156.8,163.9 215.2,190.0 273.6,146.5 332.0,181.3 390.4,163.9 448.8,146.5 507.2,172.6 565.6,129.1 624.0,163.9" class="line s2"/>
+<circle cx="448.8" cy="42.1" r="4" class="dot s1"/>
+<circle cx="507.2" cy="59.5" r="4" class="dot s1"/>
+<circle cx="565.6" cy="76.9" r="4" class="dot s1"/>
+<circle cx="624.0" cy="59.5" r="4" class="dot s1"/>
+<text x="620.0" y="51.5" class="dlabel">15</text>
+<polyline points="40.0,163.9 98.4,146.5 156.8,190.0 215.2,190.0 273.6,190.0 332.0,172.6 390.4,172.6 448.8,146.5 507.2,155.2 565.6,172.6 624.0,172.6" class="line s2"/>
 <circle cx="40.0" cy="163.9" r="4" class="dot s2"/>
-<circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
-<circle cx="156.8" cy="163.9" r="4" class="dot s2"/>
+<circle cx="98.4" cy="146.5" r="4" class="dot s2"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
 <circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
-<circle cx="273.6" cy="146.5" r="4" class="dot s2"/>
-<circle cx="332.0" cy="181.3" r="4" class="dot s2"/>
-<circle cx="390.4" cy="163.9" r="4" class="dot s2"/>
+<circle cx="273.6" cy="190.0" r="4" class="dot s2"/>
+<circle cx="332.0" cy="172.6" r="4" class="dot s2"/>
+<circle cx="390.4" cy="172.6" r="4" class="dot s2"/>
 <circle cx="448.8" cy="146.5" r="4" class="dot s2"/>
-<circle cx="507.2" cy="172.6" r="4" class="dot s2"/>
-<circle cx="565.6" cy="129.1" r="4" class="dot s2"/>
-<circle cx="624.0" cy="163.9" r="4" class="dot s2"/>
-<text x="620.0" y="155.9" class="dlabel">3</text>
-<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-04 · hit: 13 keys · spiking: 3 keys"/>
-<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-05 · hit: 11 keys · spiking: 0 keys"/>
-<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-06 · hit: 14 keys · spiking: 3 keys"/>
-<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-07 · hit: 13 keys · spiking: 0 keys"/>
-<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-08 · hit: 18 keys · spiking: 5 keys"/>
-<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-09 · hit: 15 keys · spiking: 1 keys"/>
-<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-10 · hit: 14 keys · spiking: 3 keys"/>
-<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-11 · hit: 14 keys · spiking: 5 keys"/>
-<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 14 keys · spiking: 2 keys"/>
-<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 18 keys · spiking: 7 keys"/>
-<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 14 keys · spiking: 3 keys"/>
-</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Adobe - ARP FF - Production - Key 8</b> · recurring · 09-23 (79k), 10-04+1d (69.6k), 10-10+4d (737.4k) + today (581.2k)</li><li><b>Airbnb - Account Lookup - Production Key 6</b> · recurring · 10-08+4d (598.9k), 10-14 (3k)</li><li><b>AT&amp;T - Consumer Login Web - Production - Key 3</b> · recurring · 09-20+1d (426.8k), 10-09 (2.5k), 10-11+2d (133.3k)</li><li><b>gtop100.com - Production</b> · recurring · 10-11 (5.5k), 10-13+1d (32.1k) + today (30k)</li><li><b>Amazon - IDS - Production - Key 2</b> · recurring · 09-26 (1.5k), 10-09+3d (11k)</li><li><b>WBD Bolt/Beam - Login - Production - Key 8</b> · recurring · 09-28+1d (7.7k), 10-03 (6.6k), 10-06 (5.6k), 10-11+2d (6.2k)</li><li><b>Olo - Payments - Production - Key 3</b> · recurring · 09-22+2d (5.9k), 09-30+1d (3k), 10-13 (4.5k)</li><li><b>Tinder - Production - PreSMS - Key 3</b> · recurring · 10-08 (1.5k), 10-13 (3k)</li><li><b>Adobe - Commerce - Production - Key 3</b> · one-off · 10-13+1d (10.5k)</li><li><b>Air Canada - Login - Production -  Key 1</b> · one-off · 10-13 (1.8k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · one-off ·  + today (2.5k)</li></ul><p><a href="2026-10-14_ends_cl_ct_before_cl_tz_grease_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-15.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
-<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Adobe - ARP FF - Production - Key 8</td><td>Adobe</td><td class="n">57.1k</td><td class="n">450.4k</td><td class="n">737.4k</td><td class="n">13×</td></tr><tr><td>Airbnb - Account Lookup - Production Key 6</td><td>Airbnb Inc.</td><td class="n">60.7k</td><td class="n">155.7k</td><td class="n">598.9k</td><td class="n">10×</td></tr><tr><td>AT&amp;T - Consumer Login Web - Production - Key 3</td><td>AT&amp;T</td><td class="n">376</td><td class="n">66k</td><td class="n">133.3k</td><td class="n">354×</td></tr><tr><td>gtop100.com - Production</td><td>Gtop100</td><td class="n">1.3k</td><td class="n">17k</td><td class="n">32.1k</td><td class="n">25×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">2.1k</td><td class="n">4k</td><td class="n">11k</td><td class="n">5×</td></tr><tr><td>Adobe - Commerce - Production - Key 3</td><td>Adobe</td><td class="n">0</td><td class="n">2.9k</td><td class="n">10.5k</td><td class="n">new</td></tr><tr><td>WBD Bolt/Beam - Login - Production - Key 8</td><td>WBD</td><td class="n">953</td><td class="n">2.5k</td><td class="n">6.2k</td><td class="n">6×</td></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">6</td><td class="n">1.2k</td><td class="n">4.5k</td><td class="n">695×</td></tr><tr><td>Tinder - Production - PreSMS - Key 3</td><td>Tinder</td><td class="n">221</td><td class="n">914</td><td class="n">3k</td><td class="n">14×</td></tr><tr><td>Air Canada - Login - Production -  Key 1</td><td>Air Canada</td><td class="n">0</td><td class="n">461</td><td class="n">1.8k</td><td class="n">new</td></tr></table>
-<details><summary>Telltale definition (draft — not created)</summary><pre>{
+<circle cx="507.2" cy="155.2" r="4" class="dot s2"/>
+<circle cx="565.6" cy="172.6" r="4" class="dot s2"/>
+<circle cx="624.0" cy="172.6" r="4" class="dot s2"/>
+<text x="620.0" y="164.6" class="dlabel">2</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 14 keys · spiking: 3 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 18 keys · spiking: 5 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 14 keys · spiking: 0 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 12 keys · spiking: 0 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 13 keys · spiking: 0 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 12 keys · spiking: 2 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 14 keys · spiking: 2 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 17 keys · spiking: 5 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 15 keys · spiking: 4 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 13 keys · spiking: 2 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 15 keys · spiking: 2 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Airbnb - Account Lookup - Production Key 6</b> · recurring · 10-08+4d (598.9k), 10-14 (3k)</li><li><b>Adobe - Sign-in - Production - Key 5</b> · recurring · 10-06+3d (593.7k), 10-11 (396.3k), 10-14+2d (441.6k)</li><li><b>Uber - SMS - Production - Key 1</b> · recurring · 10-11 (494.6k), 10-20 (259.1k)</li><li><b>AT&amp;T - Consumer Login Web - Production - Key 3</b> · recurring · 10-09 (2.5k), 10-11+2d (133.3k)</li><li><b>WBD Bolt/Beam - Login - Production - Key 8</b> · recurring · 09-28+1d (7.7k), 10-03 (6.6k), 10-06 (5.6k), 10-11+2d (6.2k), 10-17+1d (103.2k)</li><li><b>gtop100.com - Production</b> · recurring · 10-11 (5.5k), 10-13+3d (32.1k), 10-18 (27k), 10-22 (6.6k)</li><li><b>Amazon - IDS - Production - Key 2</b> · recurring · 10-09+3d (11k), 10-18 (2.6k), 10-21+1d (25.8k)</li><li><b>Adobe - Commerce - Production - Key 3</b> · recurring · 10-13+1d (10.5k), 10-16 (1.4k), 10-22 (2.3k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 10-15+2d (6.5k), 10-19+2d (7.5k)</li><li><b>Olo - Payments - Production - Key 3</b> · recurring · 09-30+1d (3k), 10-13 (4.5k), 10-22 (1.8k)</li><li><b>Tinder - Production - PreSMS - Key 3</b> · recurring · 10-08 (1.5k), 10-13 (3k)</li><li><b>Adobe - ARP FF - Production - Key 8</b> · persistent · 10-12+7d (1.4M)</li><li><b>WBD Bolt/Beam - Account Lookup - Production - Key 20</b> · one-off · 10-18+3d (79k)</li><li><b>WBD Multi-Tenant -  Login - Production - Key 18</b> · one-off · 10-17 (11.7k)</li><li><b>Air Canada - Login - Production -  Key 1</b> · one-off · 10-13 (1.8k)</li></ul><p><a href="2026-10-22_ends_cl_ct_before_cl_tz_grease_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">3.5k</td><td class="n">11.6k</td><td class="n">32.8k</td><td class="n">9×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">1.3k</td><td class="n">10.7k</td><td class="n">25.8k</td><td class="n">20×</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">5.2k</td><td class="n">12k</td><td class="n">23.1k</td><td class="n">4×</td></tr><tr><td>Chime - Production - Key 1 - Login</td><td>Chime</td><td class="n">108</td><td class="n">2.7k</td><td class="n">7.7k</td><td class="n">71×</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">1.9k</td><td class="n">3k</td><td class="n">7.5k</td><td class="n">4×</td></tr><tr><td>ChatAndDate - SMS - Web - Production - Key 17</td><td>Bumble</td><td class="n">0</td><td class="n">820</td><td class="n">1.7k</td><td class="n">new</td></tr><tr><td>Agoda - SMS - Production 2</td><td>Agoda</td><td class="n">0</td><td class="n">324</td><td class="n">1.3k</td><td class="n">new</td></tr><tr><td>WBD Bolt/Beam - Registration - Production - Key 9</td><td>WBD</td><td class="n">34</td><td class="n">300</td><td class="n">1.2k</td><td class="n">34×</td></tr><tr><td>Agoda - Registration - Production 1</td><td>Agoda</td><td class="n">263</td><td class="n">279</td><td class="n">1.1k</td><td class="n">4×</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>{
   &quot;ticket&quot;: &quot;DETCORE-4468&quot;,
   &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
   &quot;location&quot;: &quot;SESSION_SETUP&quot;,
@@ -220,9 +220,9 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   &quot;telltale_name&quot;: &quot;g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease&quot;
 }</pre></details>
 </div>
-<div class="card"><h2>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<div class="card"><h2>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
 <p class="muted"><code>susp-rfc-violation-cdn-header-order-content-type-before-content-length</code> + <code>g-device-parameter-spoofing</code> + <code>g-di-dict-3-match-short-term-threshold-exceeded-1x</code></p>
-<div class="tiles"><div class="tile"><b>11</b><span>keys spiking in window</span></div><div class="tile"><b>12</b><span>max keys hit on one day</span></div><div class="tile"><b>1.5M</b><span>window sessions (exact)</span></div><div class="tile"><b>90%</b><span>of window volume on spiking keys</span></div></div>
+<div class="tiles"><div class="tile"><b>4</b><span>keys spiking in window</span></div><div class="tile"><b>10</b><span>max keys hit on one day</span></div><div class="tile"><b>769k</b><span>window sessions (exact)</span></div><div class="tile"><b>26%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k2-t">
 <title id="k2-t">Keys hit per day</title>
 <rect x="422.3" y="16" width="201.7" height="174" class="win"/>
@@ -237,52 +237,52 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <text x="34" y="73.5" class="axis" text-anchor="end">9</text>
 <line x1="40" x2="624" y1="29.4" y2="29.4" class="grid"/>
 <text x="34" y="33.4" class="axis" text-anchor="end">12</text>
-<text x="40.0" y="210" class="axis" text-anchor="middle">10-04</text>
-<text x="156.8" y="210" class="axis" text-anchor="middle">10-06</text>
-<text x="273.6" y="210" class="axis" text-anchor="middle">10-08</text>
-<text x="390.4" y="210" class="axis" text-anchor="middle">10-10</text>
-<text x="507.2" y="210" class="axis" text-anchor="middle">10-12</text>
-<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
-<polyline points="40.0,109.7 98.4,56.2 156.8,56.2 215.2,69.5 273.6,29.4 332.0,42.8 390.4,29.4 448.8,42.8 507.2,69.5 565.6,56.2 624.0,29.4" class="line s1"/>
-<circle cx="40.0" cy="109.7" r="4" class="dot s1"/>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,69.5 98.4,56.2 156.8,29.4 215.2,69.5 273.6,82.9 332.0,82.9 390.4,56.2 448.8,56.2 507.2,96.3 565.6,82.9 624.0,109.7" class="line s1"/>
+<circle cx="40.0" cy="69.5" r="4" class="dot s1"/>
 <circle cx="98.4" cy="56.2" r="4" class="dot s1"/>
-<circle cx="156.8" cy="56.2" r="4" class="dot s1"/>
+<circle cx="156.8" cy="29.4" r="4" class="dot s1"/>
 <circle cx="215.2" cy="69.5" r="4" class="dot s1"/>
-<circle cx="273.6" cy="29.4" r="4" class="dot s1"/>
-<circle cx="332.0" cy="42.8" r="4" class="dot s1"/>
-<circle cx="390.4" cy="29.4" r="4" class="dot s1"/>
-<circle cx="448.8" cy="42.8" r="4" class="dot s1"/>
-<circle cx="507.2" cy="69.5" r="4" class="dot s1"/>
-<circle cx="565.6" cy="56.2" r="4" class="dot s1"/>
-<circle cx="624.0" cy="29.4" r="4" class="dot s1"/>
-<text x="620.0" y="21.4" class="dlabel">12</text>
-<polyline points="40.0,190.0 98.4,163.2 156.8,176.6 215.2,190.0 273.6,163.2 332.0,149.8 390.4,109.7 448.8,136.5 507.2,136.5 565.6,136.5 624.0,96.3" class="line s2"/>
-<circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="273.6" cy="82.9" r="4" class="dot s1"/>
+<circle cx="332.0" cy="82.9" r="4" class="dot s1"/>
+<circle cx="390.4" cy="56.2" r="4" class="dot s1"/>
+<circle cx="448.8" cy="56.2" r="4" class="dot s1"/>
+<circle cx="507.2" cy="96.3" r="4" class="dot s1"/>
+<circle cx="565.6" cy="82.9" r="4" class="dot s1"/>
+<circle cx="624.0" cy="109.7" r="4" class="dot s1"/>
+<text x="620.0" y="101.7" class="dlabel">6</text>
+<polyline points="40.0,163.2 98.4,163.2 156.8,149.8 215.2,176.6 273.6,176.6 332.0,190.0 390.4,149.8 448.8,163.2 507.2,176.6 565.6,163.2 624.0,176.6" class="line s2"/>
+<circle cx="40.0" cy="163.2" r="4" class="dot s2"/>
 <circle cx="98.4" cy="163.2" r="4" class="dot s2"/>
-<circle cx="156.8" cy="176.6" r="4" class="dot s2"/>
-<circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
-<circle cx="273.6" cy="163.2" r="4" class="dot s2"/>
-<circle cx="332.0" cy="149.8" r="4" class="dot s2"/>
-<circle cx="390.4" cy="109.7" r="4" class="dot s2"/>
-<circle cx="448.8" cy="136.5" r="4" class="dot s2"/>
-<circle cx="507.2" cy="136.5" r="4" class="dot s2"/>
-<circle cx="565.6" cy="136.5" r="4" class="dot s2"/>
-<circle cx="624.0" cy="96.3" r="4" class="dot s2"/>
-<text x="620.0" y="88.3" class="dlabel">7</text>
-<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-04 · hit: 6 keys · spiking: 0 keys"/>
-<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-05 · hit: 10 keys · spiking: 2 keys"/>
-<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-06 · hit: 10 keys · spiking: 1 keys"/>
-<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-07 · hit: 9 keys · spiking: 0 keys"/>
-<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-08 · hit: 12 keys · spiking: 2 keys"/>
-<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-09 · hit: 11 keys · spiking: 3 keys"/>
-<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-10 · hit: 12 keys · spiking: 6 keys"/>
-<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-11 · hit: 11 keys · spiking: 4 keys"/>
-<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 9 keys · spiking: 4 keys"/>
-<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 10 keys · spiking: 4 keys"/>
-<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 12 keys · spiking: 7 keys"/>
-</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Airbnb - Account Lookup - Production Key 6</b> · recurring · 10-08 (2.5k), 10-10+2d (598.6k)</li><li><b>Adobe - ARP FF - Production - Key 8</b> · recurring · 10-04+1d (54k), 10-10+3d (141.4k) + today (161k)</li><li><b>Roblox Signup - Key 2</b> · recurring · 10-02 (57.1k), 10-14 (137.4k)</li><li><b>Roblox - Production - Login - Key 1</b> · recurring · 09-20+2d (129k), 10-02 (120.6k), 10-08+3d (102.6k)</li><li><b>Microsoft - Identity - Account Signup - Production - Key 2</b> · recurring · 09-30+2d (25.1k), 10-14 (1.3k) + today (6.4k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 09-26 (3.1k), 10-10+2d (6.8k) + today (15.2k)</li><li><b>Chime - Production - Key 2 - Registration</b> · recurring · 10-06 (2.2k), 10-09+5d (5.9k) + today (3.4k)</li><li><b>Tinder - Production - PreSMS - Key 3</b> · one-off · 10-14 (11.9k)</li><li><b>AT&amp;T - Consumer Login Web - Production - Key 3</b> · one-off · 10-08+6d (6.1k) + today (1.7k)</li><li><b>Adobe - Commerce - Production - Key 3</b> · one-off · 10-14 (5.1k) + today (2.5k)</li><li><b>TIAA - Login - Production Key 1</b> · one-off · 10-13+1d (4.3k)</li></ul><p><a href="2026-10-14_ct_before_cl_dp_spoof_di_dict3_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-15.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
-<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Airbnb - Account Lookup - Production Key 6</td><td>Airbnb Inc.</td><td class="n">60.5k</td><td class="n">154.7k</td><td class="n">598.6k</td><td class="n">10×</td></tr><tr><td>Adobe - ARP FF - Production - Key 8</td><td>Adobe</td><td class="n">33.1k</td><td class="n">85.5k</td><td class="n">141.4k</td><td class="n">4×</td></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">21k</td><td class="n">47k</td><td class="n">137.4k</td><td class="n">7×</td></tr><tr><td>Roblox - Production - Login - Key 1</td><td>Roblox Corporation</td><td class="n">29.6k</td><td class="n">26.3k</td><td class="n">102.6k</td><td class="n">3×</td></tr><tr><td>Tinder - Production - PreSMS - Key 3</td><td>Tinder</td><td class="n">0</td><td class="n">3k</td><td class="n">11.9k</td><td class="n">new</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">231</td><td class="n">2k</td><td class="n">6.8k</td><td class="n">29×</td></tr><tr><td>AT&amp;T - Consumer Login Web - Production - Key 3</td><td>AT&amp;T</td><td class="n">1.3k</td><td class="n">5.3k</td><td class="n">6.1k</td><td class="n">5×</td></tr><tr><td>Chime - Production - Key 2 - Registration</td><td>Chime</td><td class="n">1.2k</td><td class="n">4.7k</td><td class="n">5.9k</td><td class="n">5×</td></tr><tr><td>Adobe - Commerce - Production - Key 3</td><td>Adobe</td><td class="n">0</td><td class="n">1.3k</td><td class="n">5.1k</td><td class="n">new</td></tr><tr><td>TIAA - Login - Production Key 1</td><td>TIAA</td><td class="n">348</td><td class="n">1.8k</td><td class="n">4.3k</td><td class="n">12×</td></tr><tr><td>Microsoft - Identity - Account Signup - Production - Key 2</td><td>Microsoft - Identity</td><td class="n">0</td><td class="n">731</td><td class="n">1.3k</td><td class="n">new</td></tr></table>
-<details><summary>Telltale definition (draft — not created)</summary><pre>{
+<circle cx="156.8" cy="149.8" r="4" class="dot s2"/>
+<circle cx="215.2" cy="176.6" r="4" class="dot s2"/>
+<circle cx="273.6" cy="176.6" r="4" class="dot s2"/>
+<circle cx="332.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="390.4" cy="149.8" r="4" class="dot s2"/>
+<circle cx="448.8" cy="163.2" r="4" class="dot s2"/>
+<circle cx="507.2" cy="176.6" r="4" class="dot s2"/>
+<circle cx="565.6" cy="163.2" r="4" class="dot s2"/>
+<circle cx="624.0" cy="176.6" r="4" class="dot s2"/>
+<text x="620.0" y="168.6" class="dlabel">1</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 9 keys · spiking: 2 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 10 keys · spiking: 2 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 12 keys · spiking: 3 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 9 keys · spiking: 1 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 8 keys · spiking: 1 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 8 keys · spiking: 0 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 10 keys · spiking: 3 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 10 keys · spiking: 2 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 7 keys · spiking: 1 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 8 keys · spiking: 2 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 6 keys · spiking: 1 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Airbnb - Account Lookup - Production Key 6</b> · recurring · 10-08 (2.5k), 10-10+2d (598.6k)</li><li><b>Adobe - ARP FF - Production - Key 8</b> · recurring · 10-04 (54k), 10-10+3d (141.4k), 10-15 (162.4k), 10-18 (250.6k)</li><li><b>Roblox Signup - Key 2</b> · recurring · 10-14 (137.4k), 10-16 (114.8k), 10-19+1d (93.4k)</li><li><b>Roblox - Production - Login - Key 1</b> · recurring · 10-02+1d (120.6k), 10-05 (1.6k), 10-08+3d (102.6k), 10-13+1d (1.5k)</li><li><b>Olo - Payments - Production - Key 3</b> · recurring · 10-08 (7.3k), 10-11 (3.1k), 10-13 (1.9k), 10-17+3d (85.5k)</li><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 10-05+3d (11.5k), 10-16+6d (62.1k)</li><li><b>AT&amp;T - Consumer SDK Android - Production - Key 4</b> · recurring · 10-18+1d (30.2k), 10-21 (1.6k)</li><li><b>Microsoft - Identity - Account Signup - Production - Key 2</b> · recurring · 09-30+2d (25.1k), 10-14+6d (11.8k)</li><li><b>Adobe - Sign-in - Production - Key 5</b> · recurring · 10-05 (1.6k), 10-07 (1.7k), 10-09+1d (9.1k), 10-12 (1.8k), 10-14 (2.2k), 10-17+2d (20.4k), 10-21 (1.7k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 10-10+2d (6.8k), 10-15 (15.2k)</li><li><b>Chime - Production - Key 2 - Registration</b> · recurring · 10-06 (2.2k), 10-09+7d (5.9k)</li><li><b>Adobe - Commerce - Production - Key 3</b> · recurring · 10-14+1d (5.1k), 10-22 (2.4k)</li><li><b>Wells Fargo - Prod/Detect - Login - Web - Key 1</b> · one-off · 10-12+10d (36.7k) + today (2.1k)</li><li><b>Tinder - Production - PreSMS - Key 3</b> · one-off · 10-14 (11.9k)</li><li><b>AT&amp;T - Consumer Login Web - Production - Key 3</b> · one-off · 10-08+7d (6.1k)</li><li><b>TIAA - Login - Production Key 1</b> · one-off · 10-13+1d (4.3k)</li></ul><p><a href="2026-10-22_ct_before_cl_dp_spoof_di_dict3_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">2.2k</td><td class="n">27.9k</td><td class="n">85.5k</td><td class="n">38×</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">1.7k</td><td class="n">20.5k</td><td class="n">62.1k</td><td class="n">36×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">49</td><td class="n">636</td><td class="n">1.6k</td><td class="n">32×</td></tr><tr><td>Roblox - Production - Monetization - Key 4</td><td>Roblox Corporation</td><td class="n">81</td><td class="n">392</td><td class="n">1.5k</td><td class="n">18×</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>{
   &quot;ticket&quot;: &quot;DETCORE-4468&quot;,
   &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
   &quot;location&quot;: &quot;SESSION_SETUP&quot;,
@@ -320,71 +320,71 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   &quot;telltale_name&quot;: &quot;g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x&quot;
 }</pre></details>
 </div>
-<div class="card"><h2>g-rta-isp-velocity-lt-pagebio-null <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<div class="card"><h2>g-rta-isp-velocity-lt-pagebio-null <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
 <p class="muted"><code>g-rta-isp-velocity-long-term-abuse</code> + <code>g-page-level-biometrics-empty-or-null</code></p>
-<div class="tiles"><div class="tile"><b>10</b><span>keys spiking in window</span></div><div class="tile"><b>10</b><span>max keys hit on one day</span></div><div class="tile"><b>185.8k</b><span>window sessions (exact)</span></div><div class="tile"><b>96%</b><span>of window volume on spiking keys</span></div></div>
+<div class="tiles"><div class="tile"><b>2</b><span>keys spiking in window</span></div><div class="tile"><b>2</b><span>max keys hit on one day</span></div><div class="tile"><b>23.1k</b><span>window sessions (exact)</span></div><div class="tile"><b>29%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k3-t">
 <title id="k3-t">Keys hit per day</title>
 <rect x="422.3" y="16" width="201.7" height="174" class="win"/>
 <text x="426.3" y="28" class="axis">scan window</text>
 <line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
 <text x="34" y="194.0" class="axis" text-anchor="end">0</text>
-<line x1="40" x2="624" y1="158.4" y2="158.4" class="grid"/>
-<text x="34" y="162.4" class="axis" text-anchor="end">2</text>
-<line x1="40" x2="624" y1="126.7" y2="126.7" class="grid"/>
-<text x="34" y="130.7" class="axis" text-anchor="end">4</text>
-<line x1="40" x2="624" y1="95.1" y2="95.1" class="grid"/>
-<text x="34" y="99.1" class="axis" text-anchor="end">6</text>
-<line x1="40" x2="624" y1="63.5" y2="63.5" class="grid"/>
-<text x="34" y="67.5" class="axis" text-anchor="end">8</text>
-<line x1="40" x2="624" y1="31.8" y2="31.8" class="grid"/>
-<text x="34" y="35.8" class="axis" text-anchor="end">10</text>
-<text x="40.0" y="210" class="axis" text-anchor="middle">10-04</text>
-<text x="156.8" y="210" class="axis" text-anchor="middle">10-06</text>
-<text x="273.6" y="210" class="axis" text-anchor="middle">10-08</text>
-<text x="390.4" y="210" class="axis" text-anchor="middle">10-10</text>
-<text x="507.2" y="210" class="axis" text-anchor="middle">10-12</text>
-<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
-<polyline points="40.0,158.4 98.4,142.5 156.8,158.4 215.2,158.4 273.6,174.2 332.0,174.2 390.4,158.4 448.8,31.8 507.2,126.7 565.6,174.2 624.0,174.2" class="line s1"/>
-<circle cx="40.0" cy="158.4" r="4" class="dot s1"/>
-<circle cx="98.4" cy="142.5" r="4" class="dot s1"/>
-<circle cx="156.8" cy="158.4" r="4" class="dot s1"/>
-<circle cx="215.2" cy="158.4" r="4" class="dot s1"/>
-<circle cx="273.6" cy="174.2" r="4" class="dot s1"/>
-<circle cx="332.0" cy="174.2" r="4" class="dot s1"/>
-<circle cx="390.4" cy="158.4" r="4" class="dot s1"/>
-<circle cx="448.8" cy="31.8" r="4" class="dot s1"/>
-<circle cx="507.2" cy="126.7" r="4" class="dot s1"/>
-<circle cx="565.6" cy="174.2" r="4" class="dot s1"/>
-<circle cx="624.0" cy="174.2" r="4" class="dot s1"/>
-<text x="620.0" y="166.2" class="dlabel">1</text>
-<polyline points="40.0,174.2 98.4,158.4 156.8,190.0 215.2,174.2 273.6,190.0 332.0,190.0 390.4,190.0 448.8,47.6 507.2,142.5 565.6,190.0 624.0,190.0" class="line s2"/>
-<circle cx="40.0" cy="174.2" r="4" class="dot s2"/>
-<circle cx="98.4" cy="158.4" r="4" class="dot s2"/>
+<line x1="40" x2="624" y1="155.2" y2="155.2" class="grid"/>
+<text x="34" y="159.2" class="axis" text-anchor="end">1</text>
+<line x1="40" x2="624" y1="120.4" y2="120.4" class="grid"/>
+<text x="34" y="124.4" class="axis" text-anchor="end">2</text>
+<line x1="40" x2="624" y1="85.6" y2="85.6" class="grid"/>
+<text x="34" y="89.6" class="axis" text-anchor="end">3</text>
+<line x1="40" x2="624" y1="50.8" y2="50.8" class="grid"/>
+<text x="34" y="54.8" class="axis" text-anchor="end">4</text>
+<line x1="40" x2="624" y1="16.0" y2="16.0" class="grid"/>
+<text x="34" y="20.0" class="axis" text-anchor="end">5</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,50.8 98.4,155.2 156.8,155.2 215.2,155.2 273.6,155.2 332.0,120.4 390.4,120.4 448.8,120.4 507.2,120.4 565.6,120.4 624.0,155.2" class="line s1"/>
+<circle cx="40.0" cy="50.8" r="4" class="dot s1"/>
+<circle cx="98.4" cy="155.2" r="4" class="dot s1"/>
+<circle cx="156.8" cy="155.2" r="4" class="dot s1"/>
+<circle cx="215.2" cy="155.2" r="4" class="dot s1"/>
+<circle cx="273.6" cy="155.2" r="4" class="dot s1"/>
+<circle cx="332.0" cy="120.4" r="4" class="dot s1"/>
+<circle cx="390.4" cy="120.4" r="4" class="dot s1"/>
+<circle cx="448.8" cy="120.4" r="4" class="dot s1"/>
+<circle cx="507.2" cy="120.4" r="4" class="dot s1"/>
+<circle cx="565.6" cy="120.4" r="4" class="dot s1"/>
+<circle cx="624.0" cy="155.2" r="4" class="dot s1"/>
+<text x="620.0" y="147.2" class="dlabel">1</text>
+<polyline points="40.0,85.6 98.4,190.0 156.8,190.0 215.2,190.0 273.6,155.2 332.0,190.0 390.4,190.0 448.8,155.2 507.2,190.0 565.6,155.2 624.0,190.0" class="line s2"/>
+<circle cx="40.0" cy="85.6" r="4" class="dot s2"/>
+<circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
 <circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
-<circle cx="215.2" cy="174.2" r="4" class="dot s2"/>
-<circle cx="273.6" cy="190.0" r="4" class="dot s2"/>
+<circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
+<circle cx="273.6" cy="155.2" r="4" class="dot s2"/>
 <circle cx="332.0" cy="190.0" r="4" class="dot s2"/>
 <circle cx="390.4" cy="190.0" r="4" class="dot s2"/>
-<circle cx="448.8" cy="47.6" r="4" class="dot s2"/>
-<circle cx="507.2" cy="142.5" r="4" class="dot s2"/>
-<circle cx="565.6" cy="190.0" r="4" class="dot s2"/>
+<circle cx="448.8" cy="155.2" r="4" class="dot s2"/>
+<circle cx="507.2" cy="190.0" r="4" class="dot s2"/>
+<circle cx="565.6" cy="155.2" r="4" class="dot s2"/>
 <circle cx="624.0" cy="190.0" r="4" class="dot s2"/>
 <text x="620.0" y="182.0" class="dlabel">0</text>
-<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-04 · hit: 2 keys · spiking: 1 keys"/>
-<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-05 · hit: 3 keys · spiking: 2 keys"/>
-<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-06 · hit: 2 keys · spiking: 0 keys"/>
-<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-07 · hit: 2 keys · spiking: 1 keys"/>
-<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-08 · hit: 1 keys · spiking: 0 keys"/>
-<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-09 · hit: 1 keys · spiking: 0 keys"/>
-<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-10 · hit: 2 keys · spiking: 0 keys"/>
-<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-11 · hit: 10 keys · spiking: 9 keys"/>
-<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 4 keys · spiking: 3 keys"/>
-<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 1 keys · spiking: 0 keys"/>
-<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 1 keys · spiking: 0 keys"/>
-</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 09-25+4d (126.8k), 10-07 (19.2k), 10-11+1d (25.4k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 09-21+4d (37.9k), 09-27 (2.5k), 10-04 (2.3k), 10-11 (7.8k)</li><li><b>Meta - Login - Production -  Key 2</b> · recurring · 09-27 (4.4k), 10-11 (11.4k)</li><li><b>Singapore Airlines - Key 1</b> · recurring · 10-12 (2.7k) + today (1.6k)</li><li><b>Airbnb - Account Lookup - Production Key 6</b> · one-off · 10-11+1d (75.8k)</li><li><b>Roblox Signup - Key 2</b> · one-off · 10-11 (6.3k)</li><li><b>DoorDash - Website - Production - Key 1</b> · one-off · 10-11 (4.9k)</li><li><b>Adobe - Sign-in - Production - Key 5</b> · one-off · 10-11 (4k)</li><li><b>Blizzard - Production - ROW Login - Key 5</b> · one-off · 10-11 (1.8k)</li><li><b>Sony - Production - Key 2 - Support Chat and Form</b> · one-off · 10-11 (1k)</li></ul><p><a href="2026-10-14_rta_isp_velocity_pagebio_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-15.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
-<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Airbnb - Account Lookup - Production Key 6</td><td>Airbnb Inc.</td><td class="n">0</td><td class="n">19.8k</td><td class="n">75.8k</td><td class="n">new</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">4.6k</td><td class="n">14.9k</td><td class="n">25.4k</td><td class="n">6×</td></tr><tr><td>Meta - Login - Production -  Key 2</td><td>Meta Platforms</td><td class="n">0</td><td class="n">2.9k</td><td class="n">11.4k</td><td class="n">new</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">323</td><td class="n">1.9k</td><td class="n">7.8k</td><td class="n">24×</td></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">0</td><td class="n">1.6k</td><td class="n">6.3k</td><td class="n">new</td></tr><tr><td>DoorDash - Website - Production - Key 1</td><td>Doordash</td><td class="n">0</td><td class="n">1.2k</td><td class="n">4.9k</td><td class="n">new</td></tr><tr><td>Adobe - Sign-in - Production - Key 5</td><td>Adobe</td><td class="n">0</td><td class="n">991</td><td class="n">4k</td><td class="n">new</td></tr><tr><td>Singapore Airlines - Key 1</td><td>Singapore Airlines</td><td class="n">0</td><td class="n">813</td><td class="n">2.7k</td><td class="n">new</td></tr><tr><td>Blizzard - Production - ROW Login - Key 5</td><td>Blizzard Entertainment Inc.</td><td class="n">0</td><td class="n">439</td><td class="n">1.8k</td><td class="n">new</td></tr><tr><td>Sony - Production - Key 2 - Support Chat and Form</td><td>Sony Interactive Entertainment</td><td class="n">0</td><td class="n">251</td><td class="n">1k</td><td class="n">new</td></tr></table>
-<details><summary>Telltale definition (draft — not created)</summary><pre>{
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 4 keys · spiking: 3 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 1 keys · spiking: 0 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 1 keys · spiking: 0 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 1 keys · spiking: 0 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 1 keys · spiking: 1 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 2 keys · spiking: 0 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 2 keys · spiking: 0 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 2 keys · spiking: 1 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 2 keys · spiking: 0 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 2 keys · spiking: 1 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 1 keys · spiking: 0 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 09-28+1d (63.9k), 10-01 (5.5k), 10-03 (11.9k), 10-06+1d (19.2k), 10-10+4d (25.4k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 10-04 (2.3k), 10-11 (7.8k)</li><li><b>Singapore Airlines - Key 1</b> · recurring · 10-12 (2.7k), 10-15 (1.6k), 10-18+1d (4.1k)</li><li><b>Airbnb - Account Lookup - Production Key 6</b> · one-off · 10-11+1d (75.8k)</li><li><b>Meta - Login - Production -  Key 2</b> · one-off · 10-11 (11.4k)</li><li><b>Roblox Signup - Key 2</b> · one-off · 10-11 (6.3k)</li><li><b>DoorDash - Website - Production - Key 1</b> · one-off · 10-11 (4.9k)</li><li><b>Adobe - Sign-in - Production - Key 5</b> · one-off · 10-11 (4k)</li><li><b>Blizzard - Production - ROW Login - Key 5</b> · one-off · 10-11 (1.8k)</li><li><b>Sony - Production - Key 2 - Support Chat and Form</b> · one-off · 10-11 (1k)</li></ul><p><a href="2026-10-22_rta_isp_velocity_pagebio_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Singapore Airlines - Key 1</td><td>Singapore Airlines</td><td class="n">819</td><td class="n">1.3k</td><td class="n">4.1k</td><td class="n">5×</td></tr><tr><td>Highlight AI - Chat Prompt - Production - Key 1</td><td>Highlight AI</td><td class="n">0</td><td class="n">323</td><td class="n">1.3k</td><td class="n">new</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>{
   &quot;ticket&quot;: &quot;DETCORE-4468&quot;,
   &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
   &quot;cohort_category&quot;: &quot;Suspicious&quot;,
@@ -418,9 +418,9 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-15: RTA ISP long-term velocity abuse + null page-level biometrics. Fired on 10 keys at once on 2026-10-11 (Airbnb Account Lookup 76k, Adobe Sign Up/Sign-in, Meta Login, Roblox Signup/Game Join, DoorDash, Singapore Airlines, Blizzard, Sony) and stopped everywhere by Oct 12; 96% of window volume on spiking keys. Check RTA data for Oct 11 before enabling: the all-keys-at-once shape could be an RTA artefact.&quot;
 }</pre></details>
 </div>
-<div class="card"><h2>g-cdn-ends-te-device-param-spoofing <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<div class="card"><h2>g-cdn-ends-te-device-param-spoofing <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
 <p class="muted"><code>cdn-header-order-ends-with-te</code> + <code>g-device-parameter-spoofing</code></p>
-<div class="tiles"><div class="tile"><b>10</b><span>keys spiking in window</span></div><div class="tile"><b>10</b><span>max keys hit on one day</span></div><div class="tile"><b>195.6k</b><span>window sessions (exact)</span></div><div class="tile"><b>92%</b><span>of window volume on spiking keys</span></div></div>
+<div class="tiles"><div class="tile"><b>6</b><span>keys spiking in window</span></div><div class="tile"><b>8</b><span>max keys hit on one day</span></div><div class="tile"><b>747.7k</b><span>window sessions (exact)</span></div><div class="tile"><b>97%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k4-t">
 <title id="k4-t">Keys hit per day</title>
 <rect x="422.3" y="16" width="201.7" height="174" class="win"/>
@@ -437,52 +437,52 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <text x="34" y="67.5" class="axis" text-anchor="end">8</text>
 <line x1="40" x2="624" y1="31.8" y2="31.8" class="grid"/>
 <text x="34" y="35.8" class="axis" text-anchor="end">10</text>
-<text x="40.0" y="210" class="axis" text-anchor="middle">10-04</text>
-<text x="156.8" y="210" class="axis" text-anchor="middle">10-06</text>
-<text x="273.6" y="210" class="axis" text-anchor="middle">10-08</text>
-<text x="390.4" y="210" class="axis" text-anchor="middle">10-10</text>
-<text x="507.2" y="210" class="axis" text-anchor="middle">10-12</text>
-<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
-<polyline points="40.0,174.2 98.4,110.9 156.8,110.9 215.2,110.9 273.6,126.7 332.0,126.7 390.4,110.9 448.8,158.4 507.2,110.9 565.6,95.1 624.0,31.8" class="line s1"/>
-<circle cx="40.0" cy="174.2" r="4" class="dot s1"/>
-<circle cx="98.4" cy="110.9" r="4" class="dot s1"/>
-<circle cx="156.8" cy="110.9" r="4" class="dot s1"/>
-<circle cx="215.2" cy="110.9" r="4" class="dot s1"/>
-<circle cx="273.6" cy="126.7" r="4" class="dot s1"/>
-<circle cx="332.0" cy="126.7" r="4" class="dot s1"/>
-<circle cx="390.4" cy="110.9" r="4" class="dot s1"/>
-<circle cx="448.8" cy="158.4" r="4" class="dot s1"/>
-<circle cx="507.2" cy="110.9" r="4" class="dot s1"/>
-<circle cx="565.6" cy="95.1" r="4" class="dot s1"/>
-<circle cx="624.0" cy="31.8" r="4" class="dot s1"/>
-<text x="620.0" y="23.8" class="dlabel">10</text>
-<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,190.0 332.0,190.0 390.4,174.2 448.8,174.2 507.2,174.2 565.6,142.5 624.0,63.5" class="line s2"/>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,110.9 98.4,95.1 156.8,31.8 215.2,63.5 273.6,79.3 332.0,110.9 390.4,63.5 448.8,126.7 507.2,63.5 565.6,79.3 624.0,110.9" class="line s1"/>
+<circle cx="40.0" cy="110.9" r="4" class="dot s1"/>
+<circle cx="98.4" cy="95.1" r="4" class="dot s1"/>
+<circle cx="156.8" cy="31.8" r="4" class="dot s1"/>
+<circle cx="215.2" cy="63.5" r="4" class="dot s1"/>
+<circle cx="273.6" cy="79.3" r="4" class="dot s1"/>
+<circle cx="332.0" cy="110.9" r="4" class="dot s1"/>
+<circle cx="390.4" cy="63.5" r="4" class="dot s1"/>
+<circle cx="448.8" cy="126.7" r="4" class="dot s1"/>
+<circle cx="507.2" cy="63.5" r="4" class="dot s1"/>
+<circle cx="565.6" cy="79.3" r="4" class="dot s1"/>
+<circle cx="624.0" cy="110.9" r="4" class="dot s1"/>
+<text x="620.0" y="102.9" class="dlabel">5</text>
+<polyline points="40.0,190.0 98.4,158.4 156.8,158.4 215.2,174.2 273.6,174.2 332.0,174.2 390.4,142.5 448.8,174.2 507.2,110.9 565.6,110.9 624.0,174.2" class="line s2"/>
 <circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
-<circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
-<circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
-<circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
-<circle cx="273.6" cy="190.0" r="4" class="dot s2"/>
-<circle cx="332.0" cy="190.0" r="4" class="dot s2"/>
-<circle cx="390.4" cy="174.2" r="4" class="dot s2"/>
+<circle cx="98.4" cy="158.4" r="4" class="dot s2"/>
+<circle cx="156.8" cy="158.4" r="4" class="dot s2"/>
+<circle cx="215.2" cy="174.2" r="4" class="dot s2"/>
+<circle cx="273.6" cy="174.2" r="4" class="dot s2"/>
+<circle cx="332.0" cy="174.2" r="4" class="dot s2"/>
+<circle cx="390.4" cy="142.5" r="4" class="dot s2"/>
 <circle cx="448.8" cy="174.2" r="4" class="dot s2"/>
-<circle cx="507.2" cy="174.2" r="4" class="dot s2"/>
-<circle cx="565.6" cy="142.5" r="4" class="dot s2"/>
-<circle cx="624.0" cy="63.5" r="4" class="dot s2"/>
-<text x="620.0" y="55.5" class="dlabel">8</text>
-<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-04 · hit: 1 keys · spiking: 0 keys"/>
-<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-05 · hit: 5 keys · spiking: 0 keys"/>
-<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-06 · hit: 5 keys · spiking: 0 keys"/>
-<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-07 · hit: 5 keys · spiking: 0 keys"/>
-<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-08 · hit: 4 keys · spiking: 0 keys"/>
-<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-09 · hit: 4 keys · spiking: 0 keys"/>
-<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-10 · hit: 5 keys · spiking: 1 keys"/>
-<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-11 · hit: 2 keys · spiking: 1 keys"/>
-<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 5 keys · spiking: 1 keys"/>
-<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 6 keys · spiking: 3 keys"/>
-<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 10 keys · spiking: 8 keys"/>
-</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Roblox Signup - Key 2</b> · recurring · 09-29 (1.1k), 10-01+2d (8.3k), 10-10 (2k), 10-14 (2.2k) + today (9.4k)</li><li><b>Uber - SMS - Production - Key 1</b> · persistent · 10-11 (97.7k)</li><li><b>Adobe - ARP FF - Production - Key 8</b> · one-off · 10-13+1d (14k) + today (7.9k)</li><li><b>Tinder - Production - PreSMS - Key 3</b> · one-off · 10-14 (11.9k)</li><li><b>Chime - Production - Key 2 - Registration</b> · one-off · 10-06+8d (6.2k) + today (3.9k)</li><li><b>TIAA - Login - Production Key 1</b> · one-off · 10-13+1d (6k)</li><li><b>Adobe - Commerce - Production - Key 3</b> · one-off · 10-14 (5k) + today (2.4k)</li><li><b>AT&amp;T - Consumer Login Web - Production - Key 3</b> · one-off · 10-12+1d (2.3k)</li><li><b>Wells Fargo - Prod/Detect - Password Reset - Web - Key 5</b> · one-off · 10-14 (1.5k) + today (1.6k)</li><li><b>Microsoft - Identity - Account Signup - Production - Key 2</b> · one-off · 10-14 (1.3k) + today (6.4k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · one-off ·  + today (31.3k)</li></ul><p><a href="2026-10-14_ends_te_dp_spoof_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-15.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
-<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Uber - SMS - Production - Key 1</td><td>Uber Inc</td><td class="n">1.1k</td><td class="n">25.1k</td><td class="n">97.7k</td><td class="n">89×</td></tr><tr><td>Adobe - ARP FF - Production - Key 8</td><td>Adobe</td><td class="n">1.2k</td><td class="n">5.1k</td><td class="n">14k</td><td class="n">12×</td></tr><tr><td>Tinder - Production - PreSMS - Key 3</td><td>Tinder</td><td class="n">0</td><td class="n">3k</td><td class="n">11.9k</td><td class="n">new</td></tr><tr><td>Chime - Production - Key 2 - Registration</td><td>Chime</td><td class="n">1.9k</td><td class="n">5k</td><td class="n">6.2k</td><td class="n">3×</td></tr><tr><td>TIAA - Login - Production Key 1</td><td>TIAA</td><td class="n">0</td><td class="n">2.9k</td><td class="n">6k</td><td class="n">new</td></tr><tr><td>Adobe - Commerce - Production - Key 3</td><td>Adobe</td><td class="n">0</td><td class="n">1.3k</td><td class="n">5k</td><td class="n">new</td></tr><tr><td>AT&amp;T - Consumer Login Web - Production - Key 3</td><td>AT&amp;T</td><td class="n">198</td><td class="n">1.2k</td><td class="n">2.3k</td><td class="n">12×</td></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">381</td><td class="n">607</td><td class="n">2.2k</td><td class="n">6×</td></tr><tr><td>Wells Fargo - Prod/Detect - Password Reset - Web - Key 5</td><td>Wells Fargo &amp; Company</td><td class="n">0</td><td class="n">363</td><td class="n">1.5k</td><td class="n">new</td></tr><tr><td>Microsoft - Identity - Account Signup - Production - Key 2</td><td>Microsoft - Identity</td><td class="n">58</td><td class="n">781</td><td class="n">1.3k</td><td class="n">23×</td></tr></table>
-<details><summary>Telltale definition (draft — not created)</summary><pre>{
+<circle cx="507.2" cy="110.9" r="4" class="dot s2"/>
+<circle cx="565.6" cy="110.9" r="4" class="dot s2"/>
+<circle cx="624.0" cy="174.2" r="4" class="dot s2"/>
+<text x="620.0" y="166.2" class="dlabel">1</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 5 keys · spiking: 0 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 6 keys · spiking: 2 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 10 keys · spiking: 2 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 8 keys · spiking: 1 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 7 keys · spiking: 1 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 5 keys · spiking: 1 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 8 keys · spiking: 3 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 4 keys · spiking: 1 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 8 keys · spiking: 5 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 7 keys · spiking: 5 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 5 keys · spiking: 1 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Roblox Signup - Key 2</b> · recurring · 10-01 (8.3k), 10-15+1d (14.8k), 10-18+4d (228.7k)</li><li><b>Uber - SMS - Production - Key 1</b> · recurring · 10-11 (97.7k), 10-21+1d (5.6k)</li><li><b>Tinder - Production - PreSMS - Key 3</b> · recurring · 10-14 (11.9k), 10-17+1d (18.8k)</li><li><b>Wells Fargo - Prod/Detect - Password Reset - Web - Key 5</b> · recurring · 10-14+2d (10.1k), 10-18 (4.8k)</li><li><b>Chime - Production - Key 2 - Registration</b> · recurring · 10-06+1d (2.3k), 10-09+7d (6.3k)</li><li><b>Adobe - ARP FF - Production - Key 8</b> · persistent · 10-14+8d (25.6k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · one-off · 10-15 (31.3k)</li><li><b>Microsoft - Identity - Account Signup - Production - Key 2</b> · one-off · 10-14+6d (11.9k)</li><li><b>TIAA - Login - Production Key 1</b> · one-off · 10-13+1d (6k)</li><li><b>Adobe - Commerce - Production - Key 3</b> · one-off · 10-14+1d (5k)</li><li><b>AT&amp;T - Consumer Login Web - Production - Key 3</b> · one-off · 10-12+1d (2.3k)</li></ul><p><a href="2026-10-22_ends_te_dp_spoof_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">32.3k</td><td class="n">154.7k</td><td class="n">228.7k</td><td class="n">7×</td></tr><tr><td>Adobe - ARP FF - Production - Key 8</td><td>Adobe</td><td class="n">8k</td><td class="n">16.3k</td><td class="n">25.6k</td><td class="n">3×</td></tr><tr><td>DoorDash - ATM PoV - Production - Key 4</td><td>Doordash</td><td class="n">0</td><td class="n">3.3k</td><td class="n">10.6k</td><td class="n">new</td></tr><tr><td>Adobe - Sign-in - Production - Key 5</td><td>Adobe</td><td class="n">72</td><td class="n">2.4k</td><td class="n">8.1k</td><td class="n">112×</td></tr><tr><td>Uber - SMS - Production - Key 1</td><td>Uber Inc</td><td class="n">947</td><td class="n">3.2k</td><td class="n">5.6k</td><td class="n">6×</td></tr><tr><td>Roblox - Production - Monetization - Key 4</td><td>Roblox Corporation</td><td class="n">471</td><td class="n">1.1k</td><td class="n">1.7k</td><td class="n">4×</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>{
   &quot;ticket&quot;: &quot;DETCORE-4468&quot;,
   &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
   &quot;cohort_category&quot;: &quot;Suspicious&quot;,
@@ -516,9 +516,9 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-15: CDN header order ends with TE + device parameter spoofing. Spiked on 10 keys Oct 11-14 (Uber SMS, Adobe ARP/Commerce, Tinder PreSMS, Chime, TIAA, Wells Fargo, AT&amp;T, Roblox Signup, Microsoft Signup); 92% of window volume on spiking keys. Still ongoing on Oct 15 on TIAA, Tinder, Adobe, Wells Fargo, Chime.&quot;
 }</pre></details>
 </div>
-<div class="card"><h2>g-bio-mouse-single-click-device-param-spoofing <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<div class="card"><h2>g-bio-mouse-single-click-device-param-spoofing <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
 <p class="muted"><code>g-biometrics-mouse-has-mouse-moves-but-only-a-single-click</code> + <code>g-device-parameter-spoofing</code></p>
-<div class="tiles"><div class="tile"><b>7</b><span>keys spiking in window</span></div><div class="tile"><b>13</b><span>max keys hit on one day</span></div><div class="tile"><b>523.5k</b><span>window sessions (exact)</span></div><div class="tile"><b>78%</b><span>of window volume on spiking keys</span></div></div>
+<div class="tiles"><div class="tile"><b>8</b><span>keys spiking in window</span></div><div class="tile"><b>13</b><span>max keys hit on one day</span></div><div class="tile"><b>957k</b><span>window sessions (exact)</span></div><div class="tile"><b>78%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k5-t">
 <title id="k5-t">Keys hit per day</title>
 <rect x="422.3" y="16" width="201.7" height="174" class="win"/>
@@ -533,52 +533,52 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
 <text x="34" y="82.1" class="axis" text-anchor="end">9</text>
 <line x1="40" x2="624" y1="40.9" y2="40.9" class="grid"/>
 <text x="34" y="44.9" class="axis" text-anchor="end">12</text>
-<text x="40.0" y="210" class="axis" text-anchor="middle">10-04</text>
-<text x="156.8" y="210" class="axis" text-anchor="middle">10-06</text>
-<text x="273.6" y="210" class="axis" text-anchor="middle">10-08</text>
-<text x="390.4" y="210" class="axis" text-anchor="middle">10-10</text>
-<text x="507.2" y="210" class="axis" text-anchor="middle">10-12</text>
-<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
-<polyline points="40.0,103.0 98.4,127.9 156.8,53.3 215.2,65.7 273.6,53.3 332.0,53.3 390.4,65.7 448.8,40.9 507.2,40.9 565.6,28.4 624.0,40.9" class="line s1"/>
-<circle cx="40.0" cy="103.0" r="4" class="dot s1"/>
-<circle cx="98.4" cy="127.9" r="4" class="dot s1"/>
-<circle cx="156.8" cy="53.3" r="4" class="dot s1"/>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,40.9 98.4,28.4 156.8,40.9 215.2,65.7 273.6,103.0 332.0,90.6 390.4,78.1 448.8,28.4 507.2,40.9 565.6,40.9 624.0,65.7" class="line s1"/>
+<circle cx="40.0" cy="40.9" r="4" class="dot s1"/>
+<circle cx="98.4" cy="28.4" r="4" class="dot s1"/>
+<circle cx="156.8" cy="40.9" r="4" class="dot s1"/>
 <circle cx="215.2" cy="65.7" r="4" class="dot s1"/>
-<circle cx="273.6" cy="53.3" r="4" class="dot s1"/>
-<circle cx="332.0" cy="53.3" r="4" class="dot s1"/>
-<circle cx="390.4" cy="65.7" r="4" class="dot s1"/>
-<circle cx="448.8" cy="40.9" r="4" class="dot s1"/>
+<circle cx="273.6" cy="103.0" r="4" class="dot s1"/>
+<circle cx="332.0" cy="90.6" r="4" class="dot s1"/>
+<circle cx="390.4" cy="78.1" r="4" class="dot s1"/>
+<circle cx="448.8" cy="28.4" r="4" class="dot s1"/>
 <circle cx="507.2" cy="40.9" r="4" class="dot s1"/>
-<circle cx="565.6" cy="28.4" r="4" class="dot s1"/>
-<circle cx="624.0" cy="40.9" r="4" class="dot s1"/>
-<text x="620.0" y="32.9" class="dlabel">12</text>
-<polyline points="40.0,190.0 98.4,190.0 156.8,165.1 215.2,190.0 273.6,177.6 332.0,165.1 390.4,165.1 448.8,152.7 507.2,177.6 565.6,127.9 624.0,140.3" class="line s2"/>
-<circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
-<circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
-<circle cx="156.8" cy="165.1" r="4" class="dot s2"/>
-<circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
-<circle cx="273.6" cy="177.6" r="4" class="dot s2"/>
-<circle cx="332.0" cy="165.1" r="4" class="dot s2"/>
-<circle cx="390.4" cy="165.1" r="4" class="dot s2"/>
-<circle cx="448.8" cy="152.7" r="4" class="dot s2"/>
-<circle cx="507.2" cy="177.6" r="4" class="dot s2"/>
-<circle cx="565.6" cy="127.9" r="4" class="dot s2"/>
+<circle cx="565.6" cy="40.9" r="4" class="dot s1"/>
+<circle cx="624.0" cy="65.7" r="4" class="dot s1"/>
+<text x="620.0" y="57.7" class="dlabel">10</text>
+<polyline points="40.0,177.6 98.4,165.1 156.8,190.0 215.2,177.6 273.6,190.0 332.0,190.0 390.4,177.6 448.8,127.9 507.2,140.3 565.6,165.1 624.0,140.3" class="line s2"/>
+<circle cx="40.0" cy="177.6" r="4" class="dot s2"/>
+<circle cx="98.4" cy="165.1" r="4" class="dot s2"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
+<circle cx="215.2" cy="177.6" r="4" class="dot s2"/>
+<circle cx="273.6" cy="190.0" r="4" class="dot s2"/>
+<circle cx="332.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="390.4" cy="177.6" r="4" class="dot s2"/>
+<circle cx="448.8" cy="127.9" r="4" class="dot s2"/>
+<circle cx="507.2" cy="140.3" r="4" class="dot s2"/>
+<circle cx="565.6" cy="165.1" r="4" class="dot s2"/>
 <circle cx="624.0" cy="140.3" r="4" class="dot s2"/>
 <text x="620.0" y="132.3" class="dlabel">4</text>
-<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-04 · hit: 7 keys · spiking: 0 keys"/>
-<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-05 · hit: 5 keys · spiking: 0 keys"/>
-<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-06 · hit: 11 keys · spiking: 2 keys"/>
-<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-07 · hit: 10 keys · spiking: 0 keys"/>
-<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-08 · hit: 11 keys · spiking: 1 keys"/>
-<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-09 · hit: 11 keys · spiking: 2 keys"/>
-<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-10 · hit: 10 keys · spiking: 2 keys"/>
-<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-11 · hit: 12 keys · spiking: 3 keys"/>
-<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 12 keys · spiking: 1 keys"/>
-<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 13 keys · spiking: 5 keys"/>
-<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 12 keys · spiking: 4 keys"/>
-</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 09-26 (12.8k), 09-29 (52.6k), 10-11 (29.3k), 10-14 (14.5k) + today (15k)</li><li><b>gtop100.com - Production</b> · recurring · 10-11 (4.1k), 10-13+1d (22.9k) + today (21.5k)</li><li><b>Roblox Signup - Key 2</b> · recurring · 10-02 (14.7k), 10-10+1d (11.2k), 10-13+1d (15.5k) + today (132.7k)</li><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 09-26+3d (6.3k), 10-04 (4.1k), 10-08 (4.7k), 10-13 (7.6k) + today (5.4k)</li><li><b>Meta - Login - Production -  Key 2</b> · recurring · 09-21+1d (5.1k), 09-24+1d (2.4k), 10-13 (4.9k)</li><li><b>Uber - SMS - Production - Key 1</b> · persistent · 10-08+6d (80.1k) + today (88k)</li><li><b>Air Canada - Login - Production -  Key 1</b> · one-off · 10-13 (1.1k)</li></ul><p><a href="2026-10-14_single_click_dp_spoof_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-15.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
-<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Uber - SMS - Production - Key 1</td><td>Uber Inc</td><td class="n">17.9k</td><td class="n">60.2k</td><td class="n">80.1k</td><td class="n">4×</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">4.1k</td><td class="n">14.1k</td><td class="n">29.3k</td><td class="n">7×</td></tr><tr><td>gtop100.com - Production</td><td>Gtop100</td><td class="n">980</td><td class="n">12.2k</td><td class="n">22.9k</td><td class="n">23×</td></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">2.9k</td><td class="n">10.6k</td><td class="n">15.5k</td><td class="n">5×</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">1.8k</td><td class="n">3.1k</td><td class="n">7.6k</td><td class="n">4×</td></tr><tr><td>Meta - Login - Production -  Key 2</td><td>Meta Platforms</td><td class="n">661</td><td class="n">2.1k</td><td class="n">4.9k</td><td class="n">7×</td></tr><tr><td>Air Canada - Login - Production -  Key 1</td><td>Air Canada</td><td class="n">0</td><td class="n">280</td><td class="n">1.1k</td><td class="n">new</td></tr></table>
-<details><summary>Telltale definition (draft — not created)</summary><pre>{
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 12 keys · spiking: 1 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 13 keys · spiking: 2 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 12 keys · spiking: 0 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 10 keys · spiking: 1 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 7 keys · spiking: 0 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 8 keys · spiking: 0 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 9 keys · spiking: 1 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 13 keys · spiking: 5 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 12 keys · spiking: 4 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 12 keys · spiking: 2 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 10 keys · spiking: 4 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Roblox Signup - Key 2</b> · recurring · 10-15+1d (134.9k), 10-18+4d (224.3k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 09-28+2d (52.6k), 10-06+1d (11.3k), 10-11+1d (29.3k), 10-14+1d (15.9k)</li><li><b>gtop100.com - Production</b> · recurring · 10-11 (4.1k), 10-13+3d (22.9k), 10-18 (18.7k), 10-22 (4.3k)</li><li><b>Roblox - Production - Login - Key 1</b> · recurring · 10-04 (1.3k), 10-07 (2.9k), 10-09 (7.9k), 10-15 (2k), 10-18 (13.9k), 10-21 (2.7k)</li><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 09-28 (6.3k), 10-08 (4.7k), 10-13 (7.6k), 10-15+1d (11.8k), 10-20+2d (13.3k)</li><li><b>Uber - SMS - Production - Key 1</b> · persistent · 10-15+1d (99.3k)</li><li><b>Amazon - IDS - Production - Key 2</b> · persistent · 10-18+3d (13.6k)</li><li><b>Meta - Login - Production -  Key 2</b> · one-off · 10-13 (4.9k)</li><li><b>Air Canada - Login - Production -  Key 1</b> · one-off · 10-13 (1.1k)</li></ul><p><a href="2026-10-22_single_click_dp_spoof_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">31.4k</td><td class="n">162.8k</td><td class="n">224.3k</td><td class="n">7×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">4.4k</td><td class="n">9.6k</td><td class="n">13.6k</td><td class="n">3×</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">4.1k</td><td class="n">9.8k</td><td class="n">13.3k</td><td class="n">3×</td></tr><tr><td>Chime - Production - Key 1 - Login</td><td>Chime</td><td class="n">22</td><td class="n">3.3k</td><td class="n">5k</td><td class="n">221×</td></tr><tr><td>ChatAndDate - SMS - Web - Production - Key 17</td><td>Bumble</td><td class="n">0</td><td class="n">731</td><td class="n">1.6k</td><td class="n">new</td></tr><tr><td>Microsoft - Identity - Account Signup - Production - Key 2</td><td>Microsoft - Identity</td><td class="n">299</td><td class="n">527</td><td class="n">1.4k</td><td class="n">5×</td></tr><tr><td>Agoda - Registration - Production 1</td><td>Agoda</td><td class="n">0</td><td class="n">259</td><td class="n">1k</td><td class="n">new</td></tr><tr><td>WBD Bolt/Beam - Registration - Production - Key 9</td><td>WBD</td><td class="n">0</td><td class="n">256</td><td class="n">1k</td><td class="n">new</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>{
   &quot;ticket&quot;: &quot;DETCORE-4468&quot;,
   &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
   &quot;cohort_category&quot;: &quot;Suspicious&quot;,
@@ -612,64 +612,71 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-15: single-click mouse biometrics + device parameter spoofing (check_answer). Spiked on 7 keys Oct 11-14 (Uber SMS, Roblox Game Join/Signup, gtop100, Adobe Sign Up, Meta Login, Air Canada); 78% of window volume on spiking keys. New burst on Roblox Signup 2026-10-15 01-02 UTC (~125k sessions, ~0% verified).&quot;
 }</pre></details>
 </div>
-<div class="card"><h2>g-di-short-300-pxr1-device-param-spoofing-ja4-dict1 <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<div class="card"><h2>g-di-short-300-pxr1-device-param-spoofing-ja4-dict1 <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
 <p class="muted"><code>di-short-count-300-fp-pixel-ratio-1</code> + <code>g-device-parameter-spoofing</code> + <code>ja4-dict-1-challenger</code></p>
-<div class="tiles"><div class="tile"><b>0</b><span>keys spiking in window</span></div><div class="tile"><b>0</b><span>max keys hit on one day</span></div><div class="tile"><b>0</b><span>window sessions (exact)</span></div><div class="tile"><b>0%</b><span>of window volume on spiking keys</span></div></div>
+<div class="tiles"><div class="tile"><b>7</b><span>keys spiking in window</span></div><div class="tile"><b>7</b><span>max keys hit on one day</span></div><div class="tile"><b>540.4k</b><span>window sessions (exact)</span></div><div class="tile"><b>61%</b><span>of window volume on spiking keys</span></div></div>
 <div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k6-t">
 <title id="k6-t">Keys hit per day</title>
 <rect x="422.3" y="16" width="201.7" height="174" class="win"/>
 <text x="426.3" y="28" class="axis">scan window</text>
 <line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
 <text x="34" y="194.0" class="axis" text-anchor="end">0</text>
-<line x1="40" x2="624" y1="103.0" y2="103.0" class="grid"/>
-<text x="34" y="107.0" class="axis" text-anchor="end">1</text>
-<line x1="40" x2="624" y1="16.0" y2="16.0" class="grid"/>
-<text x="34" y="20.0" class="axis" text-anchor="end">2</text>
-<text x="40.0" y="210" class="axis" text-anchor="middle">10-04</text>
-<text x="156.8" y="210" class="axis" text-anchor="middle">10-06</text>
-<text x="273.6" y="210" class="axis" text-anchor="middle">10-08</text>
-<text x="390.4" y="210" class="axis" text-anchor="middle">10-10</text>
-<text x="507.2" y="210" class="axis" text-anchor="middle">10-12</text>
-<text x="624.0" y="210" class="axis" text-anchor="middle">10-14</text>
-<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,190.0 332.0,190.0 390.4,190.0 448.8,190.0 507.2,190.0 565.6,190.0 624.0,190.0" class="line s1"/>
+<line x1="40" x2="624" y1="158.4" y2="158.4" class="grid"/>
+<text x="34" y="162.4" class="axis" text-anchor="end">2</text>
+<line x1="40" x2="624" y1="126.7" y2="126.7" class="grid"/>
+<text x="34" y="130.7" class="axis" text-anchor="end">4</text>
+<line x1="40" x2="624" y1="95.1" y2="95.1" class="grid"/>
+<text x="34" y="99.1" class="axis" text-anchor="end">6</text>
+<line x1="40" x2="624" y1="63.5" y2="63.5" class="grid"/>
+<text x="34" y="67.5" class="axis" text-anchor="end">8</text>
+<line x1="40" x2="624" y1="31.8" y2="31.8" class="grid"/>
+<text x="34" y="35.8" class="axis" text-anchor="end">10</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,31.8 273.6,79.3 332.0,126.7 390.4,95.1 448.8,95.1 507.2,79.3 565.6,95.1 624.0,110.9" class="line s1"/>
 <circle cx="40.0" cy="190.0" r="4" class="dot s1"/>
 <circle cx="98.4" cy="190.0" r="4" class="dot s1"/>
 <circle cx="156.8" cy="190.0" r="4" class="dot s1"/>
-<circle cx="215.2" cy="190.0" r="4" class="dot s1"/>
-<circle cx="273.6" cy="190.0" r="4" class="dot s1"/>
-<circle cx="332.0" cy="190.0" r="4" class="dot s1"/>
-<circle cx="390.4" cy="190.0" r="4" class="dot s1"/>
-<circle cx="448.8" cy="190.0" r="4" class="dot s1"/>
-<circle cx="507.2" cy="190.0" r="4" class="dot s1"/>
-<circle cx="565.6" cy="190.0" r="4" class="dot s1"/>
-<circle cx="624.0" cy="190.0" r="4" class="dot s1"/>
-<text x="620.0" y="182.0" class="dlabel">0</text>
-<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,190.0 332.0,190.0 390.4,190.0 448.8,190.0 507.2,190.0 565.6,190.0 624.0,190.0" class="line s2"/>
+<circle cx="215.2" cy="31.8" r="4" class="dot s1"/>
+<circle cx="273.6" cy="79.3" r="4" class="dot s1"/>
+<circle cx="332.0" cy="126.7" r="4" class="dot s1"/>
+<circle cx="390.4" cy="95.1" r="4" class="dot s1"/>
+<circle cx="448.8" cy="95.1" r="4" class="dot s1"/>
+<circle cx="507.2" cy="79.3" r="4" class="dot s1"/>
+<circle cx="565.6" cy="95.1" r="4" class="dot s1"/>
+<circle cx="624.0" cy="110.9" r="4" class="dot s1"/>
+<text x="620.0" y="102.9" class="dlabel">5</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,79.3 273.6,158.4 332.0,190.0 390.4,158.4 448.8,158.4 507.2,95.1 565.6,110.9 624.0,158.4" class="line s2"/>
 <circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
 <circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
 <circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
-<circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
-<circle cx="273.6" cy="190.0" r="4" class="dot s2"/>
+<circle cx="215.2" cy="79.3" r="4" class="dot s2"/>
+<circle cx="273.6" cy="158.4" r="4" class="dot s2"/>
 <circle cx="332.0" cy="190.0" r="4" class="dot s2"/>
-<circle cx="390.4" cy="190.0" r="4" class="dot s2"/>
-<circle cx="448.8" cy="190.0" r="4" class="dot s2"/>
-<circle cx="507.2" cy="190.0" r="4" class="dot s2"/>
-<circle cx="565.6" cy="190.0" r="4" class="dot s2"/>
-<circle cx="624.0" cy="190.0" r="4" class="dot s2"/>
-<text x="620.0" y="182.0" class="dlabel">0</text>
-<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-04 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-05 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-06 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-07 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-08 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-09 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-10 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-11 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 0 keys · spiking: 0 keys"/>
-<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 0 keys · spiking: 0 keys"/>
-</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Uber - SMS - Production - Key 1</b> · recurring · 09-26 (155.6k), 09-28 (109.9k), 09-30+2d (24.2k), 10-04+3d (300.6k), 10-09 (1.9k) + today (12.6k)</li><li><b>Adobe - ARP FF - Production - Key 8</b> · recurring · 09-21+2d (129.5k), 09-28+1d (3.9k), 10-14 (2k) + today (1.5k)</li><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 09-29 (99.1k), 10-08 (104.8k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 09-20+2d (6.7k), 09-26 (3.2k) + today (5.1k)</li><li><b>Wells Fargo - Prod/Detect - Login - Web - Key 1</b> · recurring · 09-21 (3.2k) + today (7.9k)</li><li><b>Pinterest - Login - Production - Key 1</b> · one-off · 10-14 (249.4k) + today (635.3k)</li><li><b>Pinterest - Registration - Production - Key 2</b> · one-off · 10-14 (27.7k) + today (78k)</li><li><b>GitLab - Production - Sign Up &amp; Identity Verification - Key 1</b> · one-off ·  + today (17.2k)</li><li><b>Wells Fargo - Prod/Detect - Password Reset - Web - Key 5</b> · one-off ·  + today (4.5k)</li></ul><p><a href="2026-10-14_dishort300_dp_spoof_ja4_dict1_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-15.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
-<details><summary>Telltale definition (draft — not created)</summary><pre>{
+<circle cx="390.4" cy="158.4" r="4" class="dot s2"/>
+<circle cx="448.8" cy="158.4" r="4" class="dot s2"/>
+<circle cx="507.2" cy="95.1" r="4" class="dot s2"/>
+<circle cx="565.6" cy="110.9" r="4" class="dot s2"/>
+<circle cx="624.0" cy="158.4" r="4" class="dot s2"/>
+<text x="620.0" y="150.4" class="dlabel">2</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 10 keys · spiking: 7 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 7 keys · spiking: 2 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 4 keys · spiking: 0 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 6 keys · spiking: 2 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 6 keys · spiking: 2 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 7 keys · spiking: 6 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 6 keys · spiking: 5 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 5 keys · spiking: 2 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Uber - SMS - Production - Key 1</b> · recurring · 09-28 (109.9k), 09-30+1d (24.2k), 10-04+3d (300.6k), 10-09 (1.9k), 10-15 (12.7k), 10-18 (46.9k)</li><li><b>Adobe - Sign Up - Production - Key 2</b> · recurring · 09-29 (99.1k), 10-08 (104.8k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 10-15 (5.1k), 10-19+1d (20.6k)</li><li><b>Meta - Login - Production -  Key 2</b> · recurring · 10-14 (1.1k), 10-18 (5.7k)</li><li><b>Adobe - ARP FF - Production - Key 8</b> · recurring · 09-28+1d (3.9k), 10-14+1d (2k), 10-18 (1.1k)</li><li><b>Pinterest - Login - Production - Key 1</b> · one-off · 10-14+2d (676.7k)</li><li><b>GitLab - Production - Sign Up &amp; Identity Verification - Key 1</b> · one-off · 10-15+2d (360.9k)</li><li><b>WBD Multi-Tenant -  Login - Production - Key 18</b> · one-off · 10-16 (120.4k)</li><li><b>Pinterest - Registration - Production - Key 2</b> · one-off · 10-14+2d (84.6k)</li><li><b>Adobe - Commerce - Production - Key 3</b> · one-off · 10-16+3d (39.3k)</li><li><b>Adobe - Sign-in - Production - Key 5</b> · one-off · 10-16+6d (15.2k)</li><li><b>Wells Fargo - Prod/Detect - Login - Web - Key 1</b> · one-off · 10-15 (9.3k)</li><li><b>Wells Fargo - Prod/Detect - Password Reset - Web - Key 5</b> · one-off · 10-15 (5k)</li></ul><p><a href="2026-10-22_dishort300_dp_spoof_ja4_dict1_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Roblox - Production - Monetization - Key 4</td><td>Roblox Corporation</td><td class="n">0</td><td class="n">33.3k</td><td class="n">133.3k</td><td class="n">new</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">7.9k</td><td class="n">11.3k</td><td class="n">27.1k</td><td class="n">3×</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">724</td><td class="n">9.9k</td><td class="n">20.6k</td><td class="n">28×</td></tr><tr><td>DoorDash - ATM PoV - Production - Key 4</td><td>Doordash</td><td class="n">0</td><td class="n">6.2k</td><td class="n">18.8k</td><td class="n">new</td></tr><tr><td>Chime - Production - Key 1 - Login</td><td>Chime</td><td class="n">0</td><td class="n">7.5k</td><td class="n">17.5k</td><td class="n">new</td></tr><tr><td>Adobe - Sign-in - Production - Key 5</td><td>Adobe</td><td class="n">3.4k</td><td class="n">10.6k</td><td class="n">15.2k</td><td class="n">4×</td></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">12</td><td class="n">3.1k</td><td class="n">5.1k</td><td class="n">400×</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>{
   &quot;ticket&quot;: &quot;DETCORE-4468&quot;,
   &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
   &quot;cohort_category&quot;: &quot;Suspicious&quot;,
@@ -707,7 +714,495 @@ details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
   &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-15: DI short-count-300 (fp pixel ratio 1) + device parameter spoofing + JA4 dict-1 challenger. Recurring bursts on Uber SMS (Sep 26, Sep 28, Oct 4-7, Oct 15, mostly verified) and new on Oct 15 15-20h UTC on GitLab Sign Up, Wells Fargo Login + Password Reset (0-1% verified). Pinterest Login/Registration match since Oct 14 16:00 at ~98% verified in a diurnal pattern - review before activating (possible false positive / client change).&quot;
 }</pre></details>
 </div>
-<div class="card"><h2>Discovery scan (1% sample)</h2><p class="muted">Re-run 2026-10-15 21:30 UTC. Step 1: 40 single flags with &gt;=3 keys spiking. Dropped as artifacts (baseline ~0, TT edited Oct 14): g-ip-asn-reputation-high-risk-with-session-signal, g-ip-connection-type-velocity-short-term-abuse-cloud-asn, g-atm-all-agents, plus the g-ip-datacenter / hosting / shared-egress family already excluded on Oct 14. g--e-g-ja4-suspicious-verification-patterns is Ensemble (re-dated daily), kept. Step 2 over 16 flags found one new attack combination, now tracked: di-short-count-300-fp-pixel-ratio-1 + g-device-parameter-spoofing + ja4-dict-1-challenger. Separately, g-ip-residential-proxy-user-ip jumped ~3.5x on Oct 14 across ~50 keys at once (sampled 10k/day -&gt; 35-38k/day) with no TT edit since Aug 3. A same-day step across that many keys looks like an IP-intel feed or list change rather than one attack. Check with the IP-intel owners before building on it; not tracked.</p><table><tr><th>Combination</th><th class="n">Keys spiking</th><th class="n">Volume on spiking keys</th><th class="n">Est. excess sessions/day</th><th>Note</th></tr><tr><td>di-short-count-300-fp-pixel-ratio-1<br>g-device-parameter-spoofing<br>ja4-dict-1-challenger</td><td class="n">8</td><td class="n">86%</td><td class="n">543.5k</td><td>NEW - tracked as dishort300_dp_spoof_ja4_dict1. Recurring on Uber SMS; new today on GitLab and Wells Fargo; Pinterest likely a client change (98% verified).</td></tr><tr><td>di-short-count-300-fp-pixel-ratio-1<br>g-device-parameter-spoofing<br>g-ip-velocity-short-term-abuse-4x</td><td class="n">8</td><td class="n">90%</td><td class="n">195.2k</td><td>Same keys as the JA4 variant, smaller volume - not tracked separately.</td></tr><tr><td>g-ip-residential-proxy-user-ip<br>window-tree-index-is-empty</td><td class="n">39</td><td class="n">83%</td><td class="n">2M</td><td>Probable feed change on Oct 14 (step across ~50 keys) - verify before use, not tracked.</td></tr><tr><td>g-ip-residential-proxy-user-ip<br>g-page-level-biometrics-empty-or-null</td><td class="n">31</td><td class="n">82%</td><td class="n">1.6M</td><td>Same residential-proxy step - not tracked.</td></tr><tr><td>g-device-parameter-spoofing<br>g-di-medium-risk-signature-exceeding-short-term-threshold</td><td class="n">8</td><td class="n">80%</td><td class="n">325.3k</td><td>Overlaps the tracked DI combos (Adobe ARP, Roblox Signup) - watch.</td></tr><tr><td>g--e-g-ja4-suspicious-verification-patterns<br>window-tree-index-is-empty</td><td class="n">9</td><td class="n">46%</td><td class="n">809.5k</td><td>Too diluted (46%) - not tracked.</td></tr></table></div>
+<div class="card"><h2>g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
+<p class="muted"><code>g-di-dict-7-match-short-term-threshold-exceeded-1x</code> + <code>di-short-count-300-fp-pixel-ratio-1</code> + <code>g-di-high-risk-signature-exceeding-short-term-threshold</code></p>
+<div class="tiles"><div class="tile"><b>2</b><span>keys spiking in window</span></div><div class="tile"><b>3</b><span>max keys hit on one day</span></div><div class="tile"><b>173.3k</b><span>window sessions (exact)</span></div><div class="tile"><b>91%</b><span>of window volume on spiking keys</span></div></div>
+<div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k7-t">
+<title id="k7-t">Keys hit per day</title>
+<rect x="422.3" y="16" width="201.7" height="174" class="win"/>
+<text x="426.3" y="28" class="axis">scan window</text>
+<line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
+<text x="34" y="194.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="624" y1="146.5" y2="146.5" class="grid"/>
+<text x="34" y="150.5" class="axis" text-anchor="end">1</text>
+<line x1="40" x2="624" y1="103.0" y2="103.0" class="grid"/>
+<text x="34" y="107.0" class="axis" text-anchor="end">2</text>
+<line x1="40" x2="624" y1="59.5" y2="59.5" class="grid"/>
+<text x="34" y="63.5" class="axis" text-anchor="end">3</text>
+<line x1="40" x2="624" y1="16.0" y2="16.0" class="grid"/>
+<text x="34" y="20.0" class="axis" text-anchor="end">4</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,59.5 332.0,103.0 390.4,103.0 448.8,103.0 507.2,146.5 565.6,59.5 624.0,59.5" class="line s1"/>
+<circle cx="40.0" cy="190.0" r="4" class="dot s1"/>
+<circle cx="98.4" cy="190.0" r="4" class="dot s1"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s1"/>
+<circle cx="215.2" cy="190.0" r="4" class="dot s1"/>
+<circle cx="273.6" cy="59.5" r="4" class="dot s1"/>
+<circle cx="332.0" cy="103.0" r="4" class="dot s1"/>
+<circle cx="390.4" cy="103.0" r="4" class="dot s1"/>
+<circle cx="448.8" cy="103.0" r="4" class="dot s1"/>
+<circle cx="507.2" cy="146.5" r="4" class="dot s1"/>
+<circle cx="565.6" cy="59.5" r="4" class="dot s1"/>
+<circle cx="624.0" cy="59.5" r="4" class="dot s1"/>
+<text x="620.0" y="51.5" class="dlabel">3</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,103.0 332.0,146.5 390.4,103.0 448.8,146.5 507.2,146.5 565.6,146.5 624.0,146.5" class="line s2"/>
+<circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
+<circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
+<circle cx="273.6" cy="103.0" r="4" class="dot s2"/>
+<circle cx="332.0" cy="146.5" r="4" class="dot s2"/>
+<circle cx="390.4" cy="103.0" r="4" class="dot s2"/>
+<circle cx="448.8" cy="146.5" r="4" class="dot s2"/>
+<circle cx="507.2" cy="146.5" r="4" class="dot s2"/>
+<circle cx="565.6" cy="146.5" r="4" class="dot s2"/>
+<circle cx="624.0" cy="146.5" r="4" class="dot s2"/>
+<text x="620.0" y="138.5" class="dlabel">1</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 3 keys · spiking: 2 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 2 keys · spiking: 1 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 2 keys · spiking: 2 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 2 keys · spiking: 1 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 1 keys · spiking: 1 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 3 keys · spiking: 1 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 3 keys · spiking: 1 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Roblox - Production - Login - Key 1</b> · recurring · 10-05+1d (78.7k), 10-12+2d (39.9k), 10-18+1d (61k), 10-21+1d (4.1k)</li><li><b>Roblox Signup - Key 2</b> · persistent · 10-18+2d (93.4k)</li></ul><p><a href="2026-10-22_dishort300_didict7_hrsig_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">9.6k</td><td class="n">38.1k</td><td class="n">93.4k</td><td class="n">10×</td></tr><tr><td>DoorDash - Website - Production - Key 1</td><td>Doordash</td><td class="n">318</td><td class="n">1.2k</td><td class="n">1.9k</td><td class="n">6×</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>{
+  &quot;ticket&quot;: &quot;DETCORE-4466&quot;,
+  &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
+  &quot;cohort_category&quot;: &quot;Suspicious&quot;,
+  &quot;owner&quot;: &quot;p.nankubuge@arkoselabs.com&quot;,
+  &quot;owner_category&quot;: &quot;User&quot;,
+  &quot;risk_category&quot;: &quot;CUSTOM&quot;,
+  &quot;risk_score&quot;: 0,
+  &quot;telltale_active&quot;: false,
+  &quot;allow_others_to_include&quot;: true,
+  &quot;life_cycle_management&quot;: &quot;M&quot;,
+  &quot;manual_life_cycle_details&quot;: &quot;Spike-scan candidate; review after 14 days&quot;,
+  &quot;_validated&quot;: &quot;created in Dataswan 2026-10-20 (definition matches)&quot;,
+  &quot;telltale_name&quot;: &quot;g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st&quot;,
+  &quot;location&quot;: &quot;SESSION_SETUP&quot;,
+  &quot;telltale_definition&quot;: [
+    {
+      &quot;key&quot;: &quot;location&quot;,
+      &quot;operator&quot;: &quot;TS_EQ&quot;,
+      &quot;value&quot;: &quot;session_setup&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-di-dict-7-match-short-term-threshold-exceeded-1x&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;di-short-count-300-fp-pixel-ratio-1&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-di-high-risk-signature-exceeding-short-term-threshold&quot;
+    }
+  ],
+  &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-20: DI dict-7 short-term 1x + DI short-count-300 (pixel ratio 1) + DI high-risk signature over short-term threshold. Recurring every ~3-6 days on Roblox Signup and Roblox Login since Oct 1, ~0-1% verified.&quot;
+}</pre></details>
+</div>
+<div class="card"><h2>g-rfc-sec-ch-ua-webgl-device-param-spoofing <span class="muted" style="font-size:12px;font-weight:400">[live]</span></h2>
+<p class="muted"><code>susp-rfc-violations-sec-ch-ua-before-user-agent-content-length-before-sec-ch-ua-anomalous-not-brand-token-webkit-webgl</code> + <code>g-device-parameter-spoofing</code></p>
+<div class="tiles"><div class="tile"><b>9</b><span>keys spiking in window</span></div><div class="tile"><b>12</b><span>max keys hit on one day</span></div><div class="tile"><b>1.1M</b><span>window sessions (exact)</span></div><div class="tile"><b>69%</b><span>of window volume on spiking keys</span></div></div>
+<div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k8-t">
+<title id="k8-t">Keys hit per day</title>
+<rect x="422.3" y="16" width="201.7" height="174" class="win"/>
+<text x="426.3" y="28" class="axis">scan window</text>
+<line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
+<text x="34" y="194.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="624" y1="149.8" y2="149.8" class="grid"/>
+<text x="34" y="153.8" class="axis" text-anchor="end">3</text>
+<line x1="40" x2="624" y1="109.7" y2="109.7" class="grid"/>
+<text x="34" y="113.7" class="axis" text-anchor="end">6</text>
+<line x1="40" x2="624" y1="69.5" y2="69.5" class="grid"/>
+<text x="34" y="73.5" class="axis" text-anchor="end">9</text>
+<line x1="40" x2="624" y1="29.4" y2="29.4" class="grid"/>
+<text x="34" y="33.4" class="axis" text-anchor="end">12</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,69.5 332.0,96.3 390.4,69.5 448.8,29.4 507.2,69.5 565.6,96.3 624.0,96.3" class="line s1"/>
+<circle cx="40.0" cy="190.0" r="4" class="dot s1"/>
+<circle cx="98.4" cy="190.0" r="4" class="dot s1"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s1"/>
+<circle cx="215.2" cy="190.0" r="4" class="dot s1"/>
+<circle cx="273.6" cy="69.5" r="4" class="dot s1"/>
+<circle cx="332.0" cy="96.3" r="4" class="dot s1"/>
+<circle cx="390.4" cy="69.5" r="4" class="dot s1"/>
+<circle cx="448.8" cy="29.4" r="4" class="dot s1"/>
+<circle cx="507.2" cy="69.5" r="4" class="dot s1"/>
+<circle cx="565.6" cy="96.3" r="4" class="dot s1"/>
+<circle cx="624.0" cy="96.3" r="4" class="dot s1"/>
+<text x="620.0" y="88.3" class="dlabel">7</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,136.5 332.0,149.8 390.4,149.8 448.8,96.3 507.2,109.7 565.6,136.5 624.0,149.8" class="line s2"/>
+<circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
+<circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
+<circle cx="273.6" cy="136.5" r="4" class="dot s2"/>
+<circle cx="332.0" cy="149.8" r="4" class="dot s2"/>
+<circle cx="390.4" cy="149.8" r="4" class="dot s2"/>
+<circle cx="448.8" cy="96.3" r="4" class="dot s2"/>
+<circle cx="507.2" cy="109.7" r="4" class="dot s2"/>
+<circle cx="565.6" cy="136.5" r="4" class="dot s2"/>
+<circle cx="624.0" cy="149.8" r="4" class="dot s2"/>
+<text x="620.0" y="141.8" class="dlabel">3</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 9 keys · spiking: 4 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 7 keys · spiking: 3 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 9 keys · spiking: 3 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 12 keys · spiking: 7 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 9 keys · spiking: 6 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 7 keys · spiking: 4 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 7 keys · spiking: 3 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Uber - SMS - Production - Key 1</b> · recurring · 10-09+2d (937.7k), 10-13+7d (301.2k)</li><li><b>Roblox Signup - Key 2</b> · recurring · 10-02 (39.4k), 10-11 (42.1k), 10-15+1d (49.2k), 10-19+2d (186.8k)</li><li><b>Roblox - Production - Monetization - Key 4</b> · recurring · 10-04+1d (28.4k), 10-09 (80k), 10-19 (61.9k)</li><li><b>Amazon - IDS - Production - Key 2</b> · recurring · 10-02+4d (46.6k), 10-09 (35k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · recurring · 10-13 (10.9k), 10-15+1d (9.7k), 10-18+1d (11.6k), 10-21+1d (10.9k)</li></ul><p><a href="2026-10-22_secchua_webgl_dp_spoof_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">10.8k</td><td class="n">103k</td><td class="n">186.8k</td><td class="n">17×</td></tr><tr><td>Microsoft - Identity - Account Signup - Production - Key 2</td><td>Microsoft - Identity</td><td class="n">1.1k</td><td class="n">50.3k</td><td class="n">167k</td><td class="n">147×</td></tr><tr><td>Roblox - Production - Monetization - Key 4</td><td>Roblox Corporation</td><td class="n">9</td><td class="n">15.5k</td><td class="n">61.9k</td><td class="n">6669×</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">7</td><td class="n">6.1k</td><td class="n">20.2k</td><td class="n">2724×</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">2.1k</td><td class="n">7.6k</td><td class="n">11.6k</td><td class="n">6×</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">1.4k</td><td class="n">5.1k</td><td class="n">10.9k</td><td class="n">8×</td></tr><tr><td>Blizzard - Production - ROW Support Site  - Key 3</td><td>Blizzard Entertainment Inc.</td><td class="n">224</td><td class="n">2.9k</td><td class="n">5.2k</td><td class="n">23×</td></tr><tr><td>Adobe - Sign-in - Production - Key 5</td><td>Adobe</td><td class="n">1.1k</td><td class="n">2.7k</td><td class="n">3.4k</td><td class="n">3×</td></tr><tr><td>Uber - Account Management - Production - Key 2</td><td>Uber Inc</td><td class="n">266</td><td class="n">1.2k</td><td class="n">1.7k</td><td class="n">7×</td></tr></table>
+<details><summary>Telltale definition (live in Dataswan)</summary><pre>{
+  &quot;ticket&quot;: &quot;DETCORE-4466&quot;,
+  &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
+  &quot;cohort_category&quot;: &quot;Suspicious&quot;,
+  &quot;owner&quot;: &quot;p.nankubuge@arkoselabs.com&quot;,
+  &quot;owner_category&quot;: &quot;User&quot;,
+  &quot;risk_category&quot;: &quot;CUSTOM&quot;,
+  &quot;risk_score&quot;: 0,
+  &quot;telltale_active&quot;: false,
+  &quot;allow_others_to_include&quot;: true,
+  &quot;life_cycle_management&quot;: &quot;M&quot;,
+  &quot;manual_life_cycle_details&quot;: &quot;Spike-scan candidate; review after 14 days&quot;,
+  &quot;_validated&quot;: &quot;created in Dataswan 2026-10-20 (definition matches)&quot;,
+  &quot;telltale_name&quot;: &quot;g-rfc-sec-ch-ua-webgl-device-param-spoofing&quot;,
+  &quot;location&quot;: &quot;SESSION_SETUP&quot;,
+  &quot;telltale_definition&quot;: [
+    {
+      &quot;key&quot;: &quot;location&quot;,
+      &quot;operator&quot;: &quot;TS_EQ&quot;,
+      &quot;value&quot;: &quot;session_setup&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;susp-rfc-violations-sec-ch-ua-before-user-agent-content-length-before-sec-ch-ua-anomalous-not-brand-token-webkit-webgl&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-device-parameter-spoofing&quot;
+    }
+  ],
+  &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-20: RFC header-order violation (sec-ch-ua before user-agent, content-length before sec-ch-ua, anomalous not-brand token, webkit webgl) + device parameter spoofing. Recurring on Uber SMS (Oct 9-11, 14, 16-18, mostly verified). New on Roblox Signup Oct 19. Steady on gtop100 and Adobe ARP. Adobe Sign-in ~2k/day at 100% verified: exclude.&quot;
+}</pre></details>
+</div>
+<div class="card"><h2>g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<p class="muted"><code>g-os-impersonation-appleos</code> + <code>g-device-parameter-spoofing</code> + <code>capi-anomaly-header-sec-fetch-dest-not-empty</code></p>
+<div class="tiles"><div class="tile"><b>2</b><span>keys spiking in window</span></div><div class="tile"><b>2</b><span>max keys hit on one day</span></div><div class="tile"><b>3.2M</b><span>window sessions (exact)</span></div><div class="tile"><b>100%</b><span>of window volume on spiking keys</span></div></div>
+<div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k9-t">
+<title id="k9-t">Keys hit per day</title>
+<rect x="422.3" y="16" width="201.7" height="174" class="win"/>
+<text x="426.3" y="28" class="axis">scan window</text>
+<line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
+<text x="34" y="194.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="624" y1="132.0" y2="132.0" class="grid"/>
+<text x="34" y="136.0" class="axis" text-anchor="end">1</text>
+<line x1="40" x2="624" y1="74.0" y2="74.0" class="grid"/>
+<text x="34" y="78.0" class="axis" text-anchor="end">2</text>
+<line x1="40" x2="624" y1="16.0" y2="16.0" class="grid"/>
+<text x="34" y="20.0" class="axis" text-anchor="end">3</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,190.0 332.0,132.0 390.4,74.0 448.8,74.0 507.2,74.0 565.6,132.0 624.0,132.0" class="line s1"/>
+<circle cx="40.0" cy="190.0" r="4" class="dot s1"/>
+<circle cx="98.4" cy="190.0" r="4" class="dot s1"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s1"/>
+<circle cx="215.2" cy="190.0" r="4" class="dot s1"/>
+<circle cx="273.6" cy="190.0" r="4" class="dot s1"/>
+<circle cx="332.0" cy="132.0" r="4" class="dot s1"/>
+<circle cx="390.4" cy="74.0" r="4" class="dot s1"/>
+<circle cx="448.8" cy="74.0" r="4" class="dot s1"/>
+<circle cx="507.2" cy="74.0" r="4" class="dot s1"/>
+<circle cx="565.6" cy="132.0" r="4" class="dot s1"/>
+<circle cx="624.0" cy="132.0" r="4" class="dot s1"/>
+<text x="620.0" y="124.0" class="dlabel">1</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,190.0 273.6,190.0 332.0,190.0 390.4,74.0 448.8,74.0 507.2,74.0 565.6,132.0 624.0,132.0" class="line s2"/>
+<circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
+<circle cx="215.2" cy="190.0" r="4" class="dot s2"/>
+<circle cx="273.6" cy="190.0" r="4" class="dot s2"/>
+<circle cx="332.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="390.4" cy="74.0" r="4" class="dot s2"/>
+<circle cx="448.8" cy="74.0" r="4" class="dot s2"/>
+<circle cx="507.2" cy="74.0" r="4" class="dot s2"/>
+<circle cx="565.6" cy="132.0" r="4" class="dot s2"/>
+<circle cx="624.0" cy="132.0" r="4" class="dot s2"/>
+<text x="620.0" y="124.0" class="dlabel">1</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 0 keys · spiking: 0 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 1 keys · spiking: 0 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 2 keys · spiking: 2 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 2 keys · spiking: 2 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 2 keys · spiking: 2 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 1 keys · spiking: 1 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 1 keys · spiking: 1 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Olo - Payments - Production - Key 3</b> · recurring · 10-08 (5.8k), 10-11 (1.8k), 10-13 (2.2k), 10-17+3d (108.4k)</li><li><b>WBD Bolt/Beam - Account Lookup - Production - Key 20</b> · one-off · 10-18+4d (1.1M) + today (47.1k)</li></ul><p><a href="2026-10-22_appleos_dp_spoof_secfetch_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>WBD Bolt/Beam - Account Lookup - Production - Key 20</td><td>WBD</td><td class="n">75.4k</td><td class="n">755.9k</td><td class="n">1.1M</td><td class="n">15×</td></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">2.2k</td><td class="n">35.5k</td><td class="n">108.4k</td><td class="n">50×</td></tr></table>
+<details><summary>Telltale definition (draft — not created)</summary><pre>{
+  &quot;ticket&quot;: &quot;DETCORE-4466&quot;,
+  &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
+  &quot;cohort_category&quot;: &quot;Suspicious&quot;,
+  &quot;owner&quot;: &quot;p.nankubuge@arkoselabs.com&quot;,
+  &quot;owner_category&quot;: &quot;User&quot;,
+  &quot;risk_category&quot;: &quot;CUSTOM&quot;,
+  &quot;risk_score&quot;: 0,
+  &quot;telltale_active&quot;: false,
+  &quot;allow_others_to_include&quot;: true,
+  &quot;life_cycle_management&quot;: &quot;M&quot;,
+  &quot;manual_life_cycle_details&quot;: &quot;Spike-scan candidate; review after 14 days&quot;,
+  &quot;_validated&quot;: &quot;not yet validated (Dataswan unavailable on 2026-10-20)&quot;,
+  &quot;telltale_name&quot;: &quot;g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest&quot;,
+  &quot;location&quot;: &quot;SESSION_SETUP&quot;,
+  &quot;telltale_definition&quot;: [
+    {
+      &quot;key&quot;: &quot;location&quot;,
+      &quot;operator&quot;: &quot;TS_EQ&quot;,
+      &quot;value&quot;: &quot;session_setup&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-os-impersonation-appleos&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-device-parameter-spoofing&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;capi-anomaly-header-sec-fetch-dest-not-empty&quot;
+    }
+  ],
+  &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-20: Apple OS impersonation + device parameter spoofing + CAPI sec-fetch-dest not empty. New Oct 18-19 on WBD Account Lookup and Olo Payments at ~0% verified; overlaps the live pagebio/rfc TT.&quot;
+}</pre></details>
+</div>
+<div class="card"><h2>g-di-dict3-st-1x-di-short-300-pxr1 <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<p class="muted"><code>g-di-dict-3-match-short-term-threshold-exceeded-1x</code> + <code>di-short-count-300-fp-pixel-ratio-1</code></p>
+<div class="tiles"><div class="tile"><b>11</b><span>keys spiking in window</span></div><div class="tile"><b>10</b><span>max keys hit on one day</span></div><div class="tile"><b>972.9k</b><span>window sessions (exact)</span></div><div class="tile"><b>84%</b><span>of window volume on spiking keys</span></div></div>
+<div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k10-t">
+<title id="k10-t">Keys hit per day</title>
+<rect x="422.3" y="16" width="201.7" height="174" class="win"/>
+<text x="426.3" y="28" class="axis">scan window</text>
+<line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
+<text x="34" y="194.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="624" y1="158.4" y2="158.4" class="grid"/>
+<text x="34" y="162.4" class="axis" text-anchor="end">2</text>
+<line x1="40" x2="624" y1="126.7" y2="126.7" class="grid"/>
+<text x="34" y="130.7" class="axis" text-anchor="end">4</text>
+<line x1="40" x2="624" y1="95.1" y2="95.1" class="grid"/>
+<text x="34" y="99.1" class="axis" text-anchor="end">6</text>
+<line x1="40" x2="624" y1="63.5" y2="63.5" class="grid"/>
+<text x="34" y="67.5" class="axis" text-anchor="end">8</text>
+<line x1="40" x2="624" y1="31.8" y2="31.8" class="grid"/>
+<text x="34" y="35.8" class="axis" text-anchor="end">10</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,126.7 98.4,110.9 156.8,95.1 215.2,95.1 273.6,126.7 332.0,110.9 390.4,110.9 448.8,47.6 507.2,31.8 565.6,63.5 624.0,31.8" class="line s1"/>
+<circle cx="40.0" cy="126.7" r="4" class="dot s1"/>
+<circle cx="98.4" cy="110.9" r="4" class="dot s1"/>
+<circle cx="156.8" cy="95.1" r="4" class="dot s1"/>
+<circle cx="215.2" cy="95.1" r="4" class="dot s1"/>
+<circle cx="273.6" cy="126.7" r="4" class="dot s1"/>
+<circle cx="332.0" cy="110.9" r="4" class="dot s1"/>
+<circle cx="390.4" cy="110.9" r="4" class="dot s1"/>
+<circle cx="448.8" cy="47.6" r="4" class="dot s1"/>
+<circle cx="507.2" cy="31.8" r="4" class="dot s1"/>
+<circle cx="565.6" cy="63.5" r="4" class="dot s1"/>
+<circle cx="624.0" cy="31.8" r="4" class="dot s1"/>
+<text x="620.0" y="23.8" class="dlabel">10</text>
+<polyline points="40.0,190.0 98.4,158.4 156.8,174.2 215.2,158.4 273.6,190.0 332.0,174.2 390.4,158.4 448.8,126.7 507.2,110.9 565.6,95.1 624.0,110.9" class="line s2"/>
+<circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="98.4" cy="158.4" r="4" class="dot s2"/>
+<circle cx="156.8" cy="174.2" r="4" class="dot s2"/>
+<circle cx="215.2" cy="158.4" r="4" class="dot s2"/>
+<circle cx="273.6" cy="190.0" r="4" class="dot s2"/>
+<circle cx="332.0" cy="174.2" r="4" class="dot s2"/>
+<circle cx="390.4" cy="158.4" r="4" class="dot s2"/>
+<circle cx="448.8" cy="126.7" r="4" class="dot s2"/>
+<circle cx="507.2" cy="110.9" r="4" class="dot s2"/>
+<circle cx="565.6" cy="95.1" r="4" class="dot s2"/>
+<circle cx="624.0" cy="110.9" r="4" class="dot s2"/>
+<text x="620.0" y="102.9" class="dlabel">5</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 4 keys · spiking: 0 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 5 keys · spiking: 2 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 6 keys · spiking: 1 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 6 keys · spiking: 2 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 4 keys · spiking: 0 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 5 keys · spiking: 1 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 5 keys · spiking: 2 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 9 keys · spiking: 4 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 10 keys · spiking: 5 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 8 keys · spiking: 6 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 10 keys · spiking: 5 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Roblox - Production - Login - Key 1</b> · recurring · 10-13+1d (1.5k), 10-20 (12k)</li><li><b>Roblox Signup - Key 2</b> · one-off · 10-12+10d (212.9k)</li><li><b>Microsoft - Identity - Account Signup - Production - Key 2</b> · one-off · 10-14+8d (166.3k) + today (22.5k)</li><li><b>Olo - Payments - Production - Key 3</b> · one-off · 10-19+1d (59.4k)</li><li><b>Adobe - Sign Up - Production - Key 2</b> · one-off · 10-19+3d (32.5k)</li><li><b>Highlight AI - Chat Prompt - Production - Key 1</b> · one-off · 10-21+1d (5.6k)</li><li><b>DoorDash - ATM PoV - Production - Key 4</b> · one-off · 10-20+1d (5.3k)</li><li><b>Amazon - IDS - Production - Key 2</b> · one-off · 10-21 (5.2k)</li><li><b>AT&amp;T - Consumer Forgot Password - Production - Key 2</b> · one-off · 10-22 (3.5k)</li><li><b>Chime - Production - Key 1 - Login</b> · one-off · 10-22 (3k)</li></ul><p><a href="2026-10-22_didict3_dishort300_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>Roblox Signup - Key 2</td><td>Roblox Corporation</td><td class="n">21k</td><td class="n">112k</td><td class="n">212.9k</td><td class="n">10×</td></tr><tr><td>Microsoft - Identity - Account Signup - Production - Key 2</td><td>Microsoft - Identity</td><td class="n">4.8k</td><td class="n">50.6k</td><td class="n">166.3k</td><td class="n">35×</td></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">89</td><td class="n">19.4k</td><td class="n">59.4k</td><td class="n">664×</td></tr><tr><td>Adobe - Sign Up - Production - Key 2</td><td>Adobe</td><td class="n">0</td><td class="n">11.6k</td><td class="n">32.5k</td><td class="n">new</td></tr><tr><td>Roblox - Production - Login - Key 1</td><td>Roblox Corporation</td><td class="n">452</td><td class="n">3k</td><td class="n">12k</td><td class="n">27×</td></tr><tr><td>Highlight AI - Chat Prompt - Production - Key 1</td><td>Highlight AI</td><td class="n">0</td><td class="n">1.9k</td><td class="n">5.6k</td><td class="n">new</td></tr><tr><td>DoorDash - ATM PoV - Production - Key 4</td><td>Doordash</td><td class="n">0</td><td class="n">2.3k</td><td class="n">5.3k</td><td class="n">new</td></tr><tr><td>Amazon - IDS - Production - Key 2</td><td>Amazon.com, Inc.</td><td class="n">0</td><td class="n">1.5k</td><td class="n">5.2k</td><td class="n">new</td></tr><tr><td>AT&amp;T - Consumer Forgot Password - Production - Key 2</td><td>AT&amp;T</td><td class="n">0</td><td class="n">872</td><td class="n">3.5k</td><td class="n">new</td></tr><tr><td>Chime - Production - Key 1 - Login</td><td>Chime</td><td class="n">0</td><td class="n">794</td><td class="n">3k</td><td class="n">new</td></tr><tr><td>Roblox - Production - Monetization - Key 4</td><td>Roblox Corporation</td><td class="n">11</td><td class="n">416</td><td class="n">1.6k</td><td class="n">134×</td></tr></table>
+<details><summary>Telltale definition (draft — not created)</summary><pre>{
+  &quot;ticket&quot;: &quot;DETCORE-4466&quot;,
+  &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
+  &quot;cohort_category&quot;: &quot;Suspicious&quot;,
+  &quot;owner&quot;: &quot;p.nankubuge@arkoselabs.com&quot;,
+  &quot;owner_category&quot;: &quot;User&quot;,
+  &quot;risk_category&quot;: &quot;CUSTOM&quot;,
+  &quot;risk_score&quot;: 0,
+  &quot;telltale_active&quot;: false,
+  &quot;allow_others_to_include&quot;: true,
+  &quot;life_cycle_management&quot;: &quot;M&quot;,
+  &quot;manual_life_cycle_details&quot;: &quot;Spike-scan candidate; review after 14 days&quot;,
+  &quot;_validated&quot;: &quot;validate_telltale 2026-10-23: valid, no errors (NOT created)&quot;,
+  &quot;location&quot;: &quot;SESSION_SETUP&quot;,
+  &quot;telltale_name&quot;: &quot;g-di-dict3-st-1x-di-short-300-pxr1&quot;,
+  &quot;telltale_definition&quot;: [
+    {
+      &quot;key&quot;: &quot;location&quot;,
+      &quot;operator&quot;: &quot;TS_EQ&quot;,
+      &quot;value&quot;: &quot;session_setup&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-di-dict-3-match-short-term-threshold-exceeded-1x&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;di-short-count-300-fp-pixel-ratio-1&quot;
+    }
+  ],
+  &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-23: DI dict-3 short-term 1x + DI short-count-300 (pixel ratio 1). Spiked on 10 keys Oct 19-22 (Roblox Login/Signup, Microsoft Identity Signup, Amazon IDS, Chime Login, Olo Payments, AT&amp;T Forgot Password, Adobe Sign Up, DoorDash ATM PoV, Highlight AI).&quot;
+}</pre></details>
+</div>
+<div class="card"><h2>g-os-spoofing-pagebio-null <span class="muted" style="font-size:12px;font-weight:400">[candidate]</span></h2>
+<p class="muted"><code>g-operating-system-spoofing</code> + <code>g-page-level-biometrics-empty-or-null</code></p>
+<div class="tiles"><div class="tile"><b>12</b><span>keys spiking in window</span></div><div class="tile"><b>24</b><span>max keys hit on one day</span></div><div class="tile"><b>4.5M</b><span>window sessions (exact)</span></div><div class="tile"><b>74%</b><span>of window volume on spiking keys</span></div></div>
+<div class="grid2"><div><h3>How many keys this signal applies to, per day</h3><div class="legend"><span class="lg"><i class="sw s1"></i>hit (≥1k sessions)</span><span class="lg"><i class="sw s2"></i>spiking (≥3× baseline)</span></div><svg viewBox="0 0 640 220" class="chart" role="img" aria-labelledby="k11-t">
+<title id="k11-t">Keys hit per day</title>
+<rect x="422.3" y="16" width="201.7" height="174" class="win"/>
+<text x="426.3" y="28" class="axis">scan window</text>
+<line x1="40" x2="624" y1="190.0" y2="190.0" class="grid"/>
+<text x="34" y="194.0" class="axis" text-anchor="end">0</text>
+<line x1="40" x2="624" y1="151.3" y2="151.3" class="grid"/>
+<text x="34" y="155.3" class="axis" text-anchor="end">6</text>
+<line x1="40" x2="624" y1="112.7" y2="112.7" class="grid"/>
+<text x="34" y="116.7" class="axis" text-anchor="end">12</text>
+<line x1="40" x2="624" y1="74.0" y2="74.0" class="grid"/>
+<text x="34" y="78.0" class="axis" text-anchor="end">18</text>
+<line x1="40" x2="624" y1="35.3" y2="35.3" class="grid"/>
+<text x="34" y="39.3" class="axis" text-anchor="end">24</text>
+<text x="40.0" y="210" class="axis" text-anchor="middle">10-12</text>
+<text x="156.8" y="210" class="axis" text-anchor="middle">10-14</text>
+<text x="273.6" y="210" class="axis" text-anchor="middle">10-16</text>
+<text x="390.4" y="210" class="axis" text-anchor="middle">10-18</text>
+<text x="507.2" y="210" class="axis" text-anchor="middle">10-20</text>
+<text x="624.0" y="210" class="axis" text-anchor="middle">10-22</text>
+<polyline points="40.0,106.2 98.4,93.3 156.8,93.3 215.2,86.9 273.6,80.4 332.0,80.4 390.4,80.4 448.8,61.1 507.2,41.8 565.6,35.3 624.0,61.1" class="line s1"/>
+<circle cx="40.0" cy="106.2" r="4" class="dot s1"/>
+<circle cx="98.4" cy="93.3" r="4" class="dot s1"/>
+<circle cx="156.8" cy="93.3" r="4" class="dot s1"/>
+<circle cx="215.2" cy="86.9" r="4" class="dot s1"/>
+<circle cx="273.6" cy="80.4" r="4" class="dot s1"/>
+<circle cx="332.0" cy="80.4" r="4" class="dot s1"/>
+<circle cx="390.4" cy="80.4" r="4" class="dot s1"/>
+<circle cx="448.8" cy="61.1" r="4" class="dot s1"/>
+<circle cx="507.2" cy="41.8" r="4" class="dot s1"/>
+<circle cx="565.6" cy="35.3" r="4" class="dot s1"/>
+<circle cx="624.0" cy="61.1" r="4" class="dot s1"/>
+<text x="620.0" y="53.1" class="dlabel">20</text>
+<polyline points="40.0,190.0 98.4,190.0 156.8,190.0 215.2,183.6 273.6,183.6 332.0,190.0 390.4,177.1 448.8,157.8 507.2,144.9 565.6,132.0 624.0,164.2" class="line s2"/>
+<circle cx="40.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="98.4" cy="190.0" r="4" class="dot s2"/>
+<circle cx="156.8" cy="190.0" r="4" class="dot s2"/>
+<circle cx="215.2" cy="183.6" r="4" class="dot s2"/>
+<circle cx="273.6" cy="183.6" r="4" class="dot s2"/>
+<circle cx="332.0" cy="190.0" r="4" class="dot s2"/>
+<circle cx="390.4" cy="177.1" r="4" class="dot s2"/>
+<circle cx="448.8" cy="157.8" r="4" class="dot s2"/>
+<circle cx="507.2" cy="144.9" r="4" class="dot s2"/>
+<circle cx="565.6" cy="132.0" r="4" class="dot s2"/>
+<circle cx="624.0" cy="164.2" r="4" class="dot s2"/>
+<text x="620.0" y="156.2" class="dlabel">4</text>
+<rect x="13.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-12 · hit: 13 keys · spiking: 0 keys"/>
+<rect x="71.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-13 · hit: 15 keys · spiking: 0 keys"/>
+<rect x="130.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-14 · hit: 15 keys · spiking: 0 keys"/>
+<rect x="188.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-15 · hit: 16 keys · spiking: 1 keys"/>
+<rect x="247.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-16 · hit: 17 keys · spiking: 1 keys"/>
+<rect x="305.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-17 · hit: 17 keys · spiking: 0 keys"/>
+<rect x="363.9" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-18 · hit: 17 keys · spiking: 2 keys"/>
+<rect x="422.3" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-19 · hit: 20 keys · spiking: 5 keys"/>
+<rect x="480.7" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-20 · hit: 23 keys · spiking: 7 keys"/>
+<rect x="539.1" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-21 · hit: 24 keys · spiking: 9 keys"/>
+<rect x="597.5" y="16" width="53.1" height="174" class="hit" data-tip="2026-10-22 · hit: 20 keys · spiking: 4 keys"/>
+</svg></div><div><h3>Burst episodes per key (start date, peak day)</h3><ul class="eps"><li><b>Olo - Payments - Production - Key 3</b> · recurring · 10-13 (2.5k), 10-17+3d (109.8k), 10-22 (1.2k)</li><li><b>Microsoft - Identity - Account Signup - Production - Key 2</b> · recurring · 10-16 (1.4k), 10-19 (2.1k), 10-21 (2.8k)</li><li><b>WBD Bolt/Beam - Account Lookup - Production - Key 20</b> · one-off · 10-12+10d (1.1M) + today (48.3k)</li><li><b>Tinder - Production - PreSMS - Key 3</b> · one-off · 10-19 (26.7k)</li><li><b>DoorDash - ATM PoV - Production - Key 4</b> · one-off · 10-20+1d (15.9k)</li><li><b>Chime - Production - Key 1 - Login</b> · one-off · 10-20+2d (13.4k)</li><li><b>Roblox - Prod - Game Join - Key 6</b> · one-off · 10-21 (9.5k)</li><li><b>Highlight AI - Chat Prompt - Production - Key 1</b> · one-off · 10-21+1d (7.2k)</li><li><b>Blizzard - Production - ROW Support Site  - Key 3</b> · one-off · 10-20+2d (3.1k)</li></ul><p><a href="2026-10-22_os_spoof_pagebio_per_key.html">Per-key charts: created vs verified, D-4 → now, ongoing/subsided →</a></p><p><a href="recurrence_2026-10-23.html">Burst history, day by day per key (does it come back?) →</a></p></div></div>
+<h3>Spiking keys</h3><table><tr><th>Key</th><th>Account</th><th class="n">Baseline/day</th><th class="n">Window/day</th><th class="n">Peak day</th><th class="n">Peak vs base</th></tr><tr><td>WBD Bolt/Beam - Account Lookup - Production - Key 20</td><td>WBD</td><td class="n">87.4k</td><td class="n">768k</td><td class="n">1.1M</td><td class="n">13×</td></tr><tr><td>Olo - Payments - Production - Key 3</td><td>Olo</td><td class="n">2.8k</td><td class="n">36.3k</td><td class="n">109.8k</td><td class="n">40×</td></tr><tr><td>Tinder - Production - PreSMS - Key 3</td><td>Tinder</td><td class="n">12</td><td class="n">6.7k</td><td class="n">26.7k</td><td class="n">2147×</td></tr><tr><td>DoorDash - ATM PoV - Production - Key 4</td><td>Doordash</td><td class="n">0</td><td class="n">5.2k</td><td class="n">15.9k</td><td class="n">new</td></tr><tr><td>Chime - Production - Key 1 - Login</td><td>Chime</td><td class="n">0</td><td class="n">6k</td><td class="n">13.4k</td><td class="n">new</td></tr><tr><td>Roblox - Prod - Game Join - Key 6</td><td>Roblox Corporation</td><td class="n">86</td><td class="n">2.6k</td><td class="n">9.5k</td><td class="n">110×</td></tr><tr><td>Highlight AI - Chat Prompt - Production - Key 1</td><td>Highlight AI</td><td class="n">0</td><td class="n">3k</td><td class="n">7.2k</td><td class="n">new</td></tr><tr><td>Blizzard - Production - ROW Support Site  - Key 3</td><td>Blizzard Entertainment Inc.</td><td class="n">168</td><td class="n">1.7k</td><td class="n">3.1k</td><td class="n">18×</td></tr><tr><td>Microsoft - Identity - Account Signup - Production - Key 2</td><td>Microsoft - Identity</td><td class="n">513</td><td class="n">1.6k</td><td class="n">2.8k</td><td class="n">5×</td></tr><tr><td>Roblox - Production - Monetization - Key 4</td><td>Roblox Corporation</td><td class="n">206</td><td class="n">817</td><td class="n">1.6k</td><td class="n">8×</td></tr><tr><td>WBD Bolt/Beam - Registration - Production - Key 9</td><td>WBD</td><td class="n">263</td><td class="n">708</td><td class="n">1.2k</td><td class="n">5×</td></tr><tr><td>F60BEA2C</td><td></td><td class="n">328</td><td class="n">756</td><td class="n">1.2k</td><td class="n">4×</td></tr></table>
+<details><summary>Telltale definition (draft — not created)</summary><pre>{
+  &quot;ticket&quot;: &quot;DETCORE-4466&quot;,
+  &quot;telltale_type&quot;: &quot;suspicion_flags&quot;,
+  &quot;cohort_category&quot;: &quot;Suspicious&quot;,
+  &quot;owner&quot;: &quot;p.nankubuge@arkoselabs.com&quot;,
+  &quot;owner_category&quot;: &quot;User&quot;,
+  &quot;risk_category&quot;: &quot;CUSTOM&quot;,
+  &quot;risk_score&quot;: 0,
+  &quot;telltale_active&quot;: false,
+  &quot;allow_others_to_include&quot;: true,
+  &quot;life_cycle_management&quot;: &quot;M&quot;,
+  &quot;manual_life_cycle_details&quot;: &quot;Spike-scan candidate; review after 14 days&quot;,
+  &quot;_validated&quot;: &quot;validate_telltale 2026-10-23: valid, no errors (NOT created)&quot;,
+  &quot;location&quot;: &quot;SESSION_SETUP&quot;,
+  &quot;telltale_name&quot;: &quot;g-os-spoofing-pagebio-null&quot;,
+  &quot;telltale_definition&quot;: [
+    {
+      &quot;key&quot;: &quot;location&quot;,
+      &quot;operator&quot;: &quot;TS_EQ&quot;,
+      &quot;value&quot;: &quot;session_setup&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-operating-system-spoofing&quot;
+    },
+    {
+      &quot;operator&quot;: &quot;#INCLUDE&quot;,
+      &quot;value&quot;: &quot;g-page-level-biometrics-empty-or-null&quot;
+    }
+  ],
+  &quot;telltale_description&quot;: &quot;Spike-scan 2026-10-23: OS spoofing (any g-os-* impersonation/obsolete/invalid) + page-level biometrics empty or null. Spiked on 9 keys Oct 19-22 (Blizzard ROW Support, Tinder PreSMS, DoorDash ATM PoV, Roblox Game Join, Olo Payments, Microsoft Identity Signup, WBD Account Lookup, Highlight AI, Chime Login).&quot;
+}</pre></details>
+</div>
+<div class="card"><h2>Discovery scan (1% sample)</h2><p class="muted">Daily run 2026-10-23. Step 1: 40 flags with &gt;=3 keys spiking. Dropped as definition changes, not attacks: g-browser-automation-swiftshader / -basic-render / g-spoofing-webgl-dimensions (created Oct 19, THR-1289, not includable), g-ip-timezone-same-country-wrong-zone (created Oct 20), g-h-capi-version-suspicious and g--e-cope-anomaly-wrong-build-id-for-capi-version(-4-6-0/-4-6-1) (CAPI 4.6.1 release Oct 20), g-ip-connection-type-velocity-* wired (edited Oct 21), g-ip-asn-reputation-high-risk-with-session-signal (created Oct 14, partial baseline), and the 8 spike-scan TTs created Oct 19-20. g--e-g-ja4-suspicious-verification-patterns + page-bio null hit 31 keys, but the Ensemble detector rewrites its JA4 list ~4x/day and it grew from 3-11 hashes to 25 on Oct 22, so it is treated as a definition change. Step 2 (16-flag vocab) found two new combos: g-di-dict-3 1x + di-short-300 pxr1 (10 keys, share 0.84) and g-operating-system-spoofing + page-bio null (9 keys, share 0.75). Both added as candidates with validated drafts.</p><table><tr><th>Combination</th><th class="n">Keys spiking</th><th class="n">Volume on spiking keys</th><th class="n">Est. excess sessions/day</th><th>Note</th></tr></table></div>
 <div id="tip"></div><script>
 const tip=document.getElementById('tip');
 document.querySelectorAll('[data-tip]').forEach(el=>{

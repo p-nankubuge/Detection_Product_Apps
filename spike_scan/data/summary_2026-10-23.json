@@ -1,0 +1,37 @@
+{
+ "title": "Update to Oct 23 01:00 UTC (data Oct 19-22 + today so far)",
+ "sections": [
+  {
+   "h": "Still getting through",
+   "items": [
+    "Adobe Sign Up (Key 2): burst on Oct 21 got through on three signatures at once: ct-before-cl + dp-spoof + dict-3 62k (84% verified), dishort300 + ja4-dict1 27k (85%), dict-3 + dishort300 32k (87%). Baseline ~3k/day. Smaller on Oct 22 (15k, 74%).",
+    "Wells Fargo Login (Key 1): ct-before-cl + dp-spoof + dict-3 steady ~32k/day at 74-76% verified every day Oct 19-22.",
+    "Adobe ARP FF (Key 8): down from 0.9-1.4M/day (Oct 16-18) to 61-130k/day, but still 51-65% verified on the pagebio and grease TTs.",
+    "Roblox Monetization (Key 4): 133k on Oct 20 on dishort300 + dp-spoof + ja4-dict1 at 59% verified, one day.",
+    "Tinder PreSMS (Key 3): 26.7k on Oct 19 on OS spoofing + page-bio null at 99% verified, one day."
+   ]
+  },
+  {
+   "h": "New keys",
+   "items": [
+    "Microsoft Identity Account Signup (Key 2): 31k Oct 21 -> 167k Oct 22 at 0% verified on secchua-webgl + dp-spoof, and 166k on the new dict-3 + dishort300 combo; still ~11k/h on Oct 23. Being stopped.",
+    "Amazon IDS (Key 2): ramping on the pagebio (12k -> 23k) and grease (16k -> 25k) TTs, verified falling from ~45% to ~19%."
+   ]
+  },
+  {
+   "h": "Mitigated",
+   "items": [
+    "Roblox Signup (Key 2): single-click + dp-spoof 174-224k/day and ends-te + dp-spoof 62-228k/day at 0-1% verified.",
+    "WBD Account Lookup (Key 20): 0.4-1.1M/day at 0-8% verified on the live pagebio TT.",
+    "Uber SMS (Key 1): grease and pagebio TTs fell from 19-25% verified on Oct 20 to 0-2% on Oct 21-22."
+   ]
+  },
+  {
+   "h": "New candidates (not created)",
+   "items": [
+    "g-di-dict3-st-1x-di-short-300-pxr1: create, scoped to Microsoft Identity Signup + Roblox Signup; watch Adobe Sign Up.",
+    "g-os-spoofing-pagebio-null: hold. Too broad (fires on normal Adobe Sign-in traffic); WBD is already covered."
+   ]
+  }
+ ]
+}
