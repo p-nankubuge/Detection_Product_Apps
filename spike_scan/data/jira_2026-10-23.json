@@ -1,0 +1,10 @@
+{"epic": "BLUE-7295",
+ "drive_folder": "https://drive.google.com/drive/folders/1Pn4aKdr4DYlEKZXswDTAQf3ySUKiR2b1",
+ "drive_day_folder": "https://drive.google.com/drive/folders/1ECFyELMkZ--RaZF82Xw2kLIlDymo_nQa",
+ "tasks": {
+  "secchua_webgl_dp_spoof": "BLUE-7296", "didict3_dishort300": "BLUE-7297",
+  "ct_before_cl_dp_spoof_di_dict3": "BLUE-7298", "single_click_dp_spoof": "BLUE-7299",
+  "ends_cl_ct_before_cl_tz_grease": "BLUE-7300", "dishort300_dp_spoof_ja4_dict1": "BLUE-7301",
+  "ends_te_dp_spoof": "BLUE-7302", "dishort300_didict7_hrsig": "BLUE-7303",
+  "rta_isp_velocity_pagebio": "BLUE-7304", "pagebio_ends_cl_tz_novpn_ct_before_cl": "BLUE-7305"},
+ "subtasks": "BLUE-7306..BLUE-7337 (one per key)"}

@@ -135,3 +135,15 @@ Work from the repo root, `cd spike_scan`.
   `PROD_INT_SESSION_SUMMARY` is the source. `SUSPICION_FLAGS` and `TELLTALE_LIST_AT_ALL_EVENTS`
   are concatenated so both suspicion flags and `telltale`-type globals (e.g. DI telltales) match.
 - Session-level, Production keys only, all locations rolled into the session.
+
+## Hand-off to TSE (from 2026-10-23)
+
+Name used outside this repo: **Daily Attack Tracking**. Requests follow the SOC page
+"Telltale Request Process (TSE / SOC)": default pressure is **ML Defense**; we never set pressure.
+- Epic: BLUE-7295 "Daily Attack Tracking – Telltale Requests (TSE)" (ongoing, one for all runs).
+- One Task per signal (labels `daily-attack-tracking`, `telltale-request`), one Sub-task per key.
+  Map for each run in `data/jira_<day>.json`. New signals on later runs = new Tasks under the same epic;
+  signals that already have a Task get a comment, not a new Task.
+- Action pack HTML goes to Drive "Daily Attack Tracking/<date>/" as
+  `Daily Attack Tracking – SOC action pack – <date>.html`. The Drive connector cannot upload a 4 MB file,
+  so the analyst drops it in; we create the dated folder and link it.
