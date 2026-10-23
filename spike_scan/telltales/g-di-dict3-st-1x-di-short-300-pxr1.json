@@ -1,0 +1,33 @@
+{
+  "ticket": "DETCORE-4466",
+  "telltale_type": "suspicion_flags",
+  "cohort_category": "Suspicious",
+  "owner": "p.nankubuge@arkoselabs.com",
+  "owner_category": "User",
+  "risk_category": "CUSTOM",
+  "risk_score": 0,
+  "telltale_active": false,
+  "allow_others_to_include": true,
+  "life_cycle_management": "M",
+  "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+  "_validated": "validate_telltale 2026-10-23: valid, no errors (NOT created)",
+  "location": "SESSION_SETUP",
+  "telltale_name": "g-di-dict3-st-1x-di-short-300-pxr1",
+  "telltale_definition": [
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-di-dict-3-match-short-term-threshold-exceeded-1x"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "di-short-count-300-fp-pixel-ratio-1"
+    }
+  ],
+  "telltale_description": "Spike-scan 2026-10-23: DI dict-3 short-term 1x + DI short-count-300 (pixel ratio 1). Spiked on 10 keys Oct 19-22 (Roblox Login/Signup, Microsoft Identity Signup, Amazon IDS, Chime Login, Olo Payments, AT&T Forgot Password, Adobe Sign Up, DoorDash ATM PoV, Highlight AI)."
+}
