@@ -91,6 +91,10 @@
   "account_name": "Airbnb Inc.",
   "key_name": "Airbnb - Account Lookup - Production Key 6"
  },
+ "51975FD6-CDA1-4D4B-A7BB-D64A05FCED9B": {
+  "account_name": "Docusign Inc",
+  "key_name": "Docusign - Abuse and Signup - Production - Key 2"
+ },
  "54B78A70-0DD3-455D-BA99-AB5CB14276CF": {
   "account_name": "Highlight AI",
   "key_name": "Highlight AI - Chat Prompt - Production - Key 1"
@@ -239,6 +243,10 @@
   "account_name": "Coinbase",
   "key_name": "Coinbase - Email Verification - Prod - Key 2"
  },
+ "E8A64FAC-C713-4EB4-85D2-7458E3579D31": {
+  "account_name": "Bank of America Corporation",
+  "key_name": "Bank of America - Production - Beacon Workforce -  ATM - Key 4"
+ },
  "EEA5F558-D6AC-4C03-B678-AABF639EE69A": {
   "account_name": "Anthropic",
   "key_name": "Anthropic - Registration & Login - Production - Key 1"
@@ -262,6 +270,10 @@
  "FAD1C7FA-A58F-4D30-93D5-87D1A4E3C641": {
   "account_name": "AT&T",
   "key_name": "AT&T - Consumer Login Web - Production - Key 3"
+ },
+ "FB98C7DB-7AFF-DD4C-A55B-6CF11267BC91": {
+  "account_name": "Microsoft - Outlook",
+  "key_name": "Microsoft - Outlook - Production - Key 1"
  },
  "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9": {
   "account_name": "Gtop100",
