@@ -1,0 +1,33 @@
+{
+ "title": "Since the last run (data Oct 23-25, exact daily counts; Oct 26 so far from hourly data)",
+ "sections": [
+  {
+   "h": "New keys",
+   "items": [
+    "Bank of America Beacon Workforce ATM (Key 4): dict-3 + dishort300 (the new, not-yet-created combo, BLUE-7297) 7.5k Oct 23 -> 166k Oct 24 -> 167k Oct 25 at 0% verified. Biggest new hit. Workforce key: confirm it is attack traffic before attaching the flag.",
+    "Highlight AI Chat Prompt (Key 1): grease and pagebio TTs 7k -> 70k -> 127k/day at 1-5% verified; dict-3 + dp-spoof 0.4k -> 5k. Growing daily, no ticket yet.",
+    "gtop100.com: secchua-webgl 44k -> 133k -> 93k (0-4% verified); new on Oct 25: single-click 30k (71% verified) and dishort300 + ja4-dict1 29k (76% verified) - this part is getting through.",
+    "Olo Payments (Key 3): new single-click + dp-spoof burst 13k on Oct 25 (57% verified); grease 13.6k (55%).",
+    "Tinder PreSMS (Key 3): back on ct-before-cl + dp-spoof + dict-3, 24k -> 47k -> 80k at 0-3% verified (being stopped).",
+    "Smaller: Uber Account Management 2.4k Oct 24, WBD Password Reset 1.4k Oct 23, Airbnb Account Lookup 1.8-3.2k Oct 24, Microsoft Outlook 3.5k Oct 25 (71% verified)."
+   ]
+  },
+  {
+   "h": "Still active",
+   "items": [
+    "Microsoft Identity Signup (Key 2): 224k / 175k / 131k at 0% verified on secchua-webgl and dict-3 + dishort300. Declining, being stopped.",
+    "Uber SMS (Key 1): back up to 212k (grease) and 165k (pagebio) on Oct 25, verified down to 1-3%.",
+    "Amazon IDS (Key 2): grease 84k / 56k and pagebio 80k / 53k on Oct 24-25, 10-37% verified; up from ~26k/day.",
+    "WBD Account Lookup (Key 20): 400k+/day Oct 23-24 at 0% verified, 22k on Oct 25 - dropping.",
+    "Getting through: Wells Fargo Login 11-29k/day on dict-3 at ~80% verified; Adobe ARP FF 9-47k at 11-83%; DoorDash Website dict-7 burst 49k on Oct 23 at 94% verified.",
+    "Blocked / low verified: Blizzard Support Site and Login (0%), Meta Login (6-15%), Roblox Signup (down from 230k peak to 4-36k), Bumble SMS (1%)."
+   ]
+  },
+  {
+   "h": "Stopped (<1k/day Oct 23-25)",
+   "items": [
+    "Roblox Monetization, Adobe Commerce, Chime Login and DoorDash ATM PoV on ja4-dict1; WBD Login on pagebio; Adobe Sign Up on grease; Roblox Login on dict-3 + dishort300."
+   ]
+  }
+ ]
+}
