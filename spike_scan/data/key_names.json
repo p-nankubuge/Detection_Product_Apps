@@ -107,6 +107,10 @@
   "account_name": "Agoda",
   "key_name": "Agoda - SMS - Production 2"
  },
+ "5B6F3411-4A78-4EC2-9223-16001F3B3E68": {
+  "account_name": "HP Inc",
+  "key_name": "HPID - Production - Returning Users - Key 1"
+ },
  "626ED8CB-A366-467A-974A-E5A3B2A1C542": {
   "account_name": "WBD",
   "key_name": "WBD Bolt/Beam - Registration - Production - Key 9"
