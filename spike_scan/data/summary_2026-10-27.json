@@ -1,0 +1,38 @@
+{
+ "title": "Since the last pack (exact counts Oct 26; Oct 27 00-08 UTC from hourly data)",
+ "sections": [
+  {
+   "h": "Biggest change",
+   "items": [
+    "Uber SMS (Key 1): grease and pagebio TTs ~1.8-1.9M on Oct 26 (about 10x Oct 25) at ~6% verified, peaking 190-225k/h at 18-20 UTC. Since 22 UTC a flat ~17k/h with verified down to 0-4/h, then 123k at 08 UTC today. Being stopped, but the largest live attack. Existing ticket: BLUE-7323."
+   ]
+  },
+  {
+   "h": "New since Oct 26",
+   "items": [
+    "Adobe Sign Up (Key 2): back on grease 10.9k Oct 26 / 7.5k today (~30% verified) and single-click 15k / 12.4k (46-55% verified) - partly getting through.",
+    "Roblox Game Join (Key 6): ends-te 5.8k Oct 26 -> 27k so far today, single-click 22k, dict-3 8.7k; verified 3-6% (being stopped).",
+    "Adobe Commerce (Key 3): new on secchua-webgl 4.5k Oct 26 / 5.6k today at 71-94% verified - getting through.",
+    "Smaller: Airbnb Account Lookup webgl 1.8k Oct 26; HPID Returning Users 1.1k on OS spoofing + page-bio null (hold combo)."
+   ]
+  },
+  {
+   "h": "Still running",
+   "items": [
+    "Microsoft Identity Signup (Key 2): ~158k/day on webgl and dict-3 + dishort300 at 0-3% verified; 69k so far today.",
+    "Bank of America Beacon Workforce ATM (Key 4): 170k Oct 26, 22k today on dict-3 + dishort300 (BLUE-7297, not created), 0% verified. Confirm it is attack traffic, not a workforce integration.",
+    "Highlight AI Chat Prompt (Key 1): ~110k/day on grease and pagebio, 0% verified. No ticket yet.",
+    "gtop100.com: webgl 91k Oct 26 (4% verified), 32k today.",
+    "Amazon IDS (Key 2): grease/pagebio dipped to ~6-7k Oct 26, back to 41-47k so far today (9% verified); OS spoofing steady ~50k/day.",
+    "Blizzard Support Site (Key 3): dict-3 and grease 41-43k on Oct 26, 0% verified.",
+    "Getting through: Wells Fargo Login ~29k/day at 81% verified; Adobe ARP FF webgl and ends-te 34-35k at 58-75%. Adobe Sign-in grease 88k at 99% verified looks legitimate."
+   ]
+  },
+  {
+   "h": "Stopped",
+   "items": [
+    "Tinder PreSMS dict-3 (80k Oct 25 -> 0); WBD Account Lookup pagebio/appleos (400k+/day -> ~2k); Olo Payments (0 on every flag); DoorDash Website dict-7 burst over, ja4-dict1 0 today; Roblox Signup ~0 today on dict-3 + dishort300 and dict-7; Amazon IDS dict-3 <1k."
+   ]
+  }
+ ]
+}
