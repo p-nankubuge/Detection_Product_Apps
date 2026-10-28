@@ -1,0 +1,303 @@
+{
+ "title": "Payoneer \u2014 low-and-slow signals, sessions created vs verified",
+ "subtitle": "Follow-up to DETCORE-4466. Source ARK_PROD.events.mini_events_log (session_setup + game_verify), exact counts.",
+ "keys": {
+  "E3EF": "Payoneer CLM Registration (Key 3)",
+  "EE84": "Payoneer Login (Key 2)",
+  "7CC2": "Payoneer Registration (Key 1)"
+ },
+ "signals": [
+  {
+   "id": "S1",
+   "title": "Resolution 1050x1000 spoofing kit (Firefox + Chrome variants)",
+   "verdict": "missed",
+   "keys": [
+    "E3EF",
+    "EE84"
+   ],
+   "show_firefox": true,
+   "markers": [
+    {
+     "label": "pair SFs created",
+     "date": "2026-10-21"
+    }
+   ],
+   "why": "One anti-detect kit with a fixed 1050x1000 screen. The Firefox build trips g-dp-invalid-resolution (available resolution 2560x1392 > screen); the Chrome 151-156 build reports a consistent 1050x960 available resolution and does not. After the invalid-resolution flags went in on Oct 21 the Firefox line drops to ~0 while total volume reaches its high on Oct 26-27, i.e. the actor moved to the Chrome build. On Payoneer, 1050x1000 is 99-100% zh-CN + outlook/hotmail and never seen on Registration.",
+   "telltales": [
+    {
+     "telltale_name": "payoneere3ef-h-dp-resolution-1050x1000",
+     "owner": "p.nankubuge@arkoselabs.com",
+     "ticket": "DETCORE-4466",
+     "telltale_definition": [
+      {
+       "key": "public_key",
+       "operator": "TS_EQ",
+       "value": "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+       "type": "string"
+      },
+      {
+       "key": "location",
+       "operator": "TS_EQ",
+       "value": "session_setup",
+       "type": "string"
+      },
+      {
+       "key": "fp_resolution",
+       "operator": "TS_EQ",
+       "value": "1050,1000",
+       "type": "string"
+      }
+     ],
+     "telltale_description": "Device spoofing kit: fixed screen resolution 1050x1000 (not a real display). Same actor as payoneere3ef-h-dp-invalid-resolution-spoofing-browser-values but also covers the Chrome 151-156 build (available resolution 1050x960) that does not trip g-dp-invalid-resolution. On CLM since Sep 14: ~2.3k sessions / 45 days, 93% verified; zh-CN, CN mobile ISPs, outlook/hotmail, rotating WebGL renderers. Moved from Firefox to Chrome after Oct 21; peak 136/day on Oct 27.",
+     "external_description": "Device spoofing: non-standard fixed screen resolution (1050x1000) reused across sessions with rotating device values. Low-and-slow on Payoneer CLM since Sep 14, ~93% verified, mostly outlook/hotmail from CN."
+    },
+    {
+     "telltale_name": "payoneeree84-h-dp-resolution-1050x1000",
+     "owner": "p.nankubuge@arkoselabs.com",
+     "ticket": "DETCORE-4466",
+     "telltale_definition": [
+      {
+       "key": "public_key",
+       "operator": "TS_EQ",
+       "value": "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+       "type": "string"
+      },
+      {
+       "key": "location",
+       "operator": "TS_EQ",
+       "value": "session_setup",
+       "type": "string"
+      },
+      {
+       "key": "fp_resolution",
+       "operator": "TS_EQ",
+       "value": "1050,1000",
+       "type": "string"
+      }
+     ],
+     "telltale_description": "Device spoofing kit: fixed screen resolution 1050x1000 (not a real display). Same actor as payoneeree84-h-dp-invalid-resolution-spoofing-browser-values but also covers the Chrome 151-156 build (available resolution 1050x960) that does not trip g-dp-invalid-resolution. On Login since Sep 14: ~1.5k sessions / 45 days, 96% verified; zh-CN, CN mobile ISPs, outlook/hotmail. Moved from Firefox to Chrome after Oct 21; 71 on Oct 27.",
+     "external_description": "Device spoofing: non-standard fixed screen resolution (1050x1000) reused across sessions with rotating device values. Low-and-slow on Payoneer Login since Sep 14, ~96% verified, mostly outlook/hotmail from CN."
+    }
+   ]
+  },
+  {
+   "id": "S2",
+   "title": "Resolution 830x800, Windows, hotmail, fake en-EN locale (residential proxies)",
+   "verdict": "missed",
+   "keys": [
+    "E3EF",
+    "EE84"
+   ],
+   "why": "Windows 100%, hotmail ~100%, navigator language 'en-EN' (not a real locale) or 'en' with reversed language priority, JP/CO/KR residential ISPs. On Login it reuses 66 fingerprints across ~1,500 IPs. This is the Oct 15-17 reversed-navigator-languages-priority surge. Quiet on CLM since Oct 23 and moved to Login (126 on Oct 25).",
+   "telltales": [
+    {
+     "telltale_name": "payoneer-h-dp-resolution-830x800-windows",
+     "owner": "p.nankubuge@arkoselabs.com",
+     "ticket": "DETCORE-4466",
+     "telltale_definition": [
+      {
+       "key": "public_key",
+       "operator": "TS_IN",
+       "value": [
+        "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+        "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+        "7CC24C4A-611B-41C7-9808-B95722C7861C"
+       ],
+       "type": "list[string]"
+      },
+      {
+       "key": "location",
+       "operator": "TS_EQ",
+       "value": "session_setup",
+       "type": "string"
+      },
+      {
+       "key": "fp_resolution",
+       "operator": "TS_EQ",
+       "value": "830,800",
+       "type": "string"
+      },
+      {
+       "key": "os",
+       "operator": "TS_EQ",
+       "value": "Windows",
+       "type": "string"
+      }
+     ],
+     "telltale_description": "Residential-proxy actor: Windows with fixed 830x800 screen resolution, hotmail emails, fake 'en-EN' navigator locale (or 'en' with reversed language priority), JP/CO/KR residential ISPs. ~6.6k sessions / 45 days on CLM + Login, 98-99% verified, challenged rarely. Fingerprint reuse on Login (66 init_fingerprints over ~1.5k IPs). Moved CLM -> Login around Oct 19-23.",
+     "external_description": "Device spoofing: non-standard fixed screen resolution (830x800) on Windows reused across many residential IPs. Low-and-slow on Payoneer CLM and Login since Sep 13, ~98% verified, mostly hotmail."
+    }
+   ]
+  },
+  {
+   "id": "S3",
+   "title": "Tencent Cloud + outlook 4-letters-4-digits handles",
+   "verdict": "missed",
+   "keys": [
+    "E3EF",
+    "EE84",
+    "7CC2"
+   ],
+   "why": "Hosting-provider IPs (Tencent Cloud Beijing), zh-CN, Chrome 147/148, outlook handles matching ^[a-z]{4}\\d{4}@. Burst on CLM Oct 7-19 (peak 355/day) at 98% verified; the existing payoneer-email-pattern-4-lowercase-letters-4-digits-outlook flag carries no pressure. Still trickling on Login and Registration.",
+   "telltales": [
+    {
+     "telltale_name": "payoneer-h-tencent-cloud-4l4d-outlook",
+     "owner": "p.nankubuge@arkoselabs.com",
+     "ticket": "DETCORE-4466",
+     "telltale_definition": [
+      {
+       "key": "public_key",
+       "operator": "TS_IN",
+       "value": [
+        "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+        "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+        "7CC24C4A-611B-41C7-9808-B95722C7861C"
+       ],
+       "type": "list[string]"
+      },
+      {
+       "key": "location",
+       "operator": "TS_EQ",
+       "value": "session_setup",
+       "type": "string"
+      },
+      {
+       "key": "isp",
+       "operator": "TS_CONTAINS",
+       "value": "tencent cloud",
+       "type": "string"
+      },
+      {
+       "operator": "#INCLUDE",
+       "value": "payoneer-email-pattern-4-lowercase-letters-4-digits-outlook"
+      }
+     ],
+     "telltale_description": "Scripted registrations from Tencent Cloud (hosting) IPs with outlook.com handles of 4 lowercase letters + 4 digits, zh-CN, Chrome 147/148. CLM burst Oct 7-19 (peak 355/day, ~2.1k sessions, 98% verified); ~1.3k on Login and a trickle on Registration since Oct 20. Narrows payoneer-email-pattern-4-lowercase-letters-4-digits-outlook to the hosting-IP core.",
+     "external_description": "Automated pattern: hosting-provider IPs combined with templated outlook.com handles (4 letters + 4 digits). Seen on Payoneer CLM, Login and Registration since Oct 6, ~98% verified."
+    }
+   ]
+  },
+  {
+   "id": "S4",
+   "title": "US outlook, 3440x1440, Chrome 150 (new Oct 22)",
+   "verdict": "watch",
+   "keys": [
+    "E3EF",
+    "EE84"
+   ],
+   "why": "Started Oct 22 on CLM at ~150-220/day, 97% verified, never challenged; starting on Login (63 on Oct 27). Ultrawide resolution + one Chrome build + US + outlook across hundreds of IPs. validate_telltale flags a ground_truth_overlap with a Roblox US ground truth (different key), likely spurious - confirm with the tester before creating.",
+   "telltales": [
+    {
+     "telltale_name": "payoneer-h-watch-us-outlook-3440x1440-chrome150",
+     "owner": "p.nankubuge@arkoselabs.com",
+     "ticket": "DETCORE-4466",
+     "telltale_definition": [
+      {
+       "key": "public_key",
+       "operator": "TS_IN",
+       "value": [
+        "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+        "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+        "7CC24C4A-611B-41C7-9808-B95722C7861C"
+       ],
+       "type": "list[string]"
+      },
+      {
+       "key": "location",
+       "operator": "TS_EQ",
+       "value": "session_setup",
+       "type": "string"
+      },
+      {
+       "key": "fp_resolution",
+       "operator": "TS_EQ",
+       "value": "3440,1440",
+       "type": "string"
+      },
+      {
+       "key": "ua",
+       "operator": "TS_CONTAINS",
+       "value": "Chrome/150.",
+       "type": "string"
+      },
+      {
+       "key": "country",
+       "operator": "TS_EQ",
+       "value": "US",
+       "type": "string"
+      },
+      {
+       "key": "email__raw_email_domain",
+       "operator": "TS_EQ",
+       "value": "outlook.com",
+       "type": "string"
+      }
+     ],
+     "telltale_description": "Watch: US outlook.com registrations on Chrome 150 / Windows with 3440x1440 resolution, few init_fingerprints across hundreds of IPs. New Oct 22 on CLM (~1.1k sessions, 97% verified, 0% challenged), starting on Login (63 on Oct 27). Monitor only until confirmed.",
+     "external_description": "Suspicious device cluster: identical uncommon device profile (3440x1440, Chrome 150) reused across many US IPs with outlook.com emails. Payoneer CLM since Oct 22."
+    }
+   ]
+  },
+  {
+   "id": "S5",
+   "title": "CN hotmail, 1280x960, Chrome 109 (Oct 19-26)",
+   "verdict": "watch",
+   "keys": [
+    "E3EF",
+    "EE84"
+   ],
+   "why": "Chrome 109 (last Windows 7 build) + 1280x960 + CN + hotmail, one init_fingerprint over 100+ IPs. Oct 19-24 on CLM, through Oct 26 on Login, 100% verified, never challenged. Currently quiet - keep as an alerter in case it comes back.",
+   "telltales": [
+    {
+     "telltale_name": "payoneer-h-watch-cn-hotmail-1280x960-chrome109",
+     "owner": "p.nankubuge@arkoselabs.com",
+     "ticket": "DETCORE-4466",
+     "telltale_definition": [
+      {
+       "key": "public_key",
+       "operator": "TS_IN",
+       "value": [
+        "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+        "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+        "7CC24C4A-611B-41C7-9808-B95722C7861C"
+       ],
+       "type": "list[string]"
+      },
+      {
+       "key": "location",
+       "operator": "TS_EQ",
+       "value": "session_setup",
+       "type": "string"
+      },
+      {
+       "key": "fp_resolution",
+       "operator": "TS_EQ",
+       "value": "1280,960",
+       "type": "string"
+      },
+      {
+       "key": "ua",
+       "operator": "TS_CONTAINS",
+       "value": "Chrome/109.",
+       "type": "string"
+      },
+      {
+       "key": "country",
+       "operator": "TS_EQ",
+       "value": "CN",
+       "type": "string"
+      },
+      {
+       "key": "email__raw_email_domain",
+       "operator": "TS_EQ",
+       "value": "hotmail.com",
+       "type": "string"
+      }
+     ],
+     "telltale_description": "Watch: CN hotmail.com sessions on Chrome 109 (Windows 7 era) with 1280x960 resolution, one init_fingerprint over 100+ IPs. Oct 19-26 on CLM + Login, ~510 sessions, 100% verified, 0% challenged. Quiet since Oct 26; alerter for recurrence.",
+     "external_description": "Suspicious device cluster: outdated browser build (Chrome 109) with a fixed 1280x960 resolution reused across many CN IPs with hotmail emails. Payoneer CLM and Login, Oct 19-26."
+    }
+   ]
+  }
+ ]
+}

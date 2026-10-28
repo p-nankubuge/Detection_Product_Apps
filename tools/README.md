@@ -43,3 +43,18 @@ tunable thresholds.
    (office, school, SSO/NAT) — these should NOT be in HARD_CHALLENGE.
 3. Only after FPR looks sane on a real key, consider Mode A (requires the
    account identifier — the far stronger signal).
+
+## `signal_timeseries_report.py` — created vs verified per signal (SOC-pack style)
+
+Renders a self-contained HTML report with one daily created-vs-verified chart per signal and key,
+burst days shaded, plus the proposed suspicion-flag definition and descriptions for each signal.
+
+```
+python3 tools/signal_timeseries_report.py \
+  --data queries/payoneer_signal_daily_2026-10-28.csv \
+  --spec tools/payoneer_signals_spec.json \
+  --days 45 --end 2026-10-27 --out docs/payoneer-signals-2026-10-28.html
+```
+
+`--days` sets the "last X days" window. The CSV is `signal,key,date,created,verified[,firefox]`; the
+daily-outcome query in `queries/payoneer_hunt.sql` (section 2) produces it per signal.
