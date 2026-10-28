@@ -82,13 +82,13 @@
   },
   {
    "id": "S2",
-   "title": "Resolution 830x800, Windows, hotmail, fake en-EN locale (residential proxies)",
+   "title": "Resolution 830x800 with no taskbar, Windows, hotmail (residential proxies) \u2014 tightened",
    "verdict": "missed",
    "keys": [
     "E3EF",
     "EE84"
    ],
-   "why": "Windows 100%, hotmail ~100%, navigator language 'en-EN' (not a real locale) or 'en' with reversed language priority, JP/CO/KR residential ISPs. On Login it reuses 66 fingerprints across ~1,500 IPs. This is the Oct 15-17 reversed-navigator-languages-priority surge. Quiet on CLM since Oct 23 and moved to Login (126 on Oct 25).",
+   "why": "Tightened definition: fp_resolution = fp_available_resolution = 830x800 on Windows. A real Windows screen always loses height to the taskbar, so available = screen means injected values. The tightened rule keeps 100% of the 6,607 sessions (no 830x800 session on Payoneer had a different available resolution), so the chart is unchanged and nothing is lost. In the last 3 days 830x800 appeared on exactly one key across all of Arkose - Payoneer Login (159 sessions). vs normal Payoneer Windows traffic: 95% hotmail (baseline 5%), 48% 'en-EN' locale (0%), 3.9 sessions / 2.1 IPs per fingerprint (1.1 / 1.1), 16-core NVIDIA profile on a netbook-sized screen. CO/KR/JP/BR IPs with matching timezones but English-only browsers. Quiet on CLM since Oct 23, active on Login.",
    "telltales": [
     {
      "telltale_name": "payoneer-h-dp-resolution-830x800-windows",
@@ -118,14 +118,20 @@
        "type": "string"
       },
       {
+       "key": "fp_available_resolution",
+       "operator": "TS_EQ",
+       "value": "830,800",
+       "type": "string"
+      },
+      {
        "key": "os",
        "operator": "TS_EQ",
        "value": "Windows",
        "type": "string"
       }
      ],
-     "telltale_description": "Residential-proxy actor: Windows with fixed 830x800 screen resolution, hotmail emails, fake 'en-EN' navigator locale (or 'en' with reversed language priority), JP/CO/KR residential ISPs. ~6.6k sessions / 45 days on CLM + Login, 98-99% verified, challenged rarely. Fingerprint reuse on Login (66 init_fingerprints over ~1.5k IPs). Moved CLM -> Login around Oct 19-23.",
-     "external_description": "Device spoofing: non-standard fixed screen resolution (830x800) on Windows reused across many residential IPs. Low-and-slow on Payoneer CLM and Login since Sep 13, ~98% verified, mostly hotmail."
+     "telltale_description": "Device spoofing / residential-proxy actor: Windows reporting screen = available resolution = 830x800 (no taskbar - impossible on real Windows; resolution seen on no other Arkose key). 95% hotmail, fake 'en-EN' locale or 'en,en-US,en' language list, CO/KR/JP/BR residential IPs with matched timezones. ~6.6k sessions / 45 days on CLM + Login, 98-99% verified, rarely challenged; 66 init_fingerprints over ~1.5k IPs on Login. Moved CLM -> Login around Oct 19-23.",
+     "external_description": "Device spoofing: screen and available resolution both a non-standard 830x800 on Windows (no taskbar), reused across many residential IPs. Low-and-slow on Payoneer CLM and Login since Sep 13, ~98% verified, mostly hotmail."
     }
    ]
   },
