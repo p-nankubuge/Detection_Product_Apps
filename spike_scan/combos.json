@@ -48,7 +48,8 @@
    "action_detail": "LIVE since 2026-10-19 03:2x UTC (Dataswan id 14768848, Suspicious flag, risk 0, no action on its own). Pressure first on Adobe ARP, Roblox Signup/Login, AT&T SDK Android and Olo Payments; not on Adobe Sign-in (99% verified, likely benign). Tracking continues: watch whether verified share drops on the keys where pressure is added. Weekend before creation: Adobe ARP came back to its highest level yet, 251k on Oct 18 (74% verified; 103k/h at 12h). New key: AT&T Consumer SDK Android, 30k on Oct 18 at 0% verified (a 2-hour burst at 09-10h UTC). Roblox Signup 115k on Oct 16 (0% verified), then ~35-45k/day. Wells Fargo Login is steady at 13-31k/day (~73% verified, getting through). Olo Payments is new from Oct 17 (12k on Oct 18, 0% verified, ongoing). Adobe Sign-in 17-20k/day at 99% verified (likely benign).",
    "dataswan_id": 14768848,
    "created": "2026-10-19",
-   "ticket": "DETCORE-4466"
+   "ticket": "DETCORE-4466",
+   "history_note": "DATA NOTE 2026-10-28: g-di-dict-3-match-short-term-threshold-exceeded-1x was edited 2026-10-27 03:05 UTC (m.davies, THR-405): an extra condition di_dictionary_num_matched == -99 was added next to == 3, so the flag can no longer fire. It drops to 0 on every key from ~09 UTC Oct 27. Drops on dict-3 combos after that are the edit, not the attacker stopping."
   },
   {
    "id": "rta_isp_velocity_pagebio",
@@ -212,9 +213,9 @@
     "di-short-count-300-fp-pixel-ratio-1"
    ],
    "draft": "telltales/g-di-dict3-st-1x-di-short-300-pxr1.json",
-   "history_note": "Added 2026-10-23; exact history from 2026-10-12.",
-   "action": "create (scoped)",
-   "action_detail": "NEW 2026-10-23, not created. Validated draft: telltales/g-di-dict3-st-1x-di-short-300-pxr1.json. Apply to: Microsoft Identity Signup (Key 2): 31k Oct 21 -> 166k Oct 22 at 0% verified, still ~11k/h on Oct 23. Roblox Signup (Key 2): 213k Oct 19 -> 26k Oct 22, ~1% verified. Watch: Adobe Sign Up (Key 2): 32k on Oct 21 at 87% verified (baseline ~3k/day); the same Oct 21 burst shows on the ct-before-cl/dict-3 (62k, 84%) and ja4-dict1 (27k, 85%) combos, so it got through on several signatures. Not on: Adobe ARP FF (Key 8, ~97% verified), Wells Fargo Login (5-9k/day, 46-80% verified, steady), Chime Login / Amazon IDS / Highlight AI (small, mixed). History before Oct 12 not loaded. Oct 23-25: Microsoft Identity Signup still 224k/175k/131k (0% verified); NEW Bank of America Beacon Workforce ATM (Key 4) 7.5k/166k/167k at 0% verified - confirm before applying (workforce key). Ticket: BLUE-7297."
+   "history_note": "Added 2026-10-23; exact history from 2026-10-12. DATA NOTE 2026-10-28: g-di-dict-3-match-short-term-threshold-exceeded-1x was edited 2026-10-27 03:05 UTC (m.davies, THR-405): an extra condition di_dictionary_num_matched == -99 was added next to == 3, so the flag can no longer fire. It drops to 0 on every key from ~09 UTC Oct 27. Drops on dict-3 combos after that are the edit, not the attacker stopping.",
+   "action": "hold (dict-3 disabled at source)",
+   "action_detail": "ON HOLD 2026-10-28: g-di-dict-3 was edited on Oct 27 03:05 UTC (THR-405) so it can no longer fire; this combo has been 0 everywhere since ~09 UTC Oct 27. Do not create until we know from m.davies whether dict-3 comes back. Before the edit: Microsoft Identity Signup 224k/175k/131k/159k (Oct 23-26) at 0-3% verified; Bank of America Beacon Workforce ATM 7.5k/166k/167k/170k at 0% verified (workforce key, confirm before any action); DoorDash Website ~40-47k/day. Draft: telltales/g-di-dict3-st-1x-di-short-300-pxr1.json. Ticket: BLUE-7297."
   },
   {
    "id": "os_spoof_pagebio",

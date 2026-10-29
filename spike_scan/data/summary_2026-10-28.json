@@ -1,0 +1,44 @@
+{
+ "title": "Today (Oct 28 00-05 UTC, hourly) and Oct 27 (exact)",
+ "sections": [
+  {
+   "h": "Read first: dict-3 flag disabled at source",
+   "items": [
+    "g-di-dict-3-match-short-term-threshold-exceeded-1x was edited 2026-10-27 03:05 UTC (m.davies, THR-405) with an impossible extra condition (num_matched == 3 AND == -99), and it is 0 on every key from ~09 UTC Oct 27. So the live TT g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x and the dict-3 + dishort300 candidate (BLUE-7297) no longer fire. The 'stop' of Bank of America Beacon ATM, Microsoft Signup, Wells Fargo, Blizzard and DoorDash on those combos is this edit, not the attacker. Worth asking m.davies whether it was intended; BLUE-7297 cannot be created as drafted while dict-3 is off."
+   ]
+  },
+  {
+   "h": "Biggest now",
+   "items": [
+    "Uber SMS (Key 1): key total 6.5M on Oct 27; grease 1.75M and pagebio 1.61M at 0% verified; still ~85-90k/h on both today (437k / 410k in 5h). Fully blocked but the largest volume we have seen. BLUE-7323.",
+    "Amazon IDS (Key 2): grease 251k and pagebio 220k on Oct 27 (up from ~7k on Oct 26), 14% verified; today 62k / 54k in 5h at 9%.",
+    "Microsoft Identity Signup (Key 2): webgl 154k on Oct 27 at 0% verified; 10k in 5h today (slowing).",
+    "gtop100.com: webgl 76k on Oct 27 (4%), 14k in 5h today."
+   ]
+  },
+  {
+   "h": "Getting through",
+   "items": [
+    "Adobe Commerce (Key 3): webgl 22k on Oct 27 at 95% verified, 4k in 5h today at 91%.",
+    "Adobe Sign Up (Key 2): ends-te 11k on Oct 27 (56%), 6.5k in 5h today at 82% - growing; single-click 17k on Oct 27 at 58%.",
+    "Adobe ARP FF (Key 8): webgl 31k at 81%, ends-te 26k at 57%, grease/pagebio ~23k at 35-40%.",
+    "Meta Login (Key 2): grease/pagebio verified rose from 11-13% to 59-63% on Oct 27 and 84-97% today - either the traffic turned legitimate or the attack is now passing."
+   ]
+  },
+  {
+   "h": "Blocked / other",
+   "items": [
+    "Roblox Game Join (Key 6): ends-te 55k and single-click 22k on Oct 27 at 3-9% verified; 4.8k in 5h today.",
+    "Roblox Login (Key 1): new on dict-7 + dishort300 + high-risk sig, 4.5k on Oct 27 at 0%.",
+    "Blizzard Support Site: grease 29k on Oct 27, 3k today, 0% verified.",
+    "Highlight AI Chat Prompt: grease/pagebio 110k on Oct 26 -> 16k on Oct 27 -> ~0 today (stopped; not a dict-3 combo)."
+   ]
+  },
+  {
+   "h": "Discovery (Oct 24-27)",
+   "items": [
+    "No new attack combination. Only ja4-dict-1 + dishort300 passed (8 keys), but it appeared from zero on 5 unrelated keys in the same hour on Oct 27 (Pinterest Login went from 0.2% to 62% of traffic at flat volume): an upstream JA4 dictionary change, not an attack. Dropped as artifacts: cdn-header-order-only-have-single-cookie (created Oct 24) and country-timezone-mismatch (jumps on every key on Oct 25, EU DST end; expect tz-mismatch flags to be noisy until US DST ends Nov 1)."
+   ]
+  }
+ ]
+}
