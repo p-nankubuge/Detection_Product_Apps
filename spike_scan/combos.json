@@ -243,7 +243,7 @@
    "draft": "telltales/g-cdn-pragma-sec-ch-ua-upcoming-chrome.json",
    "history_note": "Added 2026-10-29; exact history from 2026-10-22.",
    "action": "candidate (review)",
-   "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Amazon IDS (Key 2): 4.6k/5.2k on Oct 25-26 -> 262k Oct 27 / 312k Oct 28 at 12% verified (78% of all volume). Also Adobe Sign Up 15.5k (31%), Olo Payments 11.4k Oct 25 only (52%), MS Identity Signup 6.3k (15%), Pinterest Login 4.5k (5%). Exact share across all keys 0.83. Amazon IDS already carries the live grease/pagebio TTs, so check whether this adds anything there before creating; scope to Amazon IDS if created."
+   "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Amazon IDS (Key 2): 4.6k/5.2k on Oct 25-26 -> 262k Oct 27 / 312k Oct 28 at 12% verified (78% of all volume). Also Adobe Sign Up 15.5k (31%), Olo Payments 11.4k Oct 25 only (52%), MS Identity Signup 6.3k (15%), Pinterest Login 4.5k (5%). Exact share across all keys 0.83. Amazon IDS already carries the live grease/pagebio TTs, so check whether this adds anything there before creating; scope to Amazon IDS if created. Hourly: Amazon IDS still ~12-16k/h through Oct 29 21h UTC."
   },
   {
    "id": "spoofed_os_pagebio_grease",
@@ -258,7 +258,7 @@
    "draft": "telltales/g-spoofed-os-mismatch-pagebio-null-grease.json",
    "history_note": "Added 2026-10-29; exact history from 2026-10-22.",
    "action": "candidate (review)",
-   "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Roblox Login (Key 1): ~3k/day Oct 25-26 -> 168k Oct 27 -> 974k Oct 28 at ~8% verified (89% of volume). Also Roblox Signup 124k (28%), MS Outlook 10k (72%), Blizzard ROW Registration ~6k (1-2%), MS Identity Signup ~4k (7%). Exact share 0.53 (just over the bar); Amazon IDS fires steadily at 110-138k/day. Candidate for a Roblox-scoped flag."
+   "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Roblox Login (Key 1): ~3k/day Oct 25-26 -> 168k Oct 27 -> 974k Oct 28 at ~8% verified (89% of volume). Also Roblox Signup 124k (28%), MS Outlook 10k (72%), Blizzard ROW Registration ~6k (1-2%), MS Identity Signup ~4k (7%). Exact share 0.53 (just over the bar); Amazon IDS fires steadily at 110-138k/day. Candidate for a Roblox-scoped flag. Hourly: Roblox Login peaked at 50-67k/h on Oct 28 and fell to ~100-180/h from Oct 28 23h (stopped for now); Roblox Signup flared on Oct 29 (29k at 12h UTC)."
   }
  ],
  "retired": [

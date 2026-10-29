@@ -1,0 +1,24 @@
+{
+ "title": "Daily run 2026-10-29 (exact to Oct 28; Oct 29 00-21 UTC from hourly data)",
+ "sections": [
+  {"h": "New combinations (discovery Oct 25-28, validated drafts, not created)", "items": [
+   "g-cdn-pragma-sec-ch-ua-upcoming-chrome: Amazon IDS (Key 2) ~5k/day -> 262k Oct 27 / 312k Oct 28 at 12% verified, still ~12-16k/h today. Amazon IDS already has the live grease/pagebio TTs; scope to Amazon IDS if created.",
+   "g-spoofed-os-mismatch-pagebio-null-grease: Roblox Login (Key 1) ~3k/day -> 168k Oct 27 -> 974k Oct 28 at ~8% verified, then stopped from Oct 28 23h. Roblox Signup flared Oct 29 (29k at 12h). Exact share only 0.53 (fires steadily on Amazon IDS, DoorDash, Adobe Sign-in, Meta) - Roblox-scoped if created."]},
+  {"h": "Read first: DI dictionary flags changed at source on Oct 27", "items": [
+   "m.davies (THR-405..413) added an impossible condition to dict-1, dict-3 and dict-neg1 flags (now never fire) and re-thresholded dict-7/15/31 (1x now ratio >=3). Any drop on these flags since Oct 27 is the edit, not the attacker. The dict-3 + dishort300 candidate (BLUE-7297) is on hold."]},
+  {"h": "Biggest now", "items": [
+   "Uber SMS (Key 1): grease 2.1M / pagebio 1.9M on Oct 28 at 0% verified; 850k / 770k so far today, easing to ~24k/h in the last 6h. Ends-te 109k today at 69% verified - that part is getting through.",
+   "Amazon IDS (Key 2): grease 300k / pagebio 263k on Oct 28, 260k / 229k today, 10-14% verified, steady ~10-11k/h.",
+   "Highlight AI Chat Prompt: back - 100k today on grease and pagebio (4% verified), ~9k/h now. No ticket yet.",
+   "Airbnb Account Lookup: 52-69k today on grease/pagebio at 0% verified, mostly earlier in the day.",
+   "Microsoft Identity Signup: webgl 75k Oct 28, 73k today, 0-1% verified.",
+   "Roblox Login: webgl 12k, single-click 6k, dict-7 5.5k today at ~1% verified."]},
+  {"h": "Getting through", "items": [
+   "Adobe Commerce: webgl ~22k/day at 85-95% verified.",
+   "Adobe ARP FF: webgl 56-66% verified.",
+   "Adobe Sign Up: ends-te 24k on Oct 28 at 70% verified (1.3k today).",
+   "Uber SMS ends-te 109k today at 69% verified."]},
+  {"h": "Stopped", "items": [
+   "Roblox Game Join ends-te (55k Oct 27 -> ~0); Meta Login grease/pagebio down to ~1k; Roblox Login spoofed-OS surge stopped after Oct 28."]}
+ ]
+}

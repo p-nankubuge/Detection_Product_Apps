@@ -1,0 +1,6201 @@
+{
+ "pagebio_ends_cl_tz_novpn_ct_before_cl": [
+  {
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "median": 47242,
+   "threshold": 141726,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 269353,
+     "peak_day": "2026-10-11",
+     "sessions": 269353,
+     "verified": 46109
+    },
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-20",
+     "days": 1,
+     "peak": 182774,
+     "peak_day": "2026-10-20",
+     "sessions": 182774,
+     "verified": 46250
+    },
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-28",
+     "days": 4,
+     "peak": 1925955,
+     "peak_day": "2026-10-28",
+     "sessions": 5489454,
+     "verified": 113247
+    }
+   ],
+   "gaps_days": [
+    9,
+    5
+   ],
+   "today": [
+    766154,
+    2133
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "7A946A46-88B6-40F4-9A8E-7286D122B384",
+   "median": 397,
+   "threshold": 1191,
+   "episodes": [
+    {
+     "start": "2026-10-01",
+     "end": "2026-10-01",
+     "days": 1,
+     "peak": 11259,
+     "peak_day": "2026-10-01",
+     "sessions": 11259,
+     "verified": 267
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-16",
+     "days": 3,
+     "peak": 5164,
+     "peak_day": "2026-10-15",
+     "sessions": 9819,
+     "verified": 271
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-26",
+     "days": 9,
+     "peak": 646973,
+     "peak_day": "2026-10-21",
+     "sessions": 3119491,
+     "verified": 159682
+    }
+   ],
+   "gaps_days": [
+    13,
+    4
+   ],
+   "today": [
+    1737,
+    45
+   ],
+   "today_burst": true,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "513F48D7-3DCD-468D-8557-EFF418CF794D",
+   "median": 50,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-07",
+     "end": "2026-10-08",
+     "days": 2,
+     "peak": 5487,
+     "peak_day": "2026-10-07",
+     "sessions": 8176,
+     "verified": 5418
+    },
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-12",
+     "days": 3,
+     "peak": 565399,
+     "peak_day": "2026-10-11",
+     "sessions": 980300,
+     "verified": 485
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 1106,
+     "peak_day": "2026-10-14",
+     "sessions": 1106,
+     "verified": 42
+    }
+   ],
+   "gaps_days": [
+    3,
+    4
+   ],
+   "today": [
+    51718,
+    20
+   ],
+   "today_burst": true,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "median": 746,
+   "threshold": 2238,
+   "episodes": [
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-12",
+     "days": 4,
+     "peak": 8923,
+     "peak_day": "2026-10-11",
+     "sessions": 22914,
+     "verified": 175
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 2291,
+     "peak_day": "2026-10-18",
+     "sessions": 2291,
+     "verified": 551
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-28",
+     "days": 8,
+     "peak": 262521,
+     "peak_day": "2026-10-28",
+     "sessions": 669507,
+     "verified": 90844
+    }
+   ],
+   "gaps_days": [
+    9,
+    3
+   ],
+   "today": [
+    229043,
+    32767
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "B0217B00-2CA4-41CC-925D-1EEB57BFFC2F",
+   "median": 278,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 6211,
+     "peak_day": "2026-10-11",
+     "sessions": 6211,
+     "verified": 5662
+    },
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 2642,
+     "peak_day": "2026-10-13",
+     "sessions": 2642,
+     "verified": 1788
+    },
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-22",
+     "days": 7,
+     "peak": 202774,
+     "peak_day": "2026-10-18",
+     "sessions": 322217,
+     "verified": 86873
+    }
+   ],
+   "gaps_days": [
+    2,
+    3
+   ],
+   "today": [
+    64,
+    46
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "FAD1C7FA-A58F-4D30-93D5-87D1A4E3C641",
+   "median": 1,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-09",
+     "days": 1,
+     "peak": 2441,
+     "peak_day": "2026-10-09",
+     "sessions": 2441,
+     "verified": 972
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-13",
+     "days": 3,
+     "peak": 131566,
+     "peak_day": "2026-10-11",
+     "sessions": 260440,
+     "verified": 55278
+    }
+   ],
+   "gaps_days": [
+    2
+   ],
+   "today": [
+    1,
+    1
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+   "median": 126,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-01",
+     "end": "2026-10-01",
+     "days": 1,
+     "peak": 4124,
+     "peak_day": "2026-10-01",
+     "sessions": 4124,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-08",
+     "days": 1,
+     "peak": 5605,
+     "peak_day": "2026-10-08",
+     "sessions": 5605,
+     "verified": 254
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 2479,
+     "peak_day": "2026-10-11",
+     "sessions": 2479,
+     "verified": 164
+    },
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 3356,
+     "peak_day": "2026-10-13",
+     "sessions": 3356,
+     "verified": 1418
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-20",
+     "days": 4,
+     "peak": 72824,
+     "peak_day": "2026-10-19",
+     "sessions": 106958,
+     "verified": 1074
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 16881,
+     "peak_day": "2026-10-24",
+     "sessions": 16881,
+     "verified": 918
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 4061,
+     "peak_day": "2026-10-28",
+     "sessions": 4061,
+     "verified": 423
+    }
+   ],
+   "gaps_days": [
+    7,
+    3,
+    2,
+    4,
+    7,
+    4
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 7,
+   "kind": "recurring"
+  },
+  {
+   "key": "430FF2C3-1AB1-40B7-8BE7-44FC683FE02C",
+   "median": 4553,
+   "threshold": 13659,
+   "episodes": [
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 13674,
+     "peak_day": "2026-10-18",
+     "sessions": 13674,
+     "verified": 13664
+    },
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-23",
+     "days": 4,
+     "peak": 19973,
+     "peak_day": "2026-10-20",
+     "sessions": 69813,
+     "verified": 69708
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-27",
+     "days": 2,
+     "peak": 22434,
+     "peak_day": "2026-10-26",
+     "sessions": 40940,
+     "verified": 40899
+    }
+   ],
+   "gaps_days": [
+    2,
+    6
+   ],
+   "today": [
+    22397,
+    22318
+   ],
+   "today_burst": true,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 165,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-17",
+     "days": 3,
+     "peak": 6368,
+     "peak_day": "2026-10-17",
+     "sessions": 11350,
+     "verified": 1788
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-21",
+     "days": 3,
+     "peak": 7274,
+     "peak_day": "2026-10-20",
+     "sessions": 10818,
+     "verified": 2935
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 14204,
+     "peak_day": "2026-10-23",
+     "sessions": 14204,
+     "verified": 4913
+    }
+   ],
+   "gaps_days": [
+    4,
+    4
+   ],
+   "today": [
+    419,
+    191
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "2F1CD804-FE45-F12B-9723-240962EBA6F8",
+   "median": 442,
+   "threshold": 1326,
+   "episodes": [
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-10",
+     "days": 1,
+     "peak": 1495,
+     "peak_day": "2026-10-10",
+     "sessions": 1495,
+     "verified": 1298
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 5251,
+     "peak_day": "2026-10-14",
+     "sessions": 5251,
+     "verified": 3896
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-19",
+     "days": 1,
+     "peak": 1380,
+     "peak_day": "2026-10-19",
+     "sessions": 1380,
+     "verified": 1220
+    }
+   ],
+   "gaps_days": [
+    4,
+    5
+   ],
+   "today": [
+    337,
+    320
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",
+   "median": 37,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-17",
+     "days": 1,
+     "peak": 1875,
+     "peak_day": "2026-10-17",
+     "sessions": 1875,
+     "verified": 1756
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-25",
+     "days": 2,
+     "peak": 1842,
+     "peak_day": "2026-10-25",
+     "sessions": 3466,
+     "verified": 2427
+    },
+    {
+     "start": "2026-10-27",
+     "end": "2026-10-27",
+     "days": 1,
+     "peak": 1682,
+     "peak_day": "2026-10-27",
+     "sessions": 1682,
+     "verified": 1392
+    }
+   ],
+   "gaps_days": [
+    7,
+    3
+   ],
+   "today": [
+    57,
+    34
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 72,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 1812,
+     "peak_day": "2026-10-14",
+     "sessions": 1812,
+     "verified": 6
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    8004,
+    3935
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C",
+   "median": 61117,
+   "threshold": 183351,
+   "episodes": [
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-19",
+     "days": 8,
+     "peak": 1424605,
+     "peak_day": "2026-10-17",
+     "sessions": 5862015,
+     "verified": 3726063
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    20623,
+    4971
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "persistent"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 35368,
+   "threshold": 106104,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    34281,
+    4560
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "476068BF-9607-4799-B53D-966BE98E2B81",
+   "median": 7091,
+   "threshold": 21273,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    13449,
+    3658
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "2BF0FE95-9FB3-45E0-9CB9-3F5B5A8465B1",
+   "median": 8280,
+   "threshold": 24840,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    646,
+    579
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "CC3F2AEA-6C11-493B-A83B-7BA702D7525F",
+   "median": 10689,
+   "threshold": 32067,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    9570,
+    99
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "54B78A70-0DD3-455D-BA99-AB5CB14276CF",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-28",
+     "days": 6,
+     "peak": 125449,
+     "peak_day": "2026-10-25",
+     "sessions": 337716,
+     "verified": 3784
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    100106,
+    4493
+   ],
+   "today_burst": true,
+   "n_episodes": 1,
+   "kind": "one-off"
+  }
+ ],
+ "ends_cl_ct_before_cl_tz_grease": [
+  {
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "median": 104306,
+   "threshold": 312918,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 494601,
+     "peak_day": "2026-10-11",
+     "sessions": 494601,
+     "verified": 50930
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-28",
+     "days": 3,
+     "peak": 2136032,
+     "peak_day": "2026-10-28",
+     "sessions": 5799624,
+     "verified": 124947
+    }
+   ],
+   "gaps_days": [
+    15
+   ],
+   "today": [
+    848498,
+    2242
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "513F48D7-3DCD-468D-8557-EFF418CF794D",
+   "median": 65,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-12",
+     "days": 5,
+     "peak": 598934,
+     "peak_day": "2026-10-11",
+     "sessions": 1044489,
+     "verified": 1329
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 2986,
+     "peak_day": "2026-10-14",
+     "sessions": 2986,
+     "verified": 65
+    }
+   ],
+   "gaps_days": [
+    6
+   ],
+   "today": [
+    68834,
+    66
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "430FF2C3-1AB1-40B7-8BE7-44FC683FE02C",
+   "median": 78515,
+   "threshold": 235545,
+   "episodes": [
+    {
+     "start": "2026-10-06",
+     "end": "2026-10-09",
+     "days": 4,
+     "peak": 593672,
+     "peak_day": "2026-10-06",
+     "sessions": 1984654,
+     "verified": 1941841
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 396267,
+     "peak_day": "2026-10-11",
+     "sessions": 396267,
+     "verified": 387324
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-16",
+     "days": 3,
+     "peak": 441574,
+     "peak_day": "2026-10-16",
+     "sessions": 1241454,
+     "verified": 1206062
+    }
+   ],
+   "gaps_days": [
+    5,
+    3
+   ],
+   "today": [
+    24303,
+    24290
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "median": 746,
+   "threshold": 2238,
+   "episodes": [
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-12",
+     "days": 4,
+     "peak": 11026,
+     "peak_day": "2026-10-11",
+     "sessions": 28835,
+     "verified": 232
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 2608,
+     "peak_day": "2026-10-18",
+     "sessions": 2608,
+     "verified": 687
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-28",
+     "days": 8,
+     "peak": 299665,
+     "peak_day": "2026-10-28",
+     "sessions": 752057,
+     "verified": 107001
+    }
+   ],
+   "gaps_days": [
+    9,
+    3
+   ],
+   "today": [
+    260748,
+    37336
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "FAD1C7FA-A58F-4D30-93D5-87D1A4E3C641",
+   "median": 55,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-09",
+     "days": 1,
+     "peak": 2519,
+     "peak_day": "2026-10-09",
+     "sessions": 2519,
+     "verified": 987
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-13",
+     "days": 3,
+     "peak": 133281,
+     "peak_day": "2026-10-11",
+     "sessions": 263933,
+     "verified": 55788
+    }
+   ],
+   "gaps_days": [
+    2
+   ],
+   "today": [
+    18,
+    11
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "B0217B00-2CA4-41CC-925D-1EEB57BFFC2F",
+   "median": 106,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-03",
+     "end": "2026-10-03",
+     "days": 1,
+     "peak": 6648,
+     "peak_day": "2026-10-03",
+     "sessions": 6648,
+     "verified": 5980
+    },
+    {
+     "start": "2026-10-06",
+     "end": "2026-10-06",
+     "days": 1,
+     "peak": 5578,
+     "peak_day": "2026-10-06",
+     "sessions": 5578,
+     "verified": 3557
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-13",
+     "days": 3,
+     "peak": 6170,
+     "peak_day": "2026-10-11",
+     "sessions": 10113,
+     "verified": 7471
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-18",
+     "days": 2,
+     "peak": 103186,
+     "peak_day": "2026-10-18",
+     "sessions": 106546,
+     "verified": 83220
+    }
+   ],
+   "gaps_days": [
+    3,
+    5,
+    6
+   ],
+   "today": [
+    43,
+    28
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "7A946A46-88B6-40F4-9A8E-7286D122B384",
+   "median": 39,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-21",
+     "days": 4,
+     "peak": 78979,
+     "peak_day": "2026-10-18",
+     "sessions": 102176,
+     "verified": 17915
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 1496,
+     "peak_day": "2026-10-24",
+     "sessions": 1496,
+     "verified": 124
+    }
+   ],
+   "gaps_days": [
+    6
+   ],
+   "today": [
+    10,
+    7
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 6683,
+   "threshold": 20049,
+   "episodes": [
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-11",
+     "days": 8,
+     "peak": 60776,
+     "peak_day": "2026-10-10",
+     "sessions": 410708,
+     "verified": 30862
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-19",
+     "days": 1,
+     "peak": 32781,
+     "peak_day": "2026-10-19",
+     "sessions": 32781,
+     "verified": 471
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-26",
+     "days": 1,
+     "peak": 24604,
+     "peak_day": "2026-10-26",
+     "sessions": 24604,
+     "verified": 1042
+    }
+   ],
+   "gaps_days": [
+    15,
+    7
+   ],
+   "today": [
+    19183,
+    715
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
+   "median": 3739,
+   "threshold": 11217,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-16",
+     "days": 4,
+     "peak": 32118,
+     "peak_day": "2026-10-14",
+     "sessions": 119970,
+     "verified": 90436
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 26959,
+     "peak_day": "2026-10-18",
+     "sessions": 26959,
+     "verified": 16462
+    },
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-25",
+     "days": 1,
+     "peak": 39544,
+     "peak_day": "2026-10-25",
+     "sessions": 39544,
+     "verified": 23709
+    }
+   ],
+   "gaps_days": [
+    5,
+    7
+   ],
+   "today": [
+    1242,
+    800
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 399,
+   "threshold": 1197,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-17",
+     "days": 3,
+     "peak": 6469,
+     "peak_day": "2026-10-17",
+     "sessions": 11987,
+     "verified": 1811
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-21",
+     "days": 3,
+     "peak": 7508,
+     "peak_day": "2026-10-20",
+     "sessions": 11209,
+     "verified": 2973
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 14558,
+     "peak_day": "2026-10-23",
+     "sessions": 14558,
+     "verified": 5015
+    }
+   ],
+   "gaps_days": [
+    4,
+    4
+   ],
+   "today": [
+    427,
+    191
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+   "median": 45,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-01",
+     "end": "2026-10-01",
+     "days": 1,
+     "peak": 3018,
+     "peak_day": "2026-10-01",
+     "sessions": 3018,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 4466,
+     "peak_day": "2026-10-13",
+     "sessions": 4466,
+     "verified": 1671
+    },
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 1781,
+     "peak_day": "2026-10-22",
+     "sessions": 1781,
+     "verified": 1290
+    },
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-25",
+     "days": 1,
+     "peak": 13570,
+     "peak_day": "2026-10-25",
+     "sessions": 13570,
+     "verified": 7525
+    }
+   ],
+   "gaps_days": [
+    12,
+    9,
+    3
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "AD73B601-F0A9-459E-B619-838E01BA7EDB",
+   "median": 54,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-14",
+     "days": 2,
+     "peak": 10479,
+     "peak_day": "2026-10-13",
+     "sessions": 11770,
+     "verified": 32
+    },
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-16",
+     "days": 1,
+     "peak": 1387,
+     "peak_day": "2026-10-16",
+     "sessions": 1387,
+     "verified": 6
+    },
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 2280,
+     "peak_day": "2026-10-22",
+     "sessions": 2280,
+     "verified": 23
+    }
+   ],
+   "gaps_days": [
+    3,
+    6
+   ],
+   "today": [
+    124,
+    9
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "B5B07C8C-F93F-44A8-A353-4A47B8AD5238",
+   "median": 30,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-08",
+     "days": 1,
+     "peak": 1549,
+     "peak_day": "2026-10-08",
+     "sessions": 1549,
+     "verified": 1394
+    },
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 3039,
+     "peak_day": "2026-10-13",
+     "sessions": 3039,
+     "verified": 2175
+    }
+   ],
+   "gaps_days": [
+    5
+   ],
+   "today": [
+    166,
+    64
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "12542EDB-1782-4932-A841-D2D21B6BBB9C",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 1389,
+     "peak_day": "2026-10-23",
+     "sessions": 1389,
+     "verified": 602
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    3092,
+    2356
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C",
+   "median": 66270,
+   "threshold": 198810,
+   "episodes": [
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-19",
+     "days": 8,
+     "peak": 1432641,
+     "peak_day": "2026-10-17",
+     "sessions": 5934686,
+     "verified": 3754513
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    19613,
+    3604
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "persistent"
+  },
+  {
+   "key": "476068BF-9607-4799-B53D-966BE98E2B81",
+   "median": 7341,
+   "threshold": 22023,
+   "episodes": [
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-09",
+     "days": 6,
+     "peak": 143932,
+     "peak_day": "2026-10-08",
+     "sessions": 494762,
+     "verified": 74003
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    10518,
+    77
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "persistent"
+  },
+  {
+   "key": "2BF0FE95-9FB3-45E0-9CB9-3F5B5A8465B1",
+   "median": 9425,
+   "threshold": 28275,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    1463,
+    862
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "CF5C61EE-F062-45DF-A32F-E9398E2B4E0D",
+   "median": 6034,
+   "threshold": 18102,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    678,
+    2
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "54B78A70-0DD3-455D-BA99-AB5CB14276CF",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-28",
+     "days": 6,
+     "peak": 127285,
+     "peak_day": "2026-10-25",
+     "sessions": 339890,
+     "verified": 3806
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    100116,
+    4497
+   ],
+   "today_burst": true,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "9C3260E3-AD4C-6719-E0A9-56D21BFB0BCD",
+   "median": 8233,
+   "threshold": 24699,
+   "episodes": [
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-27",
+     "days": 3,
+     "peak": 43078,
+     "peak_day": "2026-10-26",
+     "sessions": 104521,
+     "verified": 14
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    14880,
+    11
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "D4EC8D04-608C-483B-8841-5D69FA1A7001",
+   "median": 1,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-17",
+     "days": 1,
+     "peak": 11701,
+     "peak_day": "2026-10-17",
+     "sessions": 11701,
+     "verified": 11273
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "1BE2475D-0F5A-4188-B20A-A9943639840C",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 2441,
+     "peak_day": "2026-10-24",
+     "sessions": 2441,
+     "verified": 7
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "8BAAFE0D-A867-4813-96D5-ABAF2C0D9B93",
+   "median": 30,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 1818,
+     "peak_day": "2026-10-13",
+     "sessions": 1818,
+     "verified": 11
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    85,
+    78
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  }
+ ],
+ "ct_before_cl_dp_spoof_di_dict3": [
+  {
+   "key": "513F48D7-3DCD-468D-8557-EFF418CF794D",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-08",
+     "days": 1,
+     "peak": 2509,
+     "peak_day": "2026-10-08",
+     "sessions": 2509,
+     "verified": 246
+    },
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-12",
+     "days": 3,
+     "peak": 598578,
+     "peak_day": "2026-10-11",
+     "sessions": 1039167,
+     "verified": 423
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 1806,
+     "peak_day": "2026-10-24",
+     "sessions": 1806,
+     "verified": 11
+    }
+   ],
+   "gaps_days": [
+    2,
+    14
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C",
+   "median": 16154,
+   "threshold": 48462,
+   "episodes": [
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-04",
+     "days": 1,
+     "peak": 53977,
+     "peak_day": "2026-10-04",
+     "sessions": 53977,
+     "verified": 44799
+    },
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-13",
+     "days": 4,
+     "peak": 141412,
+     "peak_day": "2026-10-12",
+     "sessions": 436992,
+     "verified": 194854
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 162431,
+     "peak_day": "2026-10-15",
+     "sessions": 162431,
+     "verified": 110795
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 250608,
+     "peak_day": "2026-10-18",
+     "sessions": 250608,
+     "verified": 185884
+    }
+   ],
+   "gaps_days": [
+    6,
+    5,
+    3
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 26247,
+   "threshold": 78741,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 137442,
+     "peak_day": "2026-10-14",
+     "sessions": 137442,
+     "verified": 1784
+    },
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-16",
+     "days": 1,
+     "peak": 114777,
+     "peak_day": "2026-10-16",
+     "sessions": 114777,
+     "verified": 1120
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-20",
+     "days": 2,
+     "peak": 93440,
+     "peak_day": "2026-10-20",
+     "sessions": 175988,
+     "verified": 3364
+    }
+   ],
+   "gaps_days": [
+    2,
+    3
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "476068BF-9607-4799-B53D-966BE98E2B81",
+   "median": 6,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-02",
+     "end": "2026-10-03",
+     "days": 2,
+     "peak": 120610,
+     "peak_day": "2026-10-02",
+     "sessions": 122593,
+     "verified": 81
+    },
+    {
+     "start": "2026-10-05",
+     "end": "2026-10-05",
+     "days": 1,
+     "peak": 1564,
+     "peak_day": "2026-10-05",
+     "sessions": 1564,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-11",
+     "days": 4,
+     "peak": 102586,
+     "peak_day": "2026-10-11",
+     "sessions": 307070,
+     "verified": 19
+    },
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-14",
+     "days": 2,
+     "peak": 1527,
+     "peak_day": "2026-10-13",
+     "sessions": 2663,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-26",
+     "days": 1,
+     "peak": 1102,
+     "peak_day": "2026-10-26",
+     "sessions": 1102,
+     "verified": 2
+    }
+   ],
+   "gaps_days": [
+    3,
+    3,
+    5,
+    13
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 5,
+   "kind": "recurring"
+  },
+  {
+   "key": "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+   "median": 3,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-08",
+     "days": 1,
+     "peak": 7346,
+     "peak_day": "2026-10-08",
+     "sessions": 7346,
+     "verified": 1
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 3069,
+     "peak_day": "2026-10-11",
+     "sessions": 3069,
+     "verified": 1
+    },
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 1948,
+     "peak_day": "2026-10-13",
+     "sessions": 1948,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-20",
+     "days": 4,
+     "peak": 85460,
+     "peak_day": "2026-10-19",
+     "sessions": 125007,
+     "verified": 176
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 18388,
+     "peak_day": "2026-10-24",
+     "sessions": 18388,
+     "verified": 13
+    }
+   ],
+   "gaps_days": [
+    3,
+    2,
+    4,
+    7
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 5,
+   "kind": "recurring"
+  },
+  {
+   "key": "B5B07C8C-F93F-44A8-A353-4A47B8AD5238",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 11896,
+     "peak_day": "2026-10-14",
+     "sessions": 11896,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-25",
+     "days": 3,
+     "peak": 80040,
+     "peak_day": "2026-10-25",
+     "sessions": 151327,
+     "verified": 3034
+    }
+   ],
+   "gaps_days": [
+    9
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 1468,
+   "threshold": 4404,
+   "episodes": [
+    {
+     "start": "2026-10-06",
+     "end": "2026-10-08",
+     "days": 3,
+     "peak": 11453,
+     "peak_day": "2026-10-07",
+     "sessions": 25555,
+     "verified": 8484
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-22",
+     "days": 2,
+     "peak": 62107,
+     "peak_day": "2026-10-21",
+     "sessions": 78023,
+     "verified": 64611
+    }
+   ],
+   "gaps_days": [
+    15
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "9C3260E3-AD4C-6719-E0A9-56D21BFB0BCD",
+   "median": 3439,
+   "threshold": 10317,
+   "episodes": [
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-17",
+     "days": 2,
+     "peak": 17569,
+     "peak_day": "2026-10-16",
+     "sessions": 33018,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-26",
+     "days": 8,
+     "peak": 40989,
+     "peak_day": "2026-10-26",
+     "sessions": 172808,
+     "verified": 21
+    }
+   ],
+   "gaps_days": [
+    3
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "median": 3,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-06",
+     "days": 3,
+     "peak": 29843,
+     "peak_day": "2026-10-05",
+     "sessions": 50723,
+     "verified": 49526
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-21",
+     "days": 1,
+     "peak": 1573,
+     "peak_day": "2026-10-21",
+     "sessions": 1573,
+     "verified": 171
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-25",
+     "days": 3,
+     "peak": 38121,
+     "peak_day": "2026-10-24",
+     "sessions": 60321,
+     "verified": 7960
+    }
+   ],
+   "gaps_days": [
+    17,
+    2
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "4DD22AF2-94A7-4F86-8A2B-C91DEB011C24",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-19",
+     "days": 2,
+     "peak": 30211,
+     "peak_day": "2026-10-18",
+     "sessions": 32118,
+     "verified": 142
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-21",
+     "days": 1,
+     "peak": 1629,
+     "peak_day": "2026-10-21",
+     "sessions": 1629,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 2184,
+     "peak_day": "2026-10-23",
+     "sessions": 2184,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    3,
+    2
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",
+   "median": 422,
+   "threshold": 1266,
+   "episodes": [
+    {
+     "start": "2026-10-01",
+     "end": "2026-10-02",
+     "days": 2,
+     "peak": 25107,
+     "peak_day": "2026-10-01",
+     "sessions": 32098,
+     "verified": 17647
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-20",
+     "days": 7,
+     "peak": 11817,
+     "peak_day": "2026-10-15",
+     "sessions": 36911,
+     "verified": 51
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-26",
+     "days": 1,
+     "peak": 1555,
+     "peak_day": "2026-10-26",
+     "sessions": 1555,
+     "verified": 1484
+    }
+   ],
+   "gaps_days": [
+    13,
+    12
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "430FF2C3-1AB1-40B7-8BE7-44FC683FE02C",
+   "median": 370,
+   "threshold": 1110,
+   "episodes": [
+    {
+     "start": "2026-10-05",
+     "end": "2026-10-05",
+     "days": 1,
+     "peak": 1570,
+     "peak_day": "2026-10-05",
+     "sessions": 1570,
+     "verified": 1546
+    },
+    {
+     "start": "2026-10-07",
+     "end": "2026-10-07",
+     "days": 1,
+     "peak": 1691,
+     "peak_day": "2026-10-07",
+     "sessions": 1691,
+     "verified": 497
+    },
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-10",
+     "days": 2,
+     "peak": 9085,
+     "peak_day": "2026-10-10",
+     "sessions": 10515,
+     "verified": 2019
+    },
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-12",
+     "days": 1,
+     "peak": 1846,
+     "peak_day": "2026-10-12",
+     "sessions": 1846,
+     "verified": 81
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 2185,
+     "peak_day": "2026-10-14",
+     "sessions": 2185,
+     "verified": 1794
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-19",
+     "days": 3,
+     "peak": 20355,
+     "peak_day": "2026-10-18",
+     "sessions": 39877,
+     "verified": 39870
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-21",
+     "days": 1,
+     "peak": 1724,
+     "peak_day": "2026-10-21",
+     "sessions": 1724,
+     "verified": 1611
+    }
+   ],
+   "gaps_days": [
+    2,
+    2,
+    3,
+    2,
+    3,
+    4
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 7,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 137,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-12",
+     "days": 3,
+     "peak": 6760,
+     "peak_day": "2026-10-12",
+     "sessions": 9666,
+     "verified": 8
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 15202,
+     "peak_day": "2026-10-15",
+     "sessions": 15202,
+     "verified": 19
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 2516,
+     "peak_day": "2026-10-24",
+     "sessions": 2516,
+     "verified": 1995
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-27",
+     "days": 2,
+     "peak": 8676,
+     "peak_day": "2026-10-27",
+     "sessions": 14873,
+     "verified": 2202
+    }
+   ],
+   "gaps_days": [
+    5,
+    9,
+    2
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "8F5905D7-1435-4252-87B2-F902B2C7FD74",
+   "median": 670,
+   "threshold": 2010,
+   "episodes": [
+    {
+     "start": "2026-10-06",
+     "end": "2026-10-06",
+     "days": 1,
+     "peak": 2176,
+     "peak_day": "2026-10-06",
+     "sessions": 2176,
+     "verified": 1847
+    },
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-16",
+     "days": 7,
+     "peak": 5899,
+     "peak_day": "2026-10-14",
+     "sessions": 30938,
+     "verified": 24603
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "AD73B601-F0A9-459E-B619-838E01BA7EDB",
+   "median": 106,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-15",
+     "days": 2,
+     "peak": 5079,
+     "peak_day": "2026-10-14",
+     "sessions": 7533,
+     "verified": 247
+    },
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 2366,
+     "peak_day": "2026-10-22",
+     "sessions": 2366,
+     "verified": 39
+    }
+   ],
+   "gaps_days": [
+    8
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "FAD1C7FA-A58F-4D30-93D5-87D1A4E3C641",
+   "median": 33,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-15",
+     "days": 8,
+     "peak": 6145,
+     "peak_day": "2026-10-13",
+     "sessions": 32078,
+     "verified": 16643
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "54B78A70-0DD3-455D-BA99-AB5CB14276CF",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-26",
+     "days": 3,
+     "peak": 5143,
+     "peak_day": "2026-10-25",
+     "sessions": 12418,
+     "verified": 101
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "942A102E-8D3A-4F0F-9ED3-13CA6D754952",
+   "median": 312,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-14",
+     "days": 2,
+     "peak": 4285,
+     "peak_day": "2026-10-14",
+     "sessions": 7237,
+     "verified": 759
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "1BE2475D-0F5A-4188-B20A-A9943639840C",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 2364,
+     "peak_day": "2026-10-24",
+     "sessions": 2364,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "9B8ED233-984B-4DE5-A7B6-3A370D9FF48B",
+   "median": 13148,
+   "threshold": 39444,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "none"
+  }
+ ],
+ "rta_isp_velocity_pagebio": [
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 2,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-01",
+     "end": "2026-10-03",
+     "days": 3,
+     "peak": 11908,
+     "peak_day": "2026-10-03",
+     "sessions": 18914,
+     "verified": 28
+    },
+    {
+     "start": "2026-10-06",
+     "end": "2026-10-07",
+     "days": 2,
+     "peak": 19242,
+     "peak_day": "2026-10-07",
+     "sessions": 26745,
+     "verified": 51
+    },
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-14",
+     "days": 5,
+     "peak": 25423,
+     "peak_day": "2026-10-12",
+     "sessions": 64383,
+     "verified": 693
+    },
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-20",
+     "days": 1,
+     "peak": 4159,
+     "peak_day": "2026-10-20",
+     "sessions": 4159,
+     "verified": 3370
+    }
+   ],
+   "gaps_days": [
+    5,
+    4,
+    10
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-04",
+     "days": 1,
+     "peak": 2264,
+     "peak_day": "2026-10-04",
+     "sessions": 2264,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 7753,
+     "peak_day": "2026-10-11",
+     "sessions": 7753,
+     "verified": 2343
+    }
+   ],
+   "gaps_days": [
+    7
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "4D297134-67EC-B943-E0E9-79E2E0D9F8DB",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-12",
+     "days": 1,
+     "peak": 2653,
+     "peak_day": "2026-10-12",
+     "sessions": 2653,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 1597,
+     "peak_day": "2026-10-15",
+     "sessions": 1597,
+     "verified": 3
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-19",
+     "days": 2,
+     "peak": 4123,
+     "peak_day": "2026-10-19",
+     "sessions": 5606,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    3,
+    3
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "513F48D7-3DCD-468D-8557-EFF418CF794D",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-12",
+     "days": 2,
+     "peak": 75778,
+     "peak_day": "2026-10-11",
+     "sessions": 79040,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "2BF0FE95-9FB3-45E0-9CB9-3F5B5A8465B1",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 11409,
+     "peak_day": "2026-10-11",
+     "sessions": 11409,
+     "verified": 9608
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 6308,
+     "peak_day": "2026-10-11",
+     "sessions": 6308,
+     "verified": 5547
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "DE24F792-2F8A-4CDC-BF2D-70F94BF1660A",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 4944,
+     "peak_day": "2026-10-11",
+     "sessions": 4944,
+     "verified": 169
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "430FF2C3-1AB1-40B7-8BE7-44FC683FE02C",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 3966,
+     "peak_day": "2026-10-11",
+     "sessions": 3966,
+     "verified": 3966
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "CF5C61EE-F062-45DF-A32F-E9398E2B4E0D",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 1757,
+     "peak_day": "2026-10-11",
+     "sessions": 1757,
+     "verified": 826
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "CDB38584-ABDB-4342-BCED-6F5067CBC8DC",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 1005,
+     "peak_day": "2026-10-11",
+     "sessions": 1005,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  }
+ ],
+ "ends_te_dp_spoof": [
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 1957,
+   "threshold": 5871,
+   "episodes": [
+    {
+     "start": "2026-10-01",
+     "end": "2026-10-01",
+     "days": 1,
+     "peak": 8312,
+     "peak_day": "2026-10-01",
+     "sessions": 8312,
+     "verified": 43
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 14848,
+     "peak_day": "2026-10-15",
+     "sessions": 14848,
+     "verified": 89
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-26",
+     "days": 9,
+     "peak": 228740,
+     "peak_day": "2026-10-20",
+     "sessions": 871075,
+     "verified": 47872
+    }
+   ],
+   "gaps_days": [
+    14,
+    3
+   ],
+   "today": [
+    1026,
+    33
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "median": 936,
+   "threshold": 2808,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 97737,
+     "peak_day": "2026-10-11",
+     "sessions": 97737,
+     "verified": 74389
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-22",
+     "days": 2,
+     "peak": 5628,
+     "peak_day": "2026-10-22",
+     "sessions": 10278,
+     "verified": 7563
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 4020,
+     "peak_day": "2026-10-28",
+     "sessions": 4020,
+     "verified": 3757
+    }
+   ],
+   "gaps_days": [
+    10,
+    7
+   ],
+   "today": [
+    109363,
+    74982
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 31324,
+     "peak_day": "2026-10-15",
+     "sessions": 31324,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-28",
+     "days": 3,
+     "peak": 54715,
+     "peak_day": "2026-10-27",
+     "sessions": 71189,
+     "verified": 8738
+    }
+   ],
+   "gaps_days": [
+    11
+   ],
+   "today": [
+    229,
+    121
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C",
+   "median": 6474,
+   "threshold": 19422,
+   "episodes": [
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-20",
+     "days": 1,
+     "peak": 25582,
+     "peak_day": "2026-10-20",
+     "sessions": 25582,
+     "verified": 3410
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-27",
+     "days": 2,
+     "peak": 35026,
+     "peak_day": "2026-10-26",
+     "sessions": 60661,
+     "verified": 35143
+    }
+   ],
+   "gaps_days": [
+    6
+   ],
+   "today": [
+    9250,
+    1701
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 35,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-18",
+     "days": 2,
+     "peak": 2703,
+     "peak_day": "2026-10-18",
+     "sessions": 4051,
+     "verified": 3323
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 1224,
+     "peak_day": "2026-10-24",
+     "sessions": 1224,
+     "verified": 152
+    },
+    {
+     "start": "2026-10-27",
+     "end": "2026-10-28",
+     "days": 2,
+     "peak": 23704,
+     "peak_day": "2026-10-28",
+     "sessions": 34805,
+     "verified": 22846
+    }
+   ],
+   "gaps_days": [
+    7,
+    3
+   ],
+   "today": [
+    1294,
+    440
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "B5B07C8C-F93F-44A8-A353-4A47B8AD5238",
+   "median": 7,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 11898,
+     "peak_day": "2026-10-14",
+     "sessions": 11898,
+     "verified": 1
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-18",
+     "days": 2,
+     "peak": 18841,
+     "peak_day": "2026-10-17",
+     "sessions": 22531,
+     "verified": 14
+    }
+   ],
+   "gaps_days": [
+    3
+   ],
+   "today": [
+    5,
+    3
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",
+   "median": 198,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-20",
+     "days": 7,
+     "peak": 11918,
+     "peak_day": "2026-10-15",
+     "sessions": 40310,
+     "verified": 2949
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-26",
+     "days": 1,
+     "peak": 6525,
+     "peak_day": "2026-10-26",
+     "sessions": 6525,
+     "verified": 4686
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 1422,
+     "peak_day": "2026-10-28",
+     "sessions": 1422,
+     "verified": 63
+    }
+   ],
+   "gaps_days": [
+    12,
+    2
+   ],
+   "today": [
+    2075,
+    95
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "DB4DC857-0913-46C5-8D96-E7EF9FBB83B2",
+   "median": 4,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-16",
+     "days": 3,
+     "peak": 10115,
+     "peak_day": "2026-10-16",
+     "sessions": 13565,
+     "verified": 9314
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 4842,
+     "peak_day": "2026-10-18",
+     "sessions": 4842,
+     "verified": 845
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "8F5905D7-1435-4252-87B2-F902B2C7FD74",
+   "median": 1242,
+   "threshold": 3726,
+   "episodes": [
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-10",
+     "days": 1,
+     "peak": 4395,
+     "peak_day": "2026-10-10",
+     "sessions": 4395,
+     "verified": 3946
+    },
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-15",
+     "days": 4,
+     "peak": 6258,
+     "peak_day": "2026-10-14",
+     "sessions": 21110,
+     "verified": 17818
+    }
+   ],
+   "gaps_days": [
+    2
+   ],
+   "today": [
+    52,
+    51
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "942A102E-8D3A-4F0F-9ED3-13CA6D754952",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-14",
+     "days": 2,
+     "peak": 6027,
+     "peak_day": "2026-10-14",
+     "sessions": 11251,
+     "verified": 480
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    2991,
+    385
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "FAD1C7FA-A58F-4D30-93D5-87D1A4E3C641",
+   "median": 33,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-13",
+     "days": 2,
+     "peak": 2289,
+     "peak_day": "2026-10-13",
+     "sessions": 3564,
+     "verified": 902
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 1065,
+     "peak_day": "2026-10-28",
+     "sessions": 1065,
+     "verified": 818
+    }
+   ],
+   "gaps_days": [
+    16
+   ],
+   "today": [
+    831,
+    639
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "DE24F792-2F8A-4CDC-BF2D-70F94BF1660A",
+   "median": 1144,
+   "threshold": 3432,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    895,
+    849
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "AD73B601-F0A9-459E-B619-838E01BA7EDB",
+   "median": 11,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-15",
+     "days": 2,
+     "peak": 5039,
+     "peak_day": "2026-10-14",
+     "sessions": 7442,
+     "verified": 234
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    3,
+    2
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "513F48D7-3DCD-468D-8557-EFF418CF794D",
+   "median": 5,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 3168,
+     "peak_day": "2026-10-24",
+     "sessions": 3168,
+     "verified": 88
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    2,
+    2
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
+   "median": 32,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 1010,
+     "peak_day": "2026-10-23",
+     "sessions": 1010,
+     "verified": 2
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "B81C9A69-A838-48B2-8720-BCD00A823A94",
+   "median": 425,
+   "threshold": 1275,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    821,
+    1
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "none"
+  }
+ ],
+ "single_click_dp_spoof": [
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 9616,
+   "threshold": 28848,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-16",
+     "days": 2,
+     "peak": 134868,
+     "peak_day": "2026-10-15",
+     "sessions": 164604,
+     "verified": 2613
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-23",
+     "days": 5,
+     "peak": 224333,
+     "peak_day": "2026-10-22",
+     "sessions": 737176,
+     "verified": 8574
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    1193,
+    58
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "median": 24950,
+   "threshold": 74850,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 80057,
+     "peak_day": "2026-10-11",
+     "sessions": 80057,
+     "verified": 21791
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-16",
+     "days": 2,
+     "peak": 99253,
+     "peak_day": "2026-10-15",
+     "sessions": 193513,
+     "verified": 54991
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    16375,
+    1495
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
+   "median": 2953,
+   "threshold": 8859,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-16",
+     "days": 4,
+     "peak": 22915,
+     "peak_day": "2026-10-14",
+     "sessions": 86014,
+     "verified": 81846
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 18691,
+     "peak_day": "2026-10-18",
+     "sessions": 18691,
+     "verified": 15602
+    },
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-25",
+     "days": 1,
+     "peak": 30028,
+     "peak_day": "2026-10-25",
+     "sessions": 30028,
+     "verified": 21425
+    }
+   ],
+   "gaps_days": [
+    5,
+    7
+   ],
+   "today": [
+    790,
+    750
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 2218,
+   "threshold": 6654,
+   "episodes": [
+    {
+     "start": "2026-10-06",
+     "end": "2026-10-07",
+     "days": 2,
+     "peak": 11297,
+     "peak_day": "2026-10-07",
+     "sessions": 18825,
+     "verified": 29
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-12",
+     "days": 2,
+     "peak": 29329,
+     "peak_day": "2026-10-11",
+     "sessions": 36802,
+     "verified": 23775
+    },
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-15",
+     "days": 2,
+     "peak": 15872,
+     "peak_day": "2026-10-15",
+     "sessions": 30403,
+     "verified": 23
+    },
+    {
+     "start": "2026-10-27",
+     "end": "2026-10-27",
+     "days": 1,
+     "peak": 22344,
+     "peak_day": "2026-10-27",
+     "sessions": 22344,
+     "verified": 725
+    }
+   ],
+   "gaps_days": [
+    5,
+    3,
+    13
+   ],
+   "today": [
+    670,
+    289
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "median": 3738,
+   "threshold": 11214,
+   "episodes": [
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-19",
+     "days": 2,
+     "peak": 13569,
+     "peak_day": "2026-10-19",
+     "sessions": 24988,
+     "verified": 3566
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-25",
+     "days": 2,
+     "peak": 17181,
+     "peak_day": "2026-10-24",
+     "sessions": 33371,
+     "verified": 9963
+    },
+    {
+     "start": "2026-10-27",
+     "end": "2026-10-27",
+     "days": 1,
+     "peak": 13885,
+     "peak_day": "2026-10-27",
+     "sessions": 13885,
+     "verified": 3207
+    }
+   ],
+   "gaps_days": [
+    6,
+    3
+   ],
+   "today": [
+    8850,
+    1938
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 2515,
+   "threshold": 7545,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 7575,
+     "peak_day": "2026-10-13",
+     "sessions": 7575,
+     "verified": 2984
+    },
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-16",
+     "days": 1,
+     "peak": 11788,
+     "peak_day": "2026-10-16",
+     "sessions": 11788,
+     "verified": 5271
+    },
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-22",
+     "days": 3,
+     "peak": 13253,
+     "peak_day": "2026-10-20",
+     "sessions": 35674,
+     "verified": 27728
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-27",
+     "days": 2,
+     "peak": 17029,
+     "peak_day": "2026-10-27",
+     "sessions": 32147,
+     "verified": 16799
+    }
+   ],
+   "gaps_days": [
+    3,
+    4,
+    6
+   ],
+   "today": [
+    2153,
+    206
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "476068BF-9607-4799-B53D-966BE98E2B81",
+   "median": 259,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-04",
+     "days": 1,
+     "peak": 1321,
+     "peak_day": "2026-10-04",
+     "sessions": 1321,
+     "verified": 105
+    },
+    {
+     "start": "2026-10-07",
+     "end": "2026-10-07",
+     "days": 1,
+     "peak": 2915,
+     "peak_day": "2026-10-07",
+     "sessions": 2915,
+     "verified": 72
+    },
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-09",
+     "days": 1,
+     "peak": 7892,
+     "peak_day": "2026-10-09",
+     "sessions": 7892,
+     "verified": 818
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 2031,
+     "peak_day": "2026-10-15",
+     "sessions": 2031,
+     "verified": 56
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 13925,
+     "peak_day": "2026-10-18",
+     "sessions": 13925,
+     "verified": 177
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-21",
+     "days": 1,
+     "peak": 2694,
+     "peak_day": "2026-10-21",
+     "sessions": 2694,
+     "verified": 921
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 1077,
+     "peak_day": "2026-10-23",
+     "sessions": 1077,
+     "verified": 224
+    }
+   ],
+   "gaps_days": [
+    3,
+    2,
+    6,
+    3,
+    3,
+    2
+   ],
+   "today": [
+    5734,
+    63
+   ],
+   "today_burst": true,
+   "n_episodes": 8,
+   "kind": "recurring"
+  },
+  {
+   "key": "9C3260E3-AD4C-6719-E0A9-56D21BFB0BCD",
+   "median": 301,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-12",
+     "days": 1,
+     "peak": 1267,
+     "peak_day": "2026-10-12",
+     "sessions": 1267,
+     "verified": 31
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-28",
+     "days": 6,
+     "peak": 1441,
+     "peak_day": "2026-10-25",
+     "sessions": 7469,
+     "verified": 669
+    }
+   ],
+   "gaps_days": [
+    11
+   ],
+   "today": [
+    556,
+    54
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "B5B07C8C-F93F-44A8-A353-4A47B8AD5238",
+   "median": 5,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-08",
+     "days": 1,
+     "peak": 1383,
+     "peak_day": "2026-10-08",
+     "sessions": 1383,
+     "verified": 1338
+    },
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-25",
+     "days": 1,
+     "peak": 1227,
+     "peak_day": "2026-10-25",
+     "sessions": 1227,
+     "verified": 7
+    }
+   ],
+   "gaps_days": [
+    17
+   ],
+   "today": [
+    1098,
+    1043
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC3F2AEA-6C11-493B-A83B-7BA702D7525F",
+   "median": 3325,
+   "threshold": 9975,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    3256,
+    121
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "8A1EAD4C-ABA1-4A1D-87DD-87521C761AF4",
+   "median": 1871,
+   "threshold": 5613,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    1707,
+    1422
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+   "median": 1,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-25",
+     "days": 1,
+     "peak": 12953,
+     "peak_day": "2026-10-25",
+     "sessions": 12953,
+     "verified": 7439
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "2BF0FE95-9FB3-45E0-9CB9-3F5B5A8465B1",
+   "median": 944,
+   "threshold": 2832,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 4856,
+     "peak_day": "2026-10-13",
+     "sessions": 4856,
+     "verified": 3637
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    980,
+    128
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "12542EDB-1782-4932-A841-D2D21B6BBB9C",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 1245,
+     "peak_day": "2026-10-23",
+     "sessions": 1245,
+     "verified": 600
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "8BAAFE0D-A867-4813-96D5-ABAF2C0D9B93",
+   "median": 4,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 1123,
+     "peak_day": "2026-10-13",
+     "sessions": 1123,
+     "verified": 1
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    80,
+    77
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  }
+ ],
+ "dishort300_dp_spoof_ja4_dict1": [
+  {
+   "key": "F5675B21-025B-4843-983C-38D86DEB394B",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-16",
+     "days": 3,
+     "peak": 676741,
+     "peak_day": "2026-10-15",
+     "sessions": 978869,
+     "verified": 961444
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 6935,
+     "peak_day": "2026-10-28",
+     "sessions": 6935,
+     "verified": 6877
+    }
+   ],
+   "gaps_days": [
+    14
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "median": 621,
+   "threshold": 1863,
+   "episodes": [
+    {
+     "start": "2026-10-01",
+     "end": "2026-10-01",
+     "days": 1,
+     "peak": 4000,
+     "peak_day": "2026-10-01",
+     "sessions": 4000,
+     "verified": 300
+    },
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-07",
+     "days": 4,
+     "peak": 300600,
+     "peak_day": "2026-10-05",
+     "sessions": 694200,
+     "verified": 598300
+    },
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-09",
+     "days": 1,
+     "peak": 1900,
+     "peak_day": "2026-10-09",
+     "sessions": 1900,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 12701,
+     "peak_day": "2026-10-15",
+     "sessions": 12701,
+     "verified": 2181
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 46888,
+     "peak_day": "2026-10-18",
+     "sessions": 46888,
+     "verified": 41630
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 4472,
+     "peak_day": "2026-10-28",
+     "sessions": 4472,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    3,
+    5,
+    6,
+    3,
+    10
+   ],
+   "today": [
+    3535,
+    1
+   ],
+   "today_burst": true,
+   "n_episodes": 6,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 12436,
+   "threshold": 37308,
+   "episodes": [
+    {
+     "start": "2026-10-01",
+     "end": "2026-10-01",
+     "days": 1,
+     "peak": 55100,
+     "peak_day": "2026-10-01",
+     "sessions": 55100,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-09",
+     "days": 2,
+     "peak": 104800,
+     "peak_day": "2026-10-08",
+     "sessions": 158400,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-12",
+     "days": 1,
+     "peak": 70911,
+     "peak_day": "2026-10-12",
+     "sessions": 70911,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 54829,
+     "peak_day": "2026-10-15",
+     "sessions": 54829,
+     "verified": 257
+    }
+   ],
+   "gaps_days": [
+    7,
+    4,
+    3
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 5074,
+     "peak_day": "2026-10-15",
+     "sessions": 5074,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-20",
+     "days": 2,
+     "peak": 20641,
+     "peak_day": "2026-10-20",
+     "sessions": 39576,
+     "verified": 6
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "9B8ED233-984B-4DE5-A7B6-3A370D9FF48B",
+   "median": 502,
+   "threshold": 1506,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 9323,
+     "peak_day": "2026-10-15",
+     "sessions": 9323,
+     "verified": 89
+    },
+    {
+     "start": "2026-10-27",
+     "end": "2026-10-27",
+     "days": 1,
+     "peak": 4646,
+     "peak_day": "2026-10-27",
+     "sessions": 4646,
+     "verified": 3511
+    }
+   ],
+   "gaps_days": [
+    12
+   ],
+   "today": [
+    1562,
+    862
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 1,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-22",
+     "days": 4,
+     "peak": 5085,
+     "peak_day": "2026-10-21",
+     "sessions": 12341,
+     "verified": 535
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 8587,
+     "peak_day": "2026-10-24",
+     "sessions": 8587,
+     "verified": 218
+    }
+   ],
+   "gaps_days": [
+    5
+   ],
+   "today": [
+    47,
+    1
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "2BF0FE95-9FB3-45E0-9CB9-3F5B5A8465B1",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 1100,
+     "peak_day": "2026-10-14",
+     "sessions": 1100,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 5685,
+     "peak_day": "2026-10-18",
+     "sessions": 5685,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C",
+   "median": 90,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-15",
+     "days": 2,
+     "peak": 1983,
+     "peak_day": "2026-10-14",
+     "sessions": 3512,
+     "verified": 6
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-18",
+     "days": 1,
+     "peak": 1108,
+     "peak_day": "2026-10-18",
+     "sessions": 1108,
+     "verified": 1
+    },
+    {
+     "start": "2026-10-27",
+     "end": "2026-10-27",
+     "days": 1,
+     "peak": 3919,
+     "peak_day": "2026-10-27",
+     "sessions": 3919,
+     "verified": 621
+    }
+   ],
+   "gaps_days": [
+    4,
+    9
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "DE24F792-2F8A-4CDC-BF2D-70F94BF1660A",
+   "median": 35100,
+   "threshold": 105300,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    14287,
+    1370
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "12D76D4C-5EDF-4EB4-A84D-042C497A9610",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-17",
+     "days": 3,
+     "peak": 360945,
+     "peak_day": "2026-10-16",
+     "sessions": 536664,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "D4EC8D04-608C-483B-8841-5D69FA1A7001",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-16",
+     "days": 1,
+     "peak": 120433,
+     "peak_day": "2026-10-16",
+     "sessions": 120433,
+     "verified": 102261
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "F7C0768A-A5B0-422A-BC5F-5912456296EE",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-16",
+     "days": 3,
+     "peak": 84626,
+     "peak_day": "2026-10-15",
+     "sessions": 117997,
+     "verified": 110972
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "AD73B601-F0A9-459E-B619-838E01BA7EDB",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-19",
+     "days": 4,
+     "peak": 39289,
+     "peak_day": "2026-10-17",
+     "sessions": 120237,
+     "verified": 2
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-26",
+     "days": 2,
+     "peak": 29203,
+     "peak_day": "2026-10-25",
+     "sessions": 33782,
+     "verified": 22163
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "430FF2C3-1AB1-40B7-8BE7-44FC683FE02C",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-22",
+     "days": 7,
+     "peak": 15212,
+     "peak_day": "2026-10-21",
+     "sessions": 66273,
+     "verified": 24614
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "DB4DC857-0913-46C5-8D96-E7EF9FBB83B2",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 4950,
+     "peak_day": "2026-10-15",
+     "sessions": 4950,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  }
+ ],
+ "dishort300_didict7_hrsig": [
+  {
+   "key": "476068BF-9607-4799-B53D-966BE98E2B81",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-05",
+     "end": "2026-10-06",
+     "days": 2,
+     "peak": 78700,
+     "peak_day": "2026-10-06",
+     "sessions": 116300,
+     "verified": 4200
+    },
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-14",
+     "days": 3,
+     "peak": 39857,
+     "peak_day": "2026-10-12",
+     "sessions": 44743,
+     "verified": 10
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-19",
+     "days": 2,
+     "peak": 60975,
+     "peak_day": "2026-10-18",
+     "sessions": 70018,
+     "verified": 280
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-23",
+     "days": 3,
+     "peak": 4060,
+     "peak_day": "2026-10-21",
+     "sessions": 8744,
+     "verified": 207
+    },
+    {
+     "start": "2026-10-27",
+     "end": "2026-10-27",
+     "days": 1,
+     "peak": 4454,
+     "peak_day": "2026-10-27",
+     "sessions": 4454,
+     "verified": 7
+    }
+   ],
+   "gaps_days": [
+    7,
+    6,
+    3,
+    6
+   ],
+   "today": [
+    5523,
+    4
+   ],
+   "today_burst": true,
+   "n_episodes": 6,
+   "kind": "recurring"
+  },
+  {
+   "key": "DE24F792-2F8A-4CDC-BF2D-70F94BF1660A",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-14",
+     "days": 4,
+     "peak": 2075,
+     "peak_day": "2026-10-14",
+     "sessions": 6433,
+     "verified": 3328
+    },
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-16",
+     "days": 1,
+     "peak": 1223,
+     "peak_day": "2026-10-16",
+     "sessions": 1223,
+     "verified": 666
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-23",
+     "days": 3,
+     "peak": 49013,
+     "peak_day": "2026-10-23",
+     "sessions": 52081,
+     "verified": 48676
+    }
+   ],
+   "gaps_days": [
+    5,
+    5
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-10",
+     "end": "2026-10-10",
+     "days": 1,
+     "peak": 1100,
+     "peak_day": "2026-10-10",
+     "sessions": 1100,
+     "verified": 1000
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-17",
+     "days": 1,
+     "peak": 3182,
+     "peak_day": "2026-10-17",
+     "sessions": 3182,
+     "verified": 3022
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 2400,
+     "peak_day": "2026-10-24",
+     "sessions": 2400,
+     "verified": 983
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-26",
+     "days": 1,
+     "peak": 6519,
+     "peak_day": "2026-10-26",
+     "sessions": 6519,
+     "verified": 6214
+    }
+   ],
+   "gaps_days": [
+    7,
+    7,
+    2
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 8732,
+   "threshold": 26196,
+   "episodes": [
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-20",
+     "days": 3,
+     "peak": 93401,
+     "peak_day": "2026-10-19",
+     "sessions": 158846,
+     "verified": 961
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    1001,
+    2
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "persistent"
+  }
+ ],
+ "secchua_webgl_dp_spoof": [
+  {
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "median": 144,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-11",
+     "days": 3,
+     "peak": 937700,
+     "peak_day": "2026-10-10",
+     "sessions": 1513500,
+     "verified": 810800
+    },
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-20",
+     "days": 8,
+     "peak": 301235,
+     "peak_day": "2026-10-17",
+     "sessions": 701659,
+     "verified": 483334
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    1018,
+    9
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",
+   "median": 784,
+   "threshold": 2352,
+   "episodes": [
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-09",
+     "days": 1,
+     "peak": 2600,
+     "peak_day": "2026-10-09",
+     "sessions": 2600,
+     "verified": 2500
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-18",
+     "days": 2,
+     "peak": 4340,
+     "peak_day": "2026-10-17",
+     "sessions": 7936,
+     "verified": 7758
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-28",
+     "days": 8,
+     "peak": 224458,
+     "peak_day": "2026-10-23",
+     "sessions": 1117104,
+     "verified": 522
+    }
+   ],
+   "gaps_days": [
+    8,
+    4
+   ],
+   "today": [
+    72854,
+    500
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 13052,
+   "threshold": 39156,
+   "episodes": [
+    {
+     "start": "2026-10-02",
+     "end": "2026-10-02",
+     "days": 1,
+     "peak": 39400,
+     "peak_day": "2026-10-02",
+     "sessions": 39400,
+     "verified": 3100
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 42100,
+     "peak_day": "2026-10-11",
+     "sessions": 42100,
+     "verified": 1900
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-16",
+     "days": 2,
+     "peak": 49242,
+     "peak_day": "2026-10-16",
+     "sessions": 92026,
+     "verified": 2352
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-21",
+     "days": 3,
+     "peak": 186838,
+     "peak_day": "2026-10-19",
+     "sessions": 384985,
+     "verified": 3838
+    }
+   ],
+   "gaps_days": [
+    9,
+    4,
+    4
+   ],
+   "today": [
+    526,
+    24
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "1B154715-ACB4-2706-19ED-0DC7E3F7D855",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-04",
+     "end": "2026-10-05",
+     "days": 2,
+     "peak": 28400,
+     "peak_day": "2026-10-04",
+     "sessions": 47200,
+     "verified": 45000
+    },
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-09",
+     "days": 1,
+     "peak": 80000,
+     "peak_day": "2026-10-09",
+     "sessions": 80000,
+     "verified": 59800
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-19",
+     "days": 1,
+     "peak": 61929,
+     "peak_day": "2026-10-19",
+     "sessions": 61929,
+     "verified": 17725
+    }
+   ],
+   "gaps_days": [
+    5,
+    10
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "median": 4664,
+   "threshold": 13992,
+   "episodes": [
+    {
+     "start": "2026-10-02",
+     "end": "2026-10-06",
+     "days": 5,
+     "peak": 46600,
+     "peak_day": "2026-10-02",
+     "sessions": 177800,
+     "verified": 19600
+    },
+    {
+     "start": "2026-10-09",
+     "end": "2026-10-09",
+     "days": 1,
+     "peak": 35000,
+     "peak_day": "2026-10-09",
+     "sessions": 35000,
+     "verified": 300
+    }
+   ],
+   "gaps_days": [
+    7
+   ],
+   "today": [
+    5221,
+    1985
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 4,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-20",
+     "days": 2,
+     "peak": 20234,
+     "peak_day": "2026-10-20",
+     "sessions": 24443,
+     "verified": 20448
+    },
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-27",
+     "days": 3,
+     "peak": 3624,
+     "peak_day": "2026-10-27",
+     "sessions": 8777,
+     "verified": 6294
+    }
+   ],
+   "gaps_days": [
+    6
+   ],
+   "today": [
+    13,
+    8
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 10942,
+     "peak_day": "2026-10-13",
+     "sessions": 10942,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-16",
+     "days": 2,
+     "peak": 9723,
+     "peak_day": "2026-10-15",
+     "sessions": 15405,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-19",
+     "days": 2,
+     "peak": 11622,
+     "peak_day": "2026-10-19",
+     "sessions": 20567,
+     "verified": 28
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-23",
+     "days": 3,
+     "peak": 10891,
+     "peak_day": "2026-10-22",
+     "sessions": 19991,
+     "verified": 353
+    }
+   ],
+   "gaps_days": [
+    2,
+    3,
+    3
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "1BE2475D-0F5A-4188-B20A-A9943639840C",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-16",
+     "days": 1,
+     "peak": 1361,
+     "peak_day": "2026-10-16",
+     "sessions": 1361,
+     "verified": 1171
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-20",
+     "days": 2,
+     "peak": 1743,
+     "peak_day": "2026-10-20",
+     "sessions": 3424,
+     "verified": 2144
+    },
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-28",
+     "days": 4,
+     "peak": 3397,
+     "peak_day": "2026-10-27",
+     "sessions": 9137,
+     "verified": 8452
+    }
+   ],
+   "gaps_days": [
+    3,
+    6
+   ],
+   "today": [
+    7,
+    7
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
+   "median": 48100,
+   "threshold": 144300,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    28464,
+    1434
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C",
+   "median": 40363,
+   "threshold": 121089,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    22952,
+    12910
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "9C3260E3-AD4C-6719-E0A9-56D21BFB0BCD",
+   "median": 2020,
+   "threshold": 6060,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    669,
+    42
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "430FF2C3-1AB1-40B7-8BE7-44FC683FE02C",
+   "median": 2526,
+   "threshold": 7578,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    1938,
+    1937
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "B5B07C8C-F93F-44A8-A353-4A47B8AD5238",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 2132,
+     "peak_day": "2026-10-23",
+     "sessions": 2132,
+     "verified": 498
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    610,
+    443
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  }
+ ],
+ "appleos_dp_spoof_secfetch": [
+  {
+   "key": "7A946A46-88B6-40F4-9A8E-7286D122B384",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-27",
+     "days": 10,
+     "peak": 1112778,
+     "peak_day": "2026-10-22",
+     "sessions": 4481492,
+     "verified": 184421
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    1741,
+    0
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+   "median": 14,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-08",
+     "end": "2026-10-08",
+     "days": 1,
+     "peak": 5800,
+     "peak_day": "2026-10-08",
+     "sessions": 5800,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-11",
+     "end": "2026-10-11",
+     "days": 1,
+     "peak": 1800,
+     "peak_day": "2026-10-11",
+     "sessions": 1800,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 2247,
+     "peak_day": "2026-10-13",
+     "sessions": 2247,
+     "verified": 10
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-20",
+     "days": 4,
+     "peak": 108434,
+     "peak_day": "2026-10-19",
+     "sessions": 156704,
+     "verified": 236
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 7883,
+     "peak_day": "2026-10-24",
+     "sessions": 7883,
+     "verified": 13
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 2761,
+     "peak_day": "2026-10-28",
+     "sessions": 2761,
+     "verified": 345
+    }
+   ],
+   "gaps_days": [
+    3,
+    2,
+    4,
+    7,
+    4
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 6,
+   "kind": "recurring"
+  }
+ ],
+ "didict3_dishort300": [
+  {
+   "key": "B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",
+   "median": 1286,
+   "threshold": 3858,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-17",
+     "days": 3,
+     "peak": 11814,
+     "peak_day": "2026-10-15",
+     "sessions": 28818,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-27",
+     "days": 7,
+     "peak": 224454,
+     "peak_day": "2026-10-23",
+     "sessions": 910269,
+     "verified": 2073
+    }
+   ],
+   "gaps_days": [
+    6
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 4806,
+   "threshold": 14418,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-14",
+     "days": 1,
+     "peak": 20266,
+     "peak_day": "2026-10-14",
+     "sessions": 20266,
+     "verified": 722
+    },
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-22",
+     "days": 7,
+     "peak": 212900,
+     "peak_day": "2026-10-19",
+     "sessions": 546796,
+     "verified": 8838
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-26",
+     "days": 3,
+     "peak": 24524,
+     "peak_day": "2026-10-24",
+     "sessions": 69717,
+     "verified": 3380
+    }
+   ],
+   "gaps_days": [
+    2,
+    8
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-20",
+     "days": 2,
+     "peak": 59435,
+     "peak_day": "2026-10-19",
+     "sessions": 77693,
+     "verified": 98
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 8476,
+     "peak_day": "2026-10-24",
+     "sessions": 8476,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    5
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-22",
+     "days": 4,
+     "peak": 32490,
+     "peak_day": "2026-10-21",
+     "sessions": 46377,
+     "verified": 38793
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 15881,
+     "peak_day": "2026-10-24",
+     "sessions": 15881,
+     "verified": 7601
+    }
+   ],
+   "gaps_days": [
+    5
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "476068BF-9607-4799-B53D-966BE98E2B81",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-14",
+     "days": 2,
+     "peak": 1527,
+     "peak_day": "2026-10-13",
+     "sessions": 2663,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-20",
+     "days": 1,
+     "peak": 12035,
+     "peak_day": "2026-10-20",
+     "sessions": 12035,
+     "verified": 15
+    }
+   ],
+   "gaps_days": [
+    7
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "9B8ED233-984B-4DE5-A7B6-3A370D9FF48B",
+   "median": 500,
+   "threshold": 1500,
+   "episodes": [
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-17",
+     "days": 6,
+     "peak": 6441,
+     "peak_day": "2026-10-15",
+     "sessions": 30503,
+     "verified": 24013
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-23",
+     "days": 5,
+     "peak": 9321,
+     "peak_day": "2026-10-21",
+     "sessions": 31462,
+     "verified": 21858
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-26",
+     "days": 1,
+     "peak": 5735,
+     "peak_day": "2026-10-26",
+     "sessions": 5735,
+     "verified": 4684
+    }
+   ],
+   "gaps_days": [
+    7,
+    7
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 8090,
+     "peak_day": "2026-10-15",
+     "sessions": 8090,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-20",
+     "days": 2,
+     "peak": 3919,
+     "peak_day": "2026-10-20",
+     "sessions": 7535,
+     "verified": 3
+    },
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 1213,
+     "peak_day": "2026-10-22",
+     "sessions": 1213,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-27",
+     "days": 4,
+     "peak": 8906,
+     "peak_day": "2026-10-25",
+     "sessions": 20410,
+     "verified": 432
+    }
+   ],
+   "gaps_days": [
+    4,
+    3,
+    2
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-21",
+     "days": 1,
+     "peak": 5216,
+     "peak_day": "2026-10-21",
+     "sessions": 5216,
+     "verified": 3180
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-24",
+     "days": 2,
+     "peak": 6525,
+     "peak_day": "2026-10-23",
+     "sessions": 8546,
+     "verified": 6720
+    }
+   ],
+   "gaps_days": [
+    2
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "A0C1F8BD-F49D-47A8-85F8-F93D9F11E898",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 3490,
+     "peak_day": "2026-10-22",
+     "sessions": 3490,
+     "verified": 602
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 5897,
+     "peak_day": "2026-10-24",
+     "sessions": 5897,
+     "verified": 97
+    }
+   ],
+   "gaps_days": [
+    2
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "E8A64FAC-C713-4EB4-85D2-7458E3579D31",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-27",
+     "days": 5,
+     "peak": 170016,
+     "peak_day": "2026-10-26",
+     "sessions": 532480,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "54B78A70-0DD3-455D-BA99-AB5CB14276CF",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-22",
+     "days": 2,
+     "peak": 5596,
+     "peak_day": "2026-10-22",
+     "sessions": 7414,
+     "verified": 4053
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "9FB8A1A8-6ABD-4790-B6EA-E2058C1A594D",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-21",
+     "days": 2,
+     "peak": 5340,
+     "peak_day": "2026-10-21",
+     "sessions": 9326,
+     "verified": 79
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "7BA04117-FC6C-4968-834C-DC69A7D0AD58",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 3042,
+     "peak_day": "2026-10-22",
+     "sessions": 3042,
+     "verified": 2545
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
+   "median": 543,
+   "threshold": 1629,
+   "episodes": [
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 1914,
+     "peak_day": "2026-10-24",
+     "sessions": 1914,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "DE24F792-2F8A-4CDC-BF2D-70F94BF1660A",
+   "median": 15644,
+   "threshold": 46932,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "none"
+  }
+ ],
+ "os_spoof_pagebio": [
+  {
+   "key": "7A946A46-88B6-40F4-9A8E-7286D122B384",
+   "median": 3047,
+   "threshold": 9141,
+   "episodes": [
+    {
+     "start": "2026-10-18",
+     "end": "2026-10-27",
+     "days": 10,
+     "peak": 1121939,
+     "peak_day": "2026-10-22",
+     "sessions": 4648271,
+     "verified": 283982
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    9327,
+    6826
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+   "median": 4,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-13",
+     "end": "2026-10-13",
+     "days": 1,
+     "peak": 2540,
+     "peak_day": "2026-10-13",
+     "sessions": 2540,
+     "verified": 214
+    },
+    {
+     "start": "2026-10-17",
+     "end": "2026-10-20",
+     "days": 4,
+     "peak": 109760,
+     "peak_day": "2026-10-19",
+     "sessions": 159889,
+     "verified": 1605
+    },
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 1223,
+     "peak_day": "2026-10-22",
+     "sessions": 1223,
+     "verified": 69
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 23800,
+     "peak_day": "2026-10-24",
+     "sessions": 23800,
+     "verified": 1237
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 6166,
+     "peak_day": "2026-10-28",
+     "sessions": 6166,
+     "verified": 633
+    }
+   ],
+   "gaps_days": [
+    4,
+    5,
+    2,
+    4
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 5,
+   "kind": "recurring"
+  },
+  {
+   "key": "436DD567-5435-4B14-89A6-2F1188E11334",
+   "median": 4847,
+   "threshold": 14541,
+   "episodes": [
+    {
+     "start": "2026-10-12",
+     "end": "2026-10-14",
+     "days": 3,
+     "peak": 34894,
+     "peak_day": "2026-10-12",
+     "sessions": 71870,
+     "verified": 1931
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-19",
+     "days": 1,
+     "peak": 24534,
+     "peak_day": "2026-10-19",
+     "sessions": 24534,
+     "verified": 4314
+    },
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 26174,
+     "peak_day": "2026-10-22",
+     "sessions": 26174,
+     "verified": 2058
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 18483,
+     "peak_day": "2026-10-28",
+     "sessions": 18483,
+     "verified": 4284
+    }
+   ],
+   "gaps_days": [
+    7,
+    3,
+    6
+   ],
+   "today": [
+    19583,
+    3849
+   ],
+   "today_burst": true,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "B5B07C8C-F93F-44A8-A353-4A47B8AD5238",
+   "median": 45,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-19",
+     "days": 1,
+     "peak": 26684,
+     "peak_day": "2026-10-19",
+     "sessions": 26684,
+     "verified": 26316
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 2933,
+     "peak_day": "2026-10-23",
+     "sessions": 2933,
+     "verified": 2680
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    76,
+    67
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "CC30DB96-0C88-4DEB-86E5-6601927ACBB4",
+   "median": 78,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-21",
+     "days": 1,
+     "peak": 9521,
+     "peak_day": "2026-10-21",
+     "sessions": 9521,
+     "verified": 8
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 6351,
+     "peak_day": "2026-10-24",
+     "sessions": 6351,
+     "verified": 2946
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 1418,
+     "peak_day": "2026-10-28",
+     "sessions": 1418,
+     "verified": 464
+    }
+   ],
+   "gaps_days": [
+    3,
+    4
+   ],
+   "today": [
+    572,
+    243
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
+   "median": 1374,
+   "threshold": 4122,
+   "episodes": [
+    {
+     "start": "2026-10-15",
+     "end": "2026-10-15",
+     "days": 1,
+     "peak": 4670,
+     "peak_day": "2026-10-15",
+     "sessions": 4670,
+     "verified": 2333
+    },
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-22",
+     "days": 3,
+     "peak": 8099,
+     "peak_day": "2026-10-21",
+     "sessions": 21020,
+     "verified": 10515
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 4356,
+     "peak_day": "2026-10-24",
+     "sessions": 4356,
+     "verified": 2098
+    }
+   ],
+   "gaps_days": [
+    5,
+    4
+   ],
+   "today": [
+    485,
+    101
+   ],
+   "today_burst": false,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "9C3260E3-AD4C-6719-E0A9-56D21BFB0BCD",
+   "median": 107,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-22",
+     "days": 3,
+     "peak": 3097,
+     "peak_day": "2026-10-22",
+     "sessions": 6289,
+     "verified": 25
+    },
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-28",
+     "days": 5,
+     "peak": 4396,
+     "peak_day": "2026-10-27",
+     "sessions": 16589,
+     "verified": 186
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    2299,
+    28
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "FB98C7DB-7AFF-DD4C-A55B-6CF11267BC91",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-25",
+     "days": 1,
+     "peak": 3541,
+     "peak_day": "2026-10-25",
+     "sessions": 3541,
+     "verified": 2512
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 4383,
+     "peak_day": "2026-10-28",
+     "sessions": 4383,
+     "verified": 2804
+    }
+   ],
+   "gaps_days": [
+    3
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+   "median": 750,
+   "threshold": 2250,
+   "episodes": [
+    {
+     "start": "2026-10-22",
+     "end": "2026-10-22",
+     "days": 1,
+     "peak": 2283,
+     "peak_day": "2026-10-22",
+     "sessions": 2283,
+     "verified": 43
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-27",
+     "days": 2,
+     "peak": 3170,
+     "peak_day": "2026-10-27",
+     "sessions": 6273,
+     "verified": 116
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    3982,
+    117
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",
+   "median": 319,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-16",
+     "end": "2026-10-16",
+     "days": 1,
+     "peak": 1443,
+     "peak_day": "2026-10-16",
+     "sessions": 1443,
+     "verified": 919
+    },
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-19",
+     "days": 1,
+     "peak": 2074,
+     "peak_day": "2026-10-19",
+     "sessions": 2074,
+     "verified": 1730
+    },
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-21",
+     "days": 1,
+     "peak": 2806,
+     "peak_day": "2026-10-21",
+     "sessions": 2806,
+     "verified": 1002
+    },
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 1026,
+     "peak_day": "2026-10-28",
+     "sessions": 1026,
+     "verified": 145
+    }
+   ],
+   "gaps_days": [
+    3,
+    2,
+    7
+   ],
+   "today": [
+    575,
+    163
+   ],
+   "today_burst": false,
+   "n_episodes": 4,
+   "kind": "recurring"
+  },
+  {
+   "key": "1B154715-ACB4-2706-19ED-0DC7E3F7D855",
+   "median": 140,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-19",
+     "end": "2026-10-20",
+     "days": 2,
+     "peak": 1564,
+     "peak_day": "2026-10-20",
+     "sessions": 3073,
+     "verified": 3046
+    },
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-25",
+     "days": 3,
+     "peak": 1970,
+     "peak_day": "2026-10-24",
+     "sessions": 5135,
+     "verified": 5040
+    }
+   ],
+   "gaps_days": [
+    4
+   ],
+   "today": [
+    144,
+    143
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "E8A64FAC-C713-4EB4-85D2-7458E3579D31",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 1719,
+     "peak_day": "2026-10-24",
+     "sessions": 1719,
+     "verified": 0
+    },
+    {
+     "start": "2026-10-26",
+     "end": "2026-10-27",
+     "days": 2,
+     "peak": 1166,
+     "peak_day": "2026-10-27",
+     "sessions": 2172,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [
+    2
+   ],
+   "today": [
+    2814,
+    0
+   ],
+   "today_burst": true,
+   "n_episodes": 3,
+   "kind": "recurring"
+  },
+  {
+   "key": "2F1CD804-FE45-F12B-9723-240962EBA6F8",
+   "median": 413,
+   "threshold": 1239,
+   "episodes": [
+    {
+     "start": "2026-10-23",
+     "end": "2026-10-23",
+     "days": 1,
+     "peak": 1391,
+     "peak_day": "2026-10-23",
+     "sessions": 1391,
+     "verified": 852
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    1586,
+    1379
+   ],
+   "today_burst": true,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "median": 25931,
+   "threshold": 77793,
+   "episodes": [
+    {
+     "start": "2026-10-14",
+     "end": "2026-10-15",
+     "days": 2,
+     "peak": 185742,
+     "peak_day": "2026-10-14",
+     "sessions": 346935,
+     "verified": 157532
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    39754,
+    68
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "persistent"
+  },
+  {
+   "key": "430FF2C3-1AB1-40B7-8BE7-44FC683FE02C",
+   "median": 37980,
+   "threshold": 113940,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    35886,
+    28181
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "median": 54651,
+   "threshold": 163953,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    55369,
+    11927
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "DE24F792-2F8A-4CDC-BF2D-70F94BF1660A",
+   "median": 18785,
+   "threshold": 56355,
+   "episodes": [
+    {
+     "start": "2026-10-28",
+     "end": "2026-10-28",
+     "days": 1,
+     "peak": 72359,
+     "peak_day": "2026-10-28",
+     "sessions": 72359,
+     "verified": 33581
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    48043,
+    21898
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "persistent"
+  },
+  {
+   "key": "2BF0FE95-9FB3-45E0-9CB9-3F5B5A8465B1",
+   "median": 14378,
+   "threshold": 43134,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    20082,
+    2526
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C",
+   "median": 7053,
+   "threshold": 21159,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    9469,
+    99
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "9B8ED233-984B-4DE5-A7B6-3A370D9FF48B",
+   "median": 9345,
+   "threshold": 28035,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    8683,
+    330
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "B81C9A69-A838-48B2-8720-BCD00A823A94",
+   "median": 7262,
+   "threshold": 21786,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    8122,
+    455
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "B0217B00-2CA4-41CC-925D-1EEB57BFFC2F",
+   "median": 2196,
+   "threshold": 6588,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    1547,
+    1103
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "476068BF-9607-4799-B53D-966BE98E2B81",
+   "median": 2029,
+   "threshold": 6087,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    2110,
+    54
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "51975FD6-CDA1-4D4B-A7BB-D64A05FCED9B",
+   "median": 1384,
+   "threshold": 4152,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    1583,
+    18
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "persistent"
+  },
+  {
+   "key": "9FB8A1A8-6ABD-4790-B6EA-E2058C1A594D",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-21",
+     "days": 2,
+     "peak": 15925,
+     "peak_day": "2026-10-21",
+     "sessions": 20521,
+     "verified": 10776
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    53,
+    22
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "7BA04117-FC6C-4968-834C-DC69A7D0AD58",
+   "median": 101,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-20",
+     "end": "2026-10-22",
+     "days": 3,
+     "peak": 13447,
+     "peak_day": "2026-10-22",
+     "sessions": 24137,
+     "verified": 800
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    31,
+    20
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "54B78A70-0DD3-455D-BA99-AB5CB14276CF",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-21",
+     "end": "2026-10-22",
+     "days": 2,
+     "peak": 7221,
+     "peak_day": "2026-10-22",
+     "sessions": 11921,
+     "verified": 7340
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "A0C1F8BD-F49D-47A8-85F8-F93D9F11E898",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-24",
+     "end": "2026-10-24",
+     "days": 1,
+     "peak": 1055,
+     "peak_day": "2026-10-24",
+     "sessions": 1055,
+     "verified": 0
+    }
+   ],
+   "gaps_days": [],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 1,
+   "kind": "one-off"
+  },
+  {
+   "key": "AD73B601-F0A9-459E-B619-838E01BA7EDB",
+   "median": 17995,
+   "threshold": 53985,
+   "episodes": [],
+   "gaps_days": [],
+   "today": [
+    17872,
+    14
+   ],
+   "today_burst": false,
+   "n_episodes": 0,
+   "kind": "none"
+  }
+ ]
+}
