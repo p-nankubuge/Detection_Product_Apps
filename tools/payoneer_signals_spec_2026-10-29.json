@@ -1,0 +1,154 @@
+{
+ "title": "Payoneer \u2014 outlook.fr template and Thailand Linux farm, sessions created vs verified",
+ "subtitle": "Follow-up to DETCORE-4466. Source ARK_PROD.events.mini_events_log (session_setup + game_verify), exact counts by flag definition, back-filled before the flags existed.",
+ "keys": {
+  "E3EF": "Payoneer CLM Registration (Key 3)",
+  "EE84": "Payoneer Login (Key 2)",
+  "7CC2": "Payoneer Registration (Key 1)"
+ },
+ "signals": [
+  {
+   "id": "S7",
+   "title": "outlook.fr CamelCase name + random suffix, email ML 80+",
+   "verdict": "missed",
+   "keys": [
+    "E3EF",
+    "EE84"
+   ],
+   "markers": [
+    {
+     "label": "flag created",
+     "date": "2026-10-29"
+    }
+   ],
+   "why": "Capitalised US first + last name with a random 5-10 character suffix @outlook.fr (e.g. CharlesAlexanderu25778jf, PamelaBaker4E79816), email ML score 80-100. Windows Chrome 156 from CO/KR/NZ/TH IPs. Near zero until Oct 22, then 100-400 a day across CLM and Login, effectively 100% verified.",
+   "telltales": [
+    {
+     "telltale_name": "payoneer-h-outlook-fr-camelcase-name-random-suffix-email-ml-80",
+     "owner": "p.nankubuge@arkoselabs.com",
+     "ticket": "DETCORE-4466",
+     "telltale_definition": [
+      {
+       "key": "public_key",
+       "operator": "TS_IN",
+       "value": [
+        "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+        "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+        "7CC24C4A-611B-41C7-9808-B95722C7861C"
+       ],
+       "type": "list[string]"
+      },
+      {
+       "key": "location",
+       "operator": "TS_EQ",
+       "value": "session_setup",
+       "type": "string"
+      },
+      {
+       "key": "email__raw_email_domain",
+       "operator": "TS_EQ",
+       "value": "outlook.fr",
+       "type": "string"
+      },
+      {
+       "key": "customer_id_2",
+       "operator": "TS_REGEX",
+       "value": "/^[A-Z][a-z]+[A-Z][a-z]+[A-Za-z0-9]{5,10}@outlook\\.fr$/",
+       "type": "string"
+      },
+      {
+       "operator": "#INCLUDE",
+       "value": "email-ml-score-80-to-100"
+      }
+     ],
+     "telltale_description": "Templated outlook.fr registrations: CamelCase US first + last name with a random 5-10 character suffix, email ML score 80-100. Windows Chrome 156 from CO/KR/NZ/TH IPs. Started ~Oct 22 on CLM + Login, ~1.5k sessions/week, 100% verified.",
+     "external_description": "Automated pattern: templated outlook.fr email handles (capitalised name + random suffix) with high email-risk score. Payoneer CLM and Login since Oct 22."
+    }
+   ]
+  },
+  {
+   "id": "S8",
+   "title": "Thailand + Linux desktop + hotmail, language 'th', Mesa/Renoir GPU",
+   "verdict": "missed",
+   "keys": [
+    "E3EF",
+    "EE84"
+   ],
+   "markers": [
+    {
+     "label": "flag created",
+     "date": "2026-10-29"
+    }
+   ],
+   "why": "Thai IPs, GNU/Linux Chrome 154-156, hotmail, browser language exactly 'th', GPU Mesa Intel or AMD Renoir. Handles are random Western names + birthdate or digits (e.g. shakyagardner23082002, alysahloxley3598). Absent before Oct 15, then a steady 60-210 a day on each key, 93-99% verified.",
+   "telltales": [
+    {
+     "telltale_name": "payoneer-h-th-linux-hotmail-th-lang-mesa-gpu",
+     "owner": "p.nankubuge@arkoselabs.com",
+     "ticket": "DETCORE-4466",
+     "telltale_definition": [
+      {
+       "key": "public_key",
+       "operator": "TS_IN",
+       "value": [
+        "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+        "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+        "7CC24C4A-611B-41C7-9808-B95722C7861C"
+       ],
+       "type": "list[string]"
+      },
+      {
+       "key": "location",
+       "operator": "TS_EQ",
+       "value": "session_setup",
+       "type": "string"
+      },
+      {
+       "key": "country",
+       "operator": "TS_EQ",
+       "value": "TH",
+       "type": "string"
+      },
+      {
+       "key": "os",
+       "operator": "TS_EQ",
+       "value": "GNU/Linux",
+       "type": "string"
+      },
+      {
+       "key": "email__raw_email_domain",
+       "operator": "TS_EQ",
+       "value": "hotmail.com",
+       "type": "string"
+      },
+      {
+       "key": "fp_language",
+       "operator": "TS_EQ",
+       "value": "th",
+       "type": "string"
+      },
+      {
+       "operator": "OR",
+       "conditions": [
+        {
+         "key": "webgl_unmasked_renderer",
+         "operator": "TS_CONTAINS",
+         "value": "Mesa Intel",
+         "type": "string"
+        },
+        {
+         "key": "webgl_unmasked_renderer",
+         "operator": "TS_CONTAINS",
+         "value": "RENOIR",
+         "type": "string"
+        }
+       ]
+      }
+     ],
+     "telltale_description": "Thailand Linux desktop farm: GNU/Linux Chrome 154-156, hotmail, browser language 'th', Mesa Intel / AMD Renoir GPU, name-generator handles. Started Oct 15 on CLM + Login, ~2k sessions/week, 96% verified.",
+     "external_description": "Suspicious device cluster: Linux desktops in Thailand with identical language and GPU profile registering hotmail accounts with generated names. Payoneer CLM and Login since Oct 15."
+    }
+   ]
+  }
+ ]
+}
