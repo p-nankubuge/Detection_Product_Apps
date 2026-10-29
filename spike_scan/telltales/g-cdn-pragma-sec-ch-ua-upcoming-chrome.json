@@ -1,0 +1,32 @@
+{
+ "telltale_name": "g-cdn-pragma-sec-ch-ua-upcoming-chrome",
+ "ticket": "DETCORE-4466",
+ "telltale_type": "suspicion_flags",
+ "cohort_category": "Suspicious",
+ "owner": "p.nankubuge@arkoselabs.com",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "telltale_active": false,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+ "location": "SESSION_SETUP",
+ "_validated": "2026-10-29 valid, no errors",
+ "telltale_definition": [
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "cdn-header-order-contains-pragma"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "client-hints-maybe-unexpected-sec-ch-ua-for-upcoming-google-chrome-version"
+  }
+ ]
+}

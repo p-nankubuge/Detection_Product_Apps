@@ -1,0 +1,36 @@
+{
+ "telltale_name": "g-spoofed-os-mismatch-pagebio-null-grease",
+ "ticket": "DETCORE-4466",
+ "telltale_type": "suspicion_flags",
+ "cohort_category": "Suspicious",
+ "owner": "p.nankubuge@arkoselabs.com",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "telltale_active": false,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+ "location": "SESSION_SETUP",
+ "_validated": "2026-10-29 valid, no errors",
+ "telltale_definition": [
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "spoofed-os-mismatch"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-page-level-biometrics-empty-or-null"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "client-hints-has-not-a-brand-grease"
+  }
+ ]
+}

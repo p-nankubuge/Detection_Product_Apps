@@ -230,6 +230,35 @@
    "history_note": "Added 2026-10-23; exact history from 2026-10-12.",
    "action": "hold",
    "action_detail": "NEW 2026-10-23, not created. Validated draft: telltales/g-os-spoofing-pagebio-null.json. The spike is almost all WBD Account Lookup (Key 20): 952k Oct 21 / 1.12M Oct 22, 1-8% verified, ~24k/h on Oct 23; the live pagebio TT and the appleos candidate already cover it. Otherwise it fires steadily on many keys: Adobe Sign-in (62-104k/day, 64-87% verified, normal traffic), DoorDash Website (17-44k/day, ~55%), Amazon IDS (~55-63k/day, 14-20%), Uber SMS (~30-36k/day, <1%), Adobe Commerce (~20k/day, 0%). Too broad to create globally. One burst got through: Tinder PreSMS (Key 3) 26.7k on Oct 19 at 99% verified, then ~0. History before Oct 12 not loaded."
+  },
+  {
+   "id": "pragma_secchua_upcoming_chrome",
+   "telltale_name": "g-cdn-pragma-sec-ch-ua-upcoming-chrome",
+   "status": "candidate",
+   "found": "2026-10-29",
+   "flags": [
+    "cdn-header-order-contains-pragma",
+    "client-hints-maybe-unexpected-sec-ch-ua-for-upcoming-google-chrome-version"
+   ],
+   "draft": "telltales/g-cdn-pragma-sec-ch-ua-upcoming-chrome.json",
+   "history_note": "Added 2026-10-29; exact history from 2026-10-22.",
+   "action": "candidate (review)",
+   "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Amazon IDS (Key 2): 4.6k/5.2k on Oct 25-26 -> 262k Oct 27 / 312k Oct 28 at 12% verified (78% of all volume). Also Adobe Sign Up 15.5k (31%), Olo Payments 11.4k Oct 25 only (52%), MS Identity Signup 6.3k (15%), Pinterest Login 4.5k (5%). Exact share across all keys 0.83. Amazon IDS already carries the live grease/pagebio TTs, so check whether this adds anything there before creating; scope to Amazon IDS if created."
+  },
+  {
+   "id": "spoofed_os_pagebio_grease",
+   "telltale_name": "g-spoofed-os-mismatch-pagebio-null-grease",
+   "status": "candidate",
+   "found": "2026-10-29",
+   "flags": [
+    "spoofed-os-mismatch",
+    "g-page-level-biometrics-empty-or-null",
+    "client-hints-has-not-a-brand-grease"
+   ],
+   "draft": "telltales/g-spoofed-os-mismatch-pagebio-null-grease.json",
+   "history_note": "Added 2026-10-29; exact history from 2026-10-22.",
+   "action": "candidate (review)",
+   "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Roblox Login (Key 1): ~3k/day Oct 25-26 -> 168k Oct 27 -> 974k Oct 28 at ~8% verified (89% of volume). Also Roblox Signup 124k (28%), MS Outlook 10k (72%), Blizzard ROW Registration ~6k (1-2%), MS Identity Signup ~4k (7%). Exact share 0.53 (just over the bar); Amazon IDS fires steadily at 110-138k/day. Candidate for a Roblox-scoped flag."
   }
  ],
  "retired": [
