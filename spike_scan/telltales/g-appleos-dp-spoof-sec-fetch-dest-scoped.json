@@ -1,0 +1,45 @@
+{
+ "telltale_name": "g-appleos-dp-spoof-sec-fetch-dest-scoped",
+ "ticket": "CHNGE-6738",
+ "telltale_type": "telltale",
+ "owner": "p.nankubuge@arkoselabs.com",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Spike-scan telltale; review after 14 days",
+ "location": "SESSION_SETUP",
+ "_validated": "2026-10-30 valid, no errors",
+ "telltale_definition": [
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "key": "public_key",
+   "operator": "TS_IN",
+   "value": [
+    "7A946A46-88B6-40F4-9A8E-7286D122B384",
+    "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+    "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
+    "30000F36-CADF-490C-929A-C6A7DD8B33C4"
+   ],
+   "type": "list[string]"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-os-impersonation-appleos"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-device-parameter-spoofing"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "capi-anomaly-header-sec-fetch-dest-not-empty"
+  }
+ ]
+}

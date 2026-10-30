@@ -203,7 +203,8 @@
     "CC30DB96-0C88-4DEB-86E5-6601927ACBB4"
    ],
    "dataswan_id": 14989770,
-   "created": "2026-10-30 00:05 UTC"
+   "created": "2026-10-30 00:05 UTC",
+   "change_ticket": "CHNGE-6738 (scoped copy g-appleos-dp-spoof-sec-fetch-dest-scoped)"
   },
   {
    "id": "didict3_dishort300",

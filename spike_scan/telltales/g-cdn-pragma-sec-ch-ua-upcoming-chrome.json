@@ -1,8 +1,7 @@
 {
  "telltale_name": "g-cdn-pragma-sec-ch-ua-upcoming-chrome",
- "ticket": "DETCORE-4466",
- "telltale_type": "suspicion_flags",
- "cohort_category": "Suspicious",
+ "ticket": "CHNGE-6738",
+ "telltale_type": "telltale",
  "owner": "p.nankubuge@arkoselabs.com",
  "owner_category": "User",
  "risk_category": "CUSTOM",
@@ -10,15 +9,28 @@
  "telltale_active": false,
  "allow_others_to_include": true,
  "life_cycle_management": "M",
- "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+ "manual_life_cycle_details": "Spike-scan telltale; review after 14 days",
  "location": "SESSION_SETUP",
- "_validated": "2026-10-29 valid, no errors",
+ "_validated": "2026-10-30 valid, no errors (telltale type, key-scoped)",
  "telltale_definition": [
   {
    "key": "location",
    "operator": "TS_EQ",
    "value": "session_setup",
    "type": "string"
+  },
+  {
+   "key": "public_key",
+   "operator": "TS_IN",
+   "value": [
+    "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+    "B7D8911C-5CC8-A9A3-35B0-554ACEE604DA",
+    "9C3260E3-AD4C-6719-E0A9-56D21BFB0BCD",
+    "F5675B21-025B-4843-983C-38D86DEB394B",
+    "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+    "436DD567-5435-4B14-89A6-2F1188E11334"
+   ],
+   "type": "list[string]"
   },
   {
    "operator": "#INCLUDE",

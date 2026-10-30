@@ -1,33 +1,47 @@
 {
-  "ticket": "DETCORE-4466",
-  "telltale_type": "suspicion_flags",
-  "cohort_category": "Suspicious",
-  "owner": "p.nankubuge@arkoselabs.com",
-  "owner_category": "User",
-  "risk_category": "CUSTOM",
-  "risk_score": 0,
-  "telltale_active": false,
-  "allow_others_to_include": true,
-  "life_cycle_management": "M",
-  "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
-  "_validated": "validate_telltale 2026-10-23: valid, no errors (NOT created)",
-  "location": "SESSION_SETUP",
-  "telltale_name": "g-os-spoofing-pagebio-null",
-  "telltale_definition": [
-    {
-      "key": "location",
-      "operator": "TS_EQ",
-      "value": "session_setup",
-      "type": "string"
-    },
-    {
-      "operator": "#INCLUDE",
-      "value": "g-operating-system-spoofing"
-    },
-    {
-      "operator": "#INCLUDE",
-      "value": "g-page-level-biometrics-empty-or-null"
-    }
-  ],
-  "telltale_description": "Spike-scan 2026-10-23: OS spoofing (any g-os-* impersonation/obsolete/invalid) + page-level biometrics empty or null. Spiked on 9 keys Oct 19-22 (Blizzard ROW Support, Tinder PreSMS, DoorDash ATM PoV, Roblox Game Join, Olo Payments, Microsoft Identity Signup, WBD Account Lookup, Highlight AI, Chime Login)."
+ "ticket": "CHNGE-6738",
+ "telltale_type": "telltale",
+ "owner": "p.nankubuge@arkoselabs.com",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "telltale_active": false,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Spike-scan telltale; review after 14 days",
+ "_validated": "2026-10-30 valid, no errors (telltale type, key-scoped)",
+ "location": "SESSION_SETUP",
+ "telltale_name": "g-os-spoofing-pagebio-null",
+ "telltale_definition": [
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "key": "public_key",
+   "operator": "TS_IN",
+   "value": [
+    "7A946A46-88B6-40F4-9A8E-7286D122B384",
+    "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+    "F82162A1-2E05-485A-BD5E-C4DF6F7486FC",
+    "AD73B601-F0A9-459E-B619-838E01BA7EDB",
+    "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+    "2BF0FE95-9FB3-45E0-9CB9-3F5B5A8465B1",
+    "9B8ED233-984B-4DE5-A7B6-3A370D9FF48B",
+    "436DD567-5435-4B14-89A6-2F1188E11334"
+   ],
+   "type": "list[string]"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-operating-system-spoofing"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-page-level-biometrics-empty-or-null"
+  }
+ ],
+ "telltale_description": "Spike-scan 2026-10-23: OS spoofing (any g-os-* impersonation/obsolete/invalid) + page-level biometrics empty or null. Spiked on 9 keys Oct 19-22 (Blizzard ROW Support, Tinder PreSMS, DoorDash ATM PoV, Roblox Game Join, Olo Payments, Microsoft Identity Signup, WBD Account Lookup, Highlight AI, Chime Login)."
 }
