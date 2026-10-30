@@ -179,7 +179,7 @@
   {
    "id": "appleos_dp_spoof_secfetch",
    "telltale_name": "g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest",
-   "status": "candidate",
+   "status": "live",
    "found": "2026-10-20",
    "flags": [
     "g-os-impersonation-appleos",
@@ -188,8 +188,8 @@
    ],
    "draft": "telltales/g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest.json",
    "history_note": "Daily history before 2026-10-19 for this combination is a 1% block sample x100 (rough estimate, clumpy); Oct 19 is exact for the charted keys.",
-   "action": "hold (covered by live TT)",
-   "action_detail": "NEW signal, not created. Started Oct 18 on WBD Account Lookup (Key 20): ~760k sampled Oct 18 (16% verified), 714k exact Oct 19 (0% verified; up to 116k/h). Olo Payments: 105k Oct 19 (0% verified, ~9-10k/h all evening). The same sessions also carry the live TT g-pagebio-null-...-rfc-ct-before-cl, which is now stopping them (0% verified). Optional: create as a backup in case the actor drops the header-order tells.",
+   "action": "keep live (backup)",
+   "action_detail": "LIVE since 2026-10-30 00:05 UTC (Dataswan id 14989770, Suspicious flag, risk 0, GLOBAL, no pressure). Created as a backup for the WBD Account Lookup / Olo Payments actor (Oct 18-22) in case it drops the header-order tells that the live pagebio TT catches; that actor is quiet now (~2k/day). Expect more hits after the DI dictionary revert (week of Nov 2), because g-device-parameter-spoofing includes the DI dict flags.",
    "hourly_keys": [
     "A2A14B1D-1AF3-C791-9BBC-EE33CC7A0A6F",
     "476068BF-9607-4799-B53D-966BE98E2B81",
@@ -201,7 +201,9 @@
     "430FF2C3-1AB1-40B7-8BE7-44FC683FE02C",
     "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
     "CC30DB96-0C88-4DEB-86E5-6601927ACBB4"
-   ]
+   ],
+   "dataswan_id": 14989770,
+   "created": "2026-10-30 00:05 UTC"
   },
   {
    "id": "didict3_dishort300",

@@ -99,6 +99,8 @@ Work from the repo root, `cd spike_scan`.
    `data/recurrence_<today>.json`, which the main report reads for its per-combo burst-episode list.
    Burst day = ≥1k sessions and ≥3× the key's median day; back-to-back days = one episode; ≥2 episodes = recurring.
    Run this before step 8.
+   **TT created 2026-10-30:** g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest (id 14989770). Its name enters
+   TELLTALE_LIST from 0, so exclude it from step 1 until 2026-11-10.
    **DI dictionary flags off 2026-10-27, revert planned week of 2026-11-02** (THR-405..413, m.davies): dict-1, dict-3 and
    dict-neg1 got an impossible `di_dictionary_num_matched == -99` condition (never fire); dict-7/15/31 were re-thresholded.
    When the revert lands, these flags (and every combo/TT that includes them, incl. g-device-parameter-spoofing and the
