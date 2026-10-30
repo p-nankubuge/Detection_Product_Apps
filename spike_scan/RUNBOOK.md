@@ -99,6 +99,12 @@ Work from the repo root, `cd spike_scan`.
    `data/recurrence_<today>.json`, which the main report reads for its per-combo burst-episode list.
    Burst day = ≥1k sessions and ≥3× the key's median day; back-to-back days = one episode; ≥2 episodes = recurring.
    Run this before step 8.
+   **DI dictionary flags off 2026-10-27, revert planned week of 2026-11-02** (THR-405..413, m.davies): dict-1, dict-3 and
+   dict-neg1 got an impossible `di_dictionary_num_matched == -99` condition (never fire); dict-7/15/31 were re-thresholded.
+   When the revert lands, these flags (and every combo/TT that includes them, incl. g-device-parameter-spoofing and the
+   dict-3 TTs) will jump from ~0 back to normal on every key at the same hour. Treat that jump as a definition change, not an
+   attack: check `get_telltale_changelog` for the revert time, drop them from step 1 for 11 days after it (until the
+   baseline is clean), and compare tracking only against days before Oct 27. Then lift the hold on `didict3_dishort300` (BLUE-7297).
    **TTs created 2026-10-19** (grease, di-dict3, rta, ends-te, single-click, ja4-dict1): their names now appear in
    `TELLTALE_LIST_AT_ALL_EVENTS` from a zero baseline, so step 1 will show them as spiking on every key they fire on.
    Same for the 2 created 2026-10-20 (g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st, g-rfc-sec-ch-ua-webgl-device-param-spoofing) until 2026-10-27.
