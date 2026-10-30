@@ -829,8 +829,8 @@ def cmd_soc(a):
         sec.append('<div class="action %s"><b>Action:</b> %s</div>' % (ak, html.escape(c.get("action_detail", ""))))
         if c.get("history_note"):
             sec.append('<p class="muted"><b>Data note:</b> %s</p>' % html.escape(c["history_note"]))
-        sec.append('<h3>Signal combination (all must be present on the session)</h3><ul class="flags">%s</ul>'
-                   % "".join(("<li><code>%s</code></li>" if c["status"] == "live" else '<li><code class="newflag">%s</code> <span class="muted">not created yet</span></li>') % html.escape(f) for f in c["flags"]))
+        sec.append('<h3>Signal combination (all must be present on the session; each is an existing Dataswan flag, combined with #INCLUDE)</h3><ul class="flags">%s</ul>'
+                   % "".join(("<li><code>%s</code></li>" if c["status"] == "live" else '<li><code class="newflag">%s</code> <span class="muted">existing flag (the combined telltale is not created yet)</span></li>') % html.escape(f) for f in c["flags"]))
         if meta:
             where = ("<b>live in Dataswan</b> (id %s, created %s)" % (c["dataswan_id"], c.get("created", "–"))) if c.get("dataswan_id") else "not created in Dataswan"
             sec.append('<p class="muted">%s: location <b>%s</b> · type %s · cohort %s · ticket %s · %s · %s.</p>'
