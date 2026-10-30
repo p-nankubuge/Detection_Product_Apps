@@ -24,3 +24,19 @@ Suggested: f3 as a risk-setting telltale on this key (punish at verify); early p
 Suggested: require the exact track in >= 2 distinct sessions (exclude self-match).
 
 Better FP proxy: no cross-session track reuse, no shared IP/device/JA4 with bot-classified sessions, no lowsec error.
+
+## exact_match_cnt > 1 vs > 2 (exact-replay flag), tested 30 Oct
+
+Chart: docs/exact-replay-gt1-vs-gt2.png. Source ARK_PROD.EVENTS.EVENTS_LOG (only table with exact_match_cnt), sessions, QA key excluded.
+
+| | Typical h | w/o busiest | Peak | NO-THREAT |
+|---|---|---|---|---|
+| >1, 9–13 Oct game_verify | 62 | 9.5 | 3,689 | 0 |
+| >2, 9–13 Oct game_verify | 56 | 5 | 2,996 | 0 |
+| >1, 19–29 Oct check_answer | 188 | 38 | 8,926 | 58 |
+| >2, 19–29 Oct check_answer | 30 | 4 | 7,492 | 2 |
+
+Kept under >2: gtop100 11 Oct (81–88%), AT&T Key 3 12 Oct (100%), Amazon Client 13 Oct (100%), gtop100 25–26 Oct, AT&T SDK Android 29 Oct.
+Lost under >2: Roblox Game Join 19–21 Oct wave (2,278 -> 133 etc.); 27–28 Oct partly kept (~60–67%). 91% of cnt=2 hits are cross-session pairs (Game Join: ~4,800 tracks shared by exactly 2 sessions ~138 s apart), only 9% self-only (Uber SMS, Meta Login, MS Signup nearly all self-only).
+Validated (not created): same definition with exact_match_cnt TS_GREATER 2 (name ...-v2).
+Recommendation: the real fix is a count of OTHER sessions with the same track; >2 is clean at game_verify (85% kept, drops Hornet/Amazon IDS chance matches) but costs the Game Join pairs at check_answer.
