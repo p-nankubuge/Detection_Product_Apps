@@ -101,6 +101,8 @@ Work from the repo root, `cd spike_scan`.
    Run this before step 8.
    **TT created 2026-10-30:** g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest (id 14989770). Its name enters
    TELLTALE_LIST from 0, so exclude it from step 1 until 2026-11-10.
+   **TT created 2026-11-01:** g-biometric-mouse-exact-replay-above-2-events-4plus (id 15052692, check_answer, global suspicion
+   flag; pressure keys in CHNGE-6738 item 6). Its name enters SUSPICION_FLAGS from 0, so exclude it from step 1 until 2026-11-12.
    **DI dictionary flags off 2026-10-27, revert planned week of 2026-11-02** (THR-405..413, m.davies): dict-1, dict-3 and
    dict-neg1 got an impossible `di_dictionary_num_matched == -99` condition (never fire); dict-7/15/31 were re-thresholded.
    When the revert lands, these flags (and every combo/TT that includes them, incl. g-device-parameter-spoofing and the
