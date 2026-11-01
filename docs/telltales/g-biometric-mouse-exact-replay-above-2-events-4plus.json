@@ -1,0 +1,26 @@
+{
+ "telltale_name": "g-biometric-mouse-exact-replay-above-2-events-4plus",
+ "ticket": "DETCORE-4468",
+ "telltale_type": "suspicion_flags",
+ "cohort_category": "Suspicious",
+ "owner": "p.nankubuge@arkoselabs.com",
+ "owner_category": "Internal Test",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "telltale_active": true,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Replay post-solve deny proposal; review after 14 days",
+ "location": "CHECK_ANSWER",
+ "_validated": "2026-11-01 valid, no errors (not created)",
+ "telltale_description": "Exact mouse replay at check_answer: the identical 4-axis mouse track (coordinates and timing) has been seen more than 2 times, on a mouse session with at least 4 events and no touch. Replaces g-biometric-mouse-exact-replay-events-4plus (> 1), whose count-2 hits included sessions resubmitting their own track (51 of 58 NO-THREAT hits, 19-29 Oct). Proposal: Post-Solve Deny on In-Game Mouse Replay Signals.",
+ "external_description": "Identical mouse movement replayed across sessions",
+ "telltale_definition": [
+  {"key": "location", "operator": "TS_EQ", "value": "check_answer", "type": "string"},
+  {"key": "behavioral_analysis__mouse__exact_match_cnt", "operator": "TS_GREATER", "value": 2, "type": "int"},
+  {"key": "behavioral_analysis__mouse__events_count", "operator": "TS_GREATER", "value": 3, "type": "int"},
+  {"operator": "OR", "conditions": [
+   {"key": "behavioral_analysis__touch__is_null_session", "operator": "TS_EQ", "value": true, "type": "boolean"},
+   {"key": "behavioral_analysis__touch__is_null_session", "operator": "TS_EQ", "value": "1", "type": "string"}]}
+ ]
+}
