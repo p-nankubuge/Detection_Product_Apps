@@ -95,6 +95,10 @@
   "account_name": "Docusign Inc",
   "key_name": "Docusign - Abuse and Signup - Production - Key 2"
  },
+ "519C70B3-B8F5-427B-827F-D2D54AB25D04": {
+  "account_name": "Bank of America Corporation",
+  "key_name": "Bank of America - Production - Beacon AuthHub -  ATM - Key 3"
+ },
  "54B78A70-0DD3-455D-BA99-AB5CB14276CF": {
   "account_name": "Highlight AI",
   "key_name": "Highlight AI - Chat Prompt - Production - Key 1"
@@ -206,6 +210,10 @@
  "B81C9A69-A838-48B2-8720-BCD00A823A94": {
   "account_name": "Wells Fargo & Company",
   "key_name": "WCA - Prod/Detect - Vantage Login - Web - Key 10"
+ },
+ "B993C75A-9EE6-471C-A277-D0461E54FD17": {
+  "account_name": "Bank of America Corporation",
+  "key_name": "Bank of America - Production - Beacon CashPro - ATM - Key 5"
  },
  "BBCC314C-4937-4CCD-B0A3-FDF0F0F7603C": {
   "account_name": "Adobe",
