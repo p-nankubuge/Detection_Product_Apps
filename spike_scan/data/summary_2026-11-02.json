@@ -1,0 +1,37 @@
+{
+ "title": "Daily run 2026-11-02 (exact Oct 29 - Nov 1; Nov 2 so far from hourly data)",
+ "sections": [
+  {"h": "Biggest change: Uber SMS shifted signature and is getting through", "items": [
+   "Uber SMS (Key 1): the grease/pagebio wave fell from 2.1M/day (Oct 28) to 75k on Nov 1, but it reappeared on other signatures with high verified share: pragma + upcoming-Chrome 175k on Nov 1 at 91% verified; spoofed-OS + pagebio + GREASE 42k on Nov 1 at 62% verified (8.9-13k/hour at 00-02 UTC with 6.9-12k verified per hour).",
+   "Discovery NEW-1 (rfc ct-before-cl + di-short-300-pxr1): 2.81M Uber SMS sessions in Oct 29 - Nov 1 at 46% verified; only 8% already flagged by a live TT. Biggest gap found this run."
+  ]},
+  {"h": "Still large but blocked", "items": [
+   "Amazon IDS (Key 2): grease 2.05M Oct 30 / 2.76M Oct 31 / 0.94M Nov 1 and pagebio 1.2-1.6M/day at 1-3% verified. Single-click + dp-spoof 295k on Oct 30 at 55% verified, 118k on Nov 1 at 7%.",
+   "Highlight AI Chat Prompt: grease/pagebio 860k on Oct 31, 465k on Nov 1, 0-1% verified.",
+   "Roblox Login (Key 1): webgl 228k on Oct 31 at 0% verified; dishort300 + ja4 40k on Oct 31.",
+   "Microsoft Identity Signup: webgl ~70-90k/day at 0-1% verified.",
+   "Blizzard ROW Support Site: grease 11-31k/day at 0% verified."
+  ]},
+  {"h": "New keys", "items": [
+   "Expedia EG Taap LowTraffic (Key 3): grease 48k-101k/day; got through on Oct 29-30 (75-96% verified) and fell to 6-11% on Oct 31 - Nov 1; OS-spoofing family 9k on Nov 1 at 57%.",
+   "Airbnb Account Lookup: grease/pagebio 43-69k/day Oct 29-31 at 0-15% verified, stopped Nov 1.",
+   "Chime Login (Key 1): ends-te + dp-spoof 9-13k/day Oct 31 - Nov 1 at 16-26% verified.",
+   "Bank of America Beacon ATM keys again: AuthHub Key 3 (519C70B3) ends-te 5k/day at 0% verified, and CashPro Key 5 (B993C75A) in discovery. Same pattern as Beacon Workforce Key 4 last week.",
+   "Tinder PreSMS: OS-spoofing family 1-5k/day at 79-96% verified (getting through)."
+  ]},
+  {"h": "Getting through (high verified)", "items": [
+   "gtop100: single-click 25k on Nov 1 at 97% verified; grease 36k at 72%.",
+   "Adobe Sign Up: grease 28k on Nov 1 at 43%; pagebio 10k at 49%; ends-te 3k at 83%.",
+   "Adobe ARP FF: webgl 17-33k/day at 54-68% (1% on Nov 1)."
+  ]},
+  {"h": "Stopped / switched off", "items": [
+   "All dict-3 combos are 0 since Oct 27 (DI dictionary flags disabled, revert not yet done).",
+   "Roblox Game Join ends-te (55k on Oct 27 -> 0); Roblox Login spoofed-OS wave (974k on Oct 28 -> ~4k/day); Airbnb on Nov 1; Adobe Commerce webgl (22k -> ~0)."
+  ]},
+  {"h": "Discovery (Oct 29 - Nov 1): 2 new candidates, validated, not created", "items": [
+   "g-rfc-ct-before-cl-di-short-300-pxr1: 8 keys, exact share 0.86, 4.59M sessions, 34% verified. Uber SMS 2.81M (46% verified; its NO-THREAT hits share JA4 with the bot-classified ones), Highlight AI 695k, Amazon IDS 446k, Roblox Monetization 201k (95% verified, may be benign), Expedia, Airbnb, MS Signup.",
+   "g-device-param-spoofing-di-high-risk-sig-st-4x: 8 keys, share 0.67, 1.19M sessions, 14% verified. Amazon IDS 413k, Roblox Login 163k, Airbnb, BofA Beacon Workforce, DoorDash, Roblox Game Join, Expedia, Chime. Includes DI flags, so it will jump when the DI revert lands.",
+   "Dropped as artifacts: the new g-atm agent telltales (created Oct 29), cdn single-cookie, timezone (DST) family, ja4-dict-1 step, wired velocity, Ensemble lists, dict-7/15/31 (re-thresholded Oct 27). DI revert not done yet; none of the CHNGE-6738 parents exist yet."
+  ]}
+ ]
+}
