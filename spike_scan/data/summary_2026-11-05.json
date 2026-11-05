@@ -1,0 +1,27 @@
+{
+ "title": "Daily run 2026-11-05 (exact Nov 2-4; Nov 5 00-04 UTC from hourly data)",
+ "sections": [
+  {"h": "Getting through now", "items": [
+   "Roblox Game Join (Key 6): NEW on pragma + upcoming-Chrome, 11k Nov 3 -> 94k Nov 4 at 39% verified; 8.3k in the first 5 hours of Nov 5 (38%). Also new on ends-te + dp-spoof today (8.9k, 7%).",
+   "Adobe ARP FF (Key 8): grease and pagebio verified share climbing 30% -> 59% -> 82-88% (Nov 2-4) and 91-96% today (~15k each in 5h); OS-spoofing 33k Nov 4 at 76%, 89% today.",
+   "Uber SMS (Key 1): single-click + dp-spoof 27-33k/day at 69-85% verified (81% today). The pragma wave (127k Nov 2 at 76%, 103k Nov 3 at 91%) stopped on Nov 4.",
+   "DoorDash Website: OS-spoofing families 20-73k/day at 38-49% verified, steady."
+  ]},
+  {"h": "Largest volumes (blocked)", "items": [
+   "Amazon IDS (Key 2): grease 594k / 633k / 1.47M (Nov 2-4) and 362k in 5h today at 0% verified; pagebio 355-378k Nov 2-3.",
+   "Roblox Signup (Key 2): grease/pagebio burst 381k / 367k on Nov 2 at 8% verified, down to ~1k today.",
+   "Highlight AI Chat Prompt: grease/pagebio 349k on Nov 2, then ~15k Nov 3 and ~0 today.",
+   "Airbnb Account Lookup: grease/pagebio 340k on Nov 2 at 0% verified; 11k on Nov 4 but at 89-90% verified.",
+   "Uber SMS: OS-spoofing 95-151k/day at 0%; spoofed-OS + pagebio + grease 78-133k/day at 1-6%.",
+   "Microsoft Identity Signup: webgl 78-96k/day at 0%. Roblox Login webgl 86k on Nov 2, 0 since."
+  ]},
+  {"h": "New keys", "items": [
+   "Coinbase Email Verification: grease/pagebio 7k on Nov 4 and 7k in 5h today, 0-5% verified.",
+   "Uber Account Management (Key 2): grease/pagebio 12k on Nov 4 (14% verified), 4.1k today.",
+   "Olo Payments (Key 3): grease/pagebio 9k on Nov 4 (3%), 0 today."
+  ]},
+  {"h": "Stopped", "items": [
+   "Uber SMS pragma wave (Nov 4); Highlight AI; Roblox Login webgl and dishort300 waves; Expedia Taap (0 today); Roblox Signup burst back to baseline."
+  ]}
+ ]
+}
