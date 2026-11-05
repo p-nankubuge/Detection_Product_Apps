@@ -189,3 +189,37 @@ Next step: replay that on truth to set the exact weights. The lift query needs a
 - **Rule C's weak bucket is dict 3.** Only 17% of rule C's verified sessions at dict 3 are confirmed fraud, against 45–47% at dict 7, 15 and 31. Dropping dict 3 from rule C removes 3,445 created sessions (7% of rule C) and 1,363 verified, but only 226 truth sessions (3% of rule C's catch).
 - **Refinement:** rule C AND dict matched ≥ 7.
 - **Gap:** for the week, rule C catches 7,565 of 23,872 reported fraud sessions (32%). The 13,658 fraud sessions at dict 7 or 15 that rule C misses are the next target.
+
+## 9. Login-ID velocity Layers 1–3 applied to Registration K2 (23 Oct 2026)
+
+Rules from the [Real-time Velocity on Customer Login ID one-pager](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4728487955), run on Blizzard registration with the email as the identifier.
+
+- **Identifier:** `customer_id_1` is a plain email (100% of sessions). `customer_id_2` is an IPv4 address (66% equal to our `user_ip`), not an account ID.
+- **Baseline:** 7 days instead of 28, because the 28-day query timed out in Superset.
+- **Key threshold:** P99 = 6 sessions per email per day.
+- **History:** 94% of emails appear on a single day, which is expected for registration.
+
+| Layer / group (23 Oct, Snowflake) | Emails | Sessions | Verified sessions | Emails also in rule C (dict ≥ 7) |
+| --- | --- | --- | --- | --- |
+| L1: new email, more than 6 sessions | 253 | 2,502 | 885 | 3 |
+| L2: known email, more than 2× own max | 81 | 466 | 146 | 19 |
+| Known email, under threshold | 4,986 | 5,737 | 2,342 (41%) | **2,243 (45%)** |
+| New email, under threshold | 42,573 | 50,265 | 38,347 (76%) | 4,763 (11%) |
+| L3: linked variant cluster of 2–4 | 460 | 685 | 443 | 4 |
+| L3: linked variant cluster of 5+ | 163 (15 stems) | 232 | 138 | 0 |
+
+**Truth check** (Athena, 23 Oct):
+
+| Group | Emails | Reported fraud |
+| --- | --- | --- |
+| Email with 7+ sessions in 00–12 UTC (L1 proxy) | 104 | 2 (1.9%) |
+| Email with 2–6 sessions | 2,148 | 77 (3.6%) |
+| Email with a single session | 18,710 | 1,727 (9.2%) |
+| L3 clusters of 5+ (full day) | 232 sessions | 1 (0.4%) |
+
+**Reading:**
+- On this key the fraud is one session per unique, unlinked email.
+- Layers 1–2 catch retry loops: one email, many sessions, low fraud.
+- Layer 3 finds small groups of linked variants that are not in Blizzard's fraud labels.
+- None of the three layers recovers the wave.
+- The one lead is "known" emails, those already seen on Key 2 earlier in the week: 45% are in rule C against 11% of new emails. That group needs a truth check with an email-history join.
