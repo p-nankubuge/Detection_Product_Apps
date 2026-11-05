@@ -171,3 +171,21 @@ Next step: replay that on truth to set the exact weights. The lift query needs a
 - "Precision" is against unlabeled traffic, which includes unreported fraud, so true precision is higher.
 - 6-hour windows were chosen because of query timeouts. W1 (peak wave) and W2 (later) disagree on the volatile flags; the core-4 rule is the part that held.
 - Suspicion flags were read at `session_setup`; telltales that fire later in the session aren't reflected in the flag-lift tables.
+
+## 8. DI dictionary matches, full week 21–27 Oct 2026 (Registration K2)
+
+`DI_DICTIONARY_NUM_MATCHED` takes the values -1, 1, 3, 7, 15, 31, 63. Created sessions are taken at session setup in Athena `events_faster`, joined to Blizzard truth in twelve-hour chunks. Verified counts are from Snowflake `PROD_INT_SESSION_SUMMARY` (`SESSIONS_VERIFIED > 0`).
+
+| Dict | All created | Share of all | Truth fraud | Share of truth | Fraud rate in bucket | Rule C created | Rule C verified | Truth in rule C | Truth share of rule C verified |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | 35,173 | 8.5% | 1,014 | 4.2% | 2.9% | 3,445 | 1,363 | 226 | 17% |
+| **7** | 126,530 | 30.6% | **14,146** | **59.3%** | **11.2%** | 29,882 | 9,047 | 4,268 | 47% |
+| **15** | 74,297 | 18.0% | **6,689** | **28.0%** | **9.0%** | 12,727 | 6,128 | 2,909 | 47% |
+| 31 | 61,672 | 14.9% | 918 | 3.8% | 1.5% | 656 | 341 | 155 | 45% |
+| 63 | 112,068 | 27.1% | 1,050 | 4.4% | 0.9% | 6 | ~5 | 0 | – |
+| Total | 413,189 | | 23,872 | | 5.8% | 46,764 | ~16.9k | 7,565 | 45% |
+
+- **Dict 7 and 15 hold 87% of the reported fraud.** By day the share ranges from 76% to 91%, so it holds across the whole week. These two buckets are 49% of all traffic. Dict 63, the commonest value for other traffic (27%), holds 4% of the fraud.
+- **Rule C's weak bucket is dict 3.** Only 17% of rule C's verified sessions at dict 3 are confirmed fraud, against 45–47% at dict 7, 15 and 31. Dropping dict 3 from rule C removes 3,445 created sessions (7% of rule C) and 1,363 verified, but only 226 truth sessions (3% of rule C's catch).
+- **Refinement:** rule C AND dict matched ≥ 7.
+- **Gap:** for the week, rule C catches 7,565 of 23,872 reported fraud sessions (32%). The 13,658 fraud sessions at dict 7 or 15 that rule C misses are the next target.
