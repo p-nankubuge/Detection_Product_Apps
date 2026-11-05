@@ -223,3 +223,25 @@ Rules from the [Real-time Velocity on Customer Login ID one-pager](https://arkos
 - Layer 3 finds small groups of linked variants that are not in Blizzard's fraud labels.
 - None of the three layers recovers the wave.
 - The one lead is "known" emails, those already seen on Key 2 earlier in the week: 45% are in rule C against 11% of new emails. That group needs a truth check with an email-history join.
+
+## 10. Cross-platform device anchor applied to the October wave (23 Oct 00:00–03:00 UTC)
+
+Rules from [Detection Idea: Cross-Platform Device Identity Signal](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4683071547). The anchor is `fp_canvas_fp + audio_fingerprint + cdn__ja4_hash + di__challenger_matched_signature + webgl_hash_webgl + init_window_hash`. Data is from `arkoselabs.events_faster` at session setup, joined to Blizzard truth.
+
+**Window:** 6,811 sessions, 449 of them reported fraud (6.6%). 6,600 sessions carry all six anchor fields, including all 449 fraud sessions. Those 6,600 sessions fall into 5,789 distinct anchors, so the anchor is close to unique per session.
+
+| Rule | Sessions flagged | Reported fraud |
+| --- | --- | --- |
+| Anchor session velocity, 10+ in the window | 187 | **0** |
+| Email dimension MEDIUM (6–14 emails per anchor) | 142 | **0** |
+| Email dimension HIGH (15–24) | 0 | 0 |
+| Email dimension CRITICAL (25+) | 39 | **0** |
+| Low-entropy key `init_window_hash + JA4`, 6–24 emails | 1,390 | 105 (7.6%) |
+| Low-entropy key, 25–99 emails | 2,212 | 155 (7.0%) |
+| Low-entropy key, 100+ emails | 1,665 | 142 (8.5%) |
+
+**Reading:**
+- The October wave uses a fresh device profile per session, so the six-field anchor never repeats and none of the anchor rules catch any of it. This matches `never-seen-before-fp-no-pressure` firing on 74–92% of the wave.
+- The low-entropy fallback key does group the fraud, but only at 1.1–1.3× the base rate, because the common browser builds dominate it.
+- The anchor rules flag a different population: 18 anchors at MEDIUM or above in 3 hours, none of them labelled as fraud. That's consistent with the August finding that CRITICAL is unchallenged and unlabelled.
+- The anchor rules are complementary to rule C and the dict ≥ 7 split, not a replacement for them on this wave.
