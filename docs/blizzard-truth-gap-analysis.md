@@ -149,7 +149,24 @@ Next step: replay that on truth to set the exact weights. The lift query needs a
 - **Login truth** from Blizzard for K5, even a few thousand labelled ATO / credential-stuffing sessions. Without it, every login recommendation here is inferred from registration.
 - Confirm with Blizzard that truth is **all reported fraud** and not a sample, so recall numbers are meaningful.
 
-## 6. Caveats
+## 6. Traffic impact on all created sessions (FP check)
+
+"Mitigated" means the session never verified. "Verified, not in truth" is the FP ceiling: some of it is unreported fraud. Quiet day = 11 Oct 12:00–18:00 UTC, with 43 truth sessions all day.
+
+| Rule | Quiet day: % of created | W1 (21 Oct): % of created | W2 (27 Oct): % of created | W1 recall / W2 recall | W1 verified not in truth (% of created) | W2 verified not in truth (% of created) |
+| --- | --- | --- | --- | --- | --- | --- |
+| B (core-4) | **15.1%** | 29.8% | 22.8% | 87% / 65% | 1,999 (15.6%) | 1,416 (8.0%) |
+| B + no biometrics + no touch | 8.4% | 19.2% | 11.7% | 81% / 41% | 1,170 (9.1%) | 729 (4.1%) |
+| B + Linux/macOS | 4.6% | 8.1% | 4.9% | 43% / 16% | 524 (4.1%) | 324 (1.8%) |
+| **C = B + (res-proxy OR fp-age-old)** | **1.3%** | 14.4% | 8.8% | 43% / 25% | 1,012 (7.9%) | 583 (3.3%) |
+
+- **B alone is too broad:** it flags 15% of created sessions on a quiet day.
+- **C is the rule to ship.** It sits at about 1% of traffic on a normal day and jumps 7–11× during an attack, so it tracks the attack rather than a slice of the population. The res-proxy and fp-age flags were firing on 11 Oct (2.8% and 1.5% of sessions) but rise to 16.9% and 8.7% in the 21 Oct wave.
+- Expected FP from C at baseline is about 1.1% of created sessions (verified ones). On W1, C left 1,012 verified sessions outside truth against about 140 expected from baseline. The ~870 excess is likely **unreported fraud**; this is an inference, not confirmed.
+- C's mitigated share: 23% (W1) and 54% (W2) of its hits were already stopped.
+- The biometrics and Linux/macOS variants sit at a steady 5–8% of traffic on quiet days, so they're population filters. They'd carry a steady FP cost.
+
+## 7. Caveats
 
 - "Precision" is against unlabeled traffic, which includes unreported fraud, so true precision is higher.
 - 6-hour windows were chosen because of query timeouts. W1 (peak wave) and W2 (later) disagree on the volatile flags; the core-4 rule is the part that held.
