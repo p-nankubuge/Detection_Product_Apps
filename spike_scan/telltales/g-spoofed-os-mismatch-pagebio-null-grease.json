@@ -11,7 +11,7 @@
  "life_cycle_management": "M",
  "manual_life_cycle_details": "Global suspicion flag (Daily Attack Tracking); parent of key-level telltales",
  "location": "SESSION_SETUP",
- "_validated": "2026-11-02 valid, no errors (global parent; key-level children per CHNGE-6738)",
+ "_validated": "created 2026-11-06 by p.nankubuge, id 15144778 (ticket DETCORE-4466, life cycle A)",
  "telltale_definition": [
   {
    "key": "location",

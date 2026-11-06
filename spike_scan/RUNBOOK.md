@@ -103,6 +103,9 @@ Work from the repo root, `cd spike_scan`.
    TELLTALE_LIST from 0, so exclude it from step 1 until 2026-11-10.
    **TT created 2026-11-01:** g-biometric-mouse-exact-replay-above-2-events-4plus (id 15052692, check_answer, global suspicion
    flag; pressure keys in CHNGE-6738 item 6). Its name enters SUSPICION_FLAGS from 0, so exclude it from step 1 until 2026-11-12.
+   **Parents created 2026-11-06 03:17-03:24 UTC** (CHNGE-6738 A-D): g-cdn-pragma-sec-ch-ua-upcoming-chrome (15144777),
+   g-spoofed-os-mismatch-pagebio-null-grease (15144778), g-di-dict3-st-1x-di-short-300-pxr1 (15144820), g-os-spoofing-pagebio-null
+   (15144836). Their names enter SUSPICION_FLAGS from 0: exclude them from step 1 until 2026-11-17.
    **DI dictionary flags off 2026-10-27, revert planned week of 2026-11-02** (THR-405..413, m.davies): dict-1, dict-3 and
    dict-neg1 got an impossible `di_dictionary_num_matched == -99` condition (never fire); dict-7/15/31 were re-thresholded.
    When the revert lands, these flags (and every combo/TT that includes them, incl. g-device-parameter-spoofing and the

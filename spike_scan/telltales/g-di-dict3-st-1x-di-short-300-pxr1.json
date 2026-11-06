@@ -9,7 +9,7 @@
  "allow_others_to_include": true,
  "life_cycle_management": "M",
  "manual_life_cycle_details": "Global suspicion flag (Daily Attack Tracking); parent of key-level telltales",
- "_validated": "2026-11-02 valid, no errors (global parent; key-level children per CHNGE-6738)",
+ "_validated": "created 2026-11-06 by p.nankubuge, id 15144820 (ticket DETCORE-4466, life cycle A)",
  "location": "SESSION_SETUP",
  "telltale_name": "g-di-dict3-st-1x-di-short-300-pxr1",
  "telltale_definition": [
