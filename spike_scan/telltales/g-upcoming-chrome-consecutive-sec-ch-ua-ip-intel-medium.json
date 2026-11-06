@@ -1,0 +1,35 @@
+{
+ "ticket": "CHNGE-6738",
+ "telltale_type": "suspicion_flags",
+ "cohort_category": "Suspicious",
+ "owner": "p.nankubuge@arkoselabs.com",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Global suspicion flag (Daily Attack Tracking); parent of key-level telltales",
+ "location": "SESSION_SETUP",
+ "_validated": "2026-11-06 valid, no errors (not created)",
+ "telltale_name": "g-upcoming-chrome-consecutive-sec-ch-ua-ip-intel-medium",
+ "telltale_definition": [
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "client-hints-maybe-unexpected-sec-ch-ua-for-upcoming-google-chrome-version"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "cdn-header-order-contains-consecutive-sec-ch-ua"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-ip-intel-asn-intel-reputation-medium-risk"
+  }
+ ]
+}
