@@ -1,0 +1,23 @@
+{
+ "title": "Daily run 2026-11-06 (exact Nov 3-5; Nov 6 hour 00 UTC from hourly data)",
+ "sections": [
+  {"h": "Getting through now: Uber SMS", "items": [
+   "Uber SMS (Key 1): grease and pagebio TTs jumped to 229k / 222k on Nov 5 at 59% verified (1-2% the days before), and 78-81% verified at 00 UTC today (~17-18k/hour). Single-click + dp-spoof 96k on Nov 5 at 95% verified, 94% today. This is the same bot discovery keeps finding on Uber (NO-THREAT hits share JA4 and device id with the bot-classified hits).",
+   "Discovery NEW candidate g-pagebio-null-grease-accept-lang-fp-mismatch (validated, not created): Uber SMS 1.75M Nov 2-5 at 86% verified; Uber Account Management 281k (17%); Amazon IDS 1.13M (5%); Roblox Signup 357k; Coinbase Email Verification 19k.",
+   "Uber SMS ct-before-cl + di-short-300 candidate: 124-152k/day, verified fell to 15% on Nov 5 (being mitigated)."
+  ]},
+  {"h": "Other movement", "items": [
+   "Roblox Game Join (Key 6): ends-te + dp-spoof NEW 64k on Nov 5 at 3% verified (blocked); pragma + upcoming-Chrome 94k Nov 4 -> 26k Nov 5 at 38-39% verified.",
+   "Amazon IDS (Key 2): grease 1.47M Nov 4 -> 667k Nov 5 (1% verified); the upcoming-Chrome + consecutive sec-ch-ua + ASN-medium candidate peaked Nov 4 (1.58M) and fell 58% on Nov 5.",
+   "Adobe ARP FF: grease/pagebio 58-63k on Nov 5 at 56-60% verified, down to 12-16% at 00 UTC today.",
+   "DoorDash Website: OS-spoofing families 91-100k on Nov 5 at 41-42% verified.",
+   "Microsoft Identity Signup: webgl 108k on Nov 5 at 0%.",
+   "Highlight AI back to 33k on Nov 5 (26% verified). Coinbase Email Verification 13k (0%). Uber Account Management 20k (6%)."
+  ]},
+  {"h": "Discovery and status (Nov 2-5)", "items": [
+   "New combos: C (validated) above; D grease + accept-lang mismatch + ASN medium and E ends-cl + ASN medium overlap C on Uber and the Amazon IDS candidate, so not drafted. Accept-encoding no-br + GREASE + pagebio stays on hold (client population change, ~95% verified on most keys).",
+   "Dropped: fp-touch-* flags (new Oct 30 / Nov 4), US-DST timezone family including two live tz telltales, ja4-dict-1, dict-7/15/31, g-atm agent flags, cdn single-cookie.",
+   "DI dictionary revert still not landed. None of the CHNGE-6738 telltales exist yet; g-upcoming-chrome-consecutive-sec-ch-ua-ip-intel-medium not created."
+  ]}
+ ]
+}
