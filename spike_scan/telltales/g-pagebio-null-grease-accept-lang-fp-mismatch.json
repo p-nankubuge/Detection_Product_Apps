@@ -10,7 +10,7 @@
  "life_cycle_management": "M",
  "manual_life_cycle_details": "Global suspicion flag (Daily Attack Tracking); parent of key-level telltales",
  "location": "SESSION_SETUP",
- "_validated": "2026-11-06 valid, no errors (not created)",
+ "_validated": "created 2026-11-06 by p.nankubuge, id 15144910 (ticket DETCORE-4466, life cycle A)",
  "telltale_name": "g-pagebio-null-grease-accept-lang-fp-mismatch",
  "telltale_definition": [
   {
