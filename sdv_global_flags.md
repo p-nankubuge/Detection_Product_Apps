@@ -1,6 +1,6 @@
 # SDV global suspicion flags
 
-All three passed Dataswan `validate_telltale` on 6 Nov 2026 (no errors). Nothing has been created yet.
+All three passed Dataswan `validate_telltale` on 6 Nov 2026 (no errors), including the global include. Nothing has been created yet.
 
 Analysis: https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4832985107
 
@@ -28,7 +28,7 @@ Same settings as your existing `g-` flags (public key GLOBAL):
 | Degrade action | 0 |
 | Allow pressure | allow |
 
-Optional: `g-email-gibberish-handle-medium-risk` includes `#INCLUDE g-global-telltales-enabled`, which presumably limits it to keys enabled for global telltales. I did not add that include here, so these flags fire on every SDV key. Add it if you want the same global opt-in. If you do, check that Roblox and Blizzard are on that list.
+Each flag includes `g-global-telltales-enabled`, the standard global opt-out. It excludes four public keys and the edge location. Roblox Key 2, Blizzard ROW Key 2 and both Payoneer keys are not excluded.
 
 ## Backtest (28 Oct–2/3 Nov)
 
@@ -49,6 +49,7 @@ The cut-offs were chosen and tested on the same days, so re-test on 3–9 Nov be
 ```json
 [
   {"key": "location", "operator": "TS_EQ", "value": "session_setup", "type": "string"},
+  {"operator": "#INCLUDE", "value": "g-global-telltales-enabled"},
   {"key": "rta__sdv_velocity_ratio_1d", "operator": "EXISTS"},
   {"key": "rta__sdv_velocity_ratio_1d", "operator": "TS_GREATER_EQ", "value": 1.0, "type": "float"},
   {"key": "rta__sdv_mean_gap_s", "operator": "EXISTS"},
@@ -65,6 +66,7 @@ The cut-offs were chosen and tested on the same days, so re-test on 3–9 Nov be
 ```json
 [
   {"key": "location", "operator": "TS_EQ", "value": "session_setup", "type": "string"},
+  {"operator": "#INCLUDE", "value": "g-global-telltales-enabled"},
   {"key": "rta__sdv_velocity_ratio_1d", "operator": "EXISTS"},
   {"key": "rta__sdv_velocity_ratio_1d", "operator": "TS_GREATER_EQ", "value": 4.0, "type": "float"}
 ]
@@ -79,6 +81,7 @@ The cut-offs were chosen and tested on the same days, so re-test on 3–9 Nov be
 ```json
 [
   {"key": "location", "operator": "TS_EQ", "value": "session_setup", "type": "string"},
+  {"operator": "#INCLUDE", "value": "g-global-telltales-enabled"},
   {"key": "rta__sdv_device_top_share", "operator": "EXISTS"},
   {"key": "rta__sdv_device_top_share", "operator": "TS_LESS", "value": 0.5, "type": "float"}
 ]
