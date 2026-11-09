@@ -1,0 +1,29 @@
+{
+ "title": "Daily run 2026-11-09 (exact Nov 6-8; Nov 9 early hours from hourly data)",
+ "sections": [
+  {"h": "Uber SMS: mitigated since Nov 7", "items": [
+   "Grease/pagebio TTs: 603k / 583k on Nov 6 at 47-48% verified (still getting through), then 615k / 605k on Nov 7 at 0% and 97-99k on Nov 8 at 3%. Single-click went from 96k (95% verified) on Nov 5 to ~0. The attack is now being stopped.",
+   "New parent B (spoofed-OS + pagebio + grease) fired on 157k Uber SMS sessions since Nov 6 03:30 at 4% verified; G 66k at 40%; A barely fires on Uber now (153)."
+  ]},
+  {"h": "Biggest now", "items": [
+   "Roblox Login (Key 1): spoofed-OS + pagebio + grease 401k on Nov 8 at 17% verified (~3k/day before); webgl 78k at 0%.",
+   "Tinder Mobile (EBC0462E): rta-isp-velocity + pagebio 164k / 118k on Nov 6-7 at 0%; also headless Chrome 684k (0% verified, blocked).",
+   "Highlight AI Chat Prompt: grease 41k -> 49k -> 110k (Nov 6-8), 1-12% verified.",
+   "Expedia EG Taap LowTraffic: rta velocity 51-66k/day and single-click 13-23k at 0%.",
+   "Amazon IDS: spoofed-OS family ~118-134k/day at 6-8%; grease down to 36k/day (from 667k on Nov 5).",
+   "Microsoft Identity Signup webgl 50-82k/day at 0%."
+  ]},
+  {"h": "Getting through", "items": [
+   "gtop100: grease 31k on Nov 8 at 70% verified, single-click 22k at 97%.",
+   "Amazon Client (Key 1): pagebio 18-21k/day at 89-93% verified.",
+   "Roblox Game Join: pragma + upcoming-Chrome 29k on Nov 8 at 42%.",
+   "Adobe Sign Up OS-spoofing families ~10k/day at 43-46%."
+  ]},
+  {"h": "Discovery (Nov 5-8)", "items": [
+   "Validated, not created: g-ip-velocity-st-4x-ip-intel-high-pagebio-null (short-term IP velocity 4x + high-risk ASN + no page biometrics): 11 keys, share 1.00. Uber SMS 415k (61% verified, 207k on Nov 8), Chime Login 156k (0%), Tinder Mobile 50k, gtop100 50k (72%), Blizzard ROW Registration 37k, Dropbox 36k, Amazon Client 24k (92%), Airbnb 20k.",
+   "Headless Chrome + dp-spoof: 1.34M sessions on 9 keys (Tinder Mobile 684k, Chime 208k, Expedia 196k, Dropbox 88k, Sony 60k) at 0.0% verified, already blocked by existing headless detection; no new TT needed.",
+   "High-risk ASN + pagebio null alone: too broad (mostly real users outside Uber SMS).",
+   "Dropped: the 6 new CHNGE-6738 parents and g-sdv-* flags (new from 0), fp-touch, DST timezone family, dict-7/15, wired velocity, cdn single-cookie. DI revert still not landed. No CHNGE-6738 key-level telltales exist yet."
+  ]}
+ ]
+}
