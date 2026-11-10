@@ -1,0 +1,29 @@
+{
+ "title": "Daily run 2026-11-10 (exact Nov 6-9; hourly to Nov 9 23h)",
+ "sections": [
+  {
+   "h": "Getting through now",
+   "items": [
+    "Adobe ARP FF (Key 8): grease and pagebio TTs jumped from ~62k/day to 218k / 212k on Nov 9 at 75-76% verified (17-21% the days before). Biggest change this run.",
+    "Uber SMS (Key 1): last run's candidate g-ip-velocity-st-4x-ip-intel-high-pagebio-null (not created) keeps growing: 69k / 74k / 207k / 231k (Nov 6-9) at 68% verified overall. The grease/pagebio wave itself is blocked (3-4% verified).",
+    "gtop100 (candidate 49k on Nov 8 at 72%), Amazon Client (pagebio 18-21k/day at ~90%), DoorDash Website OS-spoofing 65-77k/day at 40%, Adobe Sign Up OS-spoofing ~20k at 36-41%."
+   ]
+  },
+  {
+   "h": "Large but blocked",
+   "items": [
+    "Roblox Login (Key 1): spoofed-OS + pagebio + grease 401k Nov 8, 212k Nov 9 (17-26% verified).",
+    "Amazon IDS: spoofed-OS family 148k on Nov 9 (6%); Microsoft Identity Signup webgl 101k (0%); Highlight AI grease ~100k/day (1-2%); Uber SMS OS-spoofing 107-117k (0-12%).",
+    "NEW: AT&T BIAM-AM (Key 14): webgl + dp-spoof 23k on Nov 9 at 0%.",
+    "Headless-Chrome / hosting-IP bot wave on Tinder Mobile, Chime Login, Expedia Taap, Dropbox, Blizzard ROW Registration, Sony: hundreds of thousands of sessions, 0-4% verified, already classified as bot."
+   ]
+  },
+  {
+   "h": "Discovery (Nov 6-9)",
+   "items": [
+    "No new telltale recommended: the four new combos (canvas + DI high-risk sig LT, canvas + IP velocity LT-4x + pagebio, dapib + high-risk ASN, hosting-VPN velocity + pagebio) are the same headless/hosting bot wave, already BOT-classified and 0% verified outside Uber SMS. Hosting-VPN + pagebio is too broad (fires on mostly verified traffic).",
+    "Dropped as definition changes: math-fingerprint and browser-api-check Chrome version bumps (Nov 4), swiftshader (Nov 2), new gibberish email flags (Nov 5), harvested-proxy velocity (Nov 9), plus the usual list. DI revert still not landed. CHNGE-6738 key-level telltales: still 0. The IP-velocity candidate is not created."
+   ]
+  }
+ ]
+}
