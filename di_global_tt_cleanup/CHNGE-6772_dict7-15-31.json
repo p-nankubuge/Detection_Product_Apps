@@ -1,0 +1,595 @@
+{
+ "ticket": "CHNGE-6772",
+ "title": "Global DI telltales: move dict 7/15/31 from 3x/6x to 2x/4x and clean up definitions",
+ "telltales": [
+  {
+   "id": 20768,
+   "name": "g-di-dict-7-match-short-term-threshold-exceeded-1x",
+   "telltale_description": "NAME NOT CHANGED DUE TO DOWNSTREAM DEPS - RATIO IS 2x NOT 1x",
+   "from_threshold": "3x",
+   "to_threshold": "2x",
+   "reasons": [
+    "Velocity threshold: 3x \u2192 2x.",
+    "Exclude Bank of America Beacon Workforce ATM K4: production keys with shared or high-repeat devices (bank ATMs, chat prompts) that breach velocity on legitimate use (e.g. BofA Workforce ATM K4: 77% of its dict 3 traffic at \u22652x).",
+    "Add short-term threshold breached = true so the rule states all core checks.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+      "F5675B21-025B-4843-983C-38D86DEB394B",
+      "E8A64FAC-C713-4EB4-85D2-7458E3579D31"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 7,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 20769,
+   "name": "g-di-dict-7-match-short-term-threshold-exceeded-4x",
+   "telltale_description": "",
+   "from_threshold": "6x",
+   "to_threshold": "4x",
+   "reasons": [
+    "Velocity threshold: 6x \u2192 4x.",
+    "Exclude Bank of America Beacon Workforce ATM K4: production keys with shared or high-repeat devices (bank ATMs, chat prompts) that breach velocity on legitimate use (e.g. BofA Workforce ATM K4: 77% of its dict 3 traffic at \u22652x).",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "E8A64FAC-C713-4EB4-85D2-7458E3579D31"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 7,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 3.999,
+     "type": "float"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 20771,
+   "name": "g-di-dict-7-match-long-term-threshold-exceeded",
+   "telltale_description": "RATIO IS 2x",
+   "from_threshold": "3x",
+   "to_threshold": "2x",
+   "reasons": [
+    "Velocity threshold: 3x \u2192 2x.",
+    "Exclude Bank of America Beacon Workforce ATM K4: production keys with shared or high-repeat devices (bank ATMs, chat prompts) that breach velocity on legitimate use (e.g. BofA Workforce ATM K4: 77% of its dict 3 traffic at \u22652x).",
+    "Add long-term threshold breached = true so the rule states all core checks.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "E8A64FAC-C713-4EB4-85D2-7458E3579D31"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 7,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": false,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 20765,
+   "name": "g-di-dict-15-match-short-term-threshold-exceeded-1x",
+   "telltale_description": "NAME NOT CHANGED DUE TO DOWNSTREAM DEPS - RATIO IS 2x NOT 1x",
+   "from_threshold": "3x",
+   "to_threshold": "2x",
+   "reasons": [
+    "Velocity threshold: 3x \u2192 2x.",
+    "Exclude Bank of America Beacon Workforce ATM K4: production keys with shared or high-repeat devices (bank ATMs, chat prompts) that breach velocity on legitimate use (e.g. BofA Workforce ATM K4: 77% of its dict 3 traffic at \u22652x).",
+    "Add short-term threshold breached = true so the rule states all core checks.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+      "E8A64FAC-C713-4EB4-85D2-7458E3579D31"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 15,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "key": "ua",
+     "operator": "TS_NOT_CONTAINS",
+     "value": "RingApp",
+     "type": "string"
+    },
+    {
+     "key": "location",
+     "operator": "TS_EQ",
+     "value": "session_setup",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 20767,
+   "name": "g-di-dict-15-match-short-term-threshold-exceeded-4x",
+   "telltale_description": "",
+   "from_threshold": "6x",
+   "to_threshold": "4x",
+   "reasons": [
+    "Velocity threshold: 6x \u2192 4x.",
+    "Exclude Bank of America Beacon Workforce ATM K4: production keys with shared or high-repeat devices (bank ATMs, chat prompts) that breach velocity on legitimate use (e.g. BofA Workforce ATM K4: 77% of its dict 3 traffic at \u22652x).",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "E8A64FAC-C713-4EB4-85D2-7458E3579D31"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 15,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 3.999,
+     "type": "float"
+    },
+    {
+     "key": "ua",
+     "operator": "TS_NOT_CONTAINS",
+     "value": "RingApp",
+     "type": "string"
+    },
+    {
+     "key": "location",
+     "operator": "TS_EQ",
+     "value": "session_setup",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 20758,
+   "name": "g-di-dict-15-match-long-term-threshold-exceeded",
+   "telltale_description": "RATIO IS 2x",
+   "from_threshold": "3x",
+   "to_threshold": "2x",
+   "reasons": [
+    "Velocity threshold: 3x \u2192 2x.",
+    "Exclude Bank of America Beacon Workforce ATM K4: production keys with shared or high-repeat devices (bank ATMs, chat prompts) that breach velocity on legitimate use (e.g. BofA Workforce ATM K4: 77% of its dict 3 traffic at \u22652x).",
+    "Add long-term threshold breached = true so the rule states all core checks.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "E8A64FAC-C713-4EB4-85D2-7458E3579D31"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 15,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": false,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "key": "ua",
+     "operator": "TS_NOT_CONTAINS",
+     "value": "RingApp",
+     "type": "string"
+    },
+    {
+     "key": "location",
+     "operator": "TS_EQ",
+     "value": "session_setup",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 20751,
+   "name": "g-di-dict-31-match-short-term-threshold-exceeded-1x",
+   "telltale_description": "NAME NOT CHANGED DUE TO DOWNSTREAM DEPS - RATIO IS 2x NOT 1x",
+   "from_threshold": "3x",
+   "to_threshold": "2x",
+   "reasons": [
+    "Velocity threshold: 3x \u2192 2x.",
+    "Add short-term threshold breached = true so the rule states all core checks.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 31,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 20756,
+   "name": "g-di-dict-31-match-short-term-threshold-exceeded-4x",
+   "telltale_description": "",
+   "from_threshold": "6x",
+   "to_threshold": "4x",
+   "reasons": [
+    "Velocity threshold: 6x \u2192 4x.",
+    "Add short-term threshold breached = true so the rule states all core checks.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 31,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 3.999,
+     "type": "float"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 20757,
+   "name": "g-di-dict-31-match-long-term-threshold-exceeded",
+   "telltale_description": "RATIO IS 2x",
+   "from_threshold": "3x",
+   "to_threshold": "2x",
+   "reasons": [
+    "Velocity threshold: 3x \u2192 2x.",
+    "Add long-term threshold breached = true so the rule states all core checks.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 31,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  }
+ ]
+}

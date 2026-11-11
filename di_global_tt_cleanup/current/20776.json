@@ -1,0 +1,139 @@
+{
+  "id": 20776,
+  "telltale_name": "g-di-dict-1-match-short-term-threshold-exceeded-5x",
+  "telltale_definition": [
+    {
+      "key": "di_dictionary_num_matched",
+      "operator": "TS_EQ",
+      "value": 1,
+      "type": "int"
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_called",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_called",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_success",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_success",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_is_suspicious",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_is_suspicious",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_short_term_threshold_breached",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_short_term_threshold_breached",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_short_term_threshold_ratio",
+          "operator": "TS_EQ",
+          "value": 5.0,
+          "type": "float"
+        },
+        {
+          "key": "di_short_term_threshold_ratio",
+          "operator": "TS_GREATER",
+          "value": 5.0,
+          "type": "float"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "browser_detection_brave",
+          "operator": "TS_EQ",
+          "value": false,
+          "type": "boolean"
+        },
+        {
+          "key": "browser_detection_brave",
+          "operator": "TS_EQ",
+          "value": "0",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-global-telltales-enabled"
+    },
+    {
+      "key": "di_success",
+      "operator": "TS_EQ",
+      "value": true,
+      "type": "boolean"
+    },
+    {
+      "key": "di_dictionary_num_matched",
+      "operator": "TS_EQ",
+      "value": -99,
+      "type": "int"
+    }
+  ],
+  "immediate_non_legit": false,
+  "telltale_active": true,
+  "last_edited": "2026-10-27T02:52:40.262795Z",
+  "last_edited_by": "m.davies@arkoselabs.com",
+  "telltale_description": "",
+  "risk_score": 30.0,
+  "risk_category": "BOT-STD",
+  "location": "ALL",
+  "public_key": "GLOBAL"
+}

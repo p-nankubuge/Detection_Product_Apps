@@ -1,0 +1,140 @@
+{
+  "id": 20774,
+  "telltale_name": "g-di-dict-3-match-long-term-threshold-exceeded",
+  "telltale_definition": [
+    {
+      "key": "public_key",
+      "operator": "TS_NOT_IN",
+      "value": [
+        "F7C0768A-A5B0-422A-BC5F-5912456296EE",
+        "0F985541-B543-4B29-A098-4BB9B8E9DEF8",
+        "F5675B21-025B-4843-983C-38D86DEB394B",
+        "7CC24C4A-611B-41C7-9808-B95722C7861C",
+        "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF",
+        "56DA9CC0-3C2D-47A7-A8C0-564572D4D008",
+        "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+        "825DD2FA-D899-455F-970A-9E2453663EEA",
+        "26AA6D55-8C04-4BD7-8A71-F66E707C8C42",
+        "4FDBF9EF-B787-48E4-8891-F065A8076184",
+        "42887D34-B283-4723-AD25-26299EB55AC9"
+      ],
+      "type": "list[string]"
+    },
+    {
+      "key": "di_dictionary_num_matched",
+      "operator": "TS_EQ",
+      "value": 3,
+      "type": "int"
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_called",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_called",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_success",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_success",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_is_suspicious",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_is_suspicious",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_short_term_threshold_breached",
+          "operator": "TS_EQ",
+          "value": false,
+          "type": "boolean"
+        },
+        {
+          "key": "di_short_term_threshold_breached",
+          "operator": "TS_EQ",
+          "value": "0",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_long_term_threshold_breached",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_long_term_threshold_breached",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-global-telltales-enabled"
+    },
+    {
+      "key": "di_success",
+      "operator": "TS_EQ",
+      "value": true,
+      "type": "boolean"
+    },
+    {
+      "key": "di_dictionary_num_matched",
+      "operator": "TS_EQ",
+      "value": -99,
+      "type": "int"
+    }
+  ],
+  "immediate_non_legit": false,
+  "telltale_active": true,
+  "last_edited": "2026-10-27T03:10:38.053612Z",
+  "last_edited_by": "m.davies@arkoselabs.com",
+  "telltale_description": "",
+  "risk_score": 85.0,
+  "risk_category": "CUSTOM",
+  "location": "ALL",
+  "public_key": "GLOBAL"
+}

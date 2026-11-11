@@ -1,0 +1,99 @@
+{
+  "id": 20757,
+  "telltale_name": "g-di-dict-31-match-long-term-threshold-exceeded",
+  "telltale_definition": [
+    {
+      "key": "di_dictionary_num_matched",
+      "operator": "TS_EQ",
+      "value": 31,
+      "type": "int"
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_called",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_called",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_success",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_success",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_is_suspicious",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_is_suspicious",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_long_term_threshold_ratio",
+          "operator": "TS_EQ",
+          "value": 3.0,
+          "type": "float"
+        },
+        {
+          "key": "di_long_term_threshold_ratio",
+          "operator": "TS_GREATER",
+          "value": 3.0,
+          "type": "float"
+        }
+      ]
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-global-telltales-enabled"
+    },
+    {
+      "key": "di_success",
+      "operator": "TS_EQ",
+      "value": true,
+      "type": "boolean"
+    }
+  ],
+  "immediate_non_legit": false,
+  "telltale_active": true,
+  "last_edited": "2026-10-27T04:16:51.819020Z",
+  "last_edited_by": "m.davies@arkoselabs.com",
+  "telltale_description": "",
+  "risk_score": 70.0,
+  "risk_category": "CUSTOM",
+  "location": "ALL",
+  "public_key": "GLOBAL"
+}

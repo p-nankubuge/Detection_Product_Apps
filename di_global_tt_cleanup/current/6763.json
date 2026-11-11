@@ -1,0 +1,117 @@
+{
+  "id": 6763,
+  "telltale_name": "g-di-medium-risk-signature-exceeding-2x-long-term-threshold",
+  "telltale_definition": [
+    {
+      "key": "di_called",
+      "operator": "EXISTS"
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_called",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        },
+        {
+          "key": "di_called",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "key": "di_is_suspicious",
+      "operator": "EXISTS"
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_is_suspicious",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        },
+        {
+          "key": "di_is_suspicious",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "key": "di_dictionary_num_matched",
+      "operator": "TS_EQ",
+      "value": 15,
+      "type": "int"
+    },
+    {
+      "key": "di_long_term_threshold_breached",
+      "operator": "EXISTS"
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_long_term_threshold_breached",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        },
+        {
+          "key": "di_long_term_threshold_breached",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "key": "di_long_term_threshold_ratio",
+      "operator": "TS_GREATER",
+      "value": 1.99,
+      "type": "float"
+    },
+    {
+      "operator": "OR",
+      "conditions": [
+        {
+          "key": "di_success",
+          "operator": "TS_EQ",
+          "value": true,
+          "type": "boolean"
+        },
+        {
+          "key": "di_success",
+          "operator": "TS_EQ",
+          "value": "1",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "key": "location",
+      "operator": "TS_EQ",
+      "value": "session_setup",
+      "type": "string"
+    },
+    {
+      "operator": "#INCLUDE",
+      "value": "g-global-telltales-enabled"
+    }
+  ],
+  "immediate_non_legit": true,
+  "telltale_active": true,
+  "last_edited": "2024-12-10T02:26:12.240737Z",
+  "last_edited_by": "d.klimenko@arkoselabs.com",
+  "telltale_description": "Anomalous fingerprint only partiallying matching known legitimate device signatures and exceeding the long term (2 days) threshold by a factor of 2x",
+  "risk_score": 1.0,
+  "risk_category": "BOT-STD",
+  "location": "SESSION_SETUP",
+  "public_key": null
+}

@@ -1,0 +1,588 @@
+{
+ "ticket": "CHNGE-6797",
+ "title": "Global DI telltales: move high/medium-risk signature globals to 2x/4x and clean up definitions",
+ "telltales": [
+  {
+   "id": 6755,
+   "name": "g-di-high-risk-signature-exceeding-short-term-threshold",
+   "telltale_description": "RATIO IS 2x",
+   "from_threshold": "1x to under 4x",
+   "to_threshold": "2x to under 4x",
+   "reasons": [
+    "Velocity threshold: 1x to under 4x \u2192 2x to under 4x.",
+    "Brave condition removed: it was added years ago when Brave landed in the low dictionaries. Today only 0.37% of Brave sessions breach 2x (6.5% for other browsers) and Brave is 1.3% of dict -1/1 traffic (5.8% for others). The exclusion no longer prevents false positives (data since 5 Nov, 2% sample).",
+    "Exclude Pinterest Login K1: already excluded from the dict 3 and dict 7 globals. Keeps this rule consistent with them (decision 10 Nov).",
+    "Band: Covers 2x to 4x; 6761 covers 4x and above.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+      "F5675B21-025B-4843-983C-38D86DEB394B"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_IN",
+     "value": [
+      7,
+      3
+     ],
+     "type": "list[int]"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": false,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_LESS",
+     "value": 4.0,
+     "type": "float"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 6761,
+   "name": "g-di-high-risk-signature-exceeding-4x-short-term-threshold",
+   "telltale_description": "",
+   "from_threshold": "4x",
+   "to_threshold": "4x",
+   "reasons": [
+    "Exclude Pinterest Login K1: already excluded from the dict 3 and dict 7 globals. Keeps this rule consistent with them (decision 10 Nov).",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match.",
+    "Note: this telltale has immediate_non_legit = true (unchanged), so the threshold change directly reduces sessions marked non-legit."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "F5675B21-025B-4843-983C-38D86DEB394B"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_IN",
+     "value": [
+      7,
+      3
+     ],
+     "type": "list[int]"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": false,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 3.999,
+     "type": "float"
+    },
+    {
+     "key": "browser_name",
+     "operator": "TS_NOT_EQ",
+     "value": "Samsung Browser",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 6759,
+   "name": "g-di-high-risk-signature-exceeding-long-term-threshold",
+   "telltale_description": "RATIO IS 2x",
+   "from_threshold": "1x to under 2x",
+   "to_threshold": "2x to under 4x",
+   "reasons": [
+    "Velocity threshold: 1x to under 2x \u2192 2x to under 4x.",
+    "Brave condition removed: it was added years ago when Brave landed in the low dictionaries. Today only 0.37% of Brave sessions breach 2x (6.5% for other browsers) and Brave is 1.3% of dict -1/1 traffic (5.8% for others). The exclusion no longer prevents false positives (data since 5 Nov, 2% sample).",
+    "Exclude Pinterest Login K1: already excluded from the dict 3 and dict 7 globals. Keeps this rule consistent with them (decision 10 Nov).",
+    "Band: Covers 2x to 4x; 6766 covers 4x and above.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+      "F5675B21-025B-4843-983C-38D86DEB394B"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_IN",
+     "value": [
+      7,
+      3
+     ],
+     "type": "list[int]"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_LESS",
+     "value": 4.0,
+     "type": "float"
+    },
+    {
+     "key": "browser_name",
+     "operator": "TS_NOT_EQ",
+     "value": "Samsung Browser",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 6766,
+   "name": "g-di-high-risk-signature-exceeding-2x-long-term-threshold",
+   "telltale_description": "NAME NOT CHANGED DUE TO DOWNSTREAM DEPS - RATIO IS 4x NOT 2x",
+   "from_threshold": "2x",
+   "to_threshold": "4x",
+   "reasons": [
+    "Velocity threshold: 2x \u2192 4x.",
+    "Exclude Pinterest Login K1: already excluded from the dict 3 and dict 7 globals. Keeps this rule consistent with them (decision 10 Nov).",
+    "Band: The 2x to 4x long-term band now sits in 6759.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match."
+   ],
+   "definition": [
+    {
+     "key": "public_key",
+     "operator": "TS_NOT_IN",
+     "value": [
+      "EE844FC3-499D-4A4D-A643-D7400F0FD4DE",
+      "F5675B21-025B-4843-983C-38D86DEB394B"
+     ],
+     "type": "list[string]"
+    },
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_IN",
+     "value": [
+      7,
+      3
+     ],
+     "type": "list[int]"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 3.999,
+     "type": "float"
+    },
+    {
+     "key": "browser_name",
+     "operator": "TS_NOT_EQ",
+     "value": "Samsung Browser",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 6754,
+   "name": "g-di-medium-risk-signature-exceeding-short-term-threshold",
+   "telltale_description": "RATIO IS 2x",
+   "from_threshold": "1x (breach only, no ratio)",
+   "to_threshold": "2x to under 4x",
+   "reasons": [
+    "Velocity threshold: 1x (breach only, no ratio) \u2192 2x to under 4x.",
+    "Band: Covers 2x to 4x; 6760 covers 4x and above.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match.",
+    "Note: this telltale has immediate_non_legit = true (unchanged), so the threshold change directly reduces sessions marked non-legit."
+   ],
+   "definition": [
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 15,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": false,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_LESS",
+     "value": 4.0,
+     "type": "float"
+    },
+    {
+     "key": "location",
+     "operator": "TS_EQ",
+     "value": "session_setup",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 6760,
+   "name": "g-di-medium-risk-signature-exceeding-4x-short-term-threshold",
+   "telltale_description": "",
+   "from_threshold": "4x",
+   "to_threshold": "4x",
+   "reasons": [
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match.",
+    "Note: this telltale has immediate_non_legit = true (unchanged), so the threshold change directly reduces sessions marked non-legit."
+   ],
+   "definition": [
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 15,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": false,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 3.999,
+     "type": "float"
+    },
+    {
+     "key": "location",
+     "operator": "TS_EQ",
+     "value": "session_setup",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 6757,
+   "name": "g-di-medium-risk-signature-exceeding-long-term-threshold",
+   "telltale_description": "RATIO IS 2x",
+   "from_threshold": "1x (breach only, no ratio)",
+   "to_threshold": "2x to under 4x",
+   "reasons": [
+    "Velocity threshold: 1x (breach only, no ratio) \u2192 2x to under 4x.",
+    "Band: Covers 2x to 4x; 6763 covers 4x and above.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match.",
+    "Note: this telltale has immediate_non_legit = true (unchanged), so the threshold change directly reduces sessions marked non-legit."
+   ],
+   "definition": [
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 15,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_short_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": false,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 1.999,
+     "type": "float"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_LESS",
+     "value": 4.0,
+     "type": "float"
+    },
+    {
+     "key": "location",
+     "operator": "TS_EQ",
+     "value": "session_setup",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  },
+  {
+   "id": 6763,
+   "name": "g-di-medium-risk-signature-exceeding-2x-long-term-threshold",
+   "telltale_description": "NAME NOT CHANGED DUE TO DOWNSTREAM DEPS - RATIO IS 4x NOT 2x",
+   "from_threshold": "2x",
+   "to_threshold": "4x",
+   "reasons": [
+    "Velocity threshold: 2x \u2192 4x.",
+    "Band: The 2x to 4x long-term band now sits in 6757.",
+    "Structure: OR pairs, EXISTS rows and duplicate rows replaced by single boolean rows, all ANDed. Same intent, nothing can widen the match.",
+    "Note: this telltale has immediate_non_legit = true (unchanged), so the threshold change directly reduces sessions marked non-legit."
+   ],
+   "definition": [
+    {
+     "key": "di_dictionary_num_matched",
+     "operator": "TS_EQ",
+     "value": 15,
+     "type": "int"
+    },
+    {
+     "key": "di_called",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_success",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_is_suspicious",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_breached",
+     "operator": "TS_EQ",
+     "value": true,
+     "type": "boolean"
+    },
+    {
+     "key": "di_long_term_threshold_ratio",
+     "operator": "TS_GREATER",
+     "value": 3.999,
+     "type": "float"
+    },
+    {
+     "key": "location",
+     "operator": "TS_EQ",
+     "value": "session_setup",
+     "type": "string"
+    },
+    {
+     "operator": "#INCLUDE",
+     "value": "g-global-telltales-enabled"
+    }
+   ]
+  }
+ ]
+}
