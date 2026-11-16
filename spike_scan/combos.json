@@ -209,7 +209,7 @@
   {
    "id": "didict3_dishort300",
    "telltale_name": "g-di-dict3-st-1x-di-short-300-pxr1",
-   "status": "candidate",
+   "status": "live",
    "found": "2026-10-23",
    "flags": [
     "g-di-dict-3-match-short-term-threshold-exceeded-1x",
@@ -218,13 +218,13 @@
    "draft": "telltales/g-di-dict3-st-1x-di-short-300-pxr1.json",
    "history_note": "Added 2026-10-23; exact history from 2026-10-12. DATA NOTE 2026-10-28: g-di-dict-3-match-short-term-threshold-exceeded-1x was edited 2026-10-27 03:05 UTC (m.davies, THR-405): an extra condition di_dictionary_num_matched == -99 was added next to == 3, so the flag can no longer fire. It drops to 0 on every key from ~09 UTC Oct 27. Drops on dict-3 combos after that are the edit, not the attacker stopping.",
    "action": "hold (dict-3 disabled at source)",
-   "action_detail": "ON HOLD 2026-10-28: g-di-dict-3 was edited on Oct 27 03:05 UTC (THR-405) so it can no longer fire; this combo has been 0 everywhere since ~09 UTC Oct 27. Do not create until we know from m.davies whether dict-3 comes back. Before the edit: Microsoft Identity Signup 224k/175k/131k/159k (Oct 23-26) at 0-3% verified; Bank of America Beacon Workforce ATM 7.5k/166k/167k/170k at 0% verified (workforce key, confirm before any action); DoorDash Website ~40-47k/day. Draft: telltales/g-di-dict3-st-1x-di-short-300-pxr1.json. Ticket: BLUE-7297. UPDATE 2026-10-30: the DI dictionary change is to be reverted the week of Nov 2, re-enabling dict-3; re-check this combo against pre-Oct-27 levels after the revert, then decide on creating it.",
+   "action_detail": "Created 2026-11-06 as CHNGE-6738 parent C (15144820) with 6 key-level TTs, but g-di-dict-3 still has == -99 (THR-405..407 not reverted as of Nov 16; dict-1/neg1 were reverted Nov 12). Cannot fire until dict-3 comes back.",
    "change_ticket": "CHNGE-6738"
   },
   {
    "id": "os_spoof_pagebio",
    "telltale_name": "g-os-spoofing-pagebio-null",
-   "status": "candidate",
+   "status": "live",
    "found": "2026-10-23",
    "flags": [
     "g-operating-system-spoofing",
@@ -232,14 +232,14 @@
    ],
    "draft": "telltales/g-os-spoofing-pagebio-null.json",
    "history_note": "Added 2026-10-23; exact history from 2026-10-12.",
-   "action": "hold",
-   "action_detail": "NEW 2026-10-23, not created. Validated draft: telltales/g-os-spoofing-pagebio-null.json. The spike is almost all WBD Account Lookup (Key 20): 952k Oct 21 / 1.12M Oct 22, 1-8% verified, ~24k/h on Oct 23; the live pagebio TT and the appleos candidate already cover it. Otherwise it fires steadily on many keys: Adobe Sign-in (62-104k/day, 64-87% verified, normal traffic), DoorDash Website (17-44k/day, ~55%), Amazon IDS (~55-63k/day, 14-20%), Uber SMS (~30-36k/day, <1%), Adobe Commerce (~20k/day, 0%). Too broad to create globally. One burst got through: Tinder PreSMS (Key 3) 26.7k on Oct 19 at 99% verified, then ~0. History before Oct 12 not loaded.",
+   "action": "keep live",
+   "action_detail": "Created 2026-11-06 as CHNGE-6738 parent D (15144836) with 8 key-level TTs. Steady: Uber SMS ~100k/day at 10-19%, Amazon IDS ~85k at 13-14%, DoorDash 24-84k at 41-59%.",
    "change_ticket": "CHNGE-6738"
   },
   {
    "id": "pragma_secchua_upcoming_chrome",
    "telltale_name": "g-cdn-pragma-sec-ch-ua-upcoming-chrome",
-   "status": "candidate",
+   "status": "live",
    "found": "2026-10-29",
    "flags": [
     "cdn-header-order-contains-pragma",
@@ -247,14 +247,14 @@
    ],
    "draft": "telltales/g-cdn-pragma-sec-ch-ua-upcoming-chrome.json",
    "history_note": "Added 2026-10-29; exact history from 2026-10-22.",
-   "action": "candidate (review)",
-   "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Amazon IDS (Key 2): 4.6k/5.2k on Oct 25-26 -> 262k Oct 27 / 312k Oct 28 at 12% verified (78% of all volume). Also Adobe Sign Up 15.5k (31%), Olo Payments 11.4k Oct 25 only (52%), MS Identity Signup 6.3k (15%), Pinterest Login 4.5k (5%). Exact share across all keys 0.83. Amazon IDS already carries the live grease/pagebio TTs, so check whether this adds anything there before creating; scope to Amazon IDS if created. Hourly: Amazon IDS still ~12-16k/h through Oct 29 21h UTC.",
+   "action": "keep live",
+   "action_detail": "Created 2026-11-06 as CHNGE-6738 parent A (15144777) with 6 no-pressure key-level TTs (Nov 10). Amazon IDS wave from Nov 13: 241k/352k/302k per day at 13-17% verified - SOC: consider pressure on amazon5693-h-g-cdn-pragma-sec-ch-ua-upcoming-chrome.",
    "change_ticket": "CHNGE-6738"
   },
   {
    "id": "spoofed_os_pagebio_grease",
    "telltale_name": "g-spoofed-os-mismatch-pagebio-null-grease",
-   "status": "candidate",
+   "status": "live",
    "found": "2026-10-29",
    "flags": [
     "spoofed-os-mismatch",
@@ -263,8 +263,8 @@
    ],
    "draft": "telltales/g-spoofed-os-mismatch-pagebio-null-grease.json",
    "history_note": "Added 2026-10-29; exact history from 2026-10-22.",
-   "action": "candidate (review)",
-   "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Roblox Login (Key 1): ~3k/day Oct 25-26 -> 168k Oct 27 -> 974k Oct 28 at ~8% verified (89% of volume). Also Roblox Signup 124k (28%), MS Outlook 10k (72%), Blizzard ROW Registration ~6k (1-2%), MS Identity Signup ~4k (7%). Exact share 0.53 (just over the bar); Amazon IDS fires steadily at 110-138k/day. Candidate for a Roblox-scoped flag. Hourly: Roblox Login peaked at 50-67k/h on Oct 28 and fell to ~100-180/h from Oct 28 23h (stopped for now); Roblox Signup flared on Oct 29 (29k at 12h UTC).",
+   "action": "keep live",
+   "action_detail": "Created 2026-11-06 as CHNGE-6738 parent B (15144778) with 6 key-level TTs. Roblox Game Join climbed to 48-109k/day at 33-41% verified (Nov 12-15) - Game Join Key 6 (CC30DB96) is NOT one of the B keys; consider adding a key-level TT + pressure.",
    "change_ticket": "CHNGE-6738"
   },
   {
@@ -277,9 +277,9 @@
     "di-short-count-300-fp-pixel-ratio-1"
    ],
    "draft": "telltales/g-high-risk-sig-lt-di-short-300-pxr1.json",
-   "history_note": "Added 2026-11-16; exact history not yet backfilled (run 03 for Nov 5-15 with a temp combos file).",
-   "action": "candidate (review)",
-   "action_detail": "NEW 2026-11-16, not created. Validated draft (valid, no errors). Sampled step 2 (Nov 12-15 vs Nov 5-11): 7 keys spiking, share 0.75, ~38k/day excess: Roblox Game Join (Key 6), MS Identity Signup (Key 2), Wells Fargo Login Web, TIAA Login, Adobe ARP FF (Key 8), Amazon IDS (Key 2), 32FBE3BC (unnamed). Sibling of live g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st (LT instead of ST, no dict-7). Exact counts/verified share not yet pulled (exact key-filtered query timed out); backfill 11 days with 03 before deciding."
+   "history_note": "Exact history Nov 5-15 backfilled 2026-11-16 (all keys); per-key charts seeded from it; no hourly rows yet.",
+   "action": "hold",
+   "action_detail": "Exact Nov 5-15: one-day bursts only (TIAA 11k Nov 12, Adobe ARP FF 12k Nov 12, Amazon IDS 13k Nov 13), gone since; MS Identity Signup 10-29k/day at 0% and Roblox Signup at 1% verified. Already mitigated; hold."
   },
   {
    "id": "hrsig_st_spoofed_os",
@@ -291,9 +291,9 @@
     "spoofed-os-mismatch"
    ],
    "draft": "telltales/g-spoofed-os-mismatch-high-risk-sig-st.json",
-   "history_note": "Added 2026-11-16; exact history not yet backfilled (run 03 for Nov 5-15 with a temp combos file).",
-   "action": "candidate (review)",
-   "action_detail": "NEW 2026-11-16, not created. Validated draft (valid, no errors). Sampled: 5 keys spiking, share 0.94, ~48k/day excess: Uber Account Management (Key 2), Pinterest Login (Key 1), Amazon IDS (Key 2), Roblox Signup (Key 2), Roblox Game Join (Key 6). Shares spoofed-os-mismatch with candidate g-spoofed-os-mismatch-pagebio-null-grease (CHNGE-6738 parent B), different second flag. Exact counts/verified share not yet pulled; backfill 11 days with 03."
+   "history_note": "Exact history Nov 5-15 backfilled 2026-11-16 (all keys); per-key charts seeded from it; no hourly rows yet.",
+   "action": "create (review)",
+   "action_detail": "Exact Nov 12-15: 5 keys from ~0 baseline - Amazon IDS 7k->29k->25k/day (4% verified), Roblox Signup 36k Nov 12 (25%), Uber Account Mgmt 28k Nov 12 (1%), Roblox Game Join 2-7k/day (9%), Pinterest Login 1.4-2k/day (2%). Mostly blocked today; worth creating as a no-pressure key-level TT for analyst review if verified share rises."
   },
   {
    "id": "hrsig_lt_ipintel_med_pagebio",
@@ -306,9 +306,9 @@
     "g-page-level-biometrics-empty-or-null"
    ],
    "draft": "telltales/g-high-risk-sig-lt-ip-intel-medium-pagebio-null.json",
-   "history_note": "Added 2026-11-16; exact history not yet backfilled (run 03 for Nov 5-15 with a temp combos file).",
-   "action": "candidate (review)",
-   "action_detail": "NEW 2026-11-16, not created. Validated draft (valid, no errors). Sampled: 5 keys spiking, share 0.85 (pair without page-bio: 5 keys, 0.60), ~57k/day excess: Adobe ARP FF (Key 8), MS Identity Signup (Key 2), Roblox Signup (Key 2), Amazon IDS (Key 2), 32FBE3BC. Same key family as hrsig_lt_dishort300. Not related to validated-not-created g-ip-velocity-st-4x-ip-intel-high-pagebio-null (ip-intel HIGH + ipvel ST-4x). Exact counts/verified share not yet pulled; backfill 11 days with 03."
+   "history_note": "Exact history Nov 5-15 backfilled 2026-11-16 (all keys); per-key charts seeded from it; no hourly rows yet.",
+   "action": "hold",
+   "action_detail": "Exact Nov 12-15: Amazon IDS 42-43k/day (17-18% verified, baseline 8k), Roblox Signup 20-33k/day (2-3%), MS Identity Signup 6-23k/day (0%). Mostly blocked; overlaps the Amazon IDS wave already covered by pragma/ends-cl combos. Hold, re-check next run."
   }
  ],
  "retired": [

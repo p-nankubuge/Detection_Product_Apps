@@ -1,0 +1,45 @@
+{
+ "title": "Daily run 2026-11-16 (exact Nov 10-15; hourly to Nov 15 22h)",
+ "sections": [
+  {
+   "h": "Getting through / ongoing",
+   "items": [
+    "Amazon IDS (Key 2): NEW wave from Nov 13 on pragma/upcoming-Chrome (CHNGE-6738 parent A), ends-cl and pagebio combos: ~25-35k/day before, 241k / 352k / 302k on Nov 13-15 at 13-17% verified. Still running at the end of Nov 15. Mostly blocked, but ~40-50k/day get through. SOC: consider pressure on the existing key-level TT amazon5693-h-g-cdn-pragma-sec-ch-ua-upcoming-chrome.",
+    "Roblox Game Join (Key 6): spoofed-OS + pagebio + grease (parent B) climbed from ~1k/day to 48k / 70k / 109k / 36k (Nov 12-15) at 33-41% verified. Game Join Key 6 is not one of parent B's six key-level TTs - candidate for a new key-level TT + pressure.",
+    "Roblox Signup (Key 2): spoofed-OS family 172k on Nov 12, 28-43k/day since at 8-27% verified; ends-cl/pagebio 29k on Nov 15 at 26%.",
+    "DoorDash Website OS-spoofing 24-84k/day at 41-59% verified (steady, same as baseline)."
+   ]
+  },
+  {
+   "h": "Bursts that ended",
+   "items": [
+    "Uber Account Management (Key 2): ends-cl / ct-before-cl combos 1.86M (Nov 10, 57% verified), 1.83M (Nov 11, 35%), 817k (Nov 12, 37%); hourly peaks Nov 10 16-18h (~1.8M, mostly verified) and Nov 11 11-13h. Plus appleos 162k on Nov 12 at 38%. Back to ~20k/day since Nov 13.",
+    "Adobe ARP FF (Key 8): the Nov 9 wave peaked at 888k on Nov 10 (91% verified) and 346k on Nov 11 (74%), then fell to ~80k/day at 4-13% verified from Nov 12 - looks mitigated.",
+    "Uber SMS (Key 1): ends-cl combo 23.0M on Nov 11 at 0% verified (blocked); spoofed-OS family 250k on Nov 12 at 54% verified, back to ~85-100k/day at 13-21% since. single-click + dp-spoof 62k on Nov 13 at 83% verified."
+   ]
+  },
+  {
+   "h": "Large but blocked",
+   "items": [
+    "Amazon IDS spoofed-OS family ~155k/day (5%); Microsoft Identity Signup webgl ~110k/day (0%); Adobe Commerce OS-spoofing ~20k/day (0%); gtop100 webgl ~38k/day (5%); Highlight AI ends-cl fell from ~85k to 4k/day (0%)."
+   ]
+  },
+  {
+   "h": "Definition changes - read with care",
+   "items": [
+    "DI dictionary revert partly landed Nov 12 22:09-22:54 UTC (m.davies, THR-408..413): dict-1 and dict-neg1 fire again with new thresholds (>1.999 / 3.999 / 9.999) and BofA Workforce ATM excluded. dict-3 (THR-405..407) is STILL == -99, so the CHNGE-6738 parent C and its 6 key-level TTs still cannot fire; hold on didict3_dishort300 stays.",
+    "g-device-parameter-spoofing includes dict-1/neg1, so every *_dp_spoof combo changed definition from Nov 13. Rises there after Nov 12 (e.g. gtop100 dishort300+dp-spoof+ja4 83k on Nov 15 at 44%, Amazon IDS single-click 1% -> 23-25% verified, Roblox Signup / MS Signup ends-te) may be the revert, not new attacks. Excluded from discovery until Nov 24.",
+    "57 CHNGE-6738 key-level telltales created Nov 10 (validated: all correct, no pressure yet)."
+   ]
+  },
+  {
+   "h": "Discovery (Nov 12-15) - 3 new candidates, exact counts pulled",
+   "items": [
+    "g-spoofed-os-mismatch-high-risk-sig-st: 5 keys from ~0 baseline (Amazon IDS 25-29k/day, Roblox Signup 36k Nov 12, Uber Account Mgmt 28k Nov 12, Roblox Game Join, Pinterest Login), 1-25% verified. Suggest create as no-pressure key-level TT for review.",
+    "g-high-risk-sig-lt-ip-intel-medium-pagebio-null: Amazon IDS 42k/day (17%), Roblox Signup, MS Signup (0%). Hold.",
+    "g-high-risk-sig-lt-di-short-300-pxr1: one-day bursts only, gone. Hold.",
+    "Tracking note: g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st is marked live here but shows telltale_active=false in Dataswan."
+   ]
+  }
+ ]
+}
