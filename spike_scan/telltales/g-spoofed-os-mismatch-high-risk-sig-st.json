@@ -1,0 +1,33 @@
+{
+ "ticket": "DETCORE-4466",
+ "telltale_type": "suspicion_flags",
+ "cohort_category": "Suspicious",
+ "owner": "p.nankubuge@arkoselabs.com",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "telltale_active": false,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+ "location": "SESSION_SETUP",
+ "telltale_name": "g-spoofed-os-mismatch-high-risk-sig-st",
+ "telltale_definition": [
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-di-high-risk-signature-exceeding-short-term-threshold"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "spoofed-os-mismatch"
+  }
+ ],
+ "telltale_description": "Spike-scan 2026-11-16 (window Nov 12-15): DI high-risk signature over short-term threshold + spoofed OS mismatch (UA OS vs navigator.platform). Spiked on 5 keys (Uber Account Mgmt, Pinterest Login, Amazon IDS, Roblox Signup, Roblox Game Join), sampled share 0.94.",
+ "_validated": "validate_telltale 2026-11-16: valid, no errors (NOT created)"
+}

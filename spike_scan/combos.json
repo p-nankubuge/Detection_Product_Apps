@@ -266,6 +266,49 @@
    "action": "candidate (review)",
    "action_detail": "NEW 2026-10-29, not created. Validated draft (valid, no errors). Driven by Roblox Login (Key 1): ~3k/day Oct 25-26 -> 168k Oct 27 -> 974k Oct 28 at ~8% verified (89% of volume). Also Roblox Signup 124k (28%), MS Outlook 10k (72%), Blizzard ROW Registration ~6k (1-2%), MS Identity Signup ~4k (7%). Exact share 0.53 (just over the bar); Amazon IDS fires steadily at 110-138k/day. Candidate for a Roblox-scoped flag. Hourly: Roblox Login peaked at 50-67k/h on Oct 28 and fell to ~100-180/h from Oct 28 23h (stopped for now); Roblox Signup flared on Oct 29 (29k at 12h UTC).",
    "change_ticket": "CHNGE-6738"
+  },
+  {
+   "id": "hrsig_lt_dishort300",
+   "telltale_name": "g-high-risk-sig-lt-di-short-300-pxr1",
+   "status": "candidate",
+   "found": "2026-11-16",
+   "flags": [
+    "g-di-high-risk-signature-exceeding-long-term-threshold",
+    "di-short-count-300-fp-pixel-ratio-1"
+   ],
+   "draft": "telltales/g-high-risk-sig-lt-di-short-300-pxr1.json",
+   "history_note": "Added 2026-11-16; exact history not yet backfilled (run 03 for Nov 5-15 with a temp combos file).",
+   "action": "candidate (review)",
+   "action_detail": "NEW 2026-11-16, not created. Validated draft (valid, no errors). Sampled step 2 (Nov 12-15 vs Nov 5-11): 7 keys spiking, share 0.75, ~38k/day excess: Roblox Game Join (Key 6), MS Identity Signup (Key 2), Wells Fargo Login Web, TIAA Login, Adobe ARP FF (Key 8), Amazon IDS (Key 2), 32FBE3BC (unnamed). Sibling of live g-di-short-300-pxr1-di-dict7-st-1x-high-risk-sig-st (LT instead of ST, no dict-7). Exact counts/verified share not yet pulled (exact key-filtered query timed out); backfill 11 days with 03 before deciding."
+  },
+  {
+   "id": "hrsig_st_spoofed_os",
+   "telltale_name": "g-spoofed-os-mismatch-high-risk-sig-st",
+   "status": "candidate",
+   "found": "2026-11-16",
+   "flags": [
+    "g-di-high-risk-signature-exceeding-short-term-threshold",
+    "spoofed-os-mismatch"
+   ],
+   "draft": "telltales/g-spoofed-os-mismatch-high-risk-sig-st.json",
+   "history_note": "Added 2026-11-16; exact history not yet backfilled (run 03 for Nov 5-15 with a temp combos file).",
+   "action": "candidate (review)",
+   "action_detail": "NEW 2026-11-16, not created. Validated draft (valid, no errors). Sampled: 5 keys spiking, share 0.94, ~48k/day excess: Uber Account Management (Key 2), Pinterest Login (Key 1), Amazon IDS (Key 2), Roblox Signup (Key 2), Roblox Game Join (Key 6). Shares spoofed-os-mismatch with candidate g-spoofed-os-mismatch-pagebio-null-grease (CHNGE-6738 parent B), different second flag. Exact counts/verified share not yet pulled; backfill 11 days with 03."
+  },
+  {
+   "id": "hrsig_lt_ipintel_med_pagebio",
+   "telltale_name": "g-high-risk-sig-lt-ip-intel-medium-pagebio-null",
+   "status": "candidate",
+   "found": "2026-11-16",
+   "flags": [
+    "g-di-high-risk-signature-exceeding-long-term-threshold",
+    "g-ip-intel-asn-intel-reputation-medium-risk",
+    "g-page-level-biometrics-empty-or-null"
+   ],
+   "draft": "telltales/g-high-risk-sig-lt-ip-intel-medium-pagebio-null.json",
+   "history_note": "Added 2026-11-16; exact history not yet backfilled (run 03 for Nov 5-15 with a temp combos file).",
+   "action": "candidate (review)",
+   "action_detail": "NEW 2026-11-16, not created. Validated draft (valid, no errors). Sampled: 5 keys spiking, share 0.85 (pair without page-bio: 5 keys, 0.60), ~57k/day excess: Adobe ARP FF (Key 8), MS Identity Signup (Key 2), Roblox Signup (Key 2), Amazon IDS (Key 2), 32FBE3BC. Same key family as hrsig_lt_dishort300. Not related to validated-not-created g-ip-velocity-st-4x-ip-intel-high-pagebio-null (ip-intel HIGH + ipvel ST-4x). Exact counts/verified share not yet pulled; backfill 11 days with 03."
   }
  ],
  "retired": [
