@@ -410,3 +410,51 @@ Queries: `queries/blizzard_hotmail_handle_pattern.sql`.
 1. `TT-hotmail-pattern-burst`: Hotmail family AND ruf ≥ 10 AND hpc ≥ 20. It is high-precision but only catches waves whose template is new.
 2. `TT-hotmail-datacenter`: Hotmail family AND `g-ip-datacenter-with-fingerprint` AND dict ≥ 7. Treat it as a contributor, not a blocker, because 2d/2f are Group B context flags per the SOC guide. Dict ≥ 7 is untested here and should be validated.
 3. Score the two TTs additively with the LONG handle-shape rule from 12.4. Each one covers a different slice of the attack.
+
+#### 12.6.1 Full-week results (4–10 Nov, Hotmail family, 12h chunks; 10 Nov 00–12 run as 6h)
+
+Each cell is truth / verified not truth / unverified not truth.
+- **Burst** = ruf ≥ 10 AND hpc ≥ 20.
+- **DC** = `g-ip-datacenter-with-fingerprint`.
+- **DC + dict** = DC AND dict ≥ 7.
+- **Union** = Burst OR (DC AND dict ≥ 7) OR (LONG handle AND dict ≥ 7).
+
+| Chunk (UTC) | Hotmail truth | Burst | DC | DC + dict | Union |
+|---|---:|---|---|---|---|
+| 4 Nov 00 | 1,713 | **374 / 100 / 290** | 82 / 205 / 539 | 80 / 181 / 361 | 980 / 460 / 900 |
+| 4 Nov 12 | 1,732 | 4 / 9 / 6 | 27 / 179 / 252 | 24 / 156 / 51 | 191 / 475 / 105 |
+| 5 Nov 00 | 1,599 | 8 / 16 / 134 | 29 / 179 / 97 | 22 / 136 / 32 | 89 / 622 / 354 |
+| 5 Nov 12 | 2,691 | 20 / 34 / 154 | 55 / 132 / 75 | 42 / 116 / 44 | 378 / 457 / 443 |
+| 6 Nov 00 | 993 | 66 / 24 / 66 | 45 / 196 / 139 | 41 / 176 / 130 | 379 / 535 / 420 |
+| 6 Nov 12 | 1,538 | 33 / 25 / 913 | **138 / 87 / 244** | 87 / 73 / 102 | 325 / 312 / 1,498 |
+| 7 Nov 00 | 668 | 2 / 0 / 5 | **118 / 93 / 119** | 114 / 87 / 106 | 350 / 212 / 305 |
+| 7 Nov 12 | 924 | 3 / 37 / 1,637 | **124 / 63 / 224** | 120 / 55 / 180 | 189 / 284 / 2,218 |
+| 8 Nov 00 | 486 | 0 / 0 / 38 | 9 / 130 / 22 | 7 / 87 / 17 | 197 / 217 / 311 |
+| 8 Nov 12 | 456 | 0 / 0 / 5 | 4 / 53 / 10 | 4 / 50 / 5 | 84 / 257 / 183 |
+| 9 Nov 00 | 1,431 | 0 / 1 / 7 | 4 / 87 / 80 | 4 / 73 / 53 | 434 / 171 / 870 |
+| 9 Nov 12 | 1,673 | 0 / 1 / 44 | 69 / 81 / 65 | 63 / 58 / 47 | 555 / 169 / 317 |
+| 10 Nov (sparse truth) | 367 | 0 / 0 / 0 | 39 / 223 / 61 | 36 / 201 / 52 | 44 / 427 / 335 |
+| **Week** | **16,271** | **510 / 247 / 3,299** | **743 / 1,708 / 1,927** | **644 / 1,449 / 1,180** | **4,195 / 4,598 / 8,259** |
+
+**Week summary:**
+
+| Rule | Recall (Hotmail truth) | Verified precision | Fires (% of created) |
+|---|---:|---:|---:|
+| Burst | 3.1% | 67% | 4,056 (0.57%) |
+| DC | 4.6% | 30% | 4,378 (0.61%) |
+| DC + dict ≥ 7 | 4.0% | 31% | 3,273 (0.46%) |
+| LONG + dict ≥ 7 (from 12.4) | 22.7% | 54% | 12,085 (1.7%) |
+| Union of all three | 25.8% | 48% | 17,052 (2.4%) |
+
+**Reading:**
+- **Burst is a one-wave detector.**
+  - 73% of its week's truth (374 of 510) came from the 4 Nov 00–12 F1 wave. After 6 Nov it caught almost no truth.
+  - 77% of its 3,299 unverified hits fell on 6 Nov 12 – 7 Nov 24, a burst that was already being mitigated.
+  - It is cheap: 247 verified non-truth all week. It is worth keeping as a low-cost early-warning TT.
+- **Datacenter is only useful for a 36-hour window** (6 Nov 12 – 7 Nov 24): 380 truth against 243 verified non-truth, 61% precision. Across the rest of the week it is mostly legitimate traffic (30% precision for the week). Adding dict ≥ 7 does not help.
+- **The union adds little over LONG alone.** It adds 506 truth and 1,412 verified non-truth, so the added slice is about 26% precise. LONG carries most of the value. Burst and DC are contributors at best.
+
+**Revised recommendation:**
+- Ship LONG + dict as the main TT, at risk 0 first.
+- Add Burst as a small extra score bump. It is cheap and catches new-template waves early.
+- **Do not** add a datacenter TT for this attack. 2d/2f stay context-only, consistent with the SOC guide.
