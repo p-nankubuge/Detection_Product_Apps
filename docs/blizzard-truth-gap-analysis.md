@@ -541,3 +541,57 @@ Each cell is truth / verified not truth / unverified not truth.
 - LONG stays at risk 0.
 
 Do not copy the existing rule's immediate non-legit at risk 85 onto the ratio ≥ 2 rule. Off-wave precision is too low for that.
+
+## 13. qq.com / foxmail.com, September 2026 (Registration K2)
+
+**Why September:** truth is complete for 1–18 Sep (2,100–7,200 truth per day) and tails off from 19 Sep. October and November truth is incomplete because of the TD pipeline issue.
+
+### 13.1 Scale (12h windows)
+
+| Window | Hotmail truth | Gmail truth (rate) | qq.com truth (rate) | foxmail truth |
+|---|---:|---:|---:|---:|
+| 2 Sep 00–12 | 5,196 | 232 (2.1%) | 41 / 572 (7.2%) | 1 / 93 |
+| 9 Sep 00–12 | 2,651 | 116 (1.0%) | 41 / 520 (7.9%) | 1 / 101 |
+| 16 Sep 00–12 | 1,320 | 184 (0.9%) | 85 / 2,355 (3.6%) | 0 / 18 |
+
+- qq is second by fraud **rate** among the large free domains, but small in volume.
+- foxmail traffic mostly never verifies (78 of 93 on 2 Sep), so it is already being stopped and contributes almost no truth.
+
+### 13.2 What qq fraud looks like
+
+**Handles:** the email handle is **not** the signal here.
+- Legitimate qq handles are mostly 9–10 digit QQ numbers, so handle pattern and pattern velocity are uniform and do not separate classes.
+- Already-mitigated (unverified) qq traffic is mostly gibberish letter+digit handles with dict 1.
+
+**Device-spoofing flags are the signal.** Six 6h windows (1 Sep 06, 5 Sep 12, 9 Sep 06, 12 Sep 12, 16 Sep 00, 16 Sep 06): 309 qq-family truth sessions against 3,196 verified non-truth, a base verified precision of 8.8%.
+
+| Signal (qq/foxmail only) | Truth (share of qq truth) | Verified, not truth | Verified precision | Non-qq verified, not truth |
+|---|---:|---:|---:|---:|
+| Client-hints spoof cluster¹ | 158 (51%) | 222 | 42% | 3,219 |
+| Brave-spoof / randomized DI signature² | 67 (22%) | 15 | **82%** | 2,656 |
+| `country-timezone-mismatch` | 63 (20%) | 37 | 63% | 3,014 |
+| `captchaai-possible-broad-23083102` | 114 (37%) | 399 | 22% | 12,535 |
+| **Client-hints cluster AND captchaai** | 110 (36%) | 129 | **46%** | 1,837 |
+| Client-hints cluster AND `never-seen-before-fp-no-pressure` | 49 (16%) | 55 | 47% | 1,026 |
+| Union: Brave OR tz OR (CH AND (captchaai OR never-seen)) | 191 (62%) | 188 | 50% | 7,420 |
+
+¹ `client-hints-javascript-brands-empty-string`, `sec-ch-ua-null-user-agent-brands-not-null`, `client-hints-brands-header-absent-javascript-present`, `client-hints-mobile-header-absent-javascript-present`.
+² `susp-brave-browser-spoofing-chrome`, `di-matched-signature-randomized-value`, `fp-hardware-concurrency-odd`.
+
+**Reading:**
+- There are two signatures:
+  - **Brave-spoof waves:** bursty. They appeared only on 1 Sep 06–12 and 16 Sep 00–06. They are very precise and overlap with `country-timezone-mismatch`.
+  - **Client-hints spoof:** present in every window.
+- Almost all of these sessions verify. Unverified hits are only 6–39, so current scoring is not stopping them.
+- These flags fire heavily outside qq (the non-qq verified column), so any rule must be scoped to the qq family.
+
+### 13.3 TTs (both validated in Dataswan; start at risk 0)
+
+Both are in `telltales/blizzard2-freemail-tts.json`. The domain regex is `/^(qq|vip\.qq|foxmail)\.com$/i`.
+
+1. **`blizzard2-h-qq-brave-spoof`:** qq family AND (`susp-brave-browser-spoofing-chrome` OR `di-matched-signature-randomized-value` OR `fp-hardware-concurrency-odd` OR `country-timezone-mismatch`). About 20–22% of qq truth at 63–82% verified precision. This one can take a higher score.
+2. **`blizzard2-h-qq-clienthints-captchaai`:** qq family AND (any client-hints cluster flag) AND `captchaai-possible-broad-23083102`. 36% of qq truth at 46% precision, about 22 verified non-truth per 6h. Give it a moderate score.
+
+Combined, they cover about 60% of qq truth at about 50% verified precision, roughly 30 verified non-truth per 6h.
+
+**Note for the Hotmail TTs:** their domain regex has no `i` flag. If `email__raw_email_domain` is not lower-cased upstream, add `/i`.

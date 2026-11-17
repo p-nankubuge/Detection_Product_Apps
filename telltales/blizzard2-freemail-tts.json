@@ -118,6 +118,106 @@
           "type": "int"
         }
       ]
+    },
+    {
+      "telltale_name": "blizzard2-h-qq-brave-spoof",
+      "telltale_type": "suspicion_flags",
+      "risk_score": 0,
+      "location": "SESSION_SETUP",
+      "telltale_description": "qq/foxmail registration with Brave-spoof / randomized DI signature / country-timezone mismatch. Blizzard K2.",
+      "telltale_definition": [
+        {
+          "operator": "TS_EQ",
+          "key": "public_key",
+          "value": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "location",
+          "value": "session_setup",
+          "type": "string"
+        },
+        {
+          "operator": "TS_REGEX",
+          "key": "email__raw_email_domain",
+          "value": "/^(qq|vip\\.qq|foxmail)\\.com$/i",
+          "type": "string"
+        },
+        {
+          "operator": "OR",
+          "conditions": [
+            {
+              "operator": "#INCLUDE",
+              "value": "susp-brave-browser-spoofing-chrome"
+            },
+            {
+              "operator": "#INCLUDE",
+              "value": "di-matched-signature-randomized-value"
+            },
+            {
+              "operator": "#INCLUDE",
+              "value": "fp-hardware-concurrency-odd"
+            },
+            {
+              "operator": "#INCLUDE",
+              "value": "country-timezone-mismatch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "telltale_name": "blizzard2-h-qq-clienthints-captchaai",
+      "telltale_type": "suspicion_flags",
+      "risk_score": 0,
+      "location": "SESSION_SETUP",
+      "telltale_description": "qq/foxmail registration with empty JS client-hint brands / null sec-ch-ua plus captchaai flag. Blizzard K2.",
+      "telltale_definition": [
+        {
+          "operator": "TS_EQ",
+          "key": "public_key",
+          "value": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "location",
+          "value": "session_setup",
+          "type": "string"
+        },
+        {
+          "operator": "TS_REGEX",
+          "key": "email__raw_email_domain",
+          "value": "/^(qq|vip\\.qq|foxmail)\\.com$/i",
+          "type": "string"
+        },
+        {
+          "operator": "OR",
+          "conditions": [
+            {
+              "operator": "#INCLUDE",
+              "value": "client-hints-javascript-brands-empty-string"
+            },
+            {
+              "operator": "#INCLUDE",
+              "value": "sec-ch-ua-null-user-agent-brands-not-null"
+            },
+            {
+              "operator": "#INCLUDE",
+              "value": "client-hints-brands-header-absent-javascript-present"
+            },
+            {
+              "operator": "#INCLUDE",
+              "value": "client-hints-mobile-header-absent-javascript-present"
+            }
+          ]
+        },
+        {
+          "operator": "#INCLUDE",
+          "value": "captchaai-possible-broad-23083102"
+        }
+      ]
     }
   ]
 }
