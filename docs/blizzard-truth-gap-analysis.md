@@ -458,3 +458,15 @@ Each cell is truth / verified not truth / unverified not truth.
 - Ship LONG + dict as the main TT, at risk 0 first.
 - Add Burst as a small extra score bump. It is cheap and catches new-template waves early.
 - **Do not** add a datacenter TT for this attack. 2d/2f stay context-only, consistent with the SOC guide.
+
+### 12.7 TT definitions
+
+Use two separate TTs, not one combined TT, and no datacenter TT. Both definitions are in `telltales/blizzard2-hotmail-tts.json` and both passed Dataswan `validate_telltale`. Neither has been created yet.
+
+- **`blizzard2-h-hotmail-long-handle-dict`** (primary)
+  - Conditions: K2 public key AND `session_setup` AND domain regex `^(hotmail|outlook|live|msn)\.` AND `email__handle_pattern` regex `^[0-9]{2}(1[5-9]|[2-9][0-9])(0[01]|0[89]|[1-9][0-9])0000$` AND `di_dictionary_num_matched` ≥ 7.
+  - The regex matches exactly the same sessions as the Athena logic used in 12.4: 871 = 871 on 9 Nov 12–24, with no differences either way.
+- **`blizzard2-h-hotmail-handle-pattern-burst`** (secondary)
+  - Conditions: K2 public key AND `session_setup` AND the same domain regex AND `email__handle_pattern_relative_usage_factor` ≥ 10 AND `email__short_term__handle_pattern_count` ≥ 20.
+
+Why two TTs: they have different precision (54% and 67%) and different lifetimes. LONG covers steady state; Burst is a short early warning for new templates. Separate TTs can each get their own risk weight, degrade separately, and be measured separately. A combined TT would hide which signal fired. Start both as risk-0 suspicion flags, then score them after a week of monitoring.
