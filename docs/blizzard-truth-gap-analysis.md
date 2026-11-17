@@ -505,3 +505,39 @@ Each cell is truth / verified not truth / unverified not truth.
 - Hotmail truth per 12h window was about 1,500–2,700 on 4–9 Nov. On 11–14 Nov it was 180–1,500.
 - So the attack has slowed but not stopped.
 - It keeps rotating templates (5-digit handles on 16 Nov). That is exactly why the static rule decays and the burst rule holds up.
+
+### 12.9 Hotmail-tailored version of `blizzard2-h-g-email-patternvolume-highrisk`
+
+**The existing rule:**
+- `blizzard2-h-g-email-patternvolume-highrisk` is risk 85 with immediate non-legit, applied to all domains.
+- It requires `g-email-patternvolume-highrisk`, which fires when `email__triggered_rules` contains `email_rule_pattern_vol_high_risk` (handle-pattern relative usage ≥ 3), plus not private relay.
+- It hits few truth sessions on Hotmail: 14 on 23 Oct, 87 on 26 Aug, 23 on 7 Nov. Its verified non-truth is 210–320 per 12h.
+- Using the local field (`email__handle_pattern_relative_usage_factor` ≥ 3), the email-engine rule fired on far fewer Hotmail bursting sessions than expected. For example, on 9 Nov 12–24 in the 3–5 band with count ≥ 20, it fired on 12 of 275 sessions. The engine threshold or window evidently differs from the logged field.
+
+**Hotmail relative-usage bands** (truth / verified not truth):
+- Fraud is concentrated where `email__short_term__handle_pattern_count` ≥ 20, even at ratio 1.5–3.
+- 9 Nov 12–24: ratio 1.5–3 with count ≥ 20 gave 739 / 42.
+- Without the count condition, the same bands are mostly legitimate traffic.
+
+**Candidate rules, Hotmail family, 12h windows** (truth / verified not truth; precision among verified; share of Hotmail truth):
+
+| Window | ratio ≥ 1.5 AND count ≥ 20 | ratio ≥ 2 AND count ≥ 20 | Burst (ratio ≥ 10) |
+|---|---|---|---|
+| 4 Nov 00 | 850 / 301 (74%, 50%) | 763 / 214 (78%, 45%) | 374 / 100 |
+| 9 Nov 12 | 900 / 48 (95%, 54%) | 607 / 22 (97%, 36%) | 0 / 1 |
+| 12 Nov 12 | 742 / 186 (80%, 50%) | 640 / 107 (86%, 43%) | 145 / 7 |
+| 26 Aug 12 | 401 / 318 (56%, 33%) | 216 / 221 (49%, 18%) | 50 / 16 |
+| 7 Nov 12 | 271 / 374 (42%, 29%) | 166 / 281 (37%, 18%) | 3 / 37 |
+| 23 Oct 12 | 157 / 294 (35%, 6%) | 37 / 71 (34%, 2%) | 0 / 0 |
+| 15 Nov 12 (truth not in) | 0 / 103 | 0 / 80 | 0 / 7 |
+
+**New TT, `blizzard2-h-hotmail-patternvolume`:** Hotmail family AND ratio ≥ 2 AND count ≥ 20.
+- It validated in Dataswan. The private-relay condition was dropped: it is redundant on Hotmail domains and it tripped the ground-truth overlap check against `blizzard5-2captcha-260729--ground-truth`.
+- It catches 2–5× more truth than Burst. During waves its precision is 78–97%; on quiet or other days it is about 35–50%. Its standing cost is about 80–280 verified per 12h.
+
+**Suggested tiering:**
+- Burst (ratio ≥ 10) gets the higher score.
+- Hotmail pattern-volume (ratio ≥ 2) gets a moderate score.
+- LONG stays at risk 0.
+
+Do not copy the existing rule's immediate non-legit at risk 85 onto the ratio ≥ 2 rule. Off-wave precision is too low for that.
