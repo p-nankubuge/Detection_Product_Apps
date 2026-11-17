@@ -470,3 +470,38 @@ Use two separate TTs, not one combined TT, and no datacenter TT. Both definition
   - Conditions: K2 public key AND `session_setup` AND the same domain regex AND `email__handle_pattern_relative_usage_factor` ≥ 10 AND `email__short_term__handle_pattern_count` ≥ 20.
 
 Why two TTs: they have different precision (54% and 67%) and different lifetimes. LONG covers steady state; Burst is a short early warning for new templates. Separate TTs can each get their own risk weight, degrade separately, and be measured separately. A combined TT would hide which signal fired. Start both as risk-0 suspicion flags, then score them after a week of monitoring.
+
+### 12.8 Backtest outside the training week (one 12h window per day, 12–24 UTC, Hotmail family)
+
+Each cell is truth / verified not truth / unverified not truth.
+
+| Day | Hotmail truth | LONG + dict (TT 1) | Burst (TT 2) |
+|---|---:|---|---|
+| 12 Aug | 0 (no truth that day) | 0 / 180 / 60 | 0 / 25 / 21 |
+| 26 Aug | 1,230 | 4 / 66 / 5 | **50 / 16 / 50** |
+| 14 Oct | 652 | 24 / 177 / 147 | 1 / 0 / 12 |
+| 23 Oct | 2,419 | 62 / 255 / 93 | 0 / 0 / 0 |
+| 11 Nov | 180 | 10 / 142 / 147 | 0 / 0 / 0 |
+| 12 Nov | 1,492 | 20 / 117 / 201 | **145 / 7 / 608** |
+| 13 Nov | 553 | 42 / 263 / 68 | 0 / 0 / 0 |
+| 14 Nov | 636 | 9 / 184 / 43 | 2 / 2 / 25 |
+| 15 Nov | 0 (truth not in yet) | 0 / 377 / 55 | 0 / 7 / 38 |
+| 16 Nov | 0 (truth not in yet) | 0 / 282 / 80 | 0 / 159 / 585 |
+
+**TT 1 (LONG + dict) only fits the 4–9 Nov templates.**
+- Outside that window it catches 0–6% of Hotmail truth, with 4–26% verified precision.
+- Its standing cost is about 120–380 verified non-truth sessions per 12h.
+- Keep it at risk 0, or let it degrade. Do not score it.
+
+**TT 2 (Burst) generalises.**
+- It caught the 26 Aug wave (76% verified precision) and the 12 Nov wave (95%).
+- On non-wave days it stays near zero.
+
+**16 Nov 12–24 (no truth yet):** Burst fired 744 times.
+- **Template A:** 12:00–14:00 UTC, a new template of 15–22 letters + **5 digits** (`1611050000`, `1510050000`, `2015050000`, …), median dict 3, roughly 450 sessions. Almost none verified (about 6), so it was already mitigated. Burst flagged it within the hour.
+- **Template B:** the rest, about 160 verified, came from common shapes (letters + 2–4 digits, dict 7). Confirm these against truth when it lands.
+
+**Attack status:**
+- Hotmail truth per 12h window was about 1,500–2,700 on 4–9 Nov. On 11–14 Nov it was 180–1,500.
+- So the attack has slowed but not stopped.
+- It keeps rotating templates (5-digit handles on 16 Nov). That is exactly why the static rule decays and the burst rule holds up.
