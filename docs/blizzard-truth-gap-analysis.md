@@ -345,13 +345,13 @@ Each row is one 12h chunk. "Verified, not truth" is the FP-risk population.
 
 Takeaways:
 - Fingerprint- and IP-based conditions are too noisy on Hotmail. They hit 2–3× more verified non-truth than truth.
-- The handle-shape signal is the strongest field on this attack. As a static rule (LONG) it catches 31% of Hotmail truth at 80% verified precision in an active wave. It falls to about 32% precision on a quiet half-day.
+- The handle-shape signal is the strongest field on this attack. As a static rule (LONG) it caught 31% of Hotmail truth at 80% verified precision on 9 Nov. On 5 Nov 12–24 it caught 18% at 58%, and on quiet 7 Nov 32% precision.
 - Adding device or IP flags to LONG removes most of its recall.
 
 ### 12.5 Recommendation
 
 1. **Custom TT, wave-adaptive (preferred):** Hotmail-family domain AND `email__handle_pattern` ∈ a *hot-pattern list*. The list holds patterns whose Registration-K2 share in the last 1–6h is far above a trailing 7-day baseline, for example ≥ 5× and ≥ 30 sessions per hour. This catches F1, F2 and the 9 Nov template without hand-tuning each wave. `email__short_term__handle_pattern_count` may already provide the velocity part. It was not validated here, so check it against the baseline before relying on it.
-2. **Static fallback TT (monitor, then mitigate):** Hotmail-family AND letters ≥ 15 AND digits ∈ {0, 1, ≥ 8} AND specials = 0 AND dict ≥ 7. That is about 370–870 sessions per 12h (about 1% of created), 31% of Hotmail truth in an active wave, and 30–80% verified precision depending on wave. Run it at risk 0 for a week before scoring.
+2. **Static fallback TT (monitor, then mitigate):** Hotmail-family AND letters ≥ 15 AND digits ∈ {0, 1, ≥ 8} AND specials = 0 AND dict ≥ 7. Measured per 12h: about 870–1,240 sessions (1.3–1.9% of created). It caught 30% of Hotmail truth on 9 Nov and 12% on 5 Nov. Verified precision was 82% on 9 Nov, 51% on 5 Nov and 29% on quiet 7 Nov. Run it at risk 0 for a week before scoring.
 3. **Don't build on the IP Phase 1 abuse flags for this attack** (20 truth hits in 4 days). Keep 2d/2f as context only, as the SOC guide says.
 4. **Don't scope any of these to all free-mail domains.** The same templates are common in legitimate Gmail and other traffic.
 
