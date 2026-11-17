@@ -245,3 +245,39 @@ Rules from [Detection Idea: Cross-Platform Device Identity Signal](https://arkos
 - The low-entropy fallback key does group the fraud, but only at 1.1–1.3× the base rate, because the common browser builds dominate it.
 - The anchor rules flag a different population: 18 anchors at MEDIUM or above in 3 hours, none of them labelled as fraud. That's consistent with the August finding that CRITICAL is unchallenged and unlabelled.
 - The anchor rules are complementary to rule C and the dict ≥ 7 split, not a replacement for them on this wave.
+
+## 11. Missed attack by free-email domain, 5 Nov 2026 00:00–06:00 UTC
+
+- **Data:** `arkoselabs.events_faster`, flags at session setup, verified = `verified` true at `game_verify`, joined to Blizzard truth.
+- **Window:** 39,311 created registrations, 33,104 verified, 544 reported fraud. All 544 verified, and Blizzard has reported no Legit sessions.
+- **Scope:** one 6-hour window, so treat the numbers as directional.
+
+### By domain family
+
+| Family | Created | Reported fraud (rate) | Verified | Email ML ≥ 80 | Email-plus flag (fraud) | SDV ratio ≥ 1 (fraud) |
+| --- | --- | --- | --- | --- | --- | --- |
+| gmail | 23,737 | 131 (0.55%) | 93% | 1,805 | 368 (0) | 422 (5) |
+| hotmail / outlook / live | 8,153 | **358 (4.4%)** | 64% | 848 | 284 (16) | 145 (20) |
+| other / corporate | 2,212 | 24 | 78% | 296 | 138 (1) | 92 (0) |
+| yahoo | 1,436 | 4 | 94% | 17 | 1 | 22 |
+| **naver / daum / hanmail (KR)** | 1,356 | **0** | 87% | **941 (69%)** | 130 (0) | 31 |
+| no email | 604 | 0 | 4% | 0 | 0 | 521 |
+| qq / foxmail | 318 | 11 (3.5%) | 96% | 0 | 0 | 18 |
+| 163 / 126 / sina | 257 | 7 (2.7%) | 79% | 16 | 11 (1) | 0 |
+
+### Findings
+
+- **Hotmail/Outlook is where the reported fraud is**: 66% of truth at 8× Gmail's rate. Its attack profile (`never-seen-before-fp-no-pressure` + `g-suspicious-extension-count-ja4-hash` + dict 7/15) covers 1,877 sessions and 171 of the 358 truth sessions (48%), at a 9.1% fraud rate. Of the profile, 1,250 sessions were mitigated and **456 verified without being in truth**, which is likely unreported attack.
+- **Gmail fraud has two shapes that the Hotmail profile does not cover** (only 5 of 131 match it):
+  - **G1:** datacenter or hosting IP plus a country/timezone mismatch. 632 sessions, 3.0% fraud, 80% verified.
+  - **G2:** Battle.net launcher + `client-hints-pure-chromium` + fraud-farm or sweatshop country. 497 sessions, 5.4% fraud (10× the Gmail base), **92% verified**. Mostly getting through.
+  - G1 or G2 together: 1,121 sessions, 45 of 131 Gmail truth (34%), 908 verified and not in truth.
+- **`blizzard2-e-email-plus-suspicion-flag` is weak on this key:** 937 sessions, 18 truth (1.9%, 1.4× base), 69% verified, and 0 truth on its 368 Gmail hits. Its email ML ≥ 80 gate over-fires on Korean domains, which are 130 of its hits.
+- **Korean free mail is very likely legitimate, not a missed attack:**
+  - 98% of these sessions are in Korea and 77% are on mobile.
+  - Fingerprints repeat (571 across 1,356 sessions), and only 3.5% are never-seen-before.
+  - Dict matched is mostly 31 or more, and residential proxies are almost absent (2 sessions).
+  - The email ML score is median 86 here against 41 for Gmail. That's a model bias on Korean handles, and anything gated on ML ≥ 80 inherits it.
+- **Chinese domains (qq, 163, 126, sina) are low volume but 5–6× Gmail's fraud rate.** None match the Hotmail profile, and 4 of qq's 11 truth sessions had no telltale. Too few in one window to build a rule.
+- **Spoofing flags** (device-parameter, client-hints platform, `efp-bad-fos`, OS spoofing, SwiftShader, headless VM, webdriver): on Hotmail, 317 sessions, 49 truth (15%), 102 verified and not in truth. On "other", 575 sessions with 7 verified, so already stopped.
+- **SDV:** the gate (ratio ≥ 1) is mostly no-email API traffic that is already stopped (521 sessions, 23 verified). On Hotmail it is 145 sessions at 14% fraud. Volume is small, consistent with the SDV page (ratio ≥ 4 catches 3.4% of Blizzard truth).
