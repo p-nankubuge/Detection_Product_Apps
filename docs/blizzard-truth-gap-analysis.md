@@ -612,3 +612,24 @@ Each cell is truth / verified not truth / unverified not truth.
 - **TT1 (Brave-spoof):** the Brave-spoof wave is absent. TT1 is almost silent, which is good: it costs almost nothing while it waits. On 12 Nov it fired on 10 unverified sessions, which were already mitigated.
 - **TT2 (client-hints + captchaai):** caught 12 truth against 88 verified non-truth over the four windows, about 12% on partial truth. It has a standing cost of about 25 verified per 6h whether or not an attack is running.
 - **Recommendation:** score TT1. Keep TT2 at risk 0 until it can be re-checked on complete November truth.
+
+### 13.5 Out-of-sample check on August and September (truth complete; 06–12 UTC)
+
+None of these windows were used to build the TTs. Truth starts 19 Aug. The 14 Sep window timed out and is left out. Each cell is truth / verified not truth / unverified not truth.
+
+| Window | qq truth | qq verified, not truth | TT1 Brave-spoof | TT2 Client-hints + captchaai |
+|---|---:|---:|---|---|
+| 20 Aug | 73 | 278 | 4 / 4 / 59 | 2 / 33 / 4 |
+| 24 Aug | 8 | 304 | 1 / 10 / 7 | 3 / 55 / 3 |
+| 28 Aug | 85 | 328 | 0 / 3 / 35 | 0 / 39 / 4 |
+| 31 Aug | 50 | 286 | 0 / 5 / 1 | 21 / 24 / 2 |
+| 3 Sep | 39 | 230 | 0 / 3 / 0 | 14 / 33 / 1 |
+| 7 Sep | 35 | 249 | 0 / 4 / 4 | 9 / 22 / 1 |
+| 11 Sep | 28 | 380 | 0 / 1 / 2 | 13 / 25 / 2 |
+| **Total** | **318** | **2,055** | **5 / 30 / 108** | **62 / 231 / 17** |
+
+qq base rate among verified is 13.4%.
+
+- **TT1 (Brave-spoof):** caught 5 of 318 truth (1.6%) at 14% verified precision. The 63–82% precision measured in-sample came from two wave windows (1 Sep 06 and 16 Sep 00) and does not carry over to ordinary days. It does fire during attacks: 59 and 35 unverified non-truth on 20 and 28 Aug. Those sessions failed the challenge and so never reach truth, which means it adds little on top of existing enforcement. **Keep at risk 0 as a wave detector; do not score high.**
+- **TT2 (client-hints + captchaai):** caught 62 of 318 truth (19.5%) at 21% verified precision, about 1.6× lift. Its standing cost is about 33 verified non-truth per 6h, consistent with November (about 25). This is too weak to score alone. **Keep at risk 0, or use it only as one input to a combined score.**
+- **About 80% of qq truth carries neither flag set.** The qq fraud seen in Sept in-sample is mostly not separable with these suspicion flags. A next step would be email-handle features (pattern/volume, as done for Hotmail) on the qq family.
