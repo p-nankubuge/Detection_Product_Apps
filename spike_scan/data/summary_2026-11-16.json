@@ -11,6 +11,15 @@
    ]
   },
   {
+   "h": "NEW check - share of key traffic (should be <2% unless volumetric)",
+   "items": [
+    "Each combination x key is now checked against the key's TOTAL traffic (all Production sessions, 04_key_totals.sql). >2% of the key's traffic = FP risk, unless the key's traffic jumped >=1.5x that day and the flagged sessions explain >=50% of the jump (volumetric attack). Baseline uses the median day. Results: 60 FP-risk key/combination pairs, 2 volumetric, 114 OK (window Nov 12-15). Most FP-risk pairs are <10% verified, i.e. already blocked bot traffic on high-bot keys.",
+    "Review before adding pressure (FP risk AND >=30% of flagged sessions verify): Adobe Sign-in os-spoof+pagebio 1.4% avg / 2.2% peak at 93% verified; Amazon Client os-spoof+pagebio 4.8% at 89% verified (flags ~5% of normal traffic every day); Roblox Game Join spoofed-OS+pagebio+grease 16.7% avg / 27% peak at 34% verified, plus ends-cl, pagebio, pragma at 37-44% verified; Uber Account Mgmt ends-cl 17.6% avg / 38% peak at 36% and appleos 3.4% / 7.5% peak at 38%; gtop100 dishort300+dp-spoof+ja4 1.6% / 5.4% peak at 44%.",
+    "Standing high footprint (flags >2% of the key's median normal day): Highlight AI ends-cl 86% of all traffic (0% verified - the key is mostly bot), Amazon IDS spoofed-OS+pagebio+grease 9.4% and os-spoof+pagebio 5.2%, Customer Dashboard Demo Data rta 7.9%, Roblox Game Join ends-te 5.1%, Amazon Client os-spoof+pagebio 4.7% at 89% verified (most likely real FPs), MS Identity Signup webgl 4.3%, Bumble SMS pagebio 3.4%.",
+    "Candidates: g-spoofed-os-mismatch-high-risk-sig-st stays under 2% on every key except Roblox Signup (2.0% peak); g-high-risk-sig-lt-ip-intel-medium-pagebio-null peaks 2.1-9.9%; g-high-risk-sig-lt-di-short-300-pxr1 peaks 4.6-9.1%."
+   ]
+  },
+  {
    "h": "Bursts that ended",
    "items": [
     "Uber Account Management (Key 2): ends-cl / ct-before-cl combos 1.86M (Nov 10, 57% verified), 1.83M (Nov 11, 35%), 817k (Nov 12, 37%); hourly peaks Nov 10 16-18h (~1.8M, mostly verified) and Nov 11 11-13h. Plus appleos 162k on Nov 12 at 38%. Back to ~20k/day since Nov 13.",

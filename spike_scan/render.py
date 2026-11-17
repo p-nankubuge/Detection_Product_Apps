@@ -37,6 +37,8 @@ if a.vocab:
     if len(flags) > 62:
         raise SystemExit("vocab too large for a BIGINT bitmask (max 62)")
     vals["vocab"] = ",".join("'%s'" % f.replace("'", "''") for f in flags)
+if a.keys and not a.combos:  # 04_key_totals.sql: plain key list
+    vals["keys"] = ",".join("'%s'" % l.strip() for l in pathlib.Path(a.keys).read_text().splitlines() if l.strip())
 if a.combos:
     import json
     combos = json.loads(pathlib.Path(a.combos).read_text())["combos"]

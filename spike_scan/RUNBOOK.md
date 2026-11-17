@@ -118,6 +118,21 @@ Work from the repo root, `cd spike_scan`.
    Exclude them from step 1 until 2026-10-26 (same as the Oct 14-edited TTs). Tracking is unchanged, because it
    matches the raw flags, not the TT name. Daily check for live combos: a falling verified share on keys that have
    pressure means the action works; created dropping to ~0 means the attacker moved, so look for a new combo on that key in step 2.
+7c. **Share of key traffic (false-positive check, from 2026-11-17).** A signal should flag **under 2% of a key's total traffic**
+   unless it is a volumetric attack. After the exact counts are in:
+   `python3 spike_report.py totals-keys --win-start <D-4> --win-end <D> --out <scratch>/tot_keys.txt` (keys with >=1k flagged on a window day),
+   `python3 render.py sql/04_key_totals.sql --win-start <D-4> --win-end <D> --keys <scratch>/tot_keys.txt` -> `execute_sql`
+   (11 days x ~45 keys is ~34k tokens: split into two date ranges by editing SESSION_TS) -> `python3 spike_report.py totals --packed '<cell>'`
+   for each piece (merges into `data/key_totals.csv`). Check with `python3 spike_report.py share --win-start <D-4> --win-end <D>`.
+   Verdict per combination x key, per window day: share = flagged / all Production sessions on the key.
+   - **OK**: <2% on every day with >=1k flagged.
+   - **Volumetric attack**: >2% only on days when the key's traffic was >=1.5x its median baseline day AND the flagged sessions
+     explain >=50% of the extra traffic (the attack *is* the extra volume, so a high share is expected).
+   - **FP risk**: >2% without such a jump, or the signal already flags >2% of the key's median baseline day (it fires on ordinary traffic).
+     Read it with the verified share: FP risk + >=50% verified = real users are probably being caught, review before any pressure;
+     FP risk + <10% verified = already-blocked bot traffic on a high-bot key, lower concern.
+   The SOC pack shows the badges in "What to do" and the candidates card, and a full table per combination. Mention every
+   FP-risk pair with >=30% verified in the summary, and never recommend pressure on a key where the signal is FP risk without saying so.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)

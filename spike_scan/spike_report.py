@@ -19,12 +19,13 @@
           Burst episodes per combo x key over a long history (keys from data/recur_keys.json)
           -> reports/recurrence_<day>.html + data/recurrence_<day>.json. Answers "does it come back?".
 """
-import argparse, csv, datetime as dt, html, json, pathlib, sys
+import argparse, collections, csv, datetime as dt, html, json, pathlib, sys
 from collections import defaultdict
 
 ROOT = pathlib.Path(__file__).resolve().parent
 COUNTS = ROOT / "data" / "daily_key_counts.csv"
 CHART_COUNTS = ROOT / "data" / "chart_key_counts.csv"
+TOTALS = ROOT / "data" / "key_totals.csv"  # day,public_key,sessions: ALL Production sessions on the key (04_key_totals.sql)
 HOURLY = ROOT / "data" / "hourly_key_counts.csv"  # ts_hour,public_key,combo_id,sessions,verified (chart keys)
 HOURLY_FIELDS = ["ts_hour", "public_key", "combo_id", "sessions", "verified"]  # key-filtered exact counts + verified, for perkey
 NAMES = ROOT / "data" / "key_names.json"
@@ -777,6 +778,153 @@ RECUR_CSS = """
 """
 
 
+# ---- share of key traffic (FP check) -------------------------------------------------------------
+SHARE_MAX = 0.02      # a signal should flag < 2% of a key's traffic ...
+VOL_GROWTH = 1.5      # ... unless the key's traffic itself jumped >= 1.5x its baseline (volumetric attack)
+VOL_EXPLAIN = 0.5     # and the flagged sessions explain >= 50% of that extra traffic
+SHARE_MIN_FLAGGED = 1000  # only judge key/day pairs with >= 1k flagged sessions
+
+
+def read_totals():
+    if not TOTALS.exists():
+        return {}
+    with TOTALS.open() as f:
+        return {(r["day"], r["public_key"]): int(r["sessions"]) for r in csv.DictReader(f)}
+
+
+def cmd_totals(a):
+    tot = read_totals()
+    n = 0
+    for chunk in filter(None, a.packed.strip().split(";")):
+        d, k, v = chunk.split(",")
+        tot[(d, k)] = int(v); n += 1
+    TOTALS.parent.mkdir(parents=True, exist_ok=True)
+    with TOTALS.open("w", newline="") as f:
+        w = csv.writer(f); w.writerow(["day", "public_key", "sessions"])
+        for (d, k), v in sorted(tot.items()):
+            w.writerow([d, k, v])
+    print("totals: %d key-days saved (%d in file)" % (n, len(tot)))
+
+
+def cmd_totals_keys(a):
+    """Keys that need 04_key_totals.sql for this window: every key with >= SHARE_MIN_FLAGGED flagged sessions on a window day."""
+    ws, we = dt.date.fromisoformat(a.win_start), dt.date.fromisoformat(a.win_end)
+    days = {str(ws + dt.timedelta(days=i)) for i in range((we - ws).days)}
+    keys = sorted({r["public_key"] for r in read_counts() if r["day"] in days and int(r["sessions"]) >= SHARE_MIN_FLAGGED})
+    pathlib.Path(a.out).write_text("\n".join(keys) + "\n")
+    have = read_totals()
+    bdays = [str(ws - dt.timedelta(days=i)) for i in range(1, 8)] + sorted(days)
+    missing = [k for k in keys if any((d, k) not in have for d in bdays)]
+    print("%d keys -> %s; %d lack totals for %s..%s" % (len(keys), a.out, len(missing), bdays[6], max(days)))
+
+
+def share_check(cid, win_start, win_end, counts=None, totals=None):
+    """Per key: how much of the key's whole traffic the combination flags, baseline vs window.
+    verdict: ok (<2% on every judged day), volumetric (>2% only on days where key traffic jumped and the flagged
+    sessions explain the jump), fp-risk (>2% of normal traffic, i.e. the signal fires on the key's ordinary users),
+    no-totals (key totals not pulled yet)."""
+    counts = counts if counts is not None else read_counts()
+    totals = totals if totals is not None else read_totals()
+    ws, we = dt.date.fromisoformat(win_start), dt.date.fromisoformat(win_end)
+    wdays = [str(ws + dt.timedelta(days=i)) for i in range((we - ws).days)]
+    bdays = [str(ws - dt.timedelta(days=i)) for i in range(7, 0, -1)]
+    fl = collections.defaultdict(dict)
+    for r in counts:
+        if r["combo_id"] == cid and (r["day"] in wdays or r["day"] in bdays):
+            fl[r["public_key"]][r["day"]] = (int(r["sessions"]), int(r.get("verified") or 0))
+    out = []
+    for k, byday in fl.items():
+        if max((byday.get(d, (0, 0))[0] for d in wdays), default=0) < SHARE_MIN_FLAGGED:
+            continue
+        bt = [totals[(d, k)] for d in bdays if (d, k) in totals]
+        bf = [byday.get(d, (0, 0))[0] for d in bdays if (d, k) in totals]
+        row = {"key": k, "verdict": "no-totals", "days": []}
+        if not bt or not all((d, k) in totals for d in wdays):
+            out.append(row); continue
+        # medians: one attack day in the baseline must not make the baseline look "normal at 30%"
+        med = lambda xs: sorted(xs)[len(xs) // 2] if len(xs) % 2 else sum(sorted(xs)[len(xs) // 2 - 1:len(xs) // 2 + 1]) / 2
+        bt_m, bf_m = med(bt), med(bf)
+        base_share = med([f / t for f, t in zip(bf, bt) if t])
+        row.update(base_total=bt_m, base_flagged=bf_m, base_share=base_share)
+        verdicts = []
+        for d in wdays:
+            f, v = byday.get(d, (0, 0)); t = totals[(d, k)]
+            sh = f / t if t else 0
+            vd = "ok"
+            if sh > SHARE_MAX and f >= SHARE_MIN_FLAGGED:
+                grew = t >= VOL_GROWTH * bt_m
+                explained = (t - bt_m) > 0 and (f - bf_m) >= VOL_EXPLAIN * (t - bt_m)
+                vd = "volumetric" if grew and explained else "fp-risk"
+            row["days"].append({"day": d, "flagged": f, "verified": v, "total": t, "share": sh, "verdict": vd})
+            verdicts.append(vd)
+        wf = sum(x["flagged"] for x in row["days"]); wt = sum(x["total"] for x in row["days"])
+        row.update(win_flagged=wf / len(wdays), win_total=wt / len(wdays), win_share=wf / wt if wt else 0,
+                   peak_share=max(x["share"] for x in row["days"]),
+                   win_verified=sum(x["verified"] for x in row["days"]) / wf if wf else 0)
+        if base_share > SHARE_MAX and bf_m >= SHARE_MIN_FLAGGED / 7:
+            row["verdict"], row["why"] = "fp-risk", "flags %.1f%% of the key's normal traffic (median baseline day)" % (100 * base_share)
+        elif "fp-risk" in verdicts:
+            row["verdict"], row["why"] = "fp-risk", ">2%% of traffic on %d window day(s) without a matching traffic jump" % verdicts.count("fp-risk")
+        elif "volumetric" in verdicts:
+            row["verdict"], row["why"] = "volumetric", ">2% only on day(s) when key traffic jumped and the flagged sessions explain the jump"
+        else:
+            row["verdict"], row["why"] = "ok", "<2% of key traffic on every day"
+        if row["verdict"] == "fp-risk":
+            row["why"] += "; %.0f%% of flagged sessions verify" % (100 * row["win_verified"]) + (
+                " - real users likely caught, review before pressure" if row["win_verified"] >= 0.5 else
+                " - mostly blocked already, so likely bot traffic on a high-bot key" if row["win_verified"] < 0.1 else "")
+        out.append(row)
+    rank = {"fp-risk": 0, "volumetric": 1, "no-totals": 2, "ok": 3}
+    out.sort(key=lambda r: (rank[r["verdict"]], -r.get("win_flagged", 0)))
+    return out
+
+
+VERDICT_LABEL = {"fp-risk": "FP risk", "volumetric": "volumetric attack", "ok": "OK", "no-totals": "no key totals"}
+SHARE_CSS = """
+.vd{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;font-weight:600;white-space:nowrap}
+.vd.fp-risk{background:#c62828;color:#fff}.vd.volumetric{background:#ef8a00;color:#fff}.vd.ok{background:#2e7d32;color:#fff}.vd.no-totals{background:var(--grid);color:var(--text-secondary)}
+table.share td,table.share th{font-size:12px}
+"""
+
+
+def cmd_share(a):
+    names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
+    counts, totals = read_counts(), read_totals()
+    for c in load_combos():
+        rows = share_check(c["id"], a.win_start, a.win_end, counts, totals)
+        print("== %s (%s)" % (c["id"], c["status"]))
+        for r in rows:
+            if r["verdict"] == "no-totals":
+                print("   %-11s %s" % ("no-totals", key_label(r["key"], names))); continue
+            print("   %-11s %-48s share base %5.1f%% win %5.1f%% peak %5.1f%%  traffic %s -> %s/day  flagged %s -> %s/day  verified %3.0f%%"
+                  % (r["verdict"], key_label(r["key"], names)[:48], 100 * r["base_share"], 100 * r["win_share"], 100 * r["peak_share"],
+                     fmt(r["base_total"]), fmt(r["win_total"]), fmt(r["base_flagged"]), fmt(r["win_flagged"]), 100 * r["win_verified"]))
+
+
+def share_badges(rows):
+    c = collections.Counter(r["verdict"] for r in rows)
+    if not rows:
+        return '<span class="muted">no key ≥1k/day</span>'
+    return " ".join('<span class="vd %s">%d %s</span>' % (v, c[v], VERDICT_LABEL[v]) for v in ("fp-risk", "volumetric", "ok", "no-totals") if c[v])
+
+
+def share_table(rows, names):
+    if not rows:
+        return ['<p class="muted">No key flagged ≥%s sessions on a window day.</p>' % fmt(SHARE_MIN_FLAGGED)]
+    pc = lambda x: "%.1f%%" % (100 * x) if x >= 0.001 else "<0.1%"
+    tr = []
+    for r in rows:
+        if r["verdict"] == "no-totals":
+            tr.append('<tr><td>%s</td><td colspan="6" class="muted">key totals not pulled (run 04_key_totals.sql)</td><td><span class="vd no-totals">no key totals</span></td></tr>' % html.escape(key_label(r["key"], names)))
+            continue
+        tr.append('<tr><td>%s</td><td class="n">%s → %s</td><td class="n">%s → %s</td><td class="n">%s</td><td class="n">%s</td><td class="n">%s</td><td class="n">%s</td><td><span class="vd %s">%s</span> <span class="muted">%s</span></td></tr>'
+                  % (html.escape(key_label(r["key"], names)), fmt(r["base_total"]), fmt(r["win_total"]), fmt(r["base_flagged"]), fmt(r["win_flagged"]),
+                     pc(r["base_share"]), pc(r["win_share"]), pc(r["peak_share"]), pc(r["win_verified"]), r["verdict"], VERDICT_LABEL[r["verdict"]], html.escape(r["why"])))
+    return ['<p class="muted">Rule: a signal should flag <b>under %d%%</b> of a key\'s total traffic. Above that it is marked <b>FP risk</b>, unless the key\'s traffic itself jumped ≥%.1f× its baseline that day and the flagged sessions explain ≥%d%% of the jump (<b>volumetric attack</b>: the attack is the extra traffic, so a high share is expected). A signal that already flags >%d%% of the key\'s <i>baseline</i> traffic is FP risk regardless. Per day, key/day pairs with ≥%s flagged.</p>'
+            % (100 * SHARE_MAX, VOL_GROWTH, 100 * VOL_EXPLAIN, 100 * SHARE_MAX, fmt(SHARE_MIN_FLAGGED)),
+            '<div class="scroll"><table class="share"><tr><th>Key</th><th class="n">Key traffic/day<br>base → window</th><th class="n">Flagged/day<br>base → window</th><th class="n">Share base</th><th class="n">Share window</th><th class="n">Peak day</th><th class="n">Verified of flagged</th><th>Verdict</th></tr>%s</table></div>' % "".join(tr)]
+
+
 SOC_CSS = """
 .newflag{background:#fff1c2;color:#4a3700;border:1px solid #d9a800;border-radius:4px;padding:1px 5px;display:inline-block;margin:2px 0}
 .newflag.fresh{background:#ffd54a;border-color:#a77d00;font-weight:600}.card.todo{border:2px solid #d9a800}
@@ -807,6 +955,8 @@ def cmd_soc(a):
     save_recurrence_json(recur, today)
     combos.sort(key=lambda c: ACTION_ORDER[_akind(c.get("action", "hold"))])
     sections, srows = [], []
+    counts_all, totals_all = read_counts(), read_totals()
+    shares = {c["id"]: share_check(c["id"], a.win_start, a.win_end, counts_all, totals_all) for c in combos}
     for ci, c in enumerate(combos):
         title = c.get("telltale_name") or c["id"]
         anchor = "tt-%s" % c["id"]
@@ -816,8 +966,8 @@ def cmd_soc(a):
                                           extra_keys=[r["key"] for r in krows if r["kind"] != "none"])
         rec = [r for r in krows if r["kind"] == "recurring"]
         ongoing = [k for k, v in status.items() if v[0] == "ongoing"]
-        srows.append('<tr><td><a href="#%s">%s</a></td><td>%s</td><td><span class="pill %s">%s</span></td><td class="n">%d</td><td class="n">%d / %d</td><td>%s</td></tr>'
-                     % (anchor, html.escape(title), c["status"], ak, html.escape(c.get("action", "")), nkeys, len(rec), len(krows),
+        srows.append('<tr><td><a href="#%s">%s</a></td><td>%s</td><td><span class="pill %s">%s</span></td><td class="n">%d</td><td class="n">%d / %d</td><td>%s</td><td>%s</td></tr>'
+                     % (anchor, html.escape(title), c["status"], ak, html.escape(c.get("action", "")), nkeys, len(rec), len(krows), share_badges(shares[c["id"]]),
                         html.escape(", ".join(key_label(k, names) for k in ongoing)) or '<span class="muted">none</span>'))
         defn = tt_definition(c)
         meta = None
@@ -837,6 +987,8 @@ def cmd_soc(a):
                        % (("Definition" if c.get("dataswan_id") else "Draft",) + tuple(html.escape(str(meta.get(k, "–"))) for k in ("location", "telltale_type", "cohort_category", "ticket", "_validated")) + (where,)))
         sec.append('<details%s><summary>Telltale definition JSON</summary><pre>%s</pre></details>'
                    % ("" if c["status"] == "live" else " open", html.escape(json.dumps(defn, indent=2))))
+        sec.append('<h3 class="sec">Share of key traffic — false-positive check (window %s → %s vs 7-day baseline)</h3>' % (ws, we - dt.timedelta(days=1)))
+        sec += share_table(shares[c["id"]], names)
         sec.append('<h3 class="sec">Does it come back? Daily bursts per key, %s → %s</h3>' % (rdays[0], today))
         sec.append('<p class="muted">%d of %d keys had ≥2 separate bursts, %d episodes in total. %s</p>'
                    % (len(rec), len(krows), sum(r["n_episodes"] for r in krows), RECUR_INTRO % (fmt(ACTIVE_MIN), SPIKE_X, fmt(ACTIVE_MIN))))
@@ -847,26 +999,26 @@ def cmd_soc(a):
         sections.append("\n".join(sec))
     gen = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     head = ['<!doctype html><html><head><meta charset="utf-8"><title>Spike scan — SOC action pack %s</title><style>%s%s%s%s</style></head><body><div class="viz-root">'
-            % (today, css(), PERKEY_CSS, RECUR_CSS, SOC_CSS),
+            % (today, css(), PERKEY_CSS, RECUR_CSS, SOC_CSS + SHARE_CSS),
             "<h1>Spike scan — telltale action pack</h1>",
             '<p class="muted">Generated %s. Scan window <b>%s → %s</b> vs 7-day baseline; history back to <b>%s</b> for recurrence; today (%s) so far from hourly data. '
             'Exact session counts from <code>ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY</code> (Production keys). '
             '<b>Created</b> = sessions carrying the signal combination; <b>verified</b> = of those, sessions that ended verified — a wide gap means it is being stopped, '
             'lines on top of each other mean it is getting through.</p>' % (gen, ws, we - dt.timedelta(days=1), rdays[0], today),
             '<div class="card"><h2 style="margin-top:0">What to do</h2><table class="toc"><tr><th>Telltale</th><th>Status</th><th>Action</th><th class="n">Keys charted</th>'
-            '<th class="n">Recurring keys</th><th>Ongoing now (last 24h ≥3× baseline)</th></tr>%s</table></div>' % "".join(srows)]
+            '<th class="n">Recurring keys</th><th>Share of key traffic (&lt;2%% rule)</th><th>Ongoing now (last 24h ≥3× baseline)</th></tr>%s</table></div>' % "".join(srows)]
     todo = [c for c in combos if c["status"] != "live"]
     if todo:
         live_flags = {f for c in combos if c["status"] == "live" for f in c["flags"]}
-        rows_ = "".join('<tr><td><a href="#tt-%s">%s</a></td><td>%s</td><td><span class="pill %s">%s</span></td><td>%s</td></tr>'
+        rows_ = "".join('<tr><td><a href="#tt-%s">%s</a></td><td>%s</td><td><span class="pill %s">%s</span></td><td>%s</td><td>%s</td></tr>'
                         % (c["id"], html.escape(c.get("telltale_name") or c["id"]),
                            "".join('<code class="newflag%s">%s</code> ' % ("" if f in live_flags else " fresh", html.escape(f)) for f in c["flags"]),
-                           _akind(c.get("action", "hold")), html.escape(c.get("action", "")), html.escape(c.get("action_detail", "")[:260] + ("…" if len(c.get("action_detail", "")) > 260 else "")))
+                           _akind(c.get("action", "hold")), html.escape(c.get("action", "")), html.escape(c.get("action_detail", "")[:260] + ("…" if len(c.get("action_detail", "")) > 260 else "")), share_badges(shares[c["id"]]))
                         for c in todo)
         head.insert(3, '<div class="card todo"><h2 style="margin-top:0">New signals — not created in Dataswan yet</h2>'
                     '<p class="muted">Highlighted flags make up each proposed telltale. <code class="newflag fresh">Darker</code> = a flag that no live telltale here uses yet; '
                     '<code class="newflag">lighter</code> = already part of a live combination. Full definition, recurrence and per-key charts are in each section below.</p>'
-                    '<table><tr><th>Proposed telltale</th><th>Suspicion flags (all must be present)</th><th>Action</th><th>Why</th></tr>%s</table></div>' % rows_)
+                    '<table><tr><th>Proposed telltale</th><th>Suspicion flags (all must be present)</th><th>Action</th><th>Why</th><th>Share of key traffic</th></tr>%s</table></div>' % rows_)
     if a.summary:
         sm = json.loads(pathlib.Path(a.summary).read_text())
         head.insert(3, '<div class="card"><h2 style="margin-top:0">%s</h2>%s</div>' % (html.escape(sm["title"]), "".join(
@@ -893,6 +1045,9 @@ def main():
     i.add_argument("--add", action="store_true", help="sum into the day's existing rows (second 12h half)")
     i.add_argument("--chart", action="store_true", help="store in data/chart_key_counts.csv (query rendered with --keys)")
     i.add_argument("--combos", help="combos file the query was rendered with (a subset of combos.json: only those combos' rows are replaced)")
+    t = sp.add_parser("totals", help="save 04_key_totals.sql output (all sessions per key per day)"); t.add_argument("--packed", required=True)
+    tk = sp.add_parser("totals-keys", help="write the key list 04_key_totals.sql needs for this window"); tk.add_argument("--win-start", required=True); tk.add_argument("--win-end", required=True); tk.add_argument("--out", required=True)
+    sk = sp.add_parser("share", help="print the share-of-key-traffic check per combo"); sk.add_argument("--win-start", required=True); sk.add_argument("--win-end", required=True)
     k = sp.add_parser("keys"); k.add_argument("--names", required=True)
     m = sp.add_parser("missing"); m.add_argument("--since", required=True)
     r = sp.add_parser("report"); r.add_argument("--win-start", required=True); r.add_argument("--win-end", required=True); r.add_argument("--discovery")
@@ -908,7 +1063,7 @@ def main():
     so.add_argument("--chart-start", help="first day of the per-key daily charts (default: 7 days before --win-start)")
     so.add_argument("--summary", help="JSON {title, sections: [{h, items: [text]}]} shown as a card above the action table")
     a = p.parse_args()
-    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc}[a.cmd](a)
+    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc, "totals": cmd_totals, "totals-keys": cmd_totals_keys, "share": cmd_share}[a.cmd](a)
 
 
 if __name__ == "__main__":
