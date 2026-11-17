@@ -375,3 +375,38 @@ Takeaways:
 4. **Keep all of these scoped to the Hotmail family.** The same templates are common in legitimate traffic on other free-mail domains.
 
 Queries: `queries/blizzard_hotmail_handle_pattern.sql`.
+
+### 12.6 Pattern-velocity fields with the datacenter flags
+
+**The fields:**
+- `email__short_term__handle_pattern_count` (hpc): requests on the key with the same handle pattern in the last 6h.
+- `email__handle_pattern_relative_usage_factor` (ruf): short-term usage of the pattern relative to its long-term usage. The data dictionary text describes domain usage, which looks copy-pasted. The observed values are centred near 1: on 4 Nov 00–06, verified non-truth Hotmail has median 1.4 and p90 4.1, against truth median 3.1, p75 19 and p90 128.
+- 2d `g-ip-datacenter` and 2f `g-ip-datacenter-with-fingerprint` were identical on every Hotmail session tested.
+
+**Tests**, Hotmail only unless noted, 6h windows (truth / verified, not truth / unverified, not truth):
+
+| Rule | 4 Nov 00 (F1 wave) | 5 Nov 12 (F2 wave) | 7 Nov 12 (quiet) | 9 Nov 12 |
+|---|---|---|---|---|
+| Hotmail truth in window | 1,408 | 1,885 | 757 | 1,578 |
+| ruf ≥ 5 | 473 / 98 / 161 | 90 / 345 / 426 | 17 / 230 / 2,661 | 42 / 158 / 189 |
+| **ruf ≥ 10 AND hpc ≥ 20** | **350 / 28 / 57** | 20 / 34 / 154 | 3 / 33 / **1,630** | 0 / 1 / 43 |
+| same rule, all domains | 350 / 28 / 57 | 21 / 34 / 155 | 3 / 33 / 1,630 | 0 / 3 / 43 |
+| datacenter (2d = 2f) | 20 / 49 / 90 | 29 / 84 / 44 | **124 / 37 / 213** | 24 / 45 / 43 |
+| datacenter AND ruf ≥ 3 | 4 / 10 / 4 | 1 / 33 / 13 | 8 / 11 / 97 | 2 / 17 / 26 |
+
+**Reading:**
+- **Burst rule (ruf ≥ 10 AND hpc ≥ 20):**
+  - Precision 93% among verified sessions in the F1 wave. It catches 25% of that window's Hotmail truth.
+  - It adds at most about 34 verified non-truth per 6h.
+  - On quiet 7 Nov it fired on 1,630 unverified sessions, a burst that was already mitigated (so not in truth). That is consistent with it marking attack traffic.
+  - It did **not** catch the F2 (8–10 digit) or 9 Nov (letters-only) templates. Those patterns are already common, so their ratio never spikes.
+  - All-domain numbers equal Hotmail-only ones, so these bursts live on Hotmail.
+- **Datacenter is a separate sub-campaign.**
+  - It overlaps almost nothing with the burst rule (1–8 truth sessions per window).
+  - Precision is 77% on 7 Nov 12, but only 26–33% on other windows.
+- **Use them as OR'd signals, not AND'd.** Datacenter AND burst is near-empty.
+
+**Suggested TTs (start at risk 0):**
+1. `TT-hotmail-pattern-burst`: Hotmail family AND ruf ≥ 10 AND hpc ≥ 20. It is high-precision but only catches waves whose template is new.
+2. `TT-hotmail-datacenter`: Hotmail family AND `g-ip-datacenter-with-fingerprint` AND dict ≥ 7. Treat it as a contributor, not a blocker, because 2d/2f are Group B context flags per the SOC guide. Dict ≥ 7 is untested here and should be validated.
+3. Score the two TTs additively with the LONG handle-shape rule from 12.4. Each one covers a different slice of the attack.
