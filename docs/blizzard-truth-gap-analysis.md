@@ -595,3 +595,20 @@ Both are in `telltales/blizzard2-freemail-tts.json`. The domain regex is `/^(qq|
 Combined, they cover about 60% of qq truth at about 50% verified precision, roughly 30 verified non-truth per 6h.
 
 **Note for the Hotmail TTs:** their domain regex has no `i` flag. If `email__raw_email_domain` is not lower-cased upstream, add `/i`.
+
+### 13.4 qq TTs on November traffic (6h windows; November truth is partial)
+
+Each cell is truth / verified not truth / unverified not truth.
+
+| Window | qq truth | qq verified, not truth | TT1 Brave-spoof | TT2 Client-hints + captchaai |
+|---|---:|---:|---|---|
+| 5 Nov 06 | 15 | 278 | 0 / 4 / 0 | 5 / 26 / 0 |
+| 9 Nov 06 | 14 | 171 | 1 / 0 / 0 | 6 / 11 / 0 |
+| 12 Nov 06 | 5 | 158 | 0 / 0 / 10 | 1 / 28 / 1 |
+| 16 Nov 06 | 0 (truth not in) | 159 | 0 / 4 / 0 | 0 / 23 / 2 |
+
+**Reading:**
+- qq volume and qq truth are far below September.
+- **TT1 (Brave-spoof):** the Brave-spoof wave is absent. TT1 is almost silent, which is good: it costs almost nothing while it waits. On 12 Nov it fired on 10 unverified sessions, which were already mitigated.
+- **TT2 (client-hints + captchaai):** caught 12 truth against 88 verified non-truth over the four windows, about 12% on partial truth. It has a standing cost of about 25 verified per 6h whether or not an attack is running.
+- **Recommendation:** score TT1. Keep TT2 at risk 0 until it can be re-checked on complete November truth.
