@@ -281,3 +281,78 @@ Rules from [Detection Idea: Cross-Platform Device Identity Signal](https://arkos
 - **Chinese domains (qq, 163, 126, sina) are low volume but 5–6× Gmail's fraud rate.** None match the Hotmail profile, and 4 of qq's 11 truth sessions had no telltale. Too few in one window to build a rule.
 - **Spoofing flags** (device-parameter, client-hints platform, `efp-bad-fos`, OS spoofing, SwiftShader, headless VM, webdriver): on Hotmail, 317 sessions, 49 truth (15%), 102 verified and not in truth. On "other", 575 sessions with 7 verified, so already stopped.
 - **SDV:** the gate (ratio ≥ 1) is mostly no-email API traffic that is already stopped (521 sessions, 23 verified). On Hotmail it is 145 sessions at 14% fraud. Volume is small, consistent with the SDV page (ratio ≥ 4 catches 3.4% of Blizzard truth).
+
+## 12. Hotmail/Outlook attack, week of 4–10 Nov 2026 (Registration K2)
+
+Method: 12h chunks on Athena, `session_setup` for flags and email fields. Verified means `verified` true at `game_verify`. Domain is `email__raw_email_domain` matching hotmail/outlook/live/msn. Chunks for 4–7 Nov are complete. For 9 Nov 12–24 UTC only the pattern ranking and the long-handle rule were run. 8 Nov is missing because the full-day queries timed out and weren't rerun in 12h halves. Truth for 10 Nov is still sparse (856 sessions against 2.5–5k on other days), so it isn't used.
+
+### 12.1 Scale (4–7 Nov, 8 chunks)
+
+| | Sessions |
+|---|---:|
+| Created on the key | 432,440 |
+| Truth (Nonlegit) | 15,283 |
+| Hotmail-family created | 115,601 |
+| Hotmail-family truth | **11,858 (78% of all truth)** |
+
+### 12.2 Do the names look legitimate? Yes, by design
+
+`email__handle_pattern` is a 10-digit code: `LL AA DD SS 00`, giving length, letters, digits and specials. Separators such as `.` and `_` are not counted, so `first.last99` and `firstlast99` share a code.
+
+- **80% of Hotmail truth has `di_dictionary_num_matched` ≥ 7** (9,520 / 11,858). The handles are built from dictionary words or real first and last names, not random strings.
+- The attacker rotates a **handle template per wave**. Each template is a distinctive code, and it disappears again within hours:
+
+| Wave | Template (handle_pattern) | Example shape | Truth caught | Verified, not truth | Unverified, not truth |
+|---|---|---|---:|---:|---:|
+| F1: 4 Nov 00–12 UTC | 15–24 letters + **exactly 1 digit** (`1918010000`, `2019010000`, `1817010000`, …) | `aaaaaaaaaaaaaaaaaa9` | 812 (47% of Hotmail truth in that chunk) | 23 | 161 |
+| F2: 4 Nov 12 – 6 Nov 12 UTC | 5+ letters + **8–10 digits** (`1707100000`, `2012080000`, `2214080000`, …) | `aaaaaaa9999999999` | 933 | 250 | 417 |
+| 9 Nov | 15–20 letters, **0 digits** (`1515000000` … `2020000000`), plus letters + 4 digits | `aaaaaaaaaaaaaaaaa` | see §12.4 | | |
+
+Over 4–7 Nov, F1 plus F2 on Hotmail caught **1,833 truth sessions against 473 verified non-truth, which is 79% precision among verified sessions**. Outside its own wave each template catches almost nothing: from 6 Nov 12 UTC to 7 Nov, F1+F2 combined caught 6 truth sessions. A static template rule is therefore only good for the wave it was built on.
+
+Restricting to Hotmail matters. The F2 template on all domains carries 1,430 verified non-truth against 973 truth.
+
+### 12.3 IP Intelligence Phase 1 flags (live, risk 0)
+
+Hotmail truth, 4–7 Nov (11,858 sessions):
+
+| Flag | Truth hits | Note |
+|---|---:|---|
+| 2d `g-ip-datacenter` | 618 (5.2%) | always co-fires with 2f |
+| 2f `g-ip-datacenter-with-fingerprint` | 618 (5.2%) | Group B, context only |
+| Group A/C abuse flags (2a/2b/2c/2e/2i/4/4b/5) | **20** | 331 hits on non-truth Hotmail traffic, so they don't separate this attack |
+| 2j/2l no-IP-data | 0 | |
+| Residential proxy (`g-ip-residential-proxy-*`) | 2,379 (20%) | |
+| `never-seen-before-fp-no-pressure` | 3,417 (29%) | |
+
+The attack runs mostly on residential or clean IPs. Datacenter is a minority (about 5%), and the new abuse flags are effectively absent.
+
+### 12.4 Combinations tested
+
+Each row is one 12h chunk. "Verified, not truth" is the FP-risk population.
+
+| Rule (Hotmail only) | Chunk | Truth | Verified, not truth | Unverified, not truth |
+|---|---|---:|---:|---:|
+| `never-seen-before-fp-no-pressure` AND dict ≥ 7 | 4 Nov 00 | 182 | 985 | 2,894 |
+| (same) | 5 Nov 00 | 769 | 1,584 | 2,767 |
+| residential proxy AND dict ≥ 7 (not nsb / F1 / F2) | week (4–7 Nov) | 865 | 1,842 | 2,348 |
+| **LONG:** letters ≥ 15 AND digits ∈ {0, 1, ≥ 8} AND no specials | 5 Nov 12 | 482 | 345 | 789 |
+| LONG | 7 Nov 12 (quiet) | 105 | 221 | 2,044 |
+| LONG | 9 Nov 12 | 522 | 131 | 275 |
+| LONG AND dict ≥ 7 | 9 Nov 12 | 502 | 113 | 256 |
+| LONG AND dict ≥ 7 AND (rp OR nsb OR datacenter) | 9 Nov 12 | 73 | 39 | 127 |
+| LONG AND dict ≥ 7, **all domains** | 9 Nov 12 | 515 | 1,878 | 362 |
+
+Takeaways:
+- Fingerprint- and IP-based conditions are too noisy on Hotmail. They hit 2–3× more verified non-truth than truth.
+- The handle-shape signal is the strongest field on this attack. As a static rule (LONG) it catches 31% of Hotmail truth at 80% verified precision in an active wave. It falls to about 32% precision on a quiet half-day.
+- Adding device or IP flags to LONG removes most of its recall.
+
+### 12.5 Recommendation
+
+1. **Custom TT, wave-adaptive (preferred):** Hotmail-family domain AND `email__handle_pattern` ∈ a *hot-pattern list*. The list holds patterns whose Registration-K2 share in the last 1–6h is far above a trailing 7-day baseline, for example ≥ 5× and ≥ 30 sessions per hour. This catches F1, F2 and the 9 Nov template without hand-tuning each wave. `email__short_term__handle_pattern_count` may already provide the velocity part. It was not validated here, so check it against the baseline before relying on it.
+2. **Static fallback TT (monitor, then mitigate):** Hotmail-family AND letters ≥ 15 AND digits ∈ {0, 1, ≥ 8} AND specials = 0 AND dict ≥ 7. That is about 370–870 sessions per 12h (about 1% of created), 31% of Hotmail truth in an active wave, and 30–80% verified precision depending on wave. Run it at risk 0 for a week before scoring.
+3. **Don't build on the IP Phase 1 abuse flags for this attack** (20 truth hits in 4 days). Keep 2d/2f as context only, as the SOC guide says.
+4. **Don't scope any of these to all free-mail domains.** The same templates are common in legitimate Gmail and other traffic.
+
+Queries: `queries/blizzard_hotmail_handle_pattern.sql`.
