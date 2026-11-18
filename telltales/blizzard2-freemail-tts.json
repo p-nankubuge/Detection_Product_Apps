@@ -141,7 +141,7 @@
         {
           "operator": "TS_REGEX",
           "key": "email__raw_email_domain",
-          "value": "/^(qq|vip\\.qq|foxmail)\\.com$/i",
+          "value": "/^(qq|vip\\.qq|foxmail)\\.com/",
           "type": "string"
         },
         {
@@ -189,7 +189,7 @@
         {
           "operator": "TS_REGEX",
           "key": "email__raw_email_domain",
-          "value": "/^(qq|vip\\.qq|foxmail)\\.com$/i",
+          "value": "/^(qq|vip\\.qq|foxmail)\\.com/",
           "type": "string"
         },
         {
@@ -216,6 +216,39 @@
         {
           "operator": "#INCLUDE",
           "value": "captchaai-possible-broad-23083102"
+        }
+      ]
+    },
+    {
+      "telltale_name": "blizzard2-h-qq-alpha-handle",
+      "telltale_type": "suspicion_flags",
+      "risk_score": 0,
+      "location": "SESSION_SETUP",
+      "telltale_description": "qq/foxmail registration whose handle is not a numeric QQ number. Aug-Sep truth: 71% of qq truth at 45% verified precision (base 18%).",
+      "telltale_definition": [
+        {
+          "operator": "TS_EQ",
+          "key": "public_key",
+          "value": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "location",
+          "value": "session_setup",
+          "type": "string"
+        },
+        {
+          "operator": "TS_REGEX",
+          "key": "email__raw_email_domain",
+          "value": "/^(qq|vip\\.qq|foxmail)\\.com/",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "email__is_numeric_email_handle",
+          "value": false,
+          "type": "boolean"
         }
       ]
     }

@@ -633,3 +633,17 @@ qq base rate among verified is 13.4%.
 - **TT1 (Brave-spoof):** caught 5 of 318 truth (1.6%) at 14% verified precision. The 63–82% precision measured in-sample came from two wave windows (1 Sep 06 and 16 Sep 00) and does not carry over to ordinary days. It does fire during attacks: 59 and 35 unverified non-truth on 20 and 28 Aug. Those sessions failed the challenge and so never reach truth, which means it adds little on top of existing enforcement. **Keep at risk 0 as a wave detector; do not score high.**
 - **TT2 (client-hints + captchaai):** caught 62 of 318 truth (19.5%) at 21% verified precision, about 1.6× lift. Its standing cost is about 33 verified non-truth per 6h, consistent with November (about 25). This is too weak to score alone. **Keep at risk 0, or use it only as one input to a combined score.**
 - **About 80% of qq truth carries neither flag set.** The qq fraud seen in Sept in-sample is mostly not separable with these suspicion flags. A next step would be email-handle features (pattern/volume, as done for Hotmail) on the qq family.
+
+### 13.6 qq handle type and domain baseline (Aug-Sep truth, 4 x 6h windows, 247 qq truth, base rate 18%)
+
+| Rule (qq family) | Truth caught | Verified not truth | Precision |
+|---|---:|---:|---:|
+| `email__domain_relative_usage_factor` >= 1.5 | 70 (28%) | 401 | 15% |
+| Letter handle AND domain usage factor >= 1.5 | 36 | 73 | 33% |
+| **Letter handle (`email__is_numeric_email_handle` = false)** | **175 (71%)** | 214 | **45%** |
+| Letter handle AND handle-pattern usage factor >= 2 | 128 (52%) | 172 | 43% |
+| Letter handle AND length <= 8 | 83 | 83 | 50% (mostly the 28 Aug wave) |
+
+- Domain usage factor is one value per domain at a point in time, so it cannot separate sessions; rises in qq volume are mostly legitimate numeric-handle users. Use it at most as a wave alert.
+- Legitimate qq users mostly register with their numeric QQ number; fraud mostly uses letter handles. New TT `blizzard2-h-qq-alpha-handle` (risk 0) in `telltales/blizzard2-freemail-tts.json`.
+- The two existing qq TTs had their domain regex changed to `/^(qq|vip\.qq|foxmail)\.com/` on 18 Nov after firing zero times with `$` and `/i`.
