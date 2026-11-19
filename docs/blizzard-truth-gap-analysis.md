@@ -660,3 +660,20 @@ qq base rate among verified is 13.4%.
 | 040 stale Chrome UA on current Chrome QUIC JA4 | 0 (attack not on HTTP/3 yet) | 0 | 0 |
 
 On 17 Nov 10-16 UTC rule 040 matched 1,116 Hotmail sessions (839 verified, including 365 of the burst flag's 533 verified) and no Gmail. Two new Hotmail TTs (risk 0) in `telltales/blizzard2-freemail-tts.json`: `blizzard2-h-hotmail-stale-chrome-quic-ja4` (040 scoped to Hotmail) and `blizzard2-h-hotmail-http2`. Nothing above reached 5 qq truth sessions.
+
+### 13.8 Dimitri Klimenko's label-store scoring of the free-email TTs (Aug 1 - Nov 16, before go-live)
+
+Source: Confluence "Blizzard ROW Registration Key 2: answers to Patricia's questions". Precision = SUM(p_bad)/hits over all hits (verified or not), so not directly comparable with the truth-based figures above.
+
+| TT | Hits | Precision | Note |
+|---|---:|---:|---|
+| hotmail-patternvolume | 278k | 0.92 | 90% already in his primaries; adds ~2.4k attack |
+| hotmail-handle-pattern-burst | 46k | 0.93 | subset of patternvolume |
+| hotmail-long-handle-dict | 49k | 0.55 | 0.04 in September; 44% in residual |
+| qq-clienthints-captchaai | 11.8k | 0.03 | 74% CN Steam In-Game Overlay (human-looking) |
+| qq-brave-spoof | 6.6k | 0.75 | 0.93 Aug -> 0.08 Nov |
+| qq-alpha-handle (planned) | 339k | 0.95 | 306k is the August rig wave; 0.62 / 0.79 / 0.14 Sep / Oct / Nov: wave detector only |
+
+- Rule 040 (17 Nov): 1,128 sessions, 1,123 outlook.com, Turkish residential IPs, Chrome 117-131 UA on Chrome 152+ TLS; FP <= ~2%. Verified 0 of 165 on hexogen. Do not roll its cut-off; add a sibling for Chrome 145-151 UAs (2.4k sessions, FP <= ~1.4%). The solver stacks (034/035/037/040) are mostly on sessions with no email, so a Hotmail-scoped 040 covers only part of it.
+- Invalid-TLD: 32.8k sessions, 91% big-provider typos, 0.2% match a primary, 19% come back corrected within the hour; ~7.5k people.
+- Labels: Snowflake query `2026-11-19-patricia-labels-view.sql` in ai-traffic-filter recomputes labels from EVENTS_LOG. Hard labels: bad >= 0.9, legit <= 0.1. Use the 20% hold-out against Blizzard truth.
