@@ -647,3 +647,16 @@ qq base rate among verified is 13.4%.
 - Domain usage factor is one value per domain at a point in time, so it cannot separate sessions; rises in qq volume are mostly legitimate numeric-handle users. Use it at most as a wave alert.
 - Legitimate qq users mostly register with their numeric QQ number; fraud mostly uses letter handles. New TT `blizzard2-h-qq-alpha-handle` (risk 0) in `telltales/blizzard2-freemail-tts.json`.
 - The two existing qq TTs had their domain regex changed to `/^(qq|vip\.qq|foxmail)\.com/` on 18 Nov after firing zero times with `$` and `/i`.
+
+### 13.7 Signals from Dimitri Klimenko's Key 2 report, scored on free email (12 Nov 06-12 UTC truth)
+
+| Rule | Hotmail truth | Hotmail verified not truth | Gmail truth / verified not truth |
+|---|---:|---:|---:|
+| HTTP/2 (any) | 1,985 of 2,000 | 401 | 6 / 1,048 |
+| 101 HTTP/2 + Chrome <= 154 | 323 | 87 | 0 / 24 |
+| 102 HTTP/2 + 4 GB device memory | 71 | 31 | 0 / 61 |
+| 005 no pointer device, Chrome | 20 | 47 | - |
+| 002 4 GB + 12+ cores (multiple of 4) | 11 | 16 | - |
+| 040 stale Chrome UA on current Chrome QUIC JA4 | 0 (attack not on HTTP/3 yet) | 0 | 0 |
+
+On 17 Nov 10-16 UTC rule 040 matched 1,116 Hotmail sessions (839 verified, including 365 of the burst flag's 533 verified) and no Gmail. Two new Hotmail TTs (risk 0) in `telltales/blizzard2-freemail-tts.json`: `blizzard2-h-hotmail-stale-chrome-quic-ja4` (040 scoped to Hotmail) and `blizzard2-h-hotmail-http2`. Nothing above reached 5 qq truth sessions.

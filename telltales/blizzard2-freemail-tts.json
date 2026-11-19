@@ -251,6 +251,84 @@
           "type": "boolean"
         }
       ]
+    },
+    {
+      "telltale_name": "blizzard2-h-hotmail-stale-chrome-quic-ja4",
+      "telltale_type": "suspicion_flags",
+      "risk_score": 0,
+      "location": "SESSION_SETUP",
+      "telltale_description": "Hotmail-family registration claiming Chrome < 145 over the current Chrome HTTP/3 JA4 (UA spoof). Dimitri Klimenko's rule 040, scoped to Hotmail. 17 Nov 10-16 UTC: 1,116 Hotmail sessions, 839 verified; 0 Gmail. Version cut-off must be moved forward as Chrome releases.",
+      "telltale_definition": [
+        {
+          "operator": "TS_EQ",
+          "key": "public_key",
+          "value": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "location",
+          "value": "session_setup",
+          "type": "string"
+        },
+        {
+          "operator": "TS_REGEX",
+          "key": "email__raw_email_domain",
+          "value": "/^(hotmail|outlook|live|msn)\\./",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "browser_name",
+          "value": "Chrome",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "cdn__ja4_hash",
+          "value": "q13d0312h3_55b375c5d22e_178839b6cec1",
+          "type": "string"
+        },
+        {
+          "operator": "TS_REGEX",
+          "key": "browser_version",
+          "value": "/^([0-9]{1,2}|1[0-3][0-9]|14[0-4])\\./",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "telltale_name": "blizzard2-h-hotmail-http2",
+      "telltale_type": "suspicion_flags",
+      "risk_score": 0,
+      "location": "SESSION_SETUP",
+      "telltale_description": "Hotmail-family registration over HTTP/2. 12 Nov 06-12 UTC: 1,985 of 2,000 Hotmail truth sessions, 401 verified non-truth (Gmail HTTP/2: 6 truth vs 1,048). Score contributor / combiner only.",
+      "telltale_definition": [
+        {
+          "operator": "TS_EQ",
+          "key": "public_key",
+          "value": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "location",
+          "value": "session_setup",
+          "type": "string"
+        },
+        {
+          "operator": "TS_REGEX",
+          "key": "email__raw_email_domain",
+          "value": "/^(hotmail|outlook|live|msn)\\./",
+          "type": "string"
+        },
+        {
+          "operator": "TS_EQ",
+          "key": "cdn__http_version",
+          "value": "2.0",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
