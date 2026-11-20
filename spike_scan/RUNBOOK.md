@@ -134,7 +134,8 @@ Work from the repo root, `cd spike_scan`.
    The SOC pack shows the badges in "What to do" and the candidates card, and a full table per combination. Mention every
    FP-risk pair with >=30% verified in the summary, and never recommend pressure on a key where the signal is FP risk without saying so.
 7d. **Traffic drops (from 2026-11-20).** Runs over ALL Production keys, independent of the combos:
-   `python3 render.py sql/06_key_volume_drops.sql --win-start <D-4> --win-end <D> --recent-end "<D> <last complete hour HH>"` -> `execute_sql`
+   `python3 render.py sql/06_key_volume_drops.sql --win-start <D-4> --win-end <D> --recent-end "<D> <HH>"` with HH = the last complete hour MINUS ONE (the newest hour is still loading:
+   on 2026-11-20 the 02-03h hour showed Amazon IDS and gtop100 at 5-35% of normal at 03:10) -> `execute_sql`
    (~25s) -> `python3 spike_report.py drops --run <D> --packed '<cell>'` (-> `data/key_drops.csv`). Flags a key when a window day is below
    40% of its median baseline day (>=5k/day), or the last 6 complete hours / the last complete hour are below 40% of the same hours on the
    7 previous days. These are outages / integration or key-config changes, not attacks: the SOC pack lists them in a "Traffic drops" card

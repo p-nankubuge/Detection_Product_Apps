@@ -55,7 +55,9 @@ fam_raw AS (
 fam_b AS (
   SELECT ja4, CASE WHEN br ILIKE '%ios%' OR br ILIKE '%safari%' THEN 'webkit'
                    WHEN br ILIKE '%firefox%' THEN 'firefox'
-                   WHEN br ILIKE ANY ('%chrom%', '%edge%', '%opera%', '%samsung%', '%brave%', '%yandex%', '%vivaldi%') THEN 'chromium'
+                   WHEN br ILIKE ANY ('%chrom%', '%edge%', '%opera%', '%samsung%', '%brave%', '%yandex%', '%vivaldi%', '%whale%', '%baidu%', '%spark%',
+                                      '%qq%', '%uc browser%', '%360%', '%sogou%', '%maxthon%', '%coc coc%', '%silk%', '%avast%', '%avg%',
+                                      '%duckduckgo%', '%huawei%', '%miui%', '%vivo%', '%oppo%', '%headless%') THEN 'chromium'
                    ELSE br END AS br,
          COUNT(*) AS n
   FROM fam_raw GROUP BY 1, 2

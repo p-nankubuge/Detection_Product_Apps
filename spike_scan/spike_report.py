@@ -963,6 +963,10 @@ def drops_card(run, names):
 
 
 # ---- claimed UA vs JA4 ------------------------------------------------------------------------------
+CHROMIUM_NAMES = ("chrom", "edge", "opera", "samsung", "brave", "yandex", "vivaldi", "whale", "baidu", "spark", "qq", "uc browser",
+                  "360", "sogou", "maxthon", "coc coc", "silk", "avast", "avg", "duckduckgo", "huawei", "miui", "vivo", "oppo", "headless")
+
+
 def _family(b):
     """Same buckets as 07_ua_ja4_profile.sql: chromium / webkit (all iOS browsers and Safari) / firefox / other."""
     b = (b or "").strip().lower()
@@ -970,7 +974,7 @@ def _family(b):
         return "webkit"
     if "firefox" in b:
         return "firefox"
-    if any(x in b for x in ("chrom", "edge", "opera", "samsung", "brave", "yandex", "vivaldi")):
+    if any(x in b for x in CHROMIUM_NAMES):
         return "chromium"
     return b or "?"
 
@@ -995,11 +999,13 @@ def uaja4_notes(r):
     br = r["claim"].rsplit(" ", 1)[0]
     if r["flagged"] < 100:
         return notes
+    if "headless" in br.lower():
+        notes.append("UA says headless browser")
     if r["fam_n"] < 50:
         notes.append("JA4 rare outside this traffic (%d sessions across all keys in the baseline slice)" % r["fam_n"])
     elif r["fam_share"] >= 0.8 and _family(br) != r["fam_browser"]:
         notes.append("claims %s but this JA4 is %.0f%% %s across all keys" % (br, 100 * r["fam_share"], r["fam_browser"]))
-    if r["claims_n"] >= 5 and r["flagged"] >= 500:
+    if r["claims_n"] >= 10 and r["flagged"] / r["claims_n"] <= 2000:
         notes.append("%d different browser/version claims on one TLS fingerprint (UA rotation)" % r["claims_n"])
     if r["ch_mismatch"] / r["flagged"] >= 0.3:
         notes.append("sec-ch-ua version ≠ UA version on %.0f%%" % (100 * r["ch_mismatch"] / r["flagged"]))
@@ -1008,6 +1014,27 @@ def uaja4_notes(r):
     if r["flagged"] >= 1000 and r["flag_ver"] / r["flagged"] >= 0.3 and not notes:
         notes.append("%.0f%% verified and nothing odd in UA/JA4: check FP risk" % (100 * r["flag_ver"] / r["flagged"]))
     return notes
+
+
+def ja4_rotation(rows):
+    """Many JA4s with the same TLS version/cipher part (a_b) and near-equal volumes = one tool rotating its TLS extensions."""
+    groups = collections.defaultdict(list)
+    for r in rows:
+        parts = r["ja4"].split("_")
+        if len(parts) == 3 and r["flagged"] >= 500:
+            groups[parts[0][:4] + "_" + parts[1]].append(r)
+    out = []
+    for g, rs in groups.items():
+        if len(rs) < 4:
+            continue
+        ns = sorted(x["flagged"] for x in rs); med = ns[len(ns) // 2]
+        close = [x for x in rs if abs(x["flagged"] - med) <= 0.2 * med]
+        if len(close) >= 4:
+            asn = collections.Counter(x["top_asn"] for x in close).most_common(1)[0][0]
+            ver = sum(x["flag_ver"] for x in close) / max(1, sum(x["flagged"] for x in close))
+            out.append("JA4 rotation: %d fingerprints with the same cipher set (%s…) and near-equal volume (~%s each, %.0f%% verified, mostly ASN %s): one tool varying its TLS extensions"
+                       % (len(close), g, fmt(med), 100 * ver, asn or "?"))
+    return " | ".join(out)
 
 
 def cmd_uaja4_targets(a):
@@ -1048,6 +1075,9 @@ def uaja4_section(cid, run, names):
                       % (html.escape(r["ja4"]), html.escape(r["claim"]), fmt(r["flagged"]), 100 * r["flag_ver"] / max(1, r["flagged"]), fmt(r["unflagged"]),
                          html.escape(r["fam_browser"]), 100 * r["fam_share"], html.escape(r["top_cc"]),
                          ("<b>" + "; ".join(html.escape(n) for n in notes) + "</b>") if notes else '<span class="muted">consistent</span>'))
+        rot = ja4_rotation(rows)
+        if rot:
+            tr.insert(0, '<tr><td colspan="8"><b>%s</b></td></tr>' % html.escape(rot))
         secs.append('<h3 class="sec">Claimed UA vs JA4 — %s (last 2 days of the window)</h3>'
                     '<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: '
                     'does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), '
