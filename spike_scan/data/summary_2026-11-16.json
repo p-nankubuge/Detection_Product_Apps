@@ -20,6 +20,16 @@
    ]
   },
   {
+   "h": "NEW check - claimed UA vs JA4 (top 5 combination x key pairs, Nov 14-15)",
+   "items": [
+    "Roblox Signup (Key 2), g-spoofed-os-mismatch-pagebio-null-grease (section 13): 14 JA4s with the same cipher set and ~3.7k flagged sessions each, mostly ASN 5410 / France, claiming Whale Browser 4, Baidu Spark 8, Headless Chrome 157, 50-80 browser/version claims per JA4, ~30% verified - one tool rotating TLS extensions and UAs, partly getting through. Action candidate.",
+    "Uber SMS (Key 1), same telltale (section 13): 10 JA4s, ~6k each, 100% ASN 60068, 0% verified; another JA4 carries 64 claims with sec-ch-ua != UA version on 48% - same rotating tool, already blocked.",
+    "Uber Account Management (Key 2), g-cdn-ends-cl (section 2): bot cohort with 325 claims on one JA4 (0% verified) next to a clean 17k Chrome 150 cohort at 97% verified - likely FPs on that cohort.",
+    "Roblox Game Join (Key 6), section 13: main 116k cohort is ordinary Chrome 157 from Indonesia, 42% verified - likely FP; a 10k Chrome 155 cohort at 0% verified (45% ASN 151592) is the bot part.",
+    "Amazon IDS (Key 2), pragma (section 12): normal Chrome JA4s, nothing odd."
+   ]
+  },
+  {
    "h": "Bursts that ended",
    "items": [
     "Uber Account Management (Key 2): ends-cl / ct-before-cl combos 1.86M (Nov 10, 57% verified), 1.83M (Nov 11, 35%), 817k (Nov 12, 37%); hourly peaks Nov 10 16-18h (~1.8M, mostly verified) and Nov 11 11-13h. Plus appleos 162k on Nov 12 at 38%. Back to ~20k/day since Nov 13.",
