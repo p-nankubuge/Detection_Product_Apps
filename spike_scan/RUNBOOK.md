@@ -133,6 +133,22 @@ Work from the repo root, `cd spike_scan`.
      FP risk + <10% verified = already-blocked bot traffic on a high-bot key, lower concern.
    The SOC pack shows the badges in "What to do" and the candidates card, and a full table per combination. Mention every
    FP-risk pair with >=30% verified in the summary, and never recommend pressure on a key where the signal is FP risk without saying so.
+7d. **Traffic drops (from 2026-11-20).** Runs over ALL Production keys, independent of the combos:
+   `python3 render.py sql/06_key_volume_drops.sql --win-start <D-4> --win-end <D> --recent-end "<D> <last complete hour HH>"` -> `execute_sql`
+   (~25s) -> `python3 spike_report.py drops --run <D> --packed '<cell>'` (-> `data/key_drops.csv`). Flags a key when a window day is below
+   40% of its median baseline day (>=5k/day), or the last 6 complete hours / the last complete hour are below 40% of the same hours on the
+   7 previous days. These are outages / integration or key-config changes, not attacks: the SOC pack lists them in a "Traffic drops" card
+   (with the same customer's other keys), and the share-of-traffic check skips whole-day drops for that key. Look up unnamed keys with
+   `lookup_key_names` + `spike_report.py keys`. Say in the summary which drops are one key of a customer while its other keys are normal.
+7e. **Claimed UA vs JA4 (from 2026-11-20).** `python3 spike_report.py uaja4-targets --win-start <D-4> --win-end <D> --n 5` picks the
+   combination x key pairs with the most flagged traffic that gets through or is FP-risk (one per key). For each:
+   `python3 render.py sql/07_ua_ja4_profile.sql --win-start <D-4> --win-end <D> --combo-id <id> --key <key>` -> `execute_sql` (~10s, key-pruned)
+   -> `python3 spike_report.py uaja4 --run <D> --combo <id> --key <key> --packed '<cell>'` (-> `data/ua_ja4.json`). Per JA4 cohort of the
+   flagged sessions (last 2 days of the window): main claimed browser/major, number of distinct claims (UA rotation), flagged/verified,
+   unflagged on the same key, sec-ch-ua vs UA version mismatch, top ASN/country, and what that JA4 is across ALL keys (browser family
+   chromium / webkit / firefox, from a 6h baseline slice). A JA4 does not carry a browser version, only the TLS stack, so the check is
+   family consistency + rotation + client-hint consistency + concentration. A cohort that is >=30% verified with nothing odd in UA/JA4 is
+   called out as a possible FP. The pack shows the table under each combination.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)

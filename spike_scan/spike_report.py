@@ -25,6 +25,8 @@ from collections import defaultdict
 ROOT = pathlib.Path(__file__).resolve().parent
 COUNTS = ROOT / "data" / "daily_key_counts.csv"
 CHART_COUNTS = ROOT / "data" / "chart_key_counts.csv"
+DROPS = ROOT / "data" / "key_drops.csv"  # run,public_key,kind,when,sessions,baseline (06_key_volume_drops.sql)
+UAJA4 = ROOT / "data" / "ua_ja4.json"  # {run: {"combo|key": [rows]}} (07_ua_ja4_profile.sql)
 TOTALS = ROOT / "data" / "key_totals.csv"  # day,public_key,sessions: ALL Production sessions on the key (04_key_totals.sql)
 HOURLY = ROOT / "data" / "hourly_key_counts.csv"  # ts_hour,public_key,combo_id,sessions,verified (chart keys)
 HOURLY_FIELDS = ["ts_hour", "public_key", "combo_id", "sessions", "verified"]  # key-filtered exact counts + verified, for perkey
@@ -818,7 +820,7 @@ def cmd_totals_keys(a):
     print("%d keys -> %s; %d lack totals for %s..%s" % (len(keys), a.out, len(missing), bdays[6], max(days)))
 
 
-def share_check(cid, win_start, win_end, counts=None, totals=None):
+def share_check(cid, win_start, win_end, counts=None, totals=None, drops=None):
     """Per key: how much of the key's whole traffic the combination flags, baseline vs window.
     verdict: ok (<2% on every judged day), volumetric (>2% only on days where key traffic jumped and the flagged
     sessions explain the jump), fp-risk (>2% of normal traffic, i.e. the signal fires on the key's ordinary users),
@@ -851,7 +853,9 @@ def share_check(cid, win_start, win_end, counts=None, totals=None):
             f, v = byday.get(d, (0, 0)); t = totals[(d, k)]
             sh = f / t if t else 0
             vd = "ok"
-            if sh > SHARE_MAX and f >= SHARE_MIN_FLAGGED:
+            if drops and (d, k) in drops:
+                vd = "drop"  # key traffic collapsed that day: share is meaningless
+            elif sh > SHARE_MAX and f >= SHARE_MIN_FLAGGED:
                 grew = t >= VOL_GROWTH * bt_m
                 explained = (t - bt_m) > 0 and (f - bf_m) >= VOL_EXPLAIN * (t - bt_m)
                 vd = "volumetric" if grew and explained else "fp-risk"
@@ -899,6 +903,158 @@ def cmd_share(a):
             print("   %-11s %-48s share base %5.1f%% win %5.1f%% peak %5.1f%%  traffic %s -> %s/day  flagged %s -> %s/day  verified %3.0f%%"
                   % (r["verdict"], key_label(r["key"], names)[:48], 100 * r["base_share"], 100 * r["win_share"], 100 * r["peak_share"],
                      fmt(r["base_total"]), fmt(r["win_total"]), fmt(r["base_flagged"]), fmt(r["win_flagged"]), 100 * r["win_verified"]))
+
+
+# ---- traffic drops (outage / integration change, not attacks) -----------------------------------
+DROP_KIND = {"D": "day", "H6": "last 6h", "H1": "last hour"}
+
+
+def read_drops(run=None):
+    if not DROPS.exists():
+        return []
+    with DROPS.open() as f:
+        rows = list(csv.DictReader(f))
+    return [r for r in rows if run is None or r["run"] == run]
+
+
+def cmd_drops(a):
+    old = [r for r in read_drops() if r["run"] != a.run]
+    new = []
+    for chunk in filter(None, a.packed.strip().split(";")):
+        k, kind, when, n, med = chunk.split(",")
+        new.append({"run": a.run, "public_key": k, "kind": kind, "when": when, "sessions": n, "baseline": med})
+    with DROPS.open("w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=["run", "public_key", "kind", "when", "sessions", "baseline"]); w.writeheader(); w.writerows(old + new)
+    names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
+    unknown = sorted({r["public_key"] for r in new if r["public_key"] not in names})
+    print("drops: %d rows for run %s (%d keys)%s" % (len(new), a.run, len({r["public_key"] for r in new}),
+          ("; no name yet for: " + ",".join(unknown)) if unknown else ""))
+
+
+def drop_days(run):
+    """{(day, key)} of whole-day drops: the share check skips those days (a falling total inflates the share)."""
+    return {(r["when"], r["public_key"]) for r in read_drops(run) if r["kind"] == "D"}
+
+
+def drops_card(run, names):
+    rows = read_drops(run)
+    if not rows:
+        return ""
+    by = collections.defaultdict(list)
+    for r in rows:
+        by[r["public_key"]].append(r)
+    dropped = set(by)
+    acct = collections.defaultdict(list)
+    for k, v in names.items():
+        acct[v.get("account_name", "")].append(k)
+    tr = []
+    for k, rs in sorted(by.items(), key=lambda kv: min(int(r["sessions"]) / max(1, float(r["baseline"])) for r in kv[1])):
+        what = "; ".join("%s %s: %s vs %s usual (%.0f%%)" % (DROP_KIND[r["kind"]], "" if r["kind"] != "D" else r["when"], fmt(int(r["sessions"])),
+                         fmt(float(r["baseline"])), 100 * int(r["sessions"]) / max(1, float(r["baseline"]))) for r in sorted(rs, key=lambda r: (r["kind"], r["when"])))
+        a_ = names.get(k, {}).get("account_name", "")
+        sis = [x for x in acct.get(a_, []) if x != k] if a_ else []
+        sis_txt = ("other keys of %s we know: %s" % (html.escape(a_), ", ".join("%s%s" % (html.escape(key_label(x, names)), " (also down)" if x in dropped else " (not down)") for x in sis))) if sis else "no other keys of this account in key_names.json"
+        tr.append("<tr><td>%s</td><td>%s</td><td class=\"muted\">%s</td></tr>" % (html.escape(key_label(k, names)), what, sis_txt))
+    return ('<div class="card"><h2 style="margin-top:0">Traffic drops — check with the customer, not attacks</h2>'
+            '<p class="muted">Every Production key whose traffic fell below 40%% of its own normal: a whole window day vs its median baseline day (≥5k/day), '
+            'the last 6 complete hours or the last complete hour vs the same hours on the 7 previous days. A drop on one key while the same customer\'s other keys are normal usually means the page stopped calling Arkose '
+            '(outage, maintenance, integration or key-config change). On drop days the share-of-traffic check is skipped for that key.</p>'
+            '<table><tr><th>Key</th><th>Drop</th><th>Same customer</th></tr>%s</table></div>' % "".join(tr))
+
+
+# ---- claimed UA vs JA4 ------------------------------------------------------------------------------
+def _family(b):
+    """Same buckets as 07_ua_ja4_profile.sql: chromium / webkit (all iOS browsers and Safari) / firefox / other."""
+    b = (b or "").strip().lower()
+    if "ios" in b or "safari" in b:
+        return "webkit"
+    if "firefox" in b:
+        return "firefox"
+    if any(x in b for x in ("chrom", "edge", "opera", "samsung", "brave", "yandex", "vivaldi")):
+        return "chromium"
+    return b or "?"
+
+
+def cmd_uaja4(a):
+    db = json.loads(UAJA4.read_text()) if UAJA4.exists() else {}
+    rows = []
+    for chunk in filter(None, a.packed.strip().split(";")):
+        f = chunk.split("|")
+        if len(f) != 14:
+            sys.exit("bad row (%d fields): %s" % (len(f), chunk))
+        rows.append({"ja4": f[0], "claim": f[1], "claims_n": int(f[2]), "flagged": int(f[3]), "flag_ver": int(f[4]), "unflagged": int(f[5]),
+                     "ch_mismatch": int(f[6]), "top_asn": f[7], "asn_share": float(f[8] or 0), "top_cc": f[9],
+                     "fam_browser": f[10], "fam_share": float(f[11] or 0), "fam_majors": int(f[12] or 0), "fam_n": int(f[13] or 0)})
+    db.setdefault(a.run, {})["%s|%s" % (a.combo, a.key)] = rows
+    UAJA4.write_text(json.dumps(db, indent=1))
+    print("ua_ja4: %d JA4 cohorts for %s on %s (run %s)" % (len(rows), a.combo, a.key[:8], a.run))
+
+
+def uaja4_notes(r):
+    notes = []
+    br = r["claim"].rsplit(" ", 1)[0]
+    if r["flagged"] < 100:
+        return notes
+    if r["fam_n"] < 50:
+        notes.append("JA4 rare outside this traffic (%d sessions across all keys in the baseline slice)" % r["fam_n"])
+    elif r["fam_share"] >= 0.8 and _family(br) != r["fam_browser"]:
+        notes.append("claims %s but this JA4 is %.0f%% %s across all keys" % (br, 100 * r["fam_share"], r["fam_browser"]))
+    if r["claims_n"] >= 5 and r["flagged"] >= 500:
+        notes.append("%d different browser/version claims on one TLS fingerprint (UA rotation)" % r["claims_n"])
+    if r["ch_mismatch"] / r["flagged"] >= 0.3:
+        notes.append("sec-ch-ua version ≠ UA version on %.0f%%" % (100 * r["ch_mismatch"] / r["flagged"]))
+    if r["asn_share"] >= 0.5 and r["flagged"] >= 500:
+        notes.append("%.0f%% from one ASN (%s)" % (100 * r["asn_share"], r["top_asn"]))
+    if r["flagged"] >= 1000 and r["flag_ver"] / r["flagged"] >= 0.3 and not notes:
+        notes.append("%.0f%% verified and nothing odd in UA/JA4: check FP risk" % (100 * r["flag_ver"] / r["flagged"]))
+    return notes
+
+
+def cmd_uaja4_targets(a):
+    """Pick the combination x key pairs worth a UA/JA4 profile: biggest flagged volume that is getting through or FP-risk."""
+    counts, totals = read_counts(), read_totals()
+    names = json.loads(NAMES.read_text()) if NAMES.exists() else {}
+    cand = []
+    for c in load_combos():
+        for r in share_check(c["id"], a.win_start, a.win_end, counts, totals):
+            if r["verdict"] == "no-totals" or r["win_flagged"] < 5000:
+                continue
+            score = r["win_flagged"] * (r["win_verified"] + (0.3 if r["verdict"] == "fp-risk" else 0) + (0.3 if c["status"] != "live" else 0))
+            cand.append((score, c["id"], r["key"], r))
+    cand.sort(reverse=True)
+    seen, out = set(), []
+    for sc, cid, k, r in cand:
+        if k in seen:  # one combination per key, so the profiles cover different keys
+            continue
+        seen.add(k); out.append((cid, k, r))
+        if len(out) >= a.n:
+            break
+    for cid, k, r in out:
+        print("%s %s  # %s, %s/day flagged, %.0f%% verified, %s" % (cid, k, key_label(k, names), fmt(r["win_flagged"]), 100 * r["win_verified"], r["verdict"]))
+
+
+def uaja4_section(cid, run, names):
+    db = json.loads(UAJA4.read_text()) if UAJA4.exists() else {}
+    secs = []
+    for ck, rows in sorted(db.get(run, {}).items()):
+        c, k = ck.split("|")
+        if c != cid or not rows:
+            continue
+        tr = []
+        tot = sum(r["flagged"] for r in rows) or 1
+        for r in [r for r in rows if r["flagged"] >= max(100, 0.005 * tot)][:10]:
+            notes = uaja4_notes(r)
+            tr.append('<tr><td><code>%s</code></td><td>%s</td><td class="n">%s</td><td class="n">%.0f%%</td><td class="n">%s</td><td>%s (%.0f%%)</td><td>%s</td><td>%s</td></tr>'
+                      % (html.escape(r["ja4"]), html.escape(r["claim"]), fmt(r["flagged"]), 100 * r["flag_ver"] / max(1, r["flagged"]), fmt(r["unflagged"]),
+                         html.escape(r["fam_browser"]), 100 * r["fam_share"], html.escape(r["top_cc"]),
+                         ("<b>" + "; ".join(html.escape(n) for n in notes) + "</b>") if notes else '<span class="muted">consistent</span>'))
+        secs.append('<h3 class="sec">Claimed UA vs JA4 — %s (last 2 days of the window)</h3>'
+                    '<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: '
+                    'does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), '
+                    'does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p>'
+                    '<div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th>'
+                    '<th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr>%s</table></div>' % (html.escape(key_label(k, names)), "".join(tr)))
+    return secs
 
 
 def share_badges(rows):
@@ -956,7 +1112,8 @@ def cmd_soc(a):
     combos.sort(key=lambda c: ACTION_ORDER[_akind(c.get("action", "hold"))])
     sections, srows = [], []
     counts_all, totals_all = read_counts(), read_totals()
-    shares = {c["id"]: share_check(c["id"], a.win_start, a.win_end, counts_all, totals_all) for c in combos}
+    dd = drop_days(today)
+    shares = {c["id"]: share_check(c["id"], a.win_start, a.win_end, counts_all, totals_all, dd) for c in combos}
     for ci, c in enumerate(combos):
         title = c.get("telltale_name") or c["id"]
         anchor = "tt-%s" % c["id"]
@@ -989,6 +1146,7 @@ def cmd_soc(a):
                    % ("" if c["status"] == "live" else " open", html.escape(json.dumps(defn, indent=2))))
         sec.append('<h3 class="sec">Share of key traffic — false-positive check (window %s → %s vs 7-day baseline)</h3>' % (ws, we - dt.timedelta(days=1)))
         sec += share_table(shares[c["id"]], names)
+        sec += uaja4_section(c["id"], today, names)
         sec.append('<h3 class="sec">Does it come back? Daily bursts per key, %s → %s</h3>' % (rdays[0], today))
         sec.append('<p class="muted">%d of %d keys had ≥2 separate bursts, %d episodes in total. %s</p>'
                    % (len(rec), len(krows), sum(r["n_episodes"] for r in krows), RECUR_INTRO % (fmt(ACTIVE_MIN), SPIKE_X, fmt(ACTIVE_MIN))))
@@ -1019,6 +1177,9 @@ def cmd_soc(a):
                     '<p class="muted">Highlighted flags make up each proposed telltale. <code class="newflag fresh">Darker</code> = a flag that no live telltale here uses yet; '
                     '<code class="newflag">lighter</code> = already part of a live combination. Full definition, recurrence and per-key charts are in each section below.</p>'
                     '<table><tr><th>Proposed telltale</th><th>Suspicion flags (all must be present)</th><th>Action</th><th>Why</th><th>Share of key traffic</th></tr>%s</table></div>' % rows_)
+    dcard = drops_card(today, names)
+    if dcard:
+        head.insert(3, dcard)
     if a.summary:
         sm = json.loads(pathlib.Path(a.summary).read_text())
         head.insert(3, '<div class="card"><h2 style="margin-top:0">%s</h2>%s</div>' % (html.escape(sm["title"]), "".join(
@@ -1048,6 +1209,9 @@ def main():
     t = sp.add_parser("totals", help="save 04_key_totals.sql output (all sessions per key per day)"); t.add_argument("--packed", required=True)
     tk = sp.add_parser("totals-keys", help="write the key list 04_key_totals.sql needs for this window"); tk.add_argument("--win-start", required=True); tk.add_argument("--win-end", required=True); tk.add_argument("--out", required=True)
     sk = sp.add_parser("share", help="print the share-of-key-traffic check per combo"); sk.add_argument("--win-start", required=True); sk.add_argument("--win-end", required=True)
+    dr = sp.add_parser("drops", help="save 06_key_volume_drops.sql output"); dr.add_argument("--run", required=True, help="run date D"); dr.add_argument("--packed", required=True)
+    uj = sp.add_parser("uaja4", help="save 07_ua_ja4_profile.sql output"); uj.add_argument("--run", required=True); uj.add_argument("--combo", required=True); uj.add_argument("--key", required=True); uj.add_argument("--packed", required=True)
+    ut = sp.add_parser("uaja4-targets", help="pick combination x key pairs for 07"); ut.add_argument("--win-start", required=True); ut.add_argument("--win-end", required=True); ut.add_argument("--n", type=int, default=5)
     k = sp.add_parser("keys"); k.add_argument("--names", required=True)
     m = sp.add_parser("missing"); m.add_argument("--since", required=True)
     r = sp.add_parser("report"); r.add_argument("--win-start", required=True); r.add_argument("--win-end", required=True); r.add_argument("--discovery")
@@ -1063,7 +1227,7 @@ def main():
     so.add_argument("--chart-start", help="first day of the per-key daily charts (default: 7 days before --win-start)")
     so.add_argument("--summary", help="JSON {title, sections: [{h, items: [text]}]} shown as a card above the action table")
     a = p.parse_args()
-    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc, "totals": cmd_totals, "totals-keys": cmd_totals_keys, "share": cmd_share}[a.cmd](a)
+    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc, "totals": cmd_totals, "totals-keys": cmd_totals_keys, "share": cmd_share, "drops": cmd_drops, "uaja4": cmd_uaja4, "uaja4-targets": cmd_uaja4_targets}[a.cmd](a)
 
 
 if __name__ == "__main__":

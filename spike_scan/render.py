@@ -21,6 +21,9 @@ p.add_argument("--half", choices=["am", "pm"], help="03_track_exact_day: 00-12h 
 p.add_argument("--hours", help="03_track_exact_day: custom UTC hour slice, e.g. 12-18 (use when a half times out)")
 p.add_argument("--keys", help="03_track_exact_day: file with one public_key per line (per-key charts)")
 p.add_argument("--combos", help="combos.json (03_track_exact_day); uses --win-start as the day")
+p.add_argument("--recent-end", help="06_key_volume_drops: last complete hour, 'YYYY-MM-DD HH' (default: win-end 00h)")
+p.add_argument("--combo-id", help="07_ua_ja4_profile: combos.json id")
+p.add_argument("--key", help="07_ua_ja4_profile: public key")
 a = p.parse_args()
 
 ws = dt.date.fromisoformat(a.win_start)
@@ -37,6 +40,18 @@ if a.vocab:
     if len(flags) > 62:
         raise SystemExit("vocab too large for a BIGINT bitmask (max 62)")
     vals["vocab"] = ",".join("'%s'" % f.replace("'", "''") for f in flags)
+# 06_key_volume_drops
+vals["window_days"] = ", ".join("('%s')" % (ws + dt.timedelta(days=i)) for i in range((we - ws).days))
+vals["recent_end"] = (a.recent_end + ":00:00") if a.recent_end else str(we) + " 00:00:00"
+# 07_ua_ja4_profile: window = last 2 days of the scan window; family map = 12-18h on the first baseline day
+if a.combo_id:
+    import json
+    c = next(c for c in json.loads(pathlib.Path("combos.json").read_text())["combos"] if c["id"] == a.combo_id)
+    vals["combo_cond"] = " AND ".join("ARRAY_CONTAINS('%s'::VARIANT, flags)" % f for f in c["flags"])
+    vals["key"] = a.key
+    vals["ts_from"], vals["ts_to"] = str(max(ws, we - dt.timedelta(days=2))), str(we)
+    fb = ws - dt.timedelta(days=7)
+    vals["fam_from"], vals["fam_to"] = "%s 12:00:00" % fb, "%s 18:00:00" % fb
 if a.keys and not a.combos:  # 04_key_totals.sql: plain key list
     vals["keys"] = ",".join("'%s'" % l.strip() for l in pathlib.Path(a.keys).read_text().splitlines() if l.strip())
 if a.combos:
