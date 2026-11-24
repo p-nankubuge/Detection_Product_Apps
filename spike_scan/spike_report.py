@@ -1240,6 +1240,7 @@ def cmd_focus(a):
         toc.append('<tr><td><a href="#k-%s">%s</a></td><td>%s</td></tr>' % (k[:8], html.escape(nm), html.escape("; ".join(verdict_bits)) or '<span class="muted">nothing unusual</span>'))
         body = ['<section class="combo" id="k-%s"><h2 style="margin-top:0">%s</h2>' % (k[:8], html.escape(nm)),
                 '<p class="muted"><b>All sessions per day</b> (baseline median %s): %s</p>' % (fmt(bmed), traffic)]
+        body += focus_charts(k, e, an, chart, combos, bd + wd, a.win_start, bmed)
         if kd:
             body.append('<p><b>Traffic drop:</b> %s</p>' % html.escape("; ".join("%s %s: %s vs %s usual" % (DROP_KIND[r["kind"]], r["when"] if r["kind"] == "D" else "", fmt(int(r["sessions"])), fmt(float(r["baseline"]))) for r in kd)))
         if meta:
@@ -1275,6 +1276,41 @@ def cmd_focus(a):
     out = ROOT / "reports" / ("focus_%s.html" % a.run)
     out.write_text("\n".join(doc))
     print("wrote", out.relative_to(ROOT))
+
+
+def focus_charts(k, e, an, chart, combos, days, win_start, bmed):
+    """Spike charts for one key: all sessions created vs verified, each tracked combination >= 1k/day in the window,
+    and each attribute anomaly that jumped (count vs verified), all on the same day axis with the window shaded."""
+    cards = []
+    uid = "f" + k[:8]
+    wd = [d for d in days if d >= win_start]
+    if e and e.get("days"):
+        n = [e["days"].get(d, [0, 0])[0] for d in days]
+        v = [e["days"].get(d, [0, 0])[1] for d in days]
+        cards.append(("All sessions on the key", "created vs verified per day%s" % (" (block-sampled, scaled)" if e.get("sample") else ""),
+                      svg_key_lines(days, n, v, bmed, win_start, uid + "a")))
+    by = collections.defaultdict(dict)
+    for r in chart:
+        if r["public_key"] == k and r["day"] in days:
+            by[r["combo_id"]][r["day"]] = (int(r["sessions"]), int(r.get("verified") or 0))
+    ranked = sorted(by.items(), key=lambda kv: -max((kv[1].get(d, (0, 0))[0] for d in wd), default=0))
+    for i, (cid, dd) in enumerate(ranked):
+        if max((dd.get(d, (0, 0))[0] for d in wd), default=0) < 1000:
+            continue
+        c = combos.get(cid, {})
+        cr = [dd.get(d, (0, 0))[0] for d in days]; ve = [dd.get(d, (0, 0))[1] for d in days]
+        base = sum(cr[:7]) / 7.0
+        cards.append((c.get("telltale_name") or cid, "%s · flagged vs verified per day" % c.get("status", ""), svg_key_lines(days, cr, ve, base, win_start, "%sc%d" % (uid, i))))
+    if e and e.get("days"):
+        for j, x in enumerate(f for f in an if f["kind"] == "jump"):
+            idx = [nm for nm, _ in ANOM].index(x["name"])
+            cr = [e["days"].get(d, [0] * 30)[2 + 2 * idx] for d in days]; ve = [e["days"].get(d, [0] * 30)[3 + 2 * idx] for d in days]
+            base = sorted(cr[:7])[3]
+            cards.append(("Anomaly: " + x["label"], "sessions with it vs verified per day", svg_key_lines(days, cr, ve, base, win_start, "%sx%d" % (uid, j))))
+    if not cards:
+        return []
+    return ['<h3 class="sec">Spike charts (%s → %s, shaded = window)</h3><div class="kgrid">' % (days[0], days[-1])] + \
+           ['<div class="kcard"><h3 style="font-size:13px">%s</h3><div class="kstats">%s</div>%s</div>' % (html.escape(t), html.escape(sub), svg) for t, sub, svg in cards] + ['</div>']
 
 
 def uaja4_section_key(cid, key, run, names):
