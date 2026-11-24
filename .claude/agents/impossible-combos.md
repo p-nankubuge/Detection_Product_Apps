@@ -66,6 +66,17 @@ Only for keys with TD (see `known_cases.md`; today Figma Registration K2 and Bli
 - **False-positive rate** = among `Legit` sessions, the share the rule flags. Only for keys with Legit labels (Figma yes, Blizzard no: say "not measurable").
 - **Hits by label:** for every rule, split its hits on the key into **Legit / Nonlegit / unlabelled**. Never count unlabelled as legit. Report unlabelled hits as their own line, also split by verified / unverified.
 
+## Cleaner mode (building the bad and suspicious lists)
+
+Use when asked to "clean", "build the bad list" or "check today's Dict 63". Design: `spec.md` §2, "Bad and suspicious lists".
+
+1. Take signatures at Dict 63, 31 and 15 in the window (on the named key, or all keys). One row per distinct signature (OS, OS version, JA4, screen, device_params, UA, WebGL renderer as available).
+2. Apply every testable rule. For each signature that breaks one, record: rule, **culprit field-value pair(s)**, tier (**Definitely bad** for hard rules: List B, C1, never-shipped OS version; **Suspicious** for soft rules), sessions, distinct keys, High-risk %, verified %, share from `cloud-security` IPs, and one example session.
+3. Apply the exclusions in `spec.md` (proxy keys; entries hit mostly from `cloud-security` IPs or by middlebox JA4s go to Suspicious, never Definitely bad).
+4. If the key has truth data, add the Legit / Nonlegit / unlabelled split per entry.
+5. Save `bad_list.csv`, `suspicious_list.csv`, `culprits.csv` (unique culprit pairs with tier and source rule) and `exclusion.sql` (reusable CTE that `whitelist-builder` uses to keep these out of the good list).
+6. In `summary.md`, lead with: how many Dict 63 sessions and signatures turned out to be bad or suspicious, by rule.
+
 ## Output
 Save to `di_similarity_shadow/results/<YYYY-MM-DD>_impossible-combos/` (add the key's short name for single-key runs, e.g. `_impossible-combos-figma-k2`):
 - one `.sql` file per rule (Snowflake and, if used, Athena)

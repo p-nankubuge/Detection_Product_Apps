@@ -86,6 +86,27 @@ Chain, each level requires all previous fields: **os (Dict 1) → +JA4 (3) → +
 | C | 0.40–0.65 | Dict 7 |
 | D | < 0.40, or the Band D trigger above | Dict 1 / 3 |
 
+### Bad and suspicious lists (the "deny" side of the dictionary)
+
+Design agreed 24 Nov. The new DI keeps **three** reference lists, not one:
+
+| List | What goes in | Effect |
+|---|---|---|
+| **Good** (whitelist) | Signatures that pass every impossible-combination check and meet eligibility | Similarity scores against it (as above) |
+| **Definitely bad** | Signatures that break a **hard** rule: a combination no legitimate setup can produce (List B, C1, an OS version that never shipped) | Hard override (below) |
+| **Suspicious** | Signatures that break a **soft** rule: impossible for a browser but explainable by something legitimate (TLS-inspection proxies, old embedded clients), or rules with a measured false-positive rate (today C2, C3, N9–N11, see run 2) | Weighted penalty (below) |
+
+Every bad or suspicious entry records its **culprit**: the field-value pair(s) that break the rule, e.g. `os = iOS` + `webgl_renderer ~ SwiftShader`, or `os = Windows` + `ja4 cipher hash = a09f3c656075`. The culprit is usually a **pair**, not a single value: SwiftShader alone is fine on Linux (List A cap only), and a Safari JA4 alone is fine on a Mac.
+
+**How a session is judged:**
+1. **Carries a culprit from the Definitely-bad list** → Band D (or no score), **even if** its similarity to a good device is high.
+2. **Carries a culprit from the Suspicious list** → subtract the culprit fields' weights (per-platform weights table) from its good score, then band it. A culprit on a heavily weighted field (e.g. WebGL on Windows, 0.30) moves it further than one on a light field (e.g. JA4 on Android, 0.05).
+3. **Closer to a bad entry than to any good one** (closest-bad score ≥ closest-good score, and ≥ 0.85) → Band D if the bad entry is Definitely bad, Suspicious flag if it is Suspicious. This catches near-copies of known-bad setups that differ in one field.
+
+**Exclusions before an entry is listed** (from run 2, where most C2/C3/N9 hits on Figma were corporate proxies): proxy keys; sessions from `vpn_proxy_description = 'cloud-security'` IPs; JA4s seen at Dict 63 on many keys with normal High-risk rates (likely middleboxes). Entries hit mainly by such traffic go to Suspicious, never Definitely bad.
+
+**Existing Dict 63 is not trusted by default.** The cleaner pass checks today's Dict 63 (and 31 / 15) signatures against the rules; anything that breaks one is moved to the Definitely-bad or Suspicious list. Example: SwiftShader on iOS/macOS at Dict 63 should not exist.
+
 ### Worked examples to reproduce (sanity tests)
 
 | Device | Windows | iOS |
