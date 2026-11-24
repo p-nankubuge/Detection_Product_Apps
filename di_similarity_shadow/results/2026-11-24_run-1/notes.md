@@ -17,4 +17,5 @@
 
 1. Which field drops the macOS sessions to Dict 3: OS version, browser version, screen size or WebGL?
 2. Are the Dict 1 sessions with non-browser JA4s actually bad? Figma's truth data should say.
-3. Why do ~10% of low-dictionary sessions never reach a challenge: abandoned, not challenged, or something else?
+3. Why do ~10% of low-dictionary sessions never reach the final verify step: abandoned, not challenged, or something else?
+   **Answered** in `figma_k2_no_verify.md`: 85% were challenged and abandoned; low dictionaries are challenged more often. TD can't see these sessions.
