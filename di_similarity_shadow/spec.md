@@ -18,6 +18,11 @@ Distilled from the two one-pagers (sources in `CLAUDE.md`). If this file and Con
 | WebGL renderer | `webgl_unmasked_renderer` | |
 | Browser name / version | `browser_name` / ? | |
 | Risk band | `latest_risk_band`? | |
+| Risk band (session summary) | `latest_risk_band` in `ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY`; values `Low` / `Medium` / `High` (and a few `''`) | impossible-combos, 2026-11-24 (Figma K2, Oct 2026) |
+| JA4 / UA / OS (session summary) | `cdn__ja4_hash_at_session_created`, `ua_at_session_created`, `os_at_session_created` (e.g. `Windows`, `OS X`, `Android`, `iOS`, `GNU/Linux`, `Chrome OS`, `iPadOS`, `Ubuntu`), `os_version_at_session_created` in `PROD_INT_SESSION_SUMMARY` (Snowflake) and `starfleet_production.prod_session_summary` (Athena) | impossible-combos, 2026-11-24 |
+| Brave flag | `latest_browser_detection_brave` (BOOLEAN) in `PROD_INT_SESSION_SUMMARY` / Athena `prod_session_summary` (Brave UA is identical to Chrome) | impossible-combos, 2026-11-24 |
+| Session create time (summary) | `session_ts` (TIMESTAMP_NTZ). Snowflake prunes on `session_last_timestamp`; Athena `prod_session_summary` has **no year/month/day partitions** and prunes only on `session_ts` (1 h ≈ 27 s, ≥ 6 h times out) | impossible-combos, 2026-11-24 |
+| IP intel | `vpn_proxy_description` / `vpn_proxy_type` exist in `vw_events` only (not in `PROD_INT_SESSION_SUMMARY`) | impossible-combos, 2026-11-24 |
 
 ## 1. Current dictionary (for reference)
 
