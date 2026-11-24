@@ -1,5 +1,24 @@
 # Known cases (ground truth for replays)
 
+## Truth-data keys (preferred for measuring uplift)
+
+These customers send truth data (TD): their own labels for sessions. TD lets us measure **uplift**: labelled-bad sessions a new rule catches that today's detection let through. That is stronger evidence than verify rate or risk band.
+
+| Key | Name | Volume (24h, 24 Nov) | TD notes |
+|---|---|---|---|
+| `A207F8A1-ED09-4325-ACE6-C8E26A458FBA` | Figma - Registration - Production - Key 2 | ~116k session_setup | Location and format of Figma TD **not yet confirmed** |
+| `E8A75615-1CBA-5DFF-8032-D16BCF234E10` | Blizzard - Production - ROW Registration - Key 2 | ~19k session_setup | See below |
+
+**Blizzard TD caveats** (from [Blizzard ROW Registration Key 2: initial findings](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4857364481), Dimitri Klimenko):
+- **Nonlegit labels only.** Blizzard never sends Legit labels, so TD can measure missed bad (recall / uplift) but **not false positives**. Use clean keys or the HTTP/2 vs HTTP/3 split for FP estimates.
+- **Verified sessions only** (> 99.9%). Attacks that failed a challenge are never labelled.
+- **Outage:** sessions 29 Sep → 13 Oct are almost unlabelled. Exclude that window.
+- **Selective:** gmail, KR and iOS are rarely labelled.
+- August is the most complete month.
+- Dimitri also has a **label store** with a `p_bad` for every session on this key (1 Aug → 16 Nov, ~8M sessions), built from 48 approved rules. It is local for now (ask Dimitri for a copy; a Snowflake table is planned). It can score any new detector session by session.
+
+**Where TD lives:** not found in Snowflake through the Superset connector (checked 24 Nov: no truth/label tables in `ARK_PROD`, `INFORMATION_SCHEMA` lists only `ARK_COST_MONITORING_PROD`, `ARK_PROD`, `CLOUD_LOGS_PRD`, `OPENFLOW`). Dimitri's tooling is in the `ai-traffic-filter` repo, which this session can't access. **Ask Dimitri where the TD tables or files are before running uplift tests.**
+
 Each case has a key, a time window (UTC) and a signature, so it can be replayed. "Expected" is what a correct rule set should do. Verify rates are indicators only: several of these attacks verified at high rates.
 
 ## Bad traffic (should NOT reach Band A/B; impossible-combo rules should catch where applicable)

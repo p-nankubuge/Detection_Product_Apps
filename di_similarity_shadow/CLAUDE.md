@@ -71,6 +71,10 @@ Typical order: `whitelist-builder` first; then `similarity-scorer`, `impossible-
 - **Proxy keys** (JA4 is the customer's proxy, not the browser): a single JA4 on ≥ 98% of a key's sessions over 24h. Known: Payoneer `EE844FC3-499D-4A4D-A643-D7400F0FD4DE` (Login K2), `E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF` (CLM Reg K3), `7CC24C4A-611B-41C7-9808-B95722C7861C`. Pinterest `F5675B21-…` / `F7C0768A-…` proxy passes ~1,100 JA4s/day, so it is not a single-JA4 key. On proxy keys the JA4 weight is 0 and List C does not apply.
 - **Googlebot** on DoorDash Website K1 (`DE24F792-2F8A-4CDC-BF2D-70F94BF1660A`) from 66.249.x / 192.178.x: real crawler, high volume at dict 3/7.
 
+## Truth data (TD)
+
+Figma Registration K2 and Blizzard ROW Registration K2 have customer truth data. Prefer them for measuring uplift. Their details, caveats and the open question of where TD is stored are at the top of `known_cases.md`. If TD isn't available in the session, say so and fall back to the known-case replays; don't invent labels.
+
 ## Judging results
 
 - **"High risk" and "verified" are not ground truth.** Attacks verify when pressure is weak (Adobe ARP K8 solver farm verified 100% of challenges it reached). Use them as indicators, and lean on `known_cases.md` replays.
