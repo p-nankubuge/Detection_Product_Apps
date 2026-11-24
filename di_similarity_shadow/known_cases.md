@@ -6,8 +6,10 @@ These customers send truth data (TD): their own labels for sessions. TD lets us 
 
 | Key | Name | Volume (24h, 24 Nov) | TD notes |
 |---|---|---|---|
-| `A207F8A1-ED09-4325-ACE6-C8E26A458FBA` | Figma - Registration - Production - Key 2 | ~116k session_setup | Location and format of Figma TD **not yet confirmed** |
-| `E8A75615-1CBA-5DFF-8032-D16BCF234E10` | Blizzard - Production - ROW Registration - Key 2 | ~19k session_setup | See below |
+| `A207F8A1-ED09-4325-ACE6-C8E26A458FBA` | Figma - Registration - Production - Key 2 | ~116k session_setup | **Legit and Nonlegit labels.** Sep 23.0k Legit / 17.1k Nonlegit; Oct 33.9k / 15.8k; Nov (to 23rd) 26.7k / 18.1k. Almost all labelled sessions are verified. Can measure uplift **and** false positives. **Start here.** |
+| `E8A75615-1CBA-5DFF-8032-D16BCF234E10` | Blizzard - Production - ROW Registration - Key 2 | ~19k session_setup | Nonlegit only (Sep 60.0k, Oct 69.4k, Nov 75.0k). Uplift only, no FP measure. See caveats below |
+
+(Counts are by the table's `year`/`month` partition, which is when the label was ingested; `session_create_timestamp` can be earlier.)
 
 **Blizzard TD caveats** (from [Blizzard ROW Registration Key 2: initial findings](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4857364481), Dimitri Klimenko):
 - **Nonlegit labels only.** Blizzard never sends Legit labels, so TD can measure missed bad (recall / uplift) but **not false positives**. Use clean keys or the HTTP/2 vs HTTP/3 split for FP estimates.
@@ -17,7 +19,25 @@ These customers send truth data (TD): their own labels for sessions. TD lets us 
 - August is the most complete month.
 - Dimitri also has a **label store** with a `p_bad` for every session on this key (1 Aug → 16 Nov, ~8M sessions), built from 48 approved rules. It is local for now (ask Dimitri for a copy; a Snowflake table is planned). It can score any new detector session by session.
 
-**Where TD lives:** not found in Snowflake through the Superset connector (checked 24 Nov: no truth/label tables in `ARK_PROD`, `INFORMATION_SCHEMA` lists only `ARK_COST_MONITORING_PROD`, `ARK_PROD`, `CLOUD_LOGS_PRD`, `OPENFLOW`). Dimitri's tooling is in the `ai-traffic-filter` repo, which this session can't access. **Ask Dimitri where the TD tables or files are before running uplift tests.**
+**Where TD lives:** **Athena** (Superset `database_id: 2`), table **`starfleet_production.truth_data_history`**. It is not in Snowflake.
+
+| Column | Meaning |
+|---|---|
+| `arkose_session_id` | Session ID; joins to `prod_session_summary.session` |
+| `public_key` | Key |
+| `session_create_timestamp`, `decision_timestamp`, `ingest_timestamp` | When the session was created, decided, and the label arrived |
+| `is_legit` / `is_legit_value` | `'Legit'` / `'Nonlegit'` |
+| `fraud_category`, `fraud_event`, `event_type` | Customer's reason, where given |
+| `is_verified` | Whether Arkose verified the session |
+| `telltale_list`, `suspicion_flags` | What fired on the session |
+| `source`, `csv_id` | Upload source |
+| `year`, `month`, `day`, `hour` | **Partitions (ingest time). Always filter on them** to keep Athena scans cheap |
+
+**Device data for the same sessions, also in Athena:** `starfleet_production.prod_session_summary` has `session`, `public_key`, `di_dictionary_num_matched_at_session_created`, `di_signature_at_session_created`, `di_matched_signature_at_session_created`, `di_short_term_threshold_ratio_at_session_created` (and the other `di_*` fields), `cdn__ja4_hash_at_session_created`, `os_at_session_created`, `os_version_at_session_created`, `ua_at_session_created`, `webgl_unmasked_renderer_at_session_created`. Check its partition columns and the screen / device_params column names before use.
+
+So a TD test is one Athena query: `truth_data_history` joined to `prod_session_summary` on `session = arkose_session_id`, with both tables filtered on their partitions.
+
+Other TD tables exist in Athena (`truth_data_history_new`, `truth_data_history_raw`, `prod_truth_data`, `truth_data_false_positives`); `truth_data_history` is the one to use unless told otherwise. The session summary in Snowflake has only `SESSION_IS_LEGIT`, which is **Arkose's own decision, not the customer's label**.
 
 Each case has a key, a time window (UTC) and a signature, so it can be replayed. "Expected" is what a correct rule set should do. Verify rates are indicators only: several of these attacks verified at high rates.
 
