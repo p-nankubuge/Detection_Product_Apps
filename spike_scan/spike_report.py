@@ -1004,7 +1004,7 @@ def uaja4_notes(r):
         notes.append("UA says headless browser")
     if r["fam_n"] < 50:
         notes.append("JA4 rare outside this traffic (%d sessions across all keys in the baseline slice)" % r["fam_n"])
-    elif r["fam_share"] >= 0.8 and _family(br) != r["fam_browser"]:
+    elif r["fam_share"] >= 0.6 and _family(br) != r["fam_browser"]:
         notes.append("claims %s but this JA4 is %.0f%% %s across all keys" % (br, 100 * r["fam_share"], r["fam_browser"]))
     if r["claims_n"] >= 10 and r["flagged"] / r["claims_n"] <= 2000:
         notes.append("%d different browser/version claims on one TLS fingerprint (UA rotation)" % r["claims_n"])
@@ -1033,8 +1033,12 @@ def ja4_rotation(rows):
         if len(close) >= 4:
             asn = collections.Counter(x["top_asn"] for x in close).most_common(1)[0][0]
             ver = sum(x["flag_ver"] for x in close) / max(1, sum(x["flagged"] for x in close))
-            out.append("JA4 rotation: %d fingerprints with the same cipher set (%s…) and near-equal volume (~%s each, %.0f%% verified, mostly ASN %s): one tool varying its TLS extensions"
-                       % (len(close), g, fmt(med), 100 * ver, asn or "?"))
+            if ver >= 0.5:
+                out.append("%d fingerprints with the same cipher set (%s…) and near-equal volume (~%s each) but %.0f%% verified: most likely normal Chrome TLS variants (field trials), not rotation"
+                           % (len(close), g, fmt(med), 100 * ver))
+            else:
+                out.append("JA4 rotation: %d fingerprints with the same cipher set (%s…) and near-equal volume (~%s each, %.0f%% verified, mostly ASN %s): one tool varying its TLS extensions"
+                           % (len(close), g, fmt(med), 100 * ver, asn or "?"))
     return " | ".join(out)
 
 
@@ -1198,7 +1202,15 @@ def cmd_focus(a):
         tr = [totals.get((d, k)) for d in bd + wd]
         bmed = sorted([t for t in tr[:7] if t]) or [0]; bmed = bmed[len(bmed) // 2]
         traffic = " ".join("%s:%s" % (d[5:], fmt(t) if t is not None else "–") for d, t in zip(bd + wd, tr))
-        kd = [r for r in drops if r["public_key"] == k]
+        kd = []
+        for r in drops:
+            if r["public_key"] != k:
+                continue
+            if r["kind"] == "D":  # same weekday last week also low -> normal weekly pattern, not a drop
+                prev = totals.get((str(dt.date.fromisoformat(r["when"]) - dt.timedelta(days=7)), k))
+                if prev is not None and int(r["sessions"]) >= 0.5 * prev:
+                    continue
+            kd.append(r)
         # combinations
         crow = []
         for cid, c in combos.items():
@@ -1239,7 +1251,7 @@ def cmd_focus(a):
         body.append(('<table class="share"><tr><th>Anomaly</th><th class="n">Baseline</th><th class="n">Window</th><th class="n">Peak day</th><th class="n">Sessions/day</th><th class="n">Verified</th><th></th></tr>%s</table>' % arow)
                     if arow else '<p class="muted">%s</p>' % ("No anomaly rate jumped (≥2× and +2 points) or stands above 20%." if e else "Anomaly profile not pulled."))
         body.append('<h3 class="sec">Tracked signal combinations on this key</h3>')
-        body.append(('<table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr>%s</table>' % "".join(crow))
+        body.append(('<table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2%% rule</th></tr>%s</table>' % "".join(crow))
                     if crow else '<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>')
         for cid in combos:
             body += uaja4_section_key(cid, k, a.run, names)

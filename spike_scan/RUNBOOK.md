@@ -150,6 +150,18 @@ Work from the repo root, `cd spike_scan`.
    chromium / webkit / firefox, from a 6h baseline slice). A JA4 does not carry a browser version, only the TLS stack, so the check is
    family consistency + rotation + client-hint consistency + concentration. A cohort that is >=30% verified with nothing odd in UA/JA4 is
    called out as a possible FP. The pack shows the table under each combination.
+7f. **Attribute anomalies + key focus report (from 2026-11-24).** For a list of keys (one public_key per line):
+   `python3 render.py sql/08_key_anomaly_profile.sql --win-start <D-4> --win-end <D> --keys <file> [--sample N]` -> `execute_sql`
+   -> `python3 spike_report.py anomaly --run <D> --packed '<cell>' [--sample N]` (-> `data/key_anomalies.json`). Split by KEYS, never by
+   dates (the CAPI baseline needs the baseline days); small keys in groups of 3-4, keys over ~1M/day alone with `--sample 25`, Uber SMS
+   size (10M+/day) with `--sample 5`. Per key and day it counts: CAPI version off the key's usual one, navigator language != Accept-Language,
+   browser vs IP timezone region, JS UA != HTTP UA header, sec-ch-ua != UA version, fake browser/OS/resolution, navigator.platform != OS,
+   software WebGL renderer, renderer inconsistent with OS, no renderer, hosting, proxy/VPN, headless. A finding is a rate that is >=2x its
+   median baseline day and +2 points (>=300/day), or stands above 20%. A CAPI change to the version most keys moved to (or >=90% verified)
+   is a platform release, not an anomaly. Then `python3 spike_report.py focus --keys <file> --win-start <D-4> --win-end <D> --run <D>
+   --summary data/focus_summary_<D>.json` -> `reports/focus_<D>.html`: per key traffic + drops (weekend dips ignored), anomalies, tracked
+   combinations with the 2% rule, and UA vs JA4 for its biggest combination (07, `uaja4-targets --keys <file> --chart --min-flagged 500`).
+   A JA4 group with near-equal volumes that is >=50% verified is usually normal Chrome TLS variants, not rotation.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)

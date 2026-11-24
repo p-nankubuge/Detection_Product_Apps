@@ -1,0 +1,26 @@
+{"title": "Key focus 2026-11-24 — window Nov 20-23 vs Nov 13-19 (12 keys, Roblox excluded)",
+ "sections": [
+  {"h": "Attacks",
+   "items": [
+    "Uber SMS (Key 1): volumetric and growing. All sessions 12.6M/day -> 19M, 26M, 21M, 35M, 70M (Nov 18-23); verified share 55% -> 19%. The ends-cl combination flags ~4.5M/day at ~1% verified. One JA4 (t13d1517h2_8daaf6152771_cb7bf5808d99, 'Chrome 148' with 51 different UA claims, mostly Vietnam) carries 4.35M flagged sessions in 2 days at 0% verified, plus a 12-fingerprint rotation group (~5.5k each, 8% verified). New in the window: no WebGL renderer 2% -> 10% (peak 31%), navigator.platform != OS 1% -> 7% (peak 24%), JS UA != HTTP UA header 0.3% -> 2.6%, renderer inconsistent with OS. Mostly blocked, but at 70M/day even 1% getting through is ~700k sessions.",
+    "Blizzard ROW Support Site (Key 3): bot wave with rotating TLS fingerprints. Up to 366k/day (Nov 18) and 332k (Nov 23) at 26-29% verified. Language != Accept-Language 6% -> 30% (peak 46%), sec-ch-ua != UA version 1.5% -> 16%, SwiftShader software renderer 6% -> 19% (now the key's most common renderer). The webgl + dp-spoof combination (28k/day) is 15 JA4s with the same cipher set and ~5.3k each, all 'Chrome 146' with sec-ch-ua disagreeing on 96-100%, 0% verified, spread across PL/GB/CH/IT/NL - blocked.",
+    "Hcom OTP (Key 7) and Hcom Login (Key 6), Expedia: attack Nov 16-22, ended Nov 23. OTP went from ~30k/day to 150-220k/day at 16-23% verified, back to 38k at 98% verified on Nov 23. The os-spoof + pagebio combination there is one JA4 (t13d2015h2_a09f3c656075_c258b721e490) claiming Mobile Safari 17, 100% from one ASN (210644, GB), 0% verified; ~77-80% of the key's sessions were hosting/proxy IPs with platform and WebGL renderer inconsistent with the OS. Same JA4 and ASN on Login. Blocked; the Nov 23 'drop' is the attack stopping, not an outage."
+   ]},
+  {"h": "Outage, not attack",
+   "items": [
+    "Blizzard ROW Registration (Key 2): ~54k/day -> 5.3k (Nov 20), 1.1k (Nov 21), 182 (Nov 22), 13.6k (Nov 23, partial recovery). No attribute anomaly; Blizzard Login (Key 5, ~150k/day, ~59% verified) and Support were up as normal. The registration page stopped calling the key - confirm with Blizzard."
+   ]},
+  {"h": "Probably fine / false-positive side",
+   "items": [
+    "Uber Account Management (Key 2): ~0.9-1M/day at 97-99% verified. The ends-cl combination (17k/day, 64% verified) is two cohorts: a bot JA4 with 231 UA claims at 0% verified, and Chrome 156 variants (14 near-equal JA4s, ~84% verified, France) that look like normal Chrome TLS variants - possible FP on that cohort.",
+    "gtop100: dishort300 + dp-spoof + ja4-dict1 at 81% verified on one JA4 (HTTP/1.1, 'Chrome 154', 55% from ASN 208172, Singapore) - checks out as FP-ish but the single rare JA4 + one ASN is worth a look; steady 21% sec-ch-ua mismatch is the key's normal.",
+    "Amazon IDS: hosting/proxy share fell (30% -> 22%); 174k flagged in 2 days from one JA4 on one ASN (200373, US) at 24% verified - concentrated but partly verified.",
+    "BofA CashPro: one 1M burst on Nov 13 at 0% verified (blocked); ~300k/day at ~90% verified since; weekend dips are normal for this key. Highlight AI: 92k burst Nov 13 at 3% verified, ~10k/day at ~55% since. OKCupid Registration: 0% verified, 1-4k/day, no data after Nov 20."
+   ]},
+  {"h": "Notes on the new checks",
+   "items": [
+    "CAPI 4.8.0 rolled out across most keys around Nov 20 (4.7.0 -> 4.8.0), so a CAPI change to 4.8.0 is a release, not an anomaly. BofA CashPro stays on 4.6.1, gtop100 on 3.7.2, Blizzard Login on 2.18.1.",
+    "The timezone check had a case bug in this run (asia/seoul vs Asia/Seoul) and is left out; fixed for the next run.",
+    "Drop check now ignores normal weekend dips (same weekday last week also low)."
+   ]}
+ ]}
