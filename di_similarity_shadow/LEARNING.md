@@ -7,8 +7,8 @@ Each run is one sitting. Keep notes at the end of each run in `results/<date>_ru
 | Run | What you do | What you learn |
 |---|---|---|
 | 1 | One question, no agents: look at Figma's traffic by DI dictionary, OS, JA4 | How Claude queries data; what "normal" looks like on a key; why you need a baseline before judging anything |
-| 2 | One agent at a time: `whitelist-builder`, then `similarity-scorer` → the comparison table | What an agent is; why a narrow job description helps; reading a disagreement table |
-| 3 | Look inside the disagreement cells; tiebreak with truth data | Comparing doesn't tell you who's right; how to judge with labels, known cases and examples |
+| 2 | First agent: `impossible-combos` tests the JA4 part-a observations from run 1 (C2, C3, N9, N10) on Figma, scored with truth data | What an agent is; turning a hunch into a rule; uplift vs false positives |
+| 3 | `whitelist-builder` then `similarity-scorer` → the comparison table; look inside the disagreement cells, tiebreak with truth data | Agents in sequence; comparing doesn't tell you who's right |
 | 4 | Improve the agents from what went wrong; re-run | Coaching an agent file is the main skill; how to measure whether a change helped |
 | 5 | Run the team together ("use a workflow") on a second key and a second day; measure drift | When several agents pay off; how to measure drift; turning the run into a repeatable prototype |
 

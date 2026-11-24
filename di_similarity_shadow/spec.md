@@ -135,6 +135,10 @@ Each must be measured on clean traffic for false positives before being proposed
 | N6 | Mobile OS with no touch support | Android/iOS with `maxTouchPoints = 0` |
 | N7 | App UA with an implausibly old WebView | `BingSapphire/26` with `Chrome/1xx` < 140 (gtop100 fleet) |
 | N8 | Chromium UA with Safari JA4 or vice versa (overlaps C1) | |
+| N9 | Browser UA with a JA4 offering **no ALPN** (`00` at the end of JA4 part a) | `t12d520500_…` claiming Windows browser (Figma run 1) |
+| N10 | Browser UA with a cipher or extension count **outside any real browser's range** (part a digits) | `t13d3213h1_…`: 32 ciphers + h1 claiming Windows (Figma run 1). Derive the real-browser ranges from Dict 63 traffic per browser family first |
+
+**Reading JA4 part a** (e.g. `t13d1516h2`): `t`/`q` = TCP or QUIC; `13`/`12` = highest TLS version; `d`/`i` = SNI present (domain) or IP; next 2 digits = cipher count; next 2 = extension count; last 2 = ALPN (`h2`, `h1`, `h3`, `00` = none). QUIC JA4s (`q13d03…h3`) always offer 3 ciphers; that is normal, not a bot sign.
 
 ## 4. Per-dictionary × platform velocity thresholds
 
