@@ -1,0 +1,134 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Key focus 2026-11-24</title><style>
+.viz-root{color-scheme:light;--surface-1:#fcfcfb;--surface-2:#f2f1ee;--text-primary:#0b0b0b;--text-secondary:#52514e;--text-muted:#77766f;--grid:#e4e3df;--win:#f3ece4;
+--series-1:#2a78d6;--series-2:#eb6834;--series-3:#1baf7a;--series-4:#eda100;--series-5:#e87ba4;--series-6:#008300;--series-7:#6250d6;--series-8:#e34948;}
+@media (prefers-color-scheme: dark){:root:where(:not([data-theme="light"])) .viz-root{color-scheme:dark;--surface-1:#1a1a19;--surface-2:#242422;--text-primary:#f0efec;--text-secondary:#c3c2b7;--text-muted:#9a998f;--grid:#33332f;--win:#2b2620;
+--series-1:#3987e5;--series-2:#d95926;--series-3:#199e70;--series-4:#c98500;--series-5:#d55181;--series-6:#008300;--series-7:#9085e9;--series-8:#e66767;}}
+body{margin:0;font-family:Outfit,system-ui,sans-serif}
+.viz-root{background:var(--surface-1);color:var(--text-primary);padding:24px 32px;min-height:100vh}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 4px}h3{font-size:14px;margin:16px 0 6px;color:var(--text-secondary)}
+p,li,td,th{font-size:13px;line-height:1.5}.muted{color:var(--text-secondary)}
+.card{background:var(--surface-2);border-radius:8px;padding:16px 20px;margin:14px 0}
+.tiles{display:flex;gap:28px;flex-wrap:wrap;margin:8px 0}.tile b{display:block;font-size:26px}.tile span{font-size:12px;color:var(--text-secondary)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:18px}
+.chart{width:100%;height:auto}.grid{stroke:var(--grid);stroke-width:1}.axis{fill:var(--text-muted);font-size:11px}
+.win{fill:var(--win)}.line{fill:none;stroke-width:2}.dot{stroke:var(--surface-2);stroke-width:2}
+.line.s1{stroke:var(--series-1)}.dot.s1{fill:var(--series-1)}.line.s2{stroke:var(--series-2)}.dot.s2{fill:var(--series-2)}
+.dlabel{fill:var(--text-primary);font-size:11px;text-anchor:end}.hit{fill:transparent}
+.seg{rx:2}.seg:hover,.hit:hover{opacity:.85;stroke:var(--text-primary);stroke-width:1}
+.c0{fill:var(--series-1)}.sw.c0{background:var(--series-1)}.c1{fill:var(--series-2)}.sw.c1{background:var(--series-2)}.c2{fill:var(--series-3)}.sw.c2{background:var(--series-3)}.c3{fill:var(--series-4)}.sw.c3{background:var(--series-4)}.c4{fill:var(--series-5)}.sw.c4{background:var(--series-5)}.c5{fill:var(--series-6)}.sw.c5{background:var(--series-6)}.c6{fill:var(--series-7)}.sw.c6{background:var(--series-7)}.sw.cother{background:var(--text-muted)} .cother{fill:var(--text-muted)}
+.eps{margin:4px 0 8px;padding-left:18px}.eps li{font-size:12px;margin:2px 0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0}.lg{font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}.sw.s1{background:var(--series-1)}.sw.s2{background:var(--series-2)}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--grid)}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+pre{background:var(--surface-1);border-radius:6px;padding:10px;overflow:auto;font-size:12px}
+details summary{cursor:pointer;font-size:13px;color:var(--text-secondary)}
+#tip{position:fixed;pointer-events:none;background:var(--text-primary);color:var(--surface-1);font-size:12px;padding:4px 8px;border-radius:4px;display:none;z-index:9}
+.baseline{stroke:var(--text-secondary);stroke-width:1.5;stroke-dasharray:4 3}.line.partial{stroke-dasharray:3 3}.dot.hollow.s1{fill:var(--surface-2);stroke:var(--series-1)}.dot.hollow.s2{fill:var(--surface-2);stroke:var(--series-2)}.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}.kcard{background:var(--surface-2);border-radius:8px;padding:12px 16px}.kcard h3{margin:0;color:var(--text-primary)}.kstats{font-size:12px;color:var(--text-secondary);margin:2px 0 6px}.kstats b{color:var(--text-primary)}.tag{font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid var(--grid);margin-left:6px;color:var(--text-secondary)}.tag.ongoing{border-color:var(--text-primary);color:var(--text-primary);font-weight:600}.sub{font-size:11px;color:var(--text-muted);margin:8px 0 0}
+.newflag{background:#fff1c2;color:#4a3700;border:1px solid #d9a800;border-radius:4px;padding:1px 5px;display:inline-block;margin:2px 0}
+.newflag.fresh{background:#ffd54a;border-color:#a77d00;font-weight:600}.card.todo{border:2px solid #d9a800}
+.toc td a{color:var(--text-primary)}.pill{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;border:1px solid var(--grid);margin-left:6px;vertical-align:middle;color:var(--text-secondary)}
+.pill.create{background:var(--series-2);border-color:var(--series-2);color:#fff;font-weight:600}.pill.keep{background:var(--series-1);border-color:var(--series-1);color:#fff;font-weight:600}
+.action{border-left:4px solid var(--series-2);padding:8px 14px;background:var(--surface-1);border-radius:4px;margin:10px 0;font-size:13px}
+.action.keep{border-left-color:var(--series-1)}.action.hold{border-left-color:var(--text-muted)}
+.flags li{font-size:13px;margin:2px 0}.sec{border-top:1px solid var(--grid);margin-top:22px;padding-top:6px}
+section.combo{background:var(--surface-2);border-radius:10px;padding:18px 22px;margin:22px 0}
+section.combo .card{background:var(--surface-1);font-size:13px;line-height:1.5}section.combo .kcard{background:var(--surface-1)}
+@media print{.scroll{overflow:visible}details{display:block}section.combo{break-before:page}}
+
+.vd{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;font-weight:600;white-space:nowrap}
+.vd.fp-risk{background:#c62828;color:#fff}.vd.volumetric{background:#ef8a00;color:#fff}.vd.ok{background:#2e7d32;color:#fff}.vd.no-totals{background:var(--grid);color:var(--text-secondary)}
+table.share td,table.share th{font-size:12px}
+</style></head><body><div class="viz-root">
+<h1>Key focus — 2026-11-24</h1>
+<p class="muted">Generated 2026-11-24 00:45 UTC. Window <b>2026-11-20 → 2026-11-23</b> vs the 7 days before. Per key: all-session traffic and drops, attribute anomalies (CAPI version, language, timezone, UA header, client hints, fake-fingerprint flags, platform, WebGL renderer, hosting/proxy, headless), tracked signal combinations with the 2% rule, and claimed UA vs JA4 for the biggest combination.</p>
+<div class="card"><h2 style="margin-top:0">Keys</h2><table class="toc"><tr><td><a href="#k-E8A75615">Blizzard - Production - ROW Registration - Key 2</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-CF5C61EE">Blizzard - Production - ROW Login - Key 5</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-9C3260E3">Blizzard - Production - ROW Support Site  - Key 3</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-FDED3FA5">gtop100.com - Production</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-54B78A70">Highlight AI - Chat Prompt - Production - Key 1</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-B993C75A">Bank of America - Production - Beacon CashPro - ATM - Key 5</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-0C3DD163">Hcom - Production - Login - Key 6</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-F7B5AE6C">Hcom - Production - OTP - Key 7</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-301AF3D3">Match - OKCupid - Registration - Production - Key 3</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-30000F36">Uber - SMS - Production - Key 1</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-1BE2475D">Uber - Account Management - Production - Key 2</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-56938EF5">Amazon - IDS - Production - Key 2</a></td><td><span class="muted">nothing unusual</span></td></tr></table></div>
+<section class="combo" id="k-E8A75615"><h2 style="margin-top:0">Blizzard - Production - ROW Registration - Key 2</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 66.8k): 11-13:66.8k 11-14:75.2k 11-15:64.2k 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-CF5C61EE"><h2 style="margin-top:0">Blizzard - Production - ROW Login - Key 5</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 0): 11-13:– 11-14:– 11-15:– 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-9C3260E3"><h2 style="margin-top:0">Blizzard - Production - ROW Support Site  - Key 3</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 188.9k): 11-13:178.8k 11-14:315.5k 11-15:188.9k 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-FDED3FA5"><h2 style="margin-top:0">gtop100.com - Production</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 1.2M): 11-13:1.1M 11-14:1.2M 11-15:1.5M 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-54B78A70"><h2 style="margin-top:0">Highlight AI - Chat Prompt - Production - Key 1</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 25.3k): 11-13:92.1k 11-14:25.3k 11-15:6k 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-B993C75A"><h2 style="margin-top:0">Bank of America - Production - Beacon CashPro - ATM - Key 5</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 80k): 11-13:974.2k 11-14:80k 11-15:6.6k 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-0C3DD163"><h2 style="margin-top:0">Hcom - Production - Login - Key 6</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 0): 11-13:– 11-14:– 11-15:– 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-F7B5AE6C"><h2 style="margin-top:0">Hcom - Production - OTP - Key 7</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 0): 11-13:– 11-14:– 11-15:– 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-301AF3D3"><h2 style="margin-top:0">Match - OKCupid - Registration - Production - Key 3</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 2.8k): 11-13:4.4k 11-14:2.8k 11-15:2.1k 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-30000F36"><h2 style="margin-top:0">Uber - SMS - Production - Key 1</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 13.2M): 11-13:13.2M 11-14:13.4M 11-15:12.6M 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-1BE2475D"><h2 style="margin-top:0">Uber - Account Management - Production - Key 2</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 925.6k): 11-13:917.7k 11-14:950.9k 11-15:925.6k 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<section class="combo" id="k-56938EF5"><h2 style="margin-top:0">Amazon - IDS - Production - Key 2</h2>
+<p class="muted"><b>All sessions per day</b> (baseline median 2.1M): 11-13:1.7M 11-14:2.1M 11-15:2.2M 11-16:– 11-17:– 11-18:– 11-19:– 11-20:– 11-21:– 11-22:– 11-23:–</p>
+<h3 class="sec">Attribute anomalies (share of ALL the key's sessions; baseline = median day 2026-11-13 → 2026-11-19)</h3>
+<p class="muted">Anomaly profile not pulled.</p>
+<h3 class="sec">Tracked signal combinations on this key</h3>
+<p class="muted">No tracked combination ≥1k/day on this key in the window.</p>
+</section>
+<div id="tip"></div><script>
+const tip=document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+ el.addEventListener('mousemove',e=>{tip.textContent=el.dataset.tip;tip.style.display='block';tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px'});
+ el.addEventListener('mouseleave',()=>tip.style.display='none')});
+</script></div></body></html>

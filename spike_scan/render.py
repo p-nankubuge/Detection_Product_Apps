@@ -21,6 +21,7 @@ p.add_argument("--half", choices=["am", "pm"], help="03_track_exact_day: 00-12h 
 p.add_argument("--hours", help="03_track_exact_day: custom UTC hour slice, e.g. 12-18 (use when a half times out)")
 p.add_argument("--keys", help="03_track_exact_day: file with one public_key per line (per-key charts)")
 p.add_argument("--combos", help="combos.json (03_track_exact_day); uses --win-start as the day")
+p.add_argument("--sample", help="08_key_anomaly_profile: block-sample percent for very large keys (counts are scaled back)")
 p.add_argument("--recent-end", help="06_key_volume_drops: last complete hour, 'YYYY-MM-DD HH' (default: win-end 00h)")
 p.add_argument("--combo-id", help="07_ua_ja4_profile: combos.json id")
 p.add_argument("--key", help="07_ua_ja4_profile: public key")
@@ -40,6 +41,7 @@ if a.vocab:
     if len(flags) > 62:
         raise SystemExit("vocab too large for a BIGINT bitmask (max 62)")
     vals["vocab"] = ",".join("'%s'" % f.replace("'", "''") for f in flags)
+vals["sample"] = ("SAMPLE SYSTEM (%s)" % a.sample) if a.sample else ""
 # 06_key_volume_drops
 vals["window_days"] = ", ".join("('%s')" % (ws + dt.timedelta(days=i)) for i in range((we - ws).days))
 vals["recent_end"] = (a.recent_end + ":00:00") if a.recent_end else str(we) + " 00:00:00"
