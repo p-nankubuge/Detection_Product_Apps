@@ -2,7 +2,8 @@
 -- Snowflake (Superset database_id 14). Plain COUNT(*) per key, no array work.
 -- Params (render.py): {base_start} {win_start} {win_end} {window_days} {recent_end} (last complete hour, 'YYYY-MM-DD HH:00:00').
 -- Two checks, both against the key's own median:
---   D  = a window day below 40% of the key's median baseline day (baseline >= 5000 sessions/day)
+--   D  = a window day below 40% of the key's median baseline day (baseline >= 5000 sessions/day) AND below 50% of the same
+--        weekday one week earlier (so B2B keys' normal weekend dips are not reported as drops)
 --   H6 = the last 6 complete hours below 40% of the median of the same 6 hours on the 7 previous days (baseline >= 300)
 --   H1 = the last complete hour below 40% of the median of the same hour on the 7 previous days (baseline >= 100):
 --        catches a drop that started within the last hour or two (e.g. a registration page that stopped calling the key)
@@ -21,7 +22,8 @@ wd AS (SELECT column1::DATE AS d FROM VALUES {window_days}),
 day_drops AS (
   SELECT b.k, 'D' AS kind, TO_CHAR(wd.d, 'YYYY-MM-DD') AS w, COALESCE(d.n, 0) AS n, b.med
   FROM b CROSS JOIN wd LEFT JOIN d ON d.k = b.k AND d.d = wd.d
-  WHERE COALESCE(d.n, 0) < 0.4 * b.med
+  LEFT JOIN d pw ON pw.k = b.k AND pw.d = DATEADD('day', -7, wd.d)
+  WHERE COALESCE(d.n, 0) < 0.4 * b.med AND COALESCE(d.n, 0) < 0.5 * COALESCE(pw.n, b.med)
 ),
 r AS (
   SELECT PUBLIC_KEY AS k, FLOOR(TIMESTAMPDIFF('second', SESSION_TS, '{recent_end}'::TIMESTAMP_NTZ) / 86400) AS back,

@@ -1100,6 +1100,15 @@ def load_combo_name(cid):
     return cid
 
 
+# ---- attribute anomaly profile (08) ---------------------------------------------------------------
+ANOM = [("capi_off", "CAPI version differs from the key's usual one"), ("lang_mis", "navigator language ≠ Accept-Language"),
+        ("tz_mis", "browser timezone region ≠ IP timezone region"), ("ua_hdr_mis", "JS user agent ≠ HTTP User-Agent header"),
+        ("ch_mis", "sec-ch-ua version ≠ UA version"), ("fake", "fingerprint: fake browser / OS / resolution"),
+        ("plat_mis", "navigator.platform ≠ OS"), ("rend_soft", "software WebGL renderer (SwiftShader / llvmpipe / Basic Render)"),
+        ("rend_os_mis", "WebGL renderer inconsistent with OS"), ("rend_null", "no WebGL renderer"),
+        ("hosting", "hosting-provider IP"), ("proxyvpn", "proxy / VPN IP"), ("headless", "headless user agent")]
+
+
 def cmd_anomaly(a):
     db = json.loads(ANOMALY.read_text()) if ANOMALY.exists() else {}
     run = db.setdefault(a.run, {})

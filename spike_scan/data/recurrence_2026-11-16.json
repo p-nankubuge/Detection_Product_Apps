@@ -74,8 +74,8 @@
      "days": 3,
      "peak": 301242,
      "peak_day": "2026-11-14",
-     "sessions": 776687,
-     "verified": 86919
+     "sessions": 780520,
+     "verified": 87441
     }
    ],
    "gaps_days": [
@@ -165,7 +165,7 @@
      "days": 6,
      "peak": 84702,
      "peak_day": "2026-11-12",
-     "sessions": 322769,
+     "sessions": 322834,
      "verified": 0
     }
    ],
@@ -409,10 +409,10 @@
      "start": "2026-11-15",
      "end": "2026-11-15",
      "days": 1,
-     "peak": 1234,
+     "peak": 1236,
      "peak_day": "2026-11-15",
-     "sessions": 1234,
-     "verified": 653
+     "sessions": 1236,
+     "verified": 655
     }
    ],
    "gaps_days": [
@@ -792,10 +792,10 @@
      "start": "2026-11-13",
      "end": "2026-11-15",
      "days": 3,
-     "peak": 29041,
+     "peak": 30251,
      "peak_day": "2026-11-15",
-     "sessions": 59565,
-     "verified": 26598
+     "sessions": 60775,
+     "verified": 27041
     }
    ],
    "gaps_days": [
@@ -1074,8 +1074,8 @@
      "days": 3,
      "peak": 335478,
      "peak_day": "2026-11-14",
-     "sessions": 864236,
-     "verified": 98556
+     "sessions": 868507,
+     "verified": 99143
     }
    ],
    "gaps_days": [
@@ -1119,8 +1119,8 @@
      "days": 6,
      "peak": 1860828,
      "peak_day": "2026-11-10",
-     "sessions": 4562072,
-     "verified": 2028834
+     "sessions": 4562090,
+     "verified": 2028847
     }
    ],
    "gaps_days": [
@@ -1428,9 +1428,9 @@
      "start": "2026-11-15",
      "end": "2026-11-15",
      "days": 1,
-     "peak": 29053,
+     "peak": 29059,
      "peak_day": "2026-11-15",
-     "sessions": 29053,
+     "sessions": 29059,
      "verified": 7426
     }
    ],
@@ -1709,10 +1709,10 @@
      "start": "2026-11-15",
      "end": "2026-11-15",
      "days": 1,
-     "peak": 22371,
+     "peak": 22372,
      "peak_day": "2026-11-15",
-     "sessions": 22371,
-     "verified": 21349
+     "sessions": 22372,
+     "verified": 21350
     }
    ],
    "gaps_days": [
@@ -1802,10 +1802,10 @@
      "start": "2026-11-13",
      "end": "2026-11-15",
      "days": 3,
-     "peak": 30399,
-     "peak_day": "2026-11-13",
-     "sessions": 63846,
-     "verified": 27712
+     "peak": 31052,
+     "peak_day": "2026-11-15",
+     "sessions": 65064,
+     "verified": 28158
     }
    ],
    "gaps_days": [
@@ -3386,8 +3386,8 @@
      "days": 5,
      "peak": 69376,
      "peak_day": "2026-11-13",
-     "sessions": 207288,
-     "verified": 3693
+     "sessions": 207388,
+     "verified": 3698
     }
    ],
    "gaps_days": [
@@ -4005,8 +4005,8 @@
      "days": 6,
      "peak": 64194,
      "peak_day": "2026-11-14",
-     "sessions": 316655,
-     "verified": 47996
+     "sessions": 317834,
+     "verified": 48266
     }
    ],
    "gaps_days": [
@@ -4184,10 +4184,10 @@
      "start": "2026-11-15",
      "end": "2026-11-15",
      "days": 1,
-     "peak": 20808,
+     "peak": 20813,
      "peak_day": "2026-11-15",
-     "sessions": 20808,
-     "verified": 20253
+     "sessions": 20813,
+     "verified": 20256
     }
    ],
    "gaps_days": [
@@ -4903,6 +4903,41 @@
    "kind": "recurring"
   },
   {
+   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
+   "median": 0,
+   "threshold": 1000,
+   "episodes": [
+    {
+     "start": "2026-10-25",
+     "end": "2026-10-26",
+     "days": 2,
+     "peak": 29203,
+     "peak_day": "2026-10-25",
+     "sessions": 33782,
+     "verified": 22163
+    },
+    {
+     "start": "2026-11-15",
+     "end": "2026-11-15",
+     "days": 1,
+     "peak": 84766,
+     "peak_day": "2026-11-15",
+     "sessions": 84766,
+     "verified": 36128
+    }
+   ],
+   "gaps_days": [
+    21
+   ],
+   "today": [
+    0,
+    0
+   ],
+   "today_burst": false,
+   "n_episodes": 2,
+   "kind": "recurring"
+  },
+  {
    "key": "F7C0768A-A5B0-422A-BC5F-5912456296EE",
    "median": 0,
    "threshold": 1000,
@@ -4945,41 +4980,6 @@
    ],
    "today_burst": false,
    "n_episodes": 3,
-   "kind": "recurring"
-  },
-  {
-   "key": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9",
-   "median": 0,
-   "threshold": 1000,
-   "episodes": [
-    {
-     "start": "2026-10-25",
-     "end": "2026-10-26",
-     "days": 2,
-     "peak": 29203,
-     "peak_day": "2026-10-25",
-     "sessions": 33782,
-     "verified": 22163
-    },
-    {
-     "start": "2026-11-15",
-     "end": "2026-11-15",
-     "days": 1,
-     "peak": 83768,
-     "peak_day": "2026-11-15",
-     "sessions": 83768,
-     "verified": 36128
-    }
-   ],
-   "gaps_days": [
-    21
-   ],
-   "today": [
-    0,
-    0
-   ],
-   "today_burst": false,
-   "n_episodes": 2,
    "kind": "recurring"
   },
   {
@@ -5763,7 +5763,7 @@
      "days": 4,
      "peak": 3504,
      "peak_day": "2026-11-12",
-     "sessions": 11990,
+     "sessions": 12026,
      "verified": 5
     }
    ],
@@ -5844,10 +5844,10 @@
      "start": "2026-11-15",
      "end": "2026-11-15",
      "days": 1,
-     "peak": 38917,
+     "peak": 39384,
      "peak_day": "2026-11-15",
-     "sessions": 38917,
-     "verified": 578
+     "sessions": 39384,
+     "verified": 603
     }
    ],
    "gaps_days": [
@@ -6185,10 +6185,10 @@
      "start": "2026-11-14",
      "end": "2026-11-15",
      "days": 2,
-     "peak": 4946,
+     "peak": 4956,
      "peak_day": "2026-11-15",
-     "sessions": 8057,
-     "verified": 193
+     "sessions": 8067,
+     "verified": 194
     }
    ],
    "gaps_days": [
@@ -7370,9 +7370,9 @@
      "start": "2026-11-12",
      "end": "2026-11-15",
      "days": 4,
-     "peak": 5758,
+     "peak": 5859,
      "peak_day": "2026-11-15",
-     "sessions": 18396,
+     "sessions": 18497,
      "verified": 30
     }
    ],
@@ -7410,8 +7410,8 @@
      "days": 14,
      "peak": 8889,
      "peak_day": "2026-11-05",
-     "sessions": 53663,
-     "verified": 41183
+     "sessions": 53685,
+     "verified": 41204
     }
    ],
    "gaps_days": [
@@ -7706,10 +7706,10 @@
      "start": "2026-11-12",
      "end": "2026-11-15",
      "days": 4,
-     "peak": 2135,
+     "peak": 2163,
      "peak_day": "2026-11-15",
-     "sessions": 7611,
-     "verified": 1386
+     "sessions": 7639,
+     "verified": 1391
     }
    ],
    "gaps_days": [
@@ -8077,8 +8077,8 @@
      "days": 3,
      "peak": 28617,
      "peak_day": "2026-11-14",
-     "sessions": 61238,
-     "verified": 2152
+     "sessions": 61871,
+     "verified": 2181
     }
    ],
    "gaps_days": [
@@ -8162,7 +8162,7 @@
      "days": 4,
      "peak": 6800,
      "peak_day": "2026-11-14",
-     "sessions": 20043,
+     "sessions": 20189,
      "verified": 1814
     }
    ],
@@ -8184,9 +8184,9 @@
      "start": "2026-11-12",
      "end": "2026-11-15",
      "days": 4,
-     "peak": 2069,
+     "peak": 2169,
      "peak_day": "2026-11-15",
-     "sessions": 6238,
+     "sessions": 6338,
      "verified": 118
     }
    ],
@@ -8221,8 +8221,8 @@
      "days": 3,
      "peak": 42990,
      "peak_day": "2026-11-14",
-     "sessions": 112408,
-     "verified": 16982
+     "sessions": 112915,
+     "verified": 17025
     }
    ],
    "gaps_days": [
@@ -8256,8 +8256,8 @@
      "days": 7,
      "peak": 32589,
      "peak_day": "2026-11-12",
-     "sessions": 114291,
-     "verified": 13149
+     "sessions": 115111,
+     "verified": 13175
     }
    ],
    "gaps_days": [

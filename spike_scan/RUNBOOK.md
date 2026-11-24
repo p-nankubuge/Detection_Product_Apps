@@ -137,7 +137,7 @@ Work from the repo root, `cd spike_scan`.
    `python3 render.py sql/06_key_volume_drops.sql --win-start <D-4> --win-end <D> --recent-end "<D> <HH>"` with HH = the last complete hour MINUS ONE (the newest hour is still loading:
    on 2026-11-20 the 02-03h hour showed Amazon IDS and gtop100 at 5-35% of normal at 03:10) -> `execute_sql`
    (~25s) -> `python3 spike_report.py drops --run <D> --packed '<cell>'` (-> `data/key_drops.csv`). Flags a key when a window day is below
-   40% of its median baseline day (>=5k/day), or the last 6 complete hours / the last complete hour are below 40% of the same hours on the
+   40% of its median baseline day (>=5k/day) and below 50% of the same weekday a week earlier (weekend dips on B2B keys are normal), or the last 6 complete hours / the last complete hour are below 40% of the same hours on the
    7 previous days. These are outages / integration or key-config changes, not attacks: the SOC pack lists them in a "Traffic drops" card
    (with the same customer's other keys), and the share-of-traffic check skips whole-day drops for that key. Look up unnamed keys with
    `lookup_key_names` + `spike_report.py keys`. Say in the summary which drops are one key of a customer while its other keys are normal.
