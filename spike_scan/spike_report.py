@@ -28,6 +28,7 @@ CHART_COUNTS = ROOT / "data" / "chart_key_counts.csv"
 DROPS = ROOT / "data" / "key_drops.csv"  # run,public_key,kind,when,sessions,baseline (06_key_volume_drops.sql)
 UAJA4 = ROOT / "data" / "ua_ja4.json"  # {run: {"combo|key": [rows]}} (07_ua_ja4_profile.sql)
 ANOMALY = ROOT / "data" / "key_anomalies.json"  # {run: {key8: {"days": {day: [n,v,a0,v0..]}, "sample": pct, "capi": [...]}}} (08)
+COHORTS = ROOT / "data" / "cohorts.json"  # {run: {name: {key, desc, sample, daily, hourly, summ}}} (09)
 TOTALS = ROOT / "data" / "key_totals.csv"  # day,public_key,sessions: ALL Production sessions on the key (04_key_totals.sql)
 HOURLY = ROOT / "data" / "hourly_key_counts.csv"  # ts_hour,public_key,combo_id,sessions,verified (chart keys)
 HOURLY_FIELDS = ["ts_hour", "public_key", "combo_id", "sessions", "verified"]  # key-filtered exact counts + verified, for perkey
@@ -980,6 +981,57 @@ def _family(b):
     return b or "?"
 
 
+# ---- JA4 decoding ------------------------------------------------------------------------------------
+# JA4 = <a>_<b>_<c>; a = transport(t/q/d) + TLS version(13/12/11/10) + SNI(d=domain, i=IP/none) + cipher count(2) + extension count(2)
+# + ALPN first/last char (h2, h1, h3, 00 = no ALPN). b = sorted cipher list hash, c = sorted extensions + signature algorithms hash.
+JA4_STACKS = {  # cipher-list hash (b) -> TLS stack, expected cipher count, extension count range, ALPN
+    "8daaf6152771": ("chromium", "Chromium/BoringSSL", (15, 16), (15, 18), ("h2",)),
+    "55b375c5d22e": ("chromium", "Chromium QUIC (HTTP/3)", (3, 3), (11, 13), ("h3",)),
+    "a09f3c656075": ("webkit", "Safari/WebKit", (20, 20), (13, 14), ("h2",)),
+    "5b57614c22b0": ("firefox", "Firefox/NSS", (17, 17), (15, 17), ("h2",)),
+}
+
+
+def ja4_decode(ja4, claim=""):
+    """-> (short decoded text, [issues]) for one JA4 and the browser the UA claims."""
+    parts = (ja4 or "").split("_")
+    a = parts[0] if parts else ""
+    b = parts[1] if len(parts) > 1 else ""
+    if len(a) < 10:
+        return ("?", [])
+    proto, ver, sni, nc, ne, alpn = a[0], a[1:3], a[3], a[4:6], a[6:8], a[8:10]
+    try:
+        nc, ne = int(nc), int(ne)
+    except ValueError:
+        return (a, [])
+    stack = JA4_STACKS.get(b)
+    txt = "%s TLS1.%s, %s, %d ciphers, %d ext, ALPN %s, %s" % ({"t": "TCP", "q": "QUIC", "d": "DTLS"}.get(proto, proto), ver[1:] if ver[:1] == "1" else ver,
+                                                              "SNI" if sni == "d" else "no SNI", nc, ne, {"00": "none"}.get(alpn, alpn),
+                                                              stack[1] if stack else "unknown cipher set")
+    issues = []
+    browserish = _family(claim.rsplit(" ", 1)[0]) in ("chromium", "webkit", "firefox")
+    if ver != "13":
+        issues.append("TLS 1.%s, not 1.3: no current browser negotiates this" % ver[1:])
+    if sni == "i":
+        issues.append("no SNI (connected by IP): not a browser")
+    if alpn == "00":
+        issues.append("no ALPN offered: HTTP library, not a browser")
+    elif alpn == "h1" and browserish:
+        issues.append("offers only HTTP/1.1 (ALPN h1): every current browser offers h2")
+    if nc >= 25:
+        issues.append("%d ciphers: OpenSSL/library default list (browsers send 15-20)" % nc)
+    if ne < 10:
+        issues.append("only %d extensions: minimal client" % ne)
+    if browserish and not stack and b:
+        issues.append("cipher set %s is not a Chrome, Safari or Firefox stack" % b)
+    if stack and browserish and stack[0] != _family(claim.rsplit(" ", 1)[0]):
+        issues.append("claims %s but the TLS stack is %s" % (claim.rsplit(" ", 1)[0], stack[1]))
+    if stack and not (stack[2][0] <= nc <= stack[2][1] and stack[3][0] <= ne <= stack[3][1]):
+        issues.append("%s cipher set but %d ciphers / %d extensions (real one: %s / %s): impersonation library" % (
+            stack[1], nc, ne, "-".join(map(str, stack[2])), "-".join(map(str, stack[3]))))
+    return (txt, issues)
+
+
 def cmd_uaja4(a):
     db = json.loads(UAJA4.read_text()) if UAJA4.exists() else {}
     rows = []
@@ -1000,6 +1052,7 @@ def uaja4_notes(r):
     br = r["claim"].rsplit(" ", 1)[0]
     if r["flagged"] < 100:
         return notes
+    notes += ja4_decode(r["ja4"], r["claim"])[1]
     if "headless" in br.lower():
         notes.append("UA says headless browser")
     if r["fam_n"] < 50:
@@ -1013,7 +1066,7 @@ def uaja4_notes(r):
     if r["asn_share"] >= 0.5 and r["flagged"] >= 500:
         notes.append("%.0f%% from one ASN (%s)" % (100 * r["asn_share"], r["top_asn"]))
     if r["flagged"] >= 1000 and r["flag_ver"] / r["flagged"] >= 0.3 and not notes:
-        notes.append("%.0f%% verified and nothing odd in UA/JA4: check FP risk" % (100 * r["flag_ver"] / r["flagged"]))
+        notes.append("nothing odd in UA/JA4 and %.0f%% pass: either real users or an attack getting through - see the cohort profile" % (100 * r["flag_ver"] / r["flagged"]))
     return notes
 
 
@@ -1081,8 +1134,8 @@ def uaja4_section_rows(cid, k, rows, names):
     tot = sum(r["flagged"] for r in rows) or 1
     for r in [r for r in rows if r["flagged"] >= max(100, 0.005 * tot)][:10]:
         notes = uaja4_notes(r)
-        tr.append('<tr><td><code>%s</code></td><td>%s</td><td class="n">%s</td><td class="n">%.0f%%</td><td class="n">%s</td><td>%s (%.0f%%)</td><td>%s</td><td>%s</td></tr>'
-                  % (html.escape(r["ja4"]), html.escape(r["claim"]), fmt(r["flagged"]), 100 * r["flag_ver"] / max(1, r["flagged"]), fmt(r["unflagged"]),
+        tr.append('<tr><td><code>%s</code><br><span class="muted" style="font-size:11px">%s</span></td><td>%s</td><td class="n">%s</td><td class="n">%.0f%%</td><td class="n">%s</td><td>%s (%.0f%%)</td><td>%s</td><td>%s</td></tr>'
+                  % (html.escape(r["ja4"]), html.escape(ja4_decode(r["ja4"], r["claim"])[0]), html.escape(r["claim"]), fmt(r["flagged"]), 100 * r["flag_ver"] / max(1, r["flagged"]), fmt(r["unflagged"]),
                      html.escape(r["fam_browser"]), 100 * r["fam_share"], html.escape(r["top_cc"]),
                      ("<b>" + "; ".join(html.escape(n) for n in notes) + "</b>") if notes else '<span class="muted">consistent</span>'))
     rot = ja4_rotation(rows)
@@ -1270,6 +1323,7 @@ def cmd_focus(a):
         sm = json.loads(pathlib.Path(a.summary).read_text())
         doc.append('<div class="card"><h2 style="margin-top:0">%s</h2>%s</div>' % (html.escape(sm["title"]), "".join(
             '<h3>%s</h3><ul>%s</ul>' % (html.escape(x["h"]), "".join("<li>%s</li>" % html.escape(i) for i in x["items"])) for x in sm["sections"])))
+    doc += cohort_section(a.run, names, a.win_start)
     doc.append('<div class="card"><h2 style="margin-top:0">Keys</h2><table class="toc">%s</table></div>' % "".join(toc))
     doc += cards
     doc.append('<div id="tip"></div>%s</div></body></html>' % JS)
@@ -1311,6 +1365,112 @@ def focus_charts(k, e, an, chart, combos, days, win_start, bmed):
         return []
     return ['<h3 class="sec">Spike charts (%s → %s, shaded = window)</h3><div class="kgrid">' % (days[0], days[-1])] + \
            ['<div class="kcard"><h3 style="font-size:13px">%s</h3><div class="kstats">%s</div>%s</div>' % (html.escape(t), html.escape(sub), svg) for t, sub, svg in cards] + ['</div>']
+
+
+# ---- cohort profile (09): attack-likeness from session-time evidence ---------------------------------
+COHORT_S = ["n", "v", "ips", "max_ip", "devs", "max_dev", "ja4s", "claims", "hosting", "proxy", "lang_mis", "plat_mis", "soft_rend",
+            "tz_mis", "headless", "fake", "ipv_med", "top_asn", "top_asn_n", "top_ja4", "top_ja4_claim", "top_ja4_n", "top_hv", "top_hv_n",
+            "top_cc", "top_cc_n"]
+
+
+def cmd_cohort(a):
+    db = json.loads(COHORTS.read_text()) if COHORTS.exists() else {}
+    parts = dict(x.split(":", 1) for x in a.packed.strip().split("#") if ":" in x)
+    scale = 100.0 / float(a.sample) if a.sample else 1.0
+    daily = {}
+    for c in filter(None, parts.get("D", "").split(";")):
+        d, tot, n, v = c.split(",")
+        daily[d] = [round(int(tot) * scale), round(int(n) * scale), round(int(v) * scale)]
+    hourly = {}
+    for c in filter(None, parts.get("H", "").split(";")):
+        h, n, tot = c.split(",")
+        hourly[int(h)] = [int(n), int(tot)]
+    f = parts.get("S", "").split("|")
+    if len(f) != len(COHORT_S):
+        sys.exit("bad summary (%d fields)" % len(f))
+    summ = {}
+    for k, v in zip(COHORT_S, f):
+        if k in ("top_asn", "top_ja4", "top_ja4_claim", "top_hv", "top_cc"):
+            summ[k] = v
+        elif k == "ipv_med":
+            summ[k] = float(v) if v else None
+        else:
+            summ[k] = int(float(v or 0))
+    db.setdefault(a.run, {})[a.name] = {"key": a.key, "desc": a.desc, "sample": a.sample, "daily": daily, "hourly": hourly, "summ": summ}
+    COHORTS.write_text(json.dumps(db, indent=1))
+    print("cohort %s: %d days, %d hours, %d sessions in window (run %s)" % (a.name, len(daily), len(hourly), summ["n"], a.run))
+
+
+def _corr(x, y):
+    n = len(x)
+    if n < 3:
+        return None
+    mx, my = sum(x) / n, sum(y) / n
+    sx = sum((a - mx) ** 2 for a in x) ** .5; sy = sum((b - my) ** 2 for b in y) ** .5
+    return sum((a - mx) * (b - my) for a, b in zip(x, y)) / (sx * sy) if sx and sy else None
+
+
+def cohort_verdict(c, win_start):
+    """Score attack-likeness WITHOUT using the verified outcome; then say whether it is getting through."""
+    S, D = c["summ"], c["daily"]
+    n = S["n"] or 0
+    ind = []  # (name, hit, text)
+    wd = [d for d in D if d >= win_start]; bd = [d for d in D if d < win_start]
+    wmean = sum(D[d][1] for d in wd) / max(1, len(wd)); bmean = sum(D[d][1] for d in bd) / max(1, len(bd))
+    share = sum(D[d][1] for d in wd) / max(1, sum(D[d][0] for d in wd))
+    new = wmean >= 5 * max(bmean, 1) and wmean >= 500
+    ind.append(("new", new, "%s/day in the window vs %s/day before (%s)" % (fmt(wmean), fmt(bmean), "new" if new else "was already there")))
+    per_ip = n / max(1, S["ips"]); per_dev = n / max(1, S["devs"]) if S["devs"] else 0
+    asn_sh = S["top_asn_n"] / max(1, n); host = (S["hosting"] + S["proxy"]) / max(1, 2 * n)
+    conc = per_ip >= 3 or S["max_ip"] >= max(50, 0.02 * n) or asn_sh >= 0.3 or host >= 0.3 or per_dev >= 3
+    ind.append(("concentrated", conc, "%.1f sessions/IP (top IP %s), %.1f sessions/device, top ASN %s %.0f%%, hosting %.0f%% / proxy-VPN %.0f%%"
+                % (per_ip, fmt(S["max_ip"]), per_dev, S["top_asn"] or "?", 100 * asn_sh, 100 * S["hosting"] / max(1, n), 100 * S["proxy"] / max(1, n))))
+    hrs = sorted(c["hourly"]); co = [c["hourly"][h][0] for h in hrs]; kt = [c["hourly"][h][1] - c["hourly"][h][0] for h in hrs]
+    r = _corr(co, kt)
+    flat = (min(co) / max(co)) if co and max(co) else 0
+    off = (r is not None and r < 0.5) or flat >= 0.6
+    ind.append(("off-rhythm", off, "hourly correlation with the rest of the key %s, quietest/busiest hour %.2f" % ("%.2f" % r if r is not None else "n/a", flat)))
+    co_an = {k: S[k] / max(1, n) for k in ("lang_mis", "plat_mis", "soft_rend", "headless", "fake")}
+    worst = max(co_an.items(), key=lambda kv: kv[1])
+    coa = worst[1] >= 0.3
+    ind.append(("other anomalies", coa, ", ".join("%s %.0f%%" % (k, 100 * v) for k, v in co_an.items() if v >= 0.05) or "none ≥5%"))
+    jt, ji = ja4_decode(S["top_ja4"], S["top_ja4_claim"])
+    tls = bool(ji)
+    ind.append(("TLS", tls, "top JA4 %s (%s, %.0f%% of cohort): %s" % (S["top_ja4"], S["top_ja4_claim"], 100 * S["top_ja4_n"] / max(1, n), "; ".join(ji) or "consistent with the claim")))
+    rot = S["claims"] >= 20 and S["claims"] >= 3 * max(1, S["ja4s"])
+    ind.append(("UA rotation", rot, "%d browser/version claims over %d JA4s" % (S["claims"], S["ja4s"])))
+    score = sum(1 for _, h, _ in ind if h)
+    kind = "attack-like" if score >= 3 else "suspicious" if score == 2 else "user-like"
+    ver = S["v"] / max(1, n)
+    out = {"attack-like": "ATTACK getting through" if ver >= 0.2 else "attack, mostly blocked",
+           "suspicious": "suspicious, %s" % ("partly getting through" if ver >= 0.2 else "mostly blocked"),
+           "user-like": "looks like real users" + (" (low pass rate: check the challenge)" if ver < 0.2 else "")}[kind]
+    return {"score": score, "kind": kind, "verdict": out, "verified": ver, "share": share, "wmean": wmean, "bmean": bmean, "ind": ind}
+
+
+def cohort_section(run, names, win_start):
+    db = (json.loads(COHORTS.read_text()) if COHORTS.exists() else {}).get(run, {})
+    if not db:
+        return []
+    rows, cards = [], []
+    for i, (nm, c) in enumerate(sorted(db.items(), key=lambda kv: -cohort_verdict(kv[1], win_start)["score"])):
+        v = cohort_verdict(c, win_start)
+        cls = {"attack-like": "fp-risk", "suspicious": "volumetric", "user-like": "ok"}[v["kind"]]
+        rows.append('<tr><td><b>%s</b><br><span class="muted">%s</span></td><td>%s</td><td class="n">%s → %s</td><td class="n">%.1f%%</td><td class="n">%d/6</td><td class="n">%.0f%%</td><td><span class="vd %s">%s</span></td></tr>'
+                    % (html.escape(c["desc"]), html.escape(nm), html.escape(key_label(c["key"], names)), fmt(v["bmean"]), fmt(v["wmean"]), 100 * v["share"], v["score"], 100 * v["verified"], cls, html.escape(v["verdict"])))
+        days = sorted(c["daily"])
+        svg = svg_key_lines(days, [c["daily"][d][1] for d in days], [c["daily"][d][2] for d in days], v["bmean"], win_start, "coh%d" % i)
+        cards.append('<div class="kcard"><h3 style="font-size:13px">%s — %s</h3><div class="kstats">%s</div>%s<ul style="font-size:12px;margin:6px 0 0 16px;padding:0">%s</ul></div>'
+                     % (html.escape(c["desc"]), html.escape(key_label(c["key"], names)), "block-sampled %s%%, scaled" % c["sample"] if c.get("sample") else "exact",
+                        svg, "".join("<li>%s<b>%s</b>: %s</li>" % ("⚠ " if h else "", html.escape(k), html.escape(t)) for k, h, t in v["ind"])))
+    return ['<div class="card"><h2 style="margin-top:0">Is it an attack? Cohort profiles</h2>'
+            '<p class="muted">Judged on evidence available when the session starts, not on whether it ended verified (verification is an outcome: '
+            'a high pass rate can mean real users OR an attack that is getting through). Six indicators: <b>new</b> (≥5× its own baseline), '
+            '<b>concentrated</b> (sessions per IP/device, top ASN, hosting/proxy), <b>off-rhythm</b> (does not follow the key\'s hourly pattern, or flat around the clock), '
+            '<b>other anomalies</b> (language / platform / software renderer / headless / fake-fingerprint ≥30%), <b>TLS</b> (decoded JA4 does not fit the claimed browser), '
+            '<b>UA rotation</b>. 3+ = attack-like, 2 = suspicious. Only then does the verified share say whether it is getting through.</p>'
+            '<table class="share"><tr><th>Cohort</th><th>Key</th><th class="n">Sessions/day base → window</th><th class="n">Share of key</th><th class="n">Indicators</th><th class="n">Pass rate</th><th>Verdict</th></tr>%s</table>'
+            '<div class="kgrid" style="margin-top:14px">%s</div></div>' % ("".join(rows), "".join(cards))]
 
 
 def uaja4_section_key(cid, key, run, names):
@@ -1478,6 +1638,7 @@ def main():
     ut = sp.add_parser("uaja4-targets", help="pick combination x key pairs for 07"); ut.add_argument("--win-start", required=True); ut.add_argument("--win-end", required=True); ut.add_argument("--n", type=int, default=5); ut.add_argument("--keys", help="only these keys"); ut.add_argument("--chart", action="store_true", help="use chart_key_counts.csv"); ut.add_argument("--min-flagged", type=int, default=5000)
     an = sp.add_parser("anomaly", help="save 08_key_anomaly_profile.sql output"); an.add_argument("--run", required=True); an.add_argument("--packed", required=True); an.add_argument("--sample", help="block-sample percent the query was rendered with")
     fo = sp.add_parser("focus", help="focused HTML for a list of keys"); fo.add_argument("--keys", required=True); fo.add_argument("--win-start", required=True); fo.add_argument("--win-end", required=True); fo.add_argument("--run", required=True); fo.add_argument("--summary")
+    co = sp.add_parser("cohort", help="save 09_cohort_profile.sql output"); co.add_argument("--run", required=True); co.add_argument("--name", required=True); co.add_argument("--key", required=True); co.add_argument("--desc", required=True); co.add_argument("--packed", required=True); co.add_argument("--sample")
     k = sp.add_parser("keys"); k.add_argument("--names", required=True)
     m = sp.add_parser("missing"); m.add_argument("--since", required=True)
     r = sp.add_parser("report"); r.add_argument("--win-start", required=True); r.add_argument("--win-end", required=True); r.add_argument("--discovery")
@@ -1493,7 +1654,7 @@ def main():
     so.add_argument("--chart-start", help="first day of the per-key daily charts (default: 7 days before --win-start)")
     so.add_argument("--summary", help="JSON {title, sections: [{h, items: [text]}]} shown as a card above the action table")
     a = p.parse_args()
-    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc, "totals": cmd_totals, "totals-keys": cmd_totals_keys, "share": cmd_share, "drops": cmd_drops, "uaja4": cmd_uaja4, "uaja4-targets": cmd_uaja4_targets, "anomaly": cmd_anomaly, "focus": cmd_focus}[a.cmd](a)
+    {"ingest": cmd_ingest, "keys": cmd_keys, "missing": cmd_missing, "report": cmd_report, "perkey": cmd_perkey, "hourly": cmd_hourly, "recurrence": cmd_recurrence, "soc": cmd_soc, "totals": cmd_totals, "totals-keys": cmd_totals_keys, "share": cmd_share, "drops": cmd_drops, "uaja4": cmd_uaja4, "uaja4-targets": cmd_uaja4_targets, "anomaly": cmd_anomaly, "focus": cmd_focus, "cohort": cmd_cohort}[a.cmd](a)
 
 
 if __name__ == "__main__":

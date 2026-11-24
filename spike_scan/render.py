@@ -24,7 +24,8 @@ p.add_argument("--combos", help="combos.json (03_track_exact_day); uses --win-st
 p.add_argument("--sample", help="08_key_anomaly_profile: block-sample percent for very large keys (counts are scaled back)")
 p.add_argument("--recent-end", help="06_key_volume_drops: last complete hour, 'YYYY-MM-DD HH' (default: win-end 00h)")
 p.add_argument("--combo-id", help="07_ua_ja4_profile: combos.json id")
-p.add_argument("--key", help="07_ua_ja4_profile: public key")
+p.add_argument("--key", help="07_ua_ja4_profile / 09_cohort_profile: public key")
+p.add_argument("--cond", help="09_cohort_profile: SQL predicate defining the cohort (instead of --combo-id)")
 a = p.parse_args()
 
 ws = dt.date.fromisoformat(a.win_start)
@@ -54,6 +55,9 @@ if a.combo_id:
     vals["ts_from"], vals["ts_to"] = str(max(ws, we - dt.timedelta(days=2))), str(we)
     fb = ws - dt.timedelta(days=7)
     vals["fam_from"], vals["fam_to"] = "%s 12:00:00" % fb, "%s 18:00:00" % fb
+    vals["cond"] = vals["combo_cond"]
+if a.cond:
+    vals["cond"], vals["key"] = a.cond, a.key
 if a.keys and not a.combos:  # 04_key_totals.sql: plain key list
     vals["keys"] = ",".join("'%s'" % l.strip() for l in pathlib.Path(a.keys).read_text().splitlines() if l.strip())
 if a.combos:

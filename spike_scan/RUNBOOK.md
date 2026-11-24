@@ -162,6 +162,21 @@ Work from the repo root, `cd spike_scan`.
    --summary data/focus_summary_<D>.json` -> `reports/focus_<D>.html`: per key traffic + drops (weekend dips ignored), anomalies, tracked
    combinations with the 2% rule, and UA vs JA4 for its biggest combination (07, `uaja4-targets --keys <file> --chart --min-flagged 500`).
    A JA4 group with near-equal volumes that is >=50% verified is usually normal Chrome TLS variants, not rotation.
+7g. **Is it an attack? (from 2026-11-24) - verified share is NOT the false-positive test.** Verification is an outcome: a high pass
+   rate means real users OR an attack that gets through (a new attack with no pressure on it often shows a HIGH pass rate). Judge a cohort
+   (a combination on a key, or any predicate such as "Direct3D renderer with a mobile UA") on session-time evidence with
+   `sql/09_cohort_profile.sql` (`render.py ... --key K --combo-id ID` or `--cond "<SQL predicate>"`, `--sample N` for keys over ~1M/day)
+   -> `spike_report.py cohort --run D --name N --key K --desc '...' --packed '<cell>' [--sample N]`. Six indicators: new (>=5x its baseline),
+   concentrated (sessions/IP, sessions/device, top ASN >=30%, hosting/proxy >=30%), off-rhythm (hourly correlation with the rest of the
+   key < 0.5, or flat around the clock), other anomalies >=30% (language, platform, software renderer, headless, fake fingerprint), TLS
+   (decoded JA4 does not fit the claimed browser), UA rotation. 3+ = attack-like, 2 = suspicious; only then the pass rate says "getting
+   through" (>=20%) or "mostly blocked". The focus report shows a "Cohort profiles" card first.
+   **JA4 decoding** (every UA/JA4 and cohort table): part a = transport (t TCP / q QUIC) + TLS version + SNI (d domain / i IP) + cipher
+   count + extension count + ALPN (h2 / h1 / h3 / 00 none); part b = cipher-set hash. Browsers: TLS 1.3, SNI, ALPN h2 (h3 on QUIC);
+   Chromium b=8daaf6152771 with 15-16 ciphers / 15-18 ext, Safari b=a09f3c656075 with 20 / 13-14, Firefox b=5b57614c22b0 with 17 / 15-17,
+   Chrome QUIC b=55b375c5d22e. Red flags: TLS 1.2 or lower, no SNI, no ALPN, ALPN h1 with a browser UA, 25+ ciphers (OpenSSL/library
+   default 30-52), < 10 extensions, a cipher set that is not a browser stack, claimed browser != stack, or a browser stack with the
+   wrong cipher/extension counts (impersonation libraries such as curl-impersonate / tls-client).
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)
