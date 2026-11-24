@@ -138,6 +138,8 @@ Each must be measured on clean traffic for false positives before being proposed
 | N9 | Browser UA with a JA4 offering **no ALPN** (`00` at the end of JA4 part a) | `t12d520500_…` claiming Windows browser (Figma run 1) |
 | N10 | Browser UA with a cipher or extension count **outside any real browser's range** (part a digits) | `t13d3213h1_…`: 32 ciphers + h1 claiming Windows (Figma run 1). Derive the real-browser ranges from Dict 63 traffic per browser family first |
 
+| N11 | Any modern browser UA (Chrome, Edge, Firefox, Safari, Opera, Brave, Samsung) with JA4 max TLS version **1.2 or lower** (`t12`, `t11`, `t10`; QUIC is always 1.3) | Broadens C3 (Chromium + `t12`) to all browsers and to TLS 1.1 / 1.0. Every major browser has offered TLS 1.3 since 2018–2020. **Expected false-positive sources to measure:** corporate TLS-inspection proxies that re-terminate TLS (the JA4 is the proxy's), old Android WebViews / embedded app clients, smart TVs. Report hits by `vpn_proxy_description` (e.g. cloud-security) and by OS version |
+
 **Reading JA4 part a** (e.g. `t13d1516h2`): `t`/`q` = TCP or QUIC; `13`/`12` = highest TLS version; `d`/`i` = SNI present (domain) or IP; next 2 digits = cipher count; next 2 = extension count; last 2 = ALPN (`h2`, `h1`, `h3`, `00` = none). QUIC JA4s (`q13d03…h3`) always offer 3 ciphers; that is normal, not a bot sign.
 
 ## 4. Per-dictionary × platform velocity thresholds
