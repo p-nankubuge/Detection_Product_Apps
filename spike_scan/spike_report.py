@@ -1467,7 +1467,7 @@ def cohort_section(run, names, win_start):
             '<p class="muted">Judged on evidence available when the session starts, not on whether it ended verified (verification is an outcome: '
             'a high pass rate can mean real users OR an attack that is getting through). Six indicators: <b>new</b> (≥5× its own baseline), '
             '<b>concentrated</b> (sessions per IP/device, top ASN, hosting/proxy), <b>off-rhythm</b> (does not follow the key\'s hourly pattern, or flat around the clock), '
-            '<b>other anomalies</b> (language / platform / software renderer / headless / fake-fingerprint ≥30%), <b>TLS</b> (decoded JA4 does not fit the claimed browser), '
+            '<b>other anomalies</b> (language / platform / software renderer / headless / fake-fingerprint ≥30%%), <b>TLS</b> (decoded JA4 does not fit the claimed browser), '
             '<b>UA rotation</b>. 3+ = attack-like, 2 = suspicious. Only then does the verified share say whether it is getting through.</p>'
             '<table class="share"><tr><th>Cohort</th><th>Key</th><th class="n">Sessions/day base → window</th><th class="n">Share of key</th><th class="n">Indicators</th><th class="n">Pass rate</th><th>Verdict</th></tr>%s</table>'
             '<div class="kgrid" style="margin-top:14px">%s</div></div>' % ("".join(rows), "".join(cards))]

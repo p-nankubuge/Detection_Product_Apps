@@ -40,8 +40,657 @@ section.combo .card{background:var(--surface-1);font-size:13px;line-height:1.5}s
 table.share td,table.share th{font-size:12px}
 </style></head><body><div class="viz-root">
 <h1>Key focus — 2026-11-24</h1>
-<p class="muted">Generated 2026-11-24 02:33 UTC. Window <b>2026-11-20 → 2026-11-23</b> vs the 7 days before. Per key: all-session traffic and drops, attribute anomalies (CAPI version, language, timezone, UA header, client hints, fake-fingerprint flags, platform, WebGL renderer, hosting/proxy, headless), tracked signal combinations with the 2% rule, and claimed UA vs JA4 for the biggest combination. CAPI <b>4.8.0</b> rolled out across most keys in this window, so a CAPI change to that version is marked as a release, not an anomaly.</p>
-<div class="card"><h2 style="margin-top:0">Key focus 2026-11-24 — window Nov 20-23 vs Nov 13-19 (12 keys, Roblox excluded)</h2><h3>Attacks</h3><ul><li>Uber SMS (Key 1): volumetric and growing. All sessions 12.6M/day -&gt; 19M, 26M, 21M, 35M, 70M (Nov 18-23); verified share 55% -&gt; 19%. The ends-cl combination flags ~4.5M/day at ~1% verified. One JA4 (t13d1517h2_8daaf6152771_cb7bf5808d99, &#x27;Chrome 148&#x27; with 51 different UA claims, mostly Vietnam) carries 4.35M flagged sessions in 2 days at 0% verified, plus a 12-fingerprint rotation group (~5.5k each, 8% verified). New in the window: no WebGL renderer 2% -&gt; 10% (peak 31%), navigator.platform != OS 1% -&gt; 7% (peak 24%), JS UA != HTTP UA header 0.3% -&gt; 2.6%, renderer inconsistent with OS. Mostly blocked, but at 70M/day even 1% getting through is ~700k sessions. The charts show the tracked combinations peaked on Nov 20-22 (ends-cl 9.1M on Nov 20) and fell back, while total traffic kept climbing to ~67-70M on Nov 23 with verified flat at ~13M/day: most of the newest volume is NOT matched by any tracked combination (it is being stopped by something else). Worth a discovery pass on this key to find the signal combination behind the Nov 22-23 growth.</li><li>Blizzard ROW Support Site (Key 3): bot wave with rotating TLS fingerprints. Up to 366k/day (Nov 18) and 332k (Nov 23) at 26-29% verified. Language != Accept-Language 6% -&gt; 30% (peak 46%), sec-ch-ua != UA version 1.5% -&gt; 16%, SwiftShader software renderer 6% -&gt; 19% (now the key&#x27;s most common renderer). The webgl + dp-spoof combination (28k/day) is 15 JA4s with the same cipher set and ~5.3k each, all &#x27;Chrome 146&#x27; with sec-ch-ua disagreeing on 96-100%, 0% verified, spread across PL/GB/CH/IT/NL - blocked.</li><li>Hcom OTP (Key 7) and Hcom Login (Key 6), Expedia: attack Nov 16-22, ended Nov 23. OTP went from ~30k/day to 150-220k/day at 16-23% verified, back to 38k at 98% verified on Nov 23. The os-spoof + pagebio combination there is one JA4 (t13d2015h2_a09f3c656075_c258b721e490) claiming Mobile Safari 17, 100% from one ASN (210644, GB), 0% verified; ~77-80% of the key&#x27;s sessions were hosting/proxy IPs with platform and WebGL renderer inconsistent with the OS. Same JA4 and ASN on Login. Blocked; the Nov 23 &#x27;drop&#x27; is the attack stopping, not an outage.</li></ul><h3>Outage, not attack</h3><ul><li>Blizzard ROW Registration (Key 2): ~54k/day -&gt; 5.3k (Nov 20), 1.1k (Nov 21), 182 (Nov 22), 13.6k (Nov 23, partial recovery). No attribute anomaly; Blizzard Login (Key 5, ~150k/day, ~59% verified) and Support were up as normal. The registration page stopped calling the key - confirm with Blizzard.</li></ul><h3>Probably fine / false-positive side</h3><ul><li>Uber Account Management (Key 2): ~0.9-1M/day at 97-99% verified. The ends-cl combination (17k/day, 64% verified) is two cohorts: a bot JA4 with 231 UA claims at 0% verified, and Chrome 156 variants (14 near-equal JA4s, ~84% verified, France) that look like normal Chrome TLS variants - possible FP on that cohort.</li><li>gtop100: dishort300 + dp-spoof + ja4-dict1 at 81% verified on one JA4 (HTTP/1.1, &#x27;Chrome 154&#x27;, 55% from ASN 208172, Singapore) - checks out as FP-ish but the single rare JA4 + one ASN is worth a look; steady 21% sec-ch-ua mismatch is the key&#x27;s normal.</li><li>Amazon IDS: hosting/proxy share fell (30% -&gt; 22%); 174k flagged in 2 days from one JA4 on one ASN (200373, US) at 24% verified - concentrated but partly verified.</li><li>BofA CashPro: one 1M burst on Nov 13 at 0% verified (blocked); ~300k/day at ~90% verified since; weekend dips are normal for this key. Highlight AI: 92k burst Nov 13 at 3% verified, ~10k/day at ~55% since. OKCupid Registration: 0% verified, 1-4k/day, no data after Nov 20.</li></ul><h3>Notes on the new checks</h3><ul><li>CAPI 4.8.0 rolled out across most keys around Nov 20 (4.7.0 -&gt; 4.8.0), so a CAPI change to 4.8.0 is a release, not an anomaly. BofA CashPro stays on 4.6.1, gtop100 on 3.7.2, Blizzard Login on 2.18.1.</li><li>The timezone check had a case bug in this run (asia/seoul vs Asia/Seoul) and is left out; fixed for the next run.</li><li>Drop check now ignores normal weekend dips (same weekday last week also low).</li></ul></div>
+<p class="muted">Generated 2026-11-24 23:02 UTC. Window <b>2026-11-20 → 2026-11-23</b> vs the 7 days before. Per key: all-session traffic and drops, attribute anomalies (CAPI version, language, timezone, UA header, client hints, fake-fingerprint flags, platform, WebGL renderer, hosting/proxy, headless), tracked signal combinations with the 2% rule, and claimed UA vs JA4 for the biggest combination. CAPI <b>4.8.0</b> rolled out across most keys in this window, so a CAPI change to that version is marked as a release, not an anomaly.</p>
+<div class="card"><h2 style="margin-top:0">Key focus 2026-11-24 — window Nov 20-23 vs Nov 13-19 (12 keys; Roblox keys only in the Direct3D cohort check)</h2><h3>Read first: cohort verdicts use session-time evidence, not the verified outcome</h3><ul><li>Uber SMS - Direct3D renderer with a non-Windows UA: ATTACK GETTING THROUGH (5/6 indicators). ~26k/day -&gt; ~600k/day, does not follow the key&#x27;s daily rhythm, platform/fake-fingerprint anomalies on ~48%, top JA4 t13d3013h1_1d37bd780c83 claims &#x27;Chrome Mobile 158&#x27; but offers only HTTP/1.1 with 30 ciphers (an HTTP library, not a phone) - and ~45% of it verifies. This is the clearest case of a high pass rate meaning the attack works, not that it is legitimate.</li><li>gtop100 - dishort300 + dp-spoof + ja4-dict1: ATTACK GETTING THROUGH (3/6), not the FP I first called it. ~680 sessions per IP, 90% hosting/proxy, 55% one ASN (208172), flat around the clock, one JA4 that is not a browser (HTTP/1.1 only, unknown 18-cipher stack) claiming Chrome 154 - and 83% verifies. Steady since before the window, so it is an ongoing scraper/farm, not a new spike.</li><li>Uber SMS - ends-cl combination: attack, mostly blocked (4/6): 0.7M -&gt; 4.6M/day, ~14 sessions/IP, platform mismatch 53%, ~1% verified. The real Chrome TLS stack (JA4 consistent) means real automated Chrome, caught by the other signals.</li><li>Roblox Signup - Direct3D with a non-Windows UA: suspicious, mostly blocked (~58k/day, 7.7 sessions/IP, off-rhythm, 11% verified). Uber Account Management - ends-cl: suspicious, partly getting through (off-rhythm, language mismatch on 70%, 66% verified) - worth a closer look rather than an FP call.</li><li>Uber SMS - mobile GPU with a Windows UA: looks like real users (follows the daily rhythm, spread out, normal TLS) despite being new - likely a client/WebView change; low pass rate means the challenge is hard for them, so do NOT add pressure on this signal alone.</li></ul><h3>Attacks</h3><ul><li>Uber SMS (Key 1): volumetric and growing. All sessions 12.6M/day -&gt; 19M, 26M, 21M, 35M, 70M (Nov 18-23); verified share 55% -&gt; 19%. The ends-cl combination flags ~4.5M/day at ~1% verified. One JA4 (t13d1517h2_8daaf6152771_cb7bf5808d99, &#x27;Chrome 148&#x27; with 51 different UA claims, mostly Vietnam) carries 4.35M flagged sessions in 2 days at 0% verified, plus a 12-fingerprint rotation group (~5.5k each, 8% verified). New in the window: no WebGL renderer 2% -&gt; 10% (peak 31%), navigator.platform != OS 1% -&gt; 7% (peak 24%), JS UA != HTTP UA header 0.3% -&gt; 2.6%, renderer inconsistent with OS. Mostly blocked, but at 70M/day even 1% getting through is ~700k sessions. The charts show the tracked combinations peaked on Nov 20-22 (ends-cl 9.1M on Nov 20) and fell back, while total traffic kept climbing to ~67-70M on Nov 23 with verified flat at ~13M/day: most of the newest volume is NOT matched by any tracked combination (it is being stopped by something else). Worth a discovery pass on this key to find the signal combination behind the Nov 22-23 growth.</li><li>Blizzard ROW Support Site (Key 3): bot wave with rotating TLS fingerprints. Up to 366k/day (Nov 18) and 332k (Nov 23) at 26-29% verified. Language != Accept-Language 6% -&gt; 30% (peak 46%), sec-ch-ua != UA version 1.5% -&gt; 16%, SwiftShader software renderer 6% -&gt; 19% (now the key&#x27;s most common renderer). The webgl + dp-spoof combination (28k/day) is 15 JA4s with the same cipher set and ~5.3k each, all &#x27;Chrome 146&#x27; with sec-ch-ua disagreeing on 96-100%, 0% verified, spread across PL/GB/CH/IT/NL - blocked.</li><li>Hcom OTP (Key 7) and Hcom Login (Key 6), Expedia: attack Nov 16-22, ended Nov 23. OTP went from ~30k/day to 150-220k/day at 16-23% verified, back to 38k at 98% verified on Nov 23. The os-spoof + pagebio combination there is one JA4 (t13d2015h2_a09f3c656075_c258b721e490) claiming Mobile Safari 17, 100% from one ASN (210644, GB), 0% verified; ~77-80% of the key&#x27;s sessions were hosting/proxy IPs with platform and WebGL renderer inconsistent with the OS. Same JA4 and ASN on Login. Blocked; the Nov 23 &#x27;drop&#x27; is the attack stopping, not an outage.</li></ul><h3>Outage, not attack</h3><ul><li>Blizzard ROW Registration (Key 2): ~54k/day -&gt; 5.3k (Nov 20), 1.1k (Nov 21), 182 (Nov 22), 13.6k (Nov 23, partial recovery). No attribute anomaly; Blizzard Login (Key 5, ~150k/day, ~59% verified) and Support were up as normal. The registration page stopped calling the key - confirm with Blizzard.</li></ul><h3>Lower concern</h3><ul><li>Uber Account Management (Key 2): the key itself is ~0.9-1M/day at 97-99% verified; the ends-cl cohort on it is now &#x27;suspicious, partly getting through&#x27; (see the cohort card) - earlier &#x27;possible FP&#x27; call withdrawn.</li><li>Amazon IDS: hosting/proxy share fell (30% -&gt; 22%); 174k flagged in 2 days from one JA4 on one ASN (200373, US) at 24% verified - concentrated but partly verified.</li><li>BofA CashPro: one 1M burst on Nov 13 at 0% verified (blocked); ~300k/day at ~90% verified since; weekend dips are normal for this key. Highlight AI: 92k burst Nov 13 at 3% verified, ~10k/day at ~55% since. OKCupid Registration: 0% verified, 1-4k/day, no data after Nov 20.</li></ul><h3>Notes on the new checks</h3><ul><li>CAPI 4.8.0 rolled out across most keys around Nov 20 (4.7.0 -&gt; 4.8.0), so a CAPI change to 4.8.0 is a release, not an anomaly. BofA CashPro stays on 4.6.1, gtop100 on 3.7.2, Blizzard Login on 2.18.1.</li><li>The timezone check had a case bug in this run (asia/seoul vs Asia/Seoul) and is left out; fixed for the next run.</li><li>Drop check now ignores normal weekend dips (same weekday last week also low).</li></ul></div>
+<div class="card"><h2 style="margin-top:0">Is it an attack? Cohort profiles</h2><p class="muted">Judged on evidence available when the session starts, not on whether it ended verified (verification is an outcome: a high pass rate can mean real users OR an attack that is getting through). Six indicators: <b>new</b> (≥5× its own baseline), <b>concentrated</b> (sessions per IP/device, top ASN, hosting/proxy), <b>off-rhythm</b> (does not follow the key's hourly pattern, or flat around the clock), <b>other anomalies</b> (language / platform / software renderer / headless / fake-fingerprint ≥30%), <b>TLS</b> (decoded JA4 does not fit the claimed browser), <b>UA rotation</b>. 3+ = attack-like, 2 = suspicious. Only then does the verified share say whether it is getting through.</p><table class="share"><tr><th>Cohort</th><th>Key</th><th class="n">Sessions/day base → window</th><th class="n">Share of key</th><th class="n">Indicators</th><th class="n">Pass rate</th><th>Verdict</th></tr><tr><td><b>Direct3D renderer with non-Windows UA</b><br><span class="muted">ubersms_d3d_nonwin</span></td><td>Uber - SMS - Production - Key 1</td><td class="n">26.4k → 598k</td><td class="n">1.6%</td><td class="n">5/6</td><td class="n">45%</td><td><span class="vd fp-risk">ATTACK getting through</span></td></tr><tr><td><b>combination ends_cl_ct_before_cl_tz_grease</b><br><span class="muted">ends_cl_ct_before_cl_tz_grease_30000F36</span></td><td>Uber - SMS - Production - Key 1</td><td class="n">694.4k → 4.6M</td><td class="n">12.5%</td><td class="n">4/6</td><td class="n">1%</td><td><span class="vd fp-risk">attack, mostly blocked</span></td></tr><tr><td><b>Direct3D renderer with iPadOS/iOS/Android UA</b><br><span class="muted">amz_d3d_mobile</span></td><td>Amazon - IDS - Production - Key 2</td><td class="n">169.6k → 122.1k</td><td class="n">8.1%</td><td class="n">4/6</td><td class="n">20%</td><td><span class="vd fp-risk">attack, mostly blocked</span></td></tr><tr><td><b>combination dishort300_dp_spoof_ja4_dict1</b><br><span class="muted">dishort300_dp_spoof_ja4_dict1_FDED3FA5</span></td><td>gtop100.com - Production</td><td class="n">13.1k → 12.7k</td><td class="n">1.2%</td><td class="n">3/6</td><td class="n">83%</td><td><span class="vd fp-risk">ATTACK getting through</span></td></tr><tr><td><b>combination os_spoof_pagebio</b><br><span class="muted">os_spoof_pagebio_F7B5AE6C</span></td><td>Hcom - Production - OTP - Key 7</td><td class="n">93.1k → 103.4k</td><td class="n">75.8%</td><td class="n">3/6</td><td class="n">0%</td><td><span class="vd fp-risk">attack, mostly blocked</span></td></tr><tr><td><b>combination secchua_webgl_dp_spoof</b><br><span class="muted">secchua_webgl_dp_spoof_9C3260E3</span></td><td>Blizzard - Production - ROW Support Site  - Key 3</td><td class="n">18.3k → 24.8k</td><td class="n">12.4%</td><td class="n">3/6</td><td class="n">0%</td><td><span class="vd fp-risk">attack, mostly blocked</span></td></tr><tr><td><b>combination os_spoof_pagebio</b><br><span class="muted">os_spoof_pagebio_0C3DD163</span></td><td>Hcom - Production - Login - Key 6</td><td class="n">3.7k → 3.9k</td><td class="n">51.7%</td><td class="n">3/6</td><td class="n">0%</td><td><span class="vd fp-risk">attack, mostly blocked</span></td></tr><tr><td><b>Direct3D renderer with non-Windows UA</b><br><span class="muted">rsu_d3d_nonwin</span></td><td>Roblox Signup - Key 2</td><td class="n">26.6k → 58k</td><td class="n">4.6%</td><td class="n">2/6</td><td class="n">11%</td><td><span class="vd volumetric">suspicious, mostly blocked</span></td></tr><tr><td><b>combination ends_cl_ct_before_cl_tz_grease</b><br><span class="muted">ends_cl_ct_before_cl_tz_grease_1BE2475D</span></td><td>Uber - Account Management - Production - Key 2</td><td class="n">36.6k → 17.9k</td><td class="n">2.0%</td><td class="n">2/6</td><td class="n">66%</td><td><span class="vd volumetric">suspicious, partly getting through</span></td></tr><tr><td><b>combination ends_cl_ct_before_cl_tz_grease</b><br><span class="muted">ends_cl_ct_before_cl_tz_grease_56938EF5</span></td><td>Amazon - IDS - Production - Key 2</td><td class="n">232.7k → 238.3k</td><td class="n">16.0%</td><td class="n">2/6</td><td class="n">19%</td><td><span class="vd volumetric">suspicious, mostly blocked</span></td></tr><tr><td><b>Mobile GPU (Mali/PowerVR/Adreno w/o D3D) with Windows UA</b><br><span class="muted">ubersms_mobilegpu_win</span></td><td>Uber - SMS - Production - Key 1</td><td class="n">7.7k → 260.7k</td><td class="n">0.7%</td><td class="n">1/6</td><td class="n">6%</td><td><span class="vd ok">looks like real users (low pass rate: check the challenge)</span></td></tr><tr><td><b>combination ends_cl_ct_before_cl_tz_grease</b><br><span class="muted">ends_cl_ct_before_cl_tz_grease_54B78A70</span></td><td>Highlight AI - Chat Prompt - Production - Key 1</td><td class="n">16.5k → 4k</td><td class="n">39.4%</td><td class="n">1/6</td><td class="n">0%</td><td><span class="vd ok">looks like real users (low pass rate: check the challenge)</span></td></tr></table><div class="kgrid" style="margin-top:14px"><div class="kcard"><h3 style="font-size:13px">Direct3D renderer with non-Windows UA — Uber - SMS - Production - Key 1</h3><div class="kstats">block-sampled 5%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh0-t">
+<title id="coh0-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">601.8k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">1.2M</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="171.0" y2="171.0" class="baseline"/>
+<text x="52" y="167.0" class="axis">baseline avg 26.4k</text>
+<polyline points="48.0,171.1 84.4,167.8 120.8,171.0 157.2,171.9 193.6,171.7 230.0,171.9 266.4,171.8 302.8,171.7 339.2,45.9 375.6,170.5 412.0,38.3" class="line s1"/>
+<circle cx="48.0" cy="171.1" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="167.8" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="171.0" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="171.9" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="171.7" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="171.9" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="171.8" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="171.7" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="45.9" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="170.5" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="38.3" r="3.5" class="dot s1"/>
+<polyline points="48.0,172.5 84.4,172.2 120.8,171.9 157.2,172.6 193.6,172.4 230.0,172.5 266.4,172.6 302.8,172.7 339.2,91.8 375.6,172.3 412.0,138.0" class="line s2"/>
+<circle cx="48.0" cy="172.5" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="172.2" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="171.9" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="172.6" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="172.4" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="172.5" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="172.6" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="172.7" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="91.8" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="172.3" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="138.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="42.3" class="axis">created</text>
+<text x="418.0" y="142.0" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 25,600 · verified 13,280 (52%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 54,960 · verified 16,020 (29%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 26,780 · verified 18,360 (69%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 18,800 · verified 12,260 (65%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 20,260 · verified 13,880 (69%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 18,720 · verified 13,360 (71%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 19,520 · verified 12,040 (62%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 20,740 · verified 11,260 (54%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 1,136,320 · verified 729,380 (64%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 31,220 · verified 14,940 (48%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 1,203,620 · verified 319,300 (27%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li>⚠ <b>new</b>: 598k/day in the window vs 26.4k/day before (new)</li><li>⚠ <b>concentrated</b>: 2.2 sessions/IP (top IP 655), 49.6 sessions/device, top ASN 9121 12%, hosting 1% / proxy-VPN 1%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key 0.14, quietest/busiest hour 0.00</li><li>⚠ <b>other anomalies</b>: plat_mis 48%, fake 48%</li><li>⚠ <b>TLS</b>: top JA4 t13d3013h1_1d37bd780c83_8537cf56674e (Chrome Mobile 158, 47% of cohort): offers only HTTP/1.1 (ALPN h1): every current browser offers h2; 30 ciphers: OpenSSL/library default list (browsers send 15-20); cipher set 1d37bd780c83 is not a Chrome, Safari or Firefox stack</li><li><b>UA rotation</b>: 48 browser/version claims over 55 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">combination ends_cl_ct_before_cl_tz_grease — Uber - SMS - Production - Key 1</h3><div class="kstats">block-sampled 5%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh1-t">
+<title id="coh1-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">4.5M</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">8.9M</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="163.4" y2="163.4" class="baseline"/>
+<text x="52" y="159.4" class="axis">baseline avg 694.4k</text>
+<polyline points="48.0,173.3 84.4,173.2 120.8,173.4 157.2,170.9 193.6,169.5 230.0,168.1 266.4,115.7 302.8,38.3 339.2,100.7 375.6,126.6 412.0,148.7" class="line s1"/>
+<circle cx="48.0" cy="173.3" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="173.2" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="173.4" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="170.9" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="169.5" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="168.1" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="115.7" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="100.7" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="126.6" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="148.7" r="3.5" class="dot s1"/>
+<polyline points="48.0,173.9 84.4,173.8 120.8,173.6 157.2,173.2 193.6,173.3 230.0,173.3 266.4,166.1 302.8,171.8 339.2,173.9 375.6,173.7 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="173.8" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="173.6" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="173.2" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="173.3" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="173.3" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="166.1" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="171.8" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="173.7" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="152.7" class="axis">created</text>
+<text x="418.0" y="178.0" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 47,640 · verified 8,920 (19%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 52,180 · verified 14,100 (27%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 41,820 · verified 25,000 (60%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 201,320 · verified 50,440 (25%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 295,300 · verified 43,440 (15%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 388,980 · verified 44,260 (11%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 3,833,360 · verified 517,380 (13%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 8,922,560 · verified 145,520 (2%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 4,820,860 · verified 3,780 (0%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 3,115,860 · verified 21,600 (1%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 1,666,320 · verified 980 (0%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li>⚠ <b>new</b>: 4.6M/day in the window vs 694.4k/day before (new)</li><li>⚠ <b>concentrated</b>: 14.3 sessions/IP (top IP 216), 73.3 sessions/device, top ASN 3269 13%, hosting 2% / proxy-VPN 2%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key 0.32, quietest/busiest hour 0.43</li><li>⚠ <b>other anomalies</b>: lang_mis 19%, plat_mis 53%</li><li><b>TLS</b>: top JA4 t13d1517h2_8daaf6152771_cb7bf5808d99 (Chrome 148, 99% of cohort): consistent with the claim</li><li><b>UA rotation</b>: 63 browser/version claims over 39 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">Direct3D renderer with iPadOS/iOS/Android UA — Amazon - IDS - Production - Key 2</h3><div class="kstats">block-sampled 25%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh2-t">
+<title id="coh2-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">96.4k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">192.8k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="54.7" y2="54.7" class="baseline"/>
+<text x="52" y="50.7" class="axis">baseline avg 169.6k</text>
+<polyline points="48.0,54.5 84.4,38.3 120.8,39.7 157.2,61.3 193.6,56.8 230.0,59.7 266.4,72.5 302.8,86.9 339.2,87.5 375.6,92.7 412.0,85.3" class="line s1"/>
+<circle cx="48.0" cy="54.5" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="39.7" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="61.3" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="56.8" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="59.7" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="72.5" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="86.9" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="87.5" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="92.7" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="85.3" r="3.5" class="dot s1"/>
+<polyline points="48.0,162.5 84.4,161.7 120.8,161.6 157.2,162.3 193.6,161.6 230.0,162.0 266.4,158.6 302.8,159.4 339.2,159.7 375.6,160.6 412.0,148.2" class="line s2"/>
+<circle cx="48.0" cy="162.5" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="161.7" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="161.6" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="162.3" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="161.6" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="162.0" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="158.6" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="159.4" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="159.7" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="160.6" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="148.2" r="3.5" class="dot s2"/>
+<text x="418.0" y="89.3" class="axis">created</text>
+<text x="418.0" y="152.2" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 169,880 · verified 16,296 (10%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 192,796 · verified 17,496 (9%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 190,872 · verified 17,620 (9%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 160,236 · verified 16,644 (10%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 166,552 · verified 17,632 (11%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 162,512 · verified 17,068 (11%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 144,272 · verified 21,820 (15%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 123,796 · verified 20,740 (17%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 122,912 · verified 20,336 (17%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 115,616 · verified 19,020 (16%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 126,060 · verified 36,656 (29%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 122.1k/day in the window vs 169.6k/day before (was already there)</li><li>⚠ <b>concentrated</b>: 6.9 sessions/IP (top IP 23), 1.0 sessions/device, top ASN 394474 14%, hosting 35% / proxy-VPN 35%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key 0.42, quietest/busiest hour 0.43</li><li><b>other anomalies</b>: lang_mis 18%, plat_mis 21%</li><li>⚠ <b>TLS</b>: top JA4 t12d280700_b75078996b15_6b16546de802 (Mobile Safari , 67% of cohort): TLS 1.2, not 1.3: no current browser negotiates this; no ALPN offered: HTTP library, not a browser; 28 ciphers: OpenSSL/library default list (browsers send 15-20); only 7 extensions: minimal client; cipher set b75078996b15 is not a Chrome, Safari or Firefox stack</li><li>⚠ <b>UA rotation</b>: 273 browser/version claims over 42 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">combination dishort300_dp_spoof_ja4_dict1 — gtop100.com - Production</h3><div class="kstats">block-sampled 12%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh3-t">
+<title id="coh3-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">44.9k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">89.8k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="154.2" y2="154.2" class="baseline"/>
+<text x="52" y="150.2" class="axis">baseline avg 13.1k</text>
+<polyline points="48.0,174.0 84.4,174.0 120.8,38.3 157.2,171.2 193.6,174.0 230.0,174.0 266.4,173.6 302.8,174.0 339.2,174.0 375.6,106.5 412.0,164.7" class="line s1"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="171.2" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="173.6" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="106.5" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="164.7" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 84.4,174.0 120.8,125.5 157.2,173.4 193.6,174.0 230.0,174.0 266.4,173.6 302.8,174.0 339.2,174.0 375.6,118.3 412.0,166.1" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="125.5" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="173.4" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="173.6" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="118.3" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="166.1" r="3.5" class="dot s2"/>
+<text x="418.0" y="168.7" class="axis">created</text>
+<text x="418.0" y="180.7" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 0 · verified 0 (–)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 0 · verified 0 (–)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 89,800 · verified 32,092 (36%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 1,842 · verified 425 (23%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 0 · verified 0 (–)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 0 · verified 0 (–)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 258 · verified 233 (90%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 0 · verified 0 (–)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 0 · verified 0 (–)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 44,675 · verified 36,842 (82%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 6,183 · verified 5,250 (85%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 12.7k/day in the window vs 13.1k/day before (was already there)</li><li>⚠ <b>concentrated</b>: 678.1 sessions/IP (top IP 770), 6103.0 sessions/device, top ASN 208172 55%, hosting 90% / proxy-VPN 90%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key 0.06, quietest/busiest hour 0.00</li><li><b>other anomalies</b>: none ≥5%</li><li>⚠ <b>TLS</b>: top JA4 t13d1813h1_85036bcba153_d339722ba4af (Chrome 154, 100% of cohort): offers only HTTP/1.1 (ALPN h1): every current browser offers h2; cipher set 85036bcba153 is not a Chrome, Safari or Firefox stack</li><li><b>UA rotation</b>: 1 browser/version claims over 1 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">combination os_spoof_pagebio — Hcom - Production - OTP - Key 7</h3><div class="kstats">block-sampled 6%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh4-t">
+<title id="coh4-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">89.9k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">179.8k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="103.8" y2="103.8" class="baseline"/>
+<text x="52" y="99.8" class="axis">baseline avg 93.1k</text>
+<polyline points="48.0,174.0 84.4,174.0 120.8,173.9 157.2,78.6 193.6,40.3 230.0,47.2 266.4,38.3 302.8,83.1 339.2,72.6 375.6,54.5 412.0,173.7" class="line s1"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="173.9" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="78.6" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="40.3" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="47.2" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="83.1" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="72.6" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="54.5" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="173.7" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 84.4,174.0 120.8,174.0 157.2,174.0 193.6,174.0 230.0,174.0 266.4,174.0 302.8,174.0 339.2,174.0 375.6,174.0 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="177.7" class="axis">created</text>
+<text x="418.0" y="189.7" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 0 · verified 0 (–)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 0 · verified 0 (–)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 83 · verified 17 (20%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 126,350 · verified 0 (0%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 177,183 · verified 0 (0%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 168,033 · verified 0 (0%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 179,750 · verified 0 (0%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 120,433 · verified 0 (0%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 134,400 · verified 0 (0%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 158,383 · verified 0 (0%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 400 · verified 0 (0%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 103.4k/day in the window vs 93.1k/day before (was already there)</li><li>⚠ <b>concentrated</b>: 14.4 sessions/IP (top IP 30), 1.0 sessions/device, top ASN 210644 100%, hosting 100% / proxy-VPN 100%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key -0.28, quietest/busiest hour 0.23</li><li><b>other anomalies</b>: lang_mis 25%</li><li>⚠ <b>TLS</b>: top JA4 t13d2015h2_a09f3c656075_c258b721e490 (Mobile Safari 17, 100% of cohort): Safari/WebKit cipher set but 20 ciphers / 15 extensions (real one: 20-20 / 13-14): impersonation library</li><li><b>UA rotation</b>: 1 browser/version claims over 1 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">combination secchua_webgl_dp_spoof — Blizzard - Production - ROW Support Site  - Key 3</h3><div class="kstats">block-sampled 6%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh5-t">
+<title id="coh5-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">50k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">100k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="149.1" y2="149.1" class="baseline"/>
+<text x="52" y="145.1" class="axis">baseline avg 18.3k</text>
+<polyline points="48.0,172.3 84.4,173.5 120.8,174.0 157.2,173.8 193.6,174.0 230.0,38.3 266.4,138.0 302.8,139.0 339.2,172.9 375.6,157.6 412.0,91.8" class="line s1"/>
+<circle cx="48.0" cy="172.3" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="173.5" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="173.8" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="138.0" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="139.0" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="172.9" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="157.6" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="91.8" r="3.5" class="dot s1"/>
+<polyline points="48.0,173.9 84.4,173.9 120.8,174.0 157.2,173.8 193.6,174.0 230.0,171.9 266.4,172.7 302.8,174.0 339.2,174.0 375.6,174.0 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="173.8" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="171.9" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="172.7" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="95.8" class="axis">created</text>
+<text x="418.0" y="178.0" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 1,217 · verified 100 (8%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 350 · verified 83 (24%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 33 · verified 33 (100%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 167 · verified 117 (70%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 33 · verified 0 (0%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 100,017 · verified 1,550 (2%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 26,533 · verified 933 (4%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 25,800 · verified 0 (0%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 817 · verified 0 (0%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 12,083 · verified 0 (0%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 60,583 · verified 0 (0%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 24.8k/day in the window vs 18.3k/day before (was already there)</li><li>⚠ <b>concentrated</b>: 1.1 sessions/IP (top IP 25), 192.2 sessions/device, top ASN 6730 4%, hosting 9% / proxy-VPN 9%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key 0.31, quietest/busiest hour 0.01</li><li>⚠ <b>other anomalies</b>: soft_rend 94%</li><li><b>TLS</b>: top JA4 t13d1517h2_8daaf6152771_ff1e8fc497ec (Chrome 146, 6% of cohort): consistent with the claim</li><li><b>UA rotation</b>: 4 browser/version claims over 37 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">combination os_spoof_pagebio — Hcom - Production - Login - Key 6</h3><div class="kstats">exact</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh6-t">
+<title id="coh6-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">3.6k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">7.2k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="103.7" y2="103.7" class="baseline"/>
+<text x="52" y="99.7" class="axis">baseline avg 3.7k</text>
+<polyline points="48.0,174.0 84.4,174.0 120.8,174.0 157.2,75.0 193.6,44.4 230.0,38.3 266.4,46.2 302.8,84.1 339.2,80.5 375.6,63.1 412.0,172.9" class="line s1"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="174.0" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="75.0" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="44.4" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="46.2" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="84.1" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="80.5" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="63.1" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="172.9" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 84.4,174.0 120.8,174.0 157.2,174.0 193.6,174.0 230.0,174.0 266.4,174.0 302.8,174.0 339.2,174.0 375.6,174.0 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="176.9" class="axis">created</text>
+<text x="418.0" y="188.9" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 1 · verified 1 (100%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 0 · verified 0 (–)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 0 · verified 0 (–)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 5,252 · verified 0 (0%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 6,872 · verified 0 (0%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 7,195 · verified 0 (0%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 6,778 · verified 0 (0%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 4,766 · verified 0 (0%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 4,957 · verified 0 (0%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 5,882 · verified 0 (0%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 56 · verified 0 (0%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 3.9k/day in the window vs 3.7k/day before (was already there)</li><li>⚠ <b>concentrated</b>: 9.1 sessions/IP (top IP 22), 1.0 sessions/device, top ASN 210644 100%, hosting 100% / proxy-VPN 100%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key -0.48, quietest/busiest hour 0.33</li><li><b>other anomalies</b>: lang_mis 25%</li><li>⚠ <b>TLS</b>: top JA4 t13d2015h2_a09f3c656075_c258b721e490 (Mobile Safari 17, 100% of cohort): Safari/WebKit cipher set but 20 ciphers / 15 extensions (real one: 20-20 / 13-14): impersonation library</li><li><b>UA rotation</b>: 1 browser/version claims over 1 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">Direct3D renderer with non-Windows UA — Roblox Signup - Key 2</h3><div class="kstats">exact</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh7-t">
+<title id="coh7-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">83.1k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">166.2k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="152.3" y2="152.3" class="baseline"/>
+<text x="52" y="148.3" class="axis">baseline avg 26.6k</text>
+<polyline points="48.0,156.5 84.4,140.2 120.8,149.8 157.2,160.5 193.6,167.7 230.0,130.2 266.4,161.2 302.8,165.0 339.2,143.3 375.6,159.9 412.0,38.3" class="line s1"/>
+<circle cx="48.0" cy="156.5" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="140.2" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="149.8" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="160.5" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="167.7" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="130.2" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="161.2" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="165.0" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="143.3" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="159.9" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="38.3" r="3.5" class="dot s1"/>
+<polyline points="48.0,173.6 84.4,164.8 120.8,169.1 157.2,173.7 193.6,174.0 230.0,162.0 266.4,173.7 302.8,173.7 339.2,157.2 375.6,173.7 412.0,171.1" class="line s2"/>
+<circle cx="48.0" cy="173.6" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="164.8" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="169.1" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="173.7" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="162.0" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="173.7" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="173.7" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="157.2" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="173.7" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="171.1" r="3.5" class="dot s2"/>
+<text x="418.0" y="42.3" class="axis">created</text>
+<text x="418.0" y="175.1" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 21,476 · verified 549 (3%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 41,393 · verified 11,293 (27%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 29,682 · verified 6,017 (20%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 16,548 · verified 426 (3%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 7,741 · verified 15 (0%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 53,683 · verified 14,651 (27%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 15,669 · verified 314 (2%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 11,017 · verified 345 (3%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 37,575 · verified 20,547 (55%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 17,238 · verified 376 (2%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 166,150 · verified 3,545 (2%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 58k/day in the window vs 26.6k/day before (was already there)</li><li>⚠ <b>concentrated</b>: 7.7 sessions/IP (top IP 153), 1.7 sessions/device, top ASN 3320 13%, hosting 1% / proxy-VPN 1%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key 0.28, quietest/busiest hour 0.04</li><li><b>other anomalies</b>: soft_rend 8%</li><li><b>TLS</b>: top JA4 t13d1517h2_8daaf6152771_e1144aa4d245 (Whale Browser 4, 6% of cohort): consistent with the claim</li><li><b>UA rotation</b>: 117 browser/version claims over 52 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">combination ends_cl_ct_before_cl_tz_grease — Uber - Account Management - Production - Key 2</h3><div class="kstats">block-sampled 12%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh8-t">
+<title id="coh8-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">81k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">162k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="143.4" y2="143.4" class="baseline"/>
+<text x="52" y="139.4" class="axis">baseline avg 36.6k</text>
+<polyline points="48.0,159.0 84.4,158.8 120.8,162.8 157.2,156.2 193.6,167.9 230.0,38.3 266.4,160.7 302.8,173.6 339.2,166.8 375.6,173.3 412.0,122.5" class="line s1"/>
+<circle cx="48.0" cy="159.0" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="158.8" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="162.8" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="156.2" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="167.9" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="160.7" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="173.6" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="166.8" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="173.3" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="122.5" r="3.5" class="dot s1"/>
+<polyline points="48.0,173.9 84.4,164.6 120.8,167.3 157.2,158.0 193.6,173.9 230.0,135.8 266.4,163.8 302.8,174.0 339.2,173.6 375.6,174.0 412.0,134.6" class="line s2"/>
+<circle cx="48.0" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="164.6" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="167.3" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="158.0" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="173.9" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="135.8" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="163.8" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="173.6" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="134.6" r="3.5" class="dot s2"/>
+<text x="418.0" y="126.5" class="axis">created</text>
+<text x="418.0" y="138.6" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 17,917 · verified 83 (0%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 18,100 · verified 11,200 (62%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 13,400 · verified 8,017 (60%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 21,217 · verified 19,108 (90%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 7,292 · verified 117 (2%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 162,042 · verified 45,600 (28%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 15,942 · verified 12,133 (76%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 458 · verified 0 (0%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 8,658 · verified 467 (5%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 842 · verified 0 (0%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 61,550 · verified 47,042 (76%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 17.9k/day in the window vs 36.6k/day before (was already there)</li><li><b>concentrated</b>: 2.5 sessions/IP (top IP 18), 9.3 sessions/device, top ASN 12322 17%, hosting 2% / proxy-VPN 2%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key -0.35, quietest/busiest hour 0.00</li><li>⚠ <b>other anomalies</b>: lang_mis 70%, plat_mis 18%, soft_rend 6%</li><li><b>TLS</b>: top JA4 t13d1516h2_8daaf6152771_e5627efa2ab1 (Chrome 157, 23% of cohort): consistent with the claim</li><li><b>UA rotation</b>: 54 browser/version claims over 19 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">combination ends_cl_ct_before_cl_tz_grease — Amazon - IDS - Production - Key 2</h3><div class="kstats">block-sampled 12%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh9-t">
+<title id="coh9-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">161.2k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">322.4k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="76.1" y2="76.1" class="baseline"/>
+<text x="52" y="72.1" class="axis">baseline avg 232.7k</text>
+<polyline points="48.0,81.1 84.4,40.1 120.8,38.3 157.2,65.0 193.6,82.3 230.0,110.6 266.4,115.1 302.8,41.3 339.2,74.6 375.6,61.4 412.0,117.6" class="line s1"/>
+<circle cx="48.0" cy="81.1" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="40.1" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="65.0" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="82.3" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="110.6" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="115.1" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="41.3" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="74.6" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="61.4" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="117.6" r="3.5" class="dot s1"/>
+<polyline points="48.0,162.3 84.4,161.5 120.8,157.7 157.2,160.4 193.6,162.6 230.0,166.7 266.4,165.3 302.8,147.6 339.2,153.5 375.6,154.4 412.0,163.3" class="line s2"/>
+<circle cx="48.0" cy="162.3" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="161.5" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="157.7" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="160.4" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="162.6" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="166.7" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="165.3" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="147.6" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="153.5" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="154.4" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="163.3" r="3.5" class="dot s2"/>
+<text x="418.0" y="121.6" class="axis">created</text>
+<text x="418.0" y="167.3" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 220,808 · verified 27,817 (13%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 318,275 · verified 29,717 (9%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 322,425 · verified 38,642 (12%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 259,125 · verified 32,433 (13%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 217,917 · verified 27,042 (12%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 150,583 · verified 17,450 (12%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 140,017 · verified 20,792 (15%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 315,500 · verified 62,800 (20%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 236,192 · verified 48,667 (21%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 267,633 · verified 46,583 (17%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 134,017 · verified 25,517 (19%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 238.3k/day in the window vs 232.7k/day before (was already there)</li><li>⚠ <b>concentrated</b>: 7.0 sessions/IP (top IP 371), 1.0 sessions/device, top ASN 200373 47%, hosting 38% / proxy-VPN 38%</li><li><b>off-rhythm</b>: hourly correlation with the rest of the key 0.63, quietest/busiest hour 0.35</li><li>⚠ <b>other anomalies</b>: lang_mis 70%, plat_mis 28%, soft_rend 11%</li><li><b>TLS</b>: top JA4 t13d1517h2_8daaf6152771_dcad5a053991 (Chrome 152, 55% of cohort): consistent with the claim</li><li><b>UA rotation</b>: 60 browser/version claims over 21 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">Mobile GPU (Mali/PowerVR/Adreno w/o D3D) with Windows UA — Uber - SMS - Production - Key 1</h3><div class="kstats">block-sampled 5%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh10-t">
+<title id="coh10-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">340.6k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">681.2k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="172.5" y2="172.5" class="baseline"/>
+<text x="52" y="168.5" class="axis">baseline avg 7.7k</text>
+<polyline points="48.0,173.8 84.4,173.7 120.8,173.0 157.2,170.7 193.6,171.3 230.0,172.8 266.4,171.9 302.8,173.5 339.2,173.3 375.6,103.2 412.0,38.3" class="line s1"/>
+<circle cx="48.0" cy="173.8" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="173.7" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="173.0" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="170.7" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="171.3" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="172.8" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="171.9" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="173.5" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="173.3" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="103.2" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="38.3" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 84.4,174.0 120.8,173.8 157.2,173.1 193.6,173.3 230.0,173.7 266.4,173.8 302.8,174.0 339.2,174.0 375.6,168.8 412.0,166.6" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="173.8" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="173.1" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="173.3" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="173.7" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="173.8" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="168.8" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="166.6" r="3.5" class="dot s2"/>
+<text x="418.0" y="42.3" class="axis">created</text>
+<text x="418.0" y="170.6" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 1,040 · verified 20 (2%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 1,320 · verified 0 (0%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 5,240 · verified 1,120 (21%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 16,620 · verified 4,560 (27%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 13,560 · verified 3,740 (28%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 5,800 · verified 1,560 (27%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 10,440 · verified 820 (8%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 2,540 · verified 40 (2%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 3,720 · verified 140 (4%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 355,420 · verified 25,900 (7%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 681,220 · verified 37,100 (5%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li>⚠ <b>new</b>: 260.7k/day in the window vs 7.7k/day before (new)</li><li><b>concentrated</b>: 1.0 sessions/IP (top IP 42), 5.5 sessions/device, top ASN 28573 3%, hosting 1% / proxy-VPN 1%</li><li><b>off-rhythm</b>: hourly correlation with the rest of the key 0.80, quietest/busiest hour 0.16</li><li><b>other anomalies</b>: none ≥5%</li><li><b>TLS</b>: top JA4 t13d1517h2_8daaf6152771_92a4fdd66f79 (Chrome 154, 6% of cohort): consistent with the claim</li><li><b>UA rotation</b>: 19 browser/version claims over 93 JA4s</li></ul></div><div class="kcard"><h3 style="font-size:13px">combination ends_cl_ct_before_cl_tz_grease — Highlight AI - Chat Prompt - Production - Key 1</h3><div class="kstats">block-sampled 12%, scaled</div><svg viewBox="0 0 470 200" class="chart" role="img" aria-labelledby="coh11-t">
+<title id="coh11-t">Sessions created vs verified per day</title>
+<rect x="284.6" y="18" width="127.4" height="156" class="win"/>
+<line x1="48" x2="412" y1="174.0" y2="174.0" class="grid"/>
+<text x="42" y="178.0" class="axis" text-anchor="end">0</text>
+<line x1="48" x2="412" y1="106.2" y2="106.2" class="grid"/>
+<text x="42" y="110.2" class="axis" text-anchor="end">36.7k</text>
+<line x1="48" x2="412" y1="38.3" y2="38.3" class="grid"/>
+<text x="42" y="42.3" class="axis" text-anchor="end">73.5k</text>
+<text x="48.0" y="192" class="axis" text-anchor="middle">11-13</text>
+<text x="120.8" y="192" class="axis" text-anchor="middle">11-15</text>
+<text x="193.6" y="192" class="axis" text-anchor="middle">11-17</text>
+<text x="266.4" y="192" class="axis" text-anchor="middle">11-19</text>
+<text x="339.2" y="192" class="axis" text-anchor="middle">11-21</text>
+<text x="412.0" y="192" class="axis" text-anchor="middle">11-23</text>
+<line x1="48" x2="412" y1="143.5" y2="143.5" class="baseline"/>
+<text x="52" y="139.5" class="axis">baseline avg 16.5k</text>
+<polyline points="48.0,38.3 84.4,134.8 120.8,166.2 157.2,166.1 193.6,166.0 230.0,166.4 266.4,166.8 302.8,166.8 339.2,166.2 375.6,166.6 412.0,166.9" class="line s1"/>
+<circle cx="48.0" cy="38.3" r="3.5" class="dot s1"/>
+<circle cx="84.4" cy="134.8" r="3.5" class="dot s1"/>
+<circle cx="120.8" cy="166.2" r="3.5" class="dot s1"/>
+<circle cx="157.2" cy="166.1" r="3.5" class="dot s1"/>
+<circle cx="193.6" cy="166.0" r="3.5" class="dot s1"/>
+<circle cx="230.0" cy="166.4" r="3.5" class="dot s1"/>
+<circle cx="266.4" cy="166.8" r="3.5" class="dot s1"/>
+<circle cx="302.8" cy="166.8" r="3.5" class="dot s1"/>
+<circle cx="339.2" cy="166.2" r="3.5" class="dot s1"/>
+<circle cx="375.6" cy="166.6" r="3.5" class="dot s1"/>
+<circle cx="412.0" cy="166.9" r="3.5" class="dot s1"/>
+<polyline points="48.0,174.0 84.4,174.0 120.8,174.0 157.2,174.0 193.6,174.0 230.0,174.0 266.4,174.0 302.8,174.0 339.2,174.0 375.6,174.0 412.0,174.0" class="line s2"/>
+<circle cx="48.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="84.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="120.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="157.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="193.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="230.0" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="266.4" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="302.8" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="339.2" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="375.6" cy="174.0" r="3.5" class="dot s2"/>
+<circle cx="412.0" cy="174.0" r="3.5" class="dot s2"/>
+<text x="418.0" y="170.9" class="axis">created</text>
+<text x="418.0" y="182.9" class="axis">verified</text>
+<rect x="29.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-13 · created 73,458 · verified 0 (0%)"/>
+<rect x="66.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-14 · created 21,233 · verified 0 (0%)"/>
+<rect x="102.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-15 · created 4,225 · verified 0 (0%)"/>
+<rect x="139.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-16 · created 4,283 · verified 0 (0%)"/>
+<rect x="175.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-17 · created 4,317 · verified 0 (0%)"/>
+<rect x="211.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-18 · created 4,100 · verified 0 (0%)"/>
+<rect x="248.2" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-19 · created 3,900 · verified 0 (0%)"/>
+<rect x="284.6" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-20 · created 3,883 · verified 0 (0%)"/>
+<rect x="321.0" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-21 · created 4,225 · verified 0 (0%)"/>
+<rect x="357.4" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-22 · created 4,017 · verified 0 (0%)"/>
+<rect x="393.8" y="18" width="36.4" height="156" class="hit" data-tip="2026-11-23 · created 3,867 · verified 0 (0%)"/>
+</svg><ul style="font-size:12px;margin:6px 0 0 16px;padding:0"><li><b>new</b>: 4k/day in the window vs 16.5k/day before (was already there)</li><li><b>concentrated</b>: 2.2 sessions/IP (top IP 10), 1.0 sessions/device, top ASN 28573 3%, hosting 0% / proxy-VPN 0%</li><li>⚠ <b>off-rhythm</b>: hourly correlation with the rest of the key 0.44, quietest/busiest hour 0.55</li><li><b>other anomalies</b>: none ≥5%</li><li><b>TLS</b>: top JA4 t13d1517h2_8daaf6152771_dcad5a053991 (Chrome 150, 100% of cohort): consistent with the claim</li><li><b>UA rotation</b>: 1 browser/version claims over 1 JA4s</li></ul></div></div></div>
 <div class="card"><h2 style="margin-top:0">Keys</h2><table class="toc"><tr><td><a href="#k-E8A75615">Blizzard - Production - ROW Registration - Key 2</a></td><td>traffic drop</td></tr><tr><td><a href="#k-CF5C61EE">Blizzard - Production - ROW Login - Key 5</a></td><td><span class="muted">nothing unusual</span></td></tr><tr><td><a href="#k-9C3260E3">Blizzard - Production - ROW Support Site  - Key 3</a></td><td>attribute anomaly jump: lang_mis, ch_mis, rend_soft; signal over 2% of traffic</td></tr><tr><td><a href="#k-FDED3FA5">gtop100.com - Production</a></td><td>traffic drop; signal over 2% of traffic</td></tr><tr><td><a href="#k-54B78A70">Highlight AI - Chat Prompt - Production - Key 1</a></td><td>signal over 2% of traffic</td></tr><tr><td><a href="#k-B993C75A">Bank of America - Production - Beacon CashPro - ATM - Key 5</a></td><td>traffic drop</td></tr><tr><td><a href="#k-0C3DD163">Hcom - Production - Login - Key 6</a></td><td>traffic drop; signal over 2% of traffic</td></tr><tr><td><a href="#k-F7B5AE6C">Hcom - Production - OTP - Key 7</a></td><td>traffic drop; signal over 2% of traffic</td></tr><tr><td><a href="#k-301AF3D3">Match - OKCupid - Registration - Production - Key 3</a></td><td>traffic drop</td></tr><tr><td><a href="#k-30000F36">Uber - SMS - Production - Key 1</a></td><td>attribute anomaly jump: rend_null, plat_mis, ua_hdr_mis, rend_os_mis; signal over 2% of traffic; traffic up to 5.3x normal</td></tr><tr><td><a href="#k-1BE2475D">Uber - Account Management - Production - Key 2</a></td><td>signal over 2% of traffic</td></tr><tr><td><a href="#k-56938EF5">Amazon - IDS - Production - Key 2</a></td><td>signal over 2% of traffic</td></tr></table></div>
 <section class="combo" id="k-E8A75615"><h2 style="margin-top:0">Blizzard - Production - ROW Registration - Key 2</h2>
 <p class="muted"><b>All sessions per day</b> (baseline median 54.3k): 11-13:66.8k 11-14:75.2k 11-15:64.2k 11-16:52.9k 11-17:54.3k 11-18:51.6k 11-19:51k 11-20:5.3k 11-21:1.1k 11-22:182 11-23:13.6k</p>
@@ -624,7 +1273,7 @@ table.share td,table.share th{font-size:12px}
 <h3 class="sec">Tracked signal combinations on this key</h3>
 <table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr><tr><td>g-bio-mouse-single-click-device-param-spoofing<br><span class="muted">live</span></td><td class="n">1k → 1.8k</td><td class="n">0.4%</td><td class="n">0.9% / peak 4.9%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-rfc-sec-ch-ua-webgl-device-param-spoofing<br><span class="muted">live</span></td><td class="n">255 → 28.1k</td><td class="n">0.0%</td><td class="n">13.8% / peak 21.1%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-high-risk-sig-lt-di-short-300-pxr1<br><span class="muted">candidate</span></td><td class="n">0 → 379</td><td class="n">0.0%</td><td class="n">0.2% / peak 0.5%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-high-risk-sig-lt-ip-intel-medium-pagebio-null<br><span class="muted">candidate</span></td><td class="n">0 → 452</td><td class="n">0.0%</td><td class="n">0.2% / peak 1.1%</td><td><span class="vd ok">OK</span></td></tr></table>
 <h3 class="sec">Claimed UA vs JA4 — g-rfc-sec-ch-ua-webgl-device-param-spoofing on Blizzard - Production - ROW Support Site  - Key 3 (last 2 days of the window)</h3>
-<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td colspan="8"><b>JA4 rotation: 15 fingerprints with the same cipher set (t13d_8daaf6152771…) and near-equal volume (~5.3k each, 0% verified, mostly ASN 6730): one tool varying its TLS extensions</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_234dc10236f4</code></td><td>Chrome 146</td><td class="n">5.4k</td><td class="n">0%</td><td class="n">1.8k</td><td>chromium (99%)</td><td>PL</td><td><b>sec-ch-ua version ≠ UA version on 99%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_e1144aa4d245</code></td><td>Chrome 146</td><td class="n">5.4k</td><td class="n">0%</td><td class="n">1.7k</td><td>chromium (98%)</td><td>GB</td><td><b>sec-ch-ua version ≠ UA version on 98%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_f4f7aae15fbc</code></td><td>Chrome 146</td><td class="n">5.4k</td><td class="n">0%</td><td class="n">1.9k</td><td>chromium (99%)</td><td>PL</td><td><b>sec-ch-ua version ≠ UA version on 96%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_f10ceb9fcfd7</code></td><td>Chrome 146</td><td class="n">5.4k</td><td class="n">0%</td><td class="n">2.2k</td><td>chromium (99%)</td><td>CH</td><td><b>sec-ch-ua version ≠ UA version on 97%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_a323378790d4</code></td><td>Chrome 146</td><td class="n">5.3k</td><td class="n">0%</td><td class="n">1.9k</td><td>chromium (99%)</td><td>IT</td><td><b>sec-ch-ua version ≠ UA version on 98%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_541cd5a3d78e</code></td><td>Chrome 146</td><td class="n">5.3k</td><td class="n">0%</td><td class="n">1.8k</td><td>chromium (99%)</td><td>NL</td><td><b>sec-ch-ua version ≠ UA version on 100%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_937be626dbce</code></td><td>Chrome 146</td><td class="n">5.3k</td><td class="n">0%</td><td class="n">2k</td><td>chromium (99%)</td><td>FR</td><td><b>sec-ch-ua version ≠ UA version on 98%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_43736b97bd57</code></td><td>Chrome 146</td><td class="n">5.3k</td><td class="n">0%</td><td class="n">1.7k</td><td>chromium (99%)</td><td>GB</td><td><b>sec-ch-ua version ≠ UA version on 100%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_63ff51340b64</code></td><td>Chrome 146</td><td class="n">5.2k</td><td class="n">0%</td><td class="n">1.8k</td><td>chromium (99%)</td><td>PL</td><td><b>sec-ch-ua version ≠ UA version on 99%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_61307d0e143d</code></td><td>Chrome 146</td><td class="n">5.2k</td><td class="n">0%</td><td class="n">1.8k</td><td>chromium (99%)</td><td>GB</td><td><b>sec-ch-ua version ≠ UA version on 99%</b></td></tr></table></div>
+<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td colspan="8"><b>JA4 rotation: 15 fingerprints with the same cipher set (t13d_8daaf6152771…) and near-equal volume (~5.3k each, 0% verified, mostly ASN 6730): one tool varying its TLS extensions</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_234dc10236f4</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.4k</td><td class="n">0%</td><td class="n">1.8k</td><td>chromium (99%)</td><td>PL</td><td><b>sec-ch-ua version ≠ UA version on 99%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_e1144aa4d245</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.4k</td><td class="n">0%</td><td class="n">1.7k</td><td>chromium (98%)</td><td>GB</td><td><b>sec-ch-ua version ≠ UA version on 98%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_f4f7aae15fbc</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.4k</td><td class="n">0%</td><td class="n">1.9k</td><td>chromium (99%)</td><td>PL</td><td><b>sec-ch-ua version ≠ UA version on 96%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_f10ceb9fcfd7</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.4k</td><td class="n">0%</td><td class="n">2.2k</td><td>chromium (99%)</td><td>CH</td><td><b>sec-ch-ua version ≠ UA version on 97%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_a323378790d4</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.3k</td><td class="n">0%</td><td class="n">1.9k</td><td>chromium (99%)</td><td>IT</td><td><b>sec-ch-ua version ≠ UA version on 98%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_541cd5a3d78e</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.3k</td><td class="n">0%</td><td class="n">1.8k</td><td>chromium (99%)</td><td>NL</td><td><b>sec-ch-ua version ≠ UA version on 100%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_937be626dbce</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.3k</td><td class="n">0%</td><td class="n">2k</td><td>chromium (99%)</td><td>FR</td><td><b>sec-ch-ua version ≠ UA version on 98%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_43736b97bd57</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.3k</td><td class="n">0%</td><td class="n">1.7k</td><td>chromium (99%)</td><td>GB</td><td><b>sec-ch-ua version ≠ UA version on 100%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_63ff51340b64</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.2k</td><td class="n">0%</td><td class="n">1.8k</td><td>chromium (99%)</td><td>PL</td><td><b>sec-ch-ua version ≠ UA version on 99%</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_61307d0e143d</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 146</td><td class="n">5.2k</td><td class="n">0%</td><td class="n">1.8k</td><td>chromium (99%)</td><td>GB</td><td><b>sec-ch-ua version ≠ UA version on 99%</b></td></tr></table></div>
 </section>
 <section class="combo" id="k-FDED3FA5"><h2 style="margin-top:0">gtop100.com - Production</h2>
 <p class="muted"><b>All sessions per day</b> (baseline median 1.2M): 11-13:1.1M 11-14:1.2M 11-15:1.5M 11-16:1.5M 11-17:1.2M 11-18:551.3k 11-19:146.8k 11-20:775.4k 11-21:1M 11-22:1.2M 11-23:1.4M</p>
@@ -1078,7 +1727,7 @@ table.share td,table.share th{font-size:12px}
 <h3 class="sec">Tracked signal combinations on this key</h3>
 <table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease<br><span class="muted">live</span></td><td class="n">9.4k → 7.1k</td><td class="n">94.4%</td><td class="n">0.6% / peak 1.9%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x<br><span class="muted">live</span></td><td class="n">0 → 473</td><td class="n">95.7%</td><td class="n">0.0% / peak 0.1%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-bio-mouse-single-click-device-param-spoofing<br><span class="muted">live</span></td><td class="n">9.7k → 6.7k</td><td class="n">96.4%</td><td class="n">0.6% / peak 1.8%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-di-short-300-pxr1-device-param-spoofing-ja4-dict1<br><span class="muted">live</span></td><td class="n">0 → 12.8k</td><td class="n">80.6%</td><td class="n">1.2% / peak 3.7%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-rfc-sec-ch-ua-webgl-device-param-spoofing<br><span class="muted">live</span></td><td class="n">36.4k → 37.7k</td><td class="n">3.0%</td><td class="n">3.4% / peak 4.0%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-spoofed-os-mismatch-pagebio-null-grease<br><span class="muted">live</span></td><td class="n">1.6k → 1.3k</td><td class="n">13.3%</td><td class="n">0.1% / peak 0.2%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-high-risk-sig-lt-ip-intel-medium-pagebio-null<br><span class="muted">candidate</span></td><td class="n">58 → 1.2k</td><td class="n">3.7%</td><td class="n">0.1% / peak 0.3%</td><td><span class="vd ok">OK</span></td></tr></table>
 <h3 class="sec">Claimed UA vs JA4 — g-di-short-300-pxr1-device-param-spoofing-ja4-dict1 on gtop100.com - Production (last 2 days of the window)</h3>
-<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d1813h1_85036bcba153_d339722ba4af</code></td><td>Chrome 154</td><td class="n">51.4k</td><td class="n">81%</td><td class="n">2.4k</td><td>chromium (100%)</td><td>SG</td><td><b>55% from one ASN (208172)</b></td></tr></table></div>
+<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d1813h1_85036bcba153_d339722ba4af</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 18 ciphers, 13 ext, ALPN h1, unknown cipher set</span></td><td>Chrome 154</td><td class="n">51.4k</td><td class="n">81%</td><td class="n">2.4k</td><td>chromium (100%)</td><td>SG</td><td><b>offers only HTTP/1.1 (ALPN h1): every current browser offers h2; cipher set 85036bcba153 is not a Chrome, Safari or Firefox stack; 55% from one ASN (208172)</b></td></tr></table></div>
 </section>
 <section class="combo" id="k-54B78A70"><h2 style="margin-top:0">Highlight AI - Chat Prompt - Production - Key 1</h2>
 <p class="muted"><b>All sessions per day</b> (baseline median 12.7k): 11-13:92.1k 11-14:25.3k 11-15:6k 11-16:9.4k 11-17:9.7k 11-18:13k 11-19:12.7k 11-20:11k 11-21:8k 11-22:9.3k 11-23:13.1k</p>
@@ -1255,7 +1904,7 @@ table.share td,table.share th{font-size:12px}
 <h3 class="sec">Tracked signal combinations on this key</h3>
 <table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl<br><span class="muted">live</span></td><td class="n">4k → 4.1k</td><td class="n">0.0%</td><td class="n">39.5% / peak 50.6%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease<br><span class="muted">live</span></td><td class="n">4.1k → 4.1k</td><td class="n">0.0%</td><td class="n">39.7% / peak 50.6%</td><td><span class="vd fp-risk">FP risk</span></td></tr></table>
 <h3 class="sec">Claimed UA vs JA4 — g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease on Highlight AI - Chat Prompt - Production - Key 1 (last 2 days of the window)</h3>
-<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d1517h2_8daaf6152771_dcad5a053991</code></td><td>Chrome 150</td><td class="n">8.3k</td><td class="n">0%</td><td class="n">908</td><td>chromium (98%)</td><td>BR</td><td><span class="muted">consistent</span></td></tr></table></div>
+<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d1517h2_8daaf6152771_dcad5a053991</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 150</td><td class="n">8.3k</td><td class="n">0%</td><td class="n">908</td><td>chromium (98%)</td><td>BR</td><td><span class="muted">consistent</span></td></tr></table></div>
 </section>
 <section class="combo" id="k-B993C75A"><h2 style="margin-top:0">Bank of America - Production - Beacon CashPro - ATM - Key 5</h2>
 <p class="muted"><b>All sessions per day</b> (baseline median 295.1k): 11-13:974.2k 11-14:80k 11-15:6.6k 11-16:308k 11-17:307.8k 11-18:292.7k 11-19:295.1k 11-20:283.3k 11-21:28.4k 11-22:25.4k 11-23:294.7k</p>
@@ -1610,7 +2259,7 @@ table.share td,table.share th{font-size:12px}
 <h3 class="sec">Tracked signal combinations on this key</h3>
 <table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl<br><span class="muted">live</span></td><td class="n">4.7k → 3.5k</td><td class="n">0.0%</td><td class="n">46.7% / peak 59.1%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-rta-isp-velocity-lt-pagebio-null<br><span class="muted">live</span></td><td class="n">3.3k → 2.7k</td><td class="n">0.0%</td><td class="n">35.1% / peak 60.9%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest<br><span class="muted">live</span></td><td class="n">3.2k → 3.6k</td><td class="n">0.0%</td><td class="n">47.6% / peak 60.8%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-os-spoofing-pagebio-null<br><span class="muted">live</span></td><td class="n">5.3k → 3.9k</td><td class="n">0.0%</td><td class="n">51.7% / peak 65.5%</td><td><span class="vd fp-risk">FP risk</span></td></tr></table>
 <h3 class="sec">Claimed UA vs JA4 — g-os-spoofing-pagebio-null on Hcom - Production - Login - Key 6 (last 2 days of the window)</h3>
-<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d2015h2_a09f3c656075_c258b721e490</code></td><td>Mobile Safari 17</td><td class="n">5.9k</td><td class="n">0%</td><td class="n">0</td><td>chromium (68%)</td><td>GB</td><td><b>claims Mobile Safari but this JA4 is 68% chromium across all keys; 100% from one ASN (210644)</b></td></tr></table></div>
+<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d2015h2_a09f3c656075_c258b721e490</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 20 ciphers, 15 ext, ALPN h2, Safari/WebKit</span></td><td>Mobile Safari 17</td><td class="n">5.9k</td><td class="n">0%</td><td class="n">0</td><td>chromium (68%)</td><td>GB</td><td><b>Safari/WebKit cipher set but 20 ciphers / 15 extensions (real one: 20-20 / 13-14): impersonation library; claims Mobile Safari but this JA4 is 68% chromium across all keys; 100% from one ASN (210644)</b></td></tr></table></div>
 </section>
 <section class="combo" id="k-F7B5AE6C"><h2 style="margin-top:0">Hcom - Production - OTP - Key 7</h2>
 <p class="muted"><b>All sessions per day</b> (baseline median 167.1k): 11-13:30.8k 11-14:27k 11-15:29.2k 11-16:167.1k 11-17:206.4k 11-18:218.8k 11-19:212.1k 11-20:155.8k 11-21:149.6k 11-22:172.3k 11-23:38.5k</p>
@@ -1953,7 +2602,7 @@ table.share td,table.share th{font-size:12px}
 <h3 class="sec">Tracked signal combinations on this key</h3>
 <table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl<br><span class="muted">live</span></td><td class="n">116.5k → 87.3k</td><td class="n">0.0%</td><td class="n">67.6% / peak 74.9%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-rta-isp-velocity-lt-pagebio-null<br><span class="muted">live</span></td><td class="n">0 → 44k</td><td class="n">0.0%</td><td class="n">34.1% / peak 82.0%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-di-short-300-pxr1-device-param-spoofing-ja4-dict1<br><span class="muted">live</span></td><td class="n">95.6k → 71.4k</td><td class="n">0.0%</td><td class="n">55.3% / peak 62.1%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest<br><span class="muted">live</span></td><td class="n">127.5k → 95.4k</td><td class="n">0.0%</td><td class="n">73.9% / peak 82.4%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-os-spoofing-pagebio-null<br><span class="muted">live</span></td><td class="n">128.9k → 96.5k</td><td class="n">0.0%</td><td class="n">74.8% / peak 82.9%</td><td><span class="vd fp-risk">FP risk</span></td></tr></table>
 <h3 class="sec">Claimed UA vs JA4 — g-os-spoofing-pagebio-null on Hcom - Production - OTP - Key 7 (last 2 days of the window)</h3>
-<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d2015h2_a09f3c656075_c258b721e490</code></td><td>Mobile Safari 17</td><td class="n">143.5k</td><td class="n">0%</td><td class="n">0</td><td>chromium (68%)</td><td>GB</td><td><b>claims Mobile Safari but this JA4 is 68% chromium across all keys; 100% from one ASN (210644)</b></td></tr></table></div>
+<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d2015h2_a09f3c656075_c258b721e490</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 20 ciphers, 15 ext, ALPN h2, Safari/WebKit</span></td><td>Mobile Safari 17</td><td class="n">143.5k</td><td class="n">0%</td><td class="n">0</td><td>chromium (68%)</td><td>GB</td><td><b>Safari/WebKit cipher set but 20 ciphers / 15 extensions (real one: 20-20 / 13-14): impersonation library; claims Mobile Safari but this JA4 is 68% chromium across all keys; 100% from one ASN (210644)</b></td></tr></table></div>
 </section>
 <section class="combo" id="k-301AF3D3"><h2 style="margin-top:0">Match - OKCupid - Registration - Production - Key 3</h2>
 <p class="muted"><b>All sessions per day</b> (baseline median 2.1k): 11-13:4.4k 11-14:2.8k 11-15:2.1k 11-16:2.1k 11-17:2k 11-18:1.8k 11-19:656 11-20:859 11-21:– 11-22:– 11-23:–</p>
@@ -2802,7 +3451,7 @@ table.share td,table.share th{font-size:12px}
 <h3 class="sec">Tracked signal combinations on this key</h3>
 <table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl<br><span class="muted">live</span></td><td class="n">178k → 958.7k</td><td class="n">1.5%</td><td class="n">2.5% / peak 11.4%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease<br><span class="muted">live</span></td><td class="n">237.2k → 4.5M</td><td class="n">1.0%</td><td class="n">11.9% / peak 36.9%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-cdn-ends-te-device-param-spoofing<br><span class="muted">live</span></td><td class="n">73 → 36.8k</td><td class="n">7.5%</td><td class="n">0.1% / peak 0.6%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-bio-mouse-single-click-device-param-spoofing<br><span class="muted">live</span></td><td class="n">2.8k → 14.6k</td><td class="n">73.2%</td><td class="n">0.0% / peak 0.2%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-di-short-300-pxr1-device-param-spoofing-ja4-dict1<br><span class="muted">live</span></td><td class="n">419 → 1M</td><td class="n">10.9%</td><td class="n">2.7% / peak 7.7%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-rfc-sec-ch-ua-webgl-device-param-spoofing<br><span class="muted">live</span></td><td class="n">2.7k → 5k</td><td class="n">0.0%</td><td class="n">0.0% / peak 0.0%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-os-impersonation-appleos-device-param-spoofing-sec-fetch-dest<br><span class="muted">live</span></td><td class="n">0 → 1.3k</td><td class="n">0.0%</td><td class="n">0.0% / peak 0.0%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-os-spoofing-pagebio-null<br><span class="muted">live</span></td><td class="n">89.9k → 51.5k</td><td class="n">10.7%</td><td class="n">0.1% / peak 0.2%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-spoofed-os-mismatch-pagebio-null-grease<br><span class="muted">live</span></td><td class="n">97.2k → 531.4k</td><td class="n">32.9%</td><td class="n">1.4% / peak 3.6%</td><td><span class="vd fp-risk">FP risk</span></td></tr></table>
 <h3 class="sec">Claimed UA vs JA4 — g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease on Uber - SMS - Production - Key 1 (last 2 days of the window)</h3>
-<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td colspan="8"><b>JA4 rotation: 12 fingerprints with the same cipher set (t13d_8daaf6152771…) and near-equal volume (~5.5k each, 8% verified, mostly ASN 8452): one tool varying its TLS extensions</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_cb7bf5808d99</code></td><td>Chrome 148</td><td class="n">4.4M</td><td class="n">0%</td><td class="n">136.8k</td><td>chromium (99%)</td><td>VN</td><td><span class="muted">consistent</span></td></tr></table></div>
+<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td colspan="8"><b>JA4 rotation: 12 fingerprints with the same cipher set (t13d_8daaf6152771…) and near-equal volume (~5.5k each, 8% verified, mostly ASN 8452): one tool varying its TLS extensions</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_cb7bf5808d99</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 148</td><td class="n">4.4M</td><td class="n">0%</td><td class="n">136.8k</td><td>chromium (99%)</td><td>VN</td><td><span class="muted">consistent</span></td></tr></table></div>
 </section>
 <section class="combo" id="k-1BE2475D"><h2 style="margin-top:0">Uber - Account Management - Production - Key 2</h2>
 <p class="muted"><b>All sessions per day</b> (baseline median 925.6k): 11-13:917.7k 11-14:950.9k 11-15:925.6k 11-16:911.6k 11-17:896.8k 11-18:1.1M 11-19:928.8k 11-20:897k 11-21:873.5k 11-22:913k 11-23:1M</p>
@@ -3145,7 +3794,7 @@ table.share td,table.share th{font-size:12px}
 <h3 class="sec">Tracked signal combinations on this key</h3>
 <table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl<br><span class="muted">live</span></td><td class="n">10.8k → 13.8k</td><td class="n">78.5%</td><td class="n">1.5% / peak 5.2%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease<br><span class="muted">live</span></td><td class="n">18.9k → 17.1k</td><td class="n">64.1%</td><td class="n">1.8% / peak 6.0%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-rfc-sec-ch-ua-webgl-device-param-spoofing<br><span class="muted">live</span></td><td class="n">65 → 4.3k</td><td class="n">98.8%</td><td class="n">0.5% / peak 0.7%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-os-spoofing-pagebio-null<br><span class="muted">live</span></td><td class="n">201 → 1.5k</td><td class="n">69.9%</td><td class="n">0.2% / peak 0.4%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-spoofed-os-mismatch-pagebio-null-grease<br><span class="muted">live</span></td><td class="n">136 → 1.5k</td><td class="n">69.6%</td><td class="n">0.2% / peak 0.4%</td><td><span class="vd ok">OK</span></td></tr></table>
 <h3 class="sec">Claimed UA vs JA4 — g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease on Uber - Account Management - Production - Key 2 (last 2 days of the window)</h3>
-<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td colspan="8"><b>14 fingerprints with the same cipher set (t13d_8daaf6152771…) and near-equal volume (~3.2k each) but 84% verified: most likely normal Chrome TLS variants (field trials), not rotation</b></td></tr><tr><td><code>t13d1516h2_8daaf6152771_e5627efa2ab1</code></td><td>Chrome 157</td><td class="n">10.6k</td><td class="n">0%</td><td class="n">6.3k</td><td>chromium (62%)</td><td>BR</td><td><b>231 different browser/version claims on one TLS fingerprint (UA rotation)</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_f4f7aae15fbc</code></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">85%</td><td class="n">3.1k</td><td>chromium (99%)</td><td>FR</td><td><b>85% verified and nothing odd in UA/JA4: check FP risk</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_61307d0e143d</code></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">84%</td><td class="n">3.4k</td><td>chromium (99%)</td><td>FR</td><td><b>84% verified and nothing odd in UA/JA4: check FP risk</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_63ff51340b64</code></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">84%</td><td class="n">3.5k</td><td>chromium (99%)</td><td>FR</td><td><b>84% verified and nothing odd in UA/JA4: check FP risk</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_0d789d2519e1</code></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">85%</td><td class="n">3.1k</td><td>chromium (99%)</td><td>FR</td><td><b>85% verified and nothing odd in UA/JA4: check FP risk</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_5cd47779f5c5</code></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">84%</td><td class="n">3.2k</td><td>chromium (99%)</td><td>FR</td><td><b>84% verified and nothing odd in UA/JA4: check FP risk</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_a323666e1952</code></td><td>Chrome 156</td><td class="n">3.2k</td><td class="n">84%</td><td class="n">3k</td><td>chromium (99%)</td><td>FR</td><td><b>84% verified and nothing odd in UA/JA4: check FP risk</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_a323378790d4</code></td><td>Chrome 156</td><td class="n">3.2k</td><td class="n">84%</td><td class="n">3.1k</td><td>chromium (99%)</td><td>FR</td><td><b>84% verified and nothing odd in UA/JA4: check FP risk</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_f10ceb9fcfd7</code></td><td>Chrome 156</td><td class="n">3.2k</td><td class="n">85%</td><td class="n">2.9k</td><td>chromium (99%)</td><td>FR</td><td><b>85% verified and nothing odd in UA/JA4: check FP risk</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_43736b97bd57</code></td><td>Chrome 156</td><td class="n">3.2k</td><td class="n">84%</td><td class="n">2.9k</td><td>chromium (99%)</td><td>FR</td><td><b>84% verified and nothing odd in UA/JA4: check FP risk</b></td></tr></table></div>
+<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td colspan="8"><b>14 fingerprints with the same cipher set (t13d_8daaf6152771…) and near-equal volume (~3.2k each) but 84% verified: most likely normal Chrome TLS variants (field trials), not rotation</b></td></tr><tr><td><code>t13d1516h2_8daaf6152771_e5627efa2ab1</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 16 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 157</td><td class="n">10.6k</td><td class="n">0%</td><td class="n">6.3k</td><td>chromium (62%)</td><td>BR</td><td><b>231 different browser/version claims on one TLS fingerprint (UA rotation)</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_f4f7aae15fbc</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">85%</td><td class="n">3.1k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 85% pass: either real users or an attack getting through - see the cohort profile</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_61307d0e143d</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">84%</td><td class="n">3.4k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 84% pass: either real users or an attack getting through - see the cohort profile</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_63ff51340b64</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">84%</td><td class="n">3.5k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 84% pass: either real users or an attack getting through - see the cohort profile</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_0d789d2519e1</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">85%</td><td class="n">3.1k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 85% pass: either real users or an attack getting through - see the cohort profile</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_5cd47779f5c5</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.3k</td><td class="n">84%</td><td class="n">3.2k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 84% pass: either real users or an attack getting through - see the cohort profile</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_a323666e1952</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.2k</td><td class="n">84%</td><td class="n">3k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 84% pass: either real users or an attack getting through - see the cohort profile</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_a323378790d4</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.2k</td><td class="n">84%</td><td class="n">3.1k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 84% pass: either real users or an attack getting through - see the cohort profile</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_f10ceb9fcfd7</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.2k</td><td class="n">85%</td><td class="n">2.9k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 85% pass: either real users or an attack getting through - see the cohort profile</b></td></tr><tr><td><code>t13d1517h2_8daaf6152771_43736b97bd57</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 156</td><td class="n">3.2k</td><td class="n">84%</td><td class="n">2.9k</td><td>chromium (99%)</td><td>FR</td><td><b>nothing odd in UA/JA4 and 84% pass: either real users or an attack getting through - see the cohort profile</b></td></tr></table></div>
 </section>
 <section class="combo" id="k-56938EF5"><h2 style="margin-top:0">Amazon - IDS - Production - Key 2</h2>
 <p class="muted"><b>All sessions per day</b> (baseline median 1.8M): 11-13:1.7M 11-14:2.1M 11-15:2.2M 11-16:2M 11-17:1.8M 11-18:1.5M 11-19:1.4M 11-20:1.6M 11-21:1.5M 11-22:1.5M 11-23:1.4M</p>
@@ -3763,7 +4412,7 @@ table.share td,table.share th{font-size:12px}
 <h3 class="sec">Tracked signal combinations on this key</h3>
 <table class="share"><tr><th>Telltale</th><th class="n">Flagged/day base → window</th><th class="n">Verified</th><th class="n">Share of key traffic</th><th>2% rule</th></tr><tr><td>g-pagebio-null-cdn-ends-content-length-tz-mismatch-no-vpn-rfc-ct-before-cl<br><span class="muted">live</span></td><td class="n">205.8k → 231.7k</td><td class="n">19.8%</td><td class="n">15.4% / peak 19.1%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease<br><span class="muted">live</span></td><td class="n">229k → 240k</td><td class="n">19.1%</td><td class="n">16.0% / peak 19.7%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-rfc-ct-before-cl-device-param-spoofing-di-dict3-st-1x<br><span class="muted">live</span></td><td class="n">0 → 5k</td><td class="n">33.8%</td><td class="n">0.3% / peak 0.8%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-bio-mouse-single-click-device-param-spoofing<br><span class="muted">live</span></td><td class="n">51.1k → 48.3k</td><td class="n">63.6%</td><td class="n">3.2% / peak 5.4%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-rfc-sec-ch-ua-webgl-device-param-spoofing<br><span class="muted">live</span></td><td class="n">5.4k → 674</td><td class="n">72.0%</td><td class="n">0.0% / peak 0.1%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-os-spoofing-pagebio-null<br><span class="muted">live</span></td><td class="n">71.5k → 153.5k</td><td class="n">18.8%</td><td class="n">10.2% / peak 13.6%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-cdn-pragma-sec-ch-ua-upcoming-chrome<br><span class="muted">live</span></td><td class="n">240.6k → 113k</td><td class="n">16.9%</td><td class="n">7.5% / peak 8.9%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-spoofed-os-mismatch-pagebio-null-grease<br><span class="muted">live</span></td><td class="n">133.3k → 179.2k</td><td class="n">15.3%</td><td class="n">11.9% / peak 14.8%</td><td><span class="vd fp-risk">FP risk</span></td></tr><tr><td>g-spoofed-os-mismatch-high-risk-sig-st<br><span class="muted">candidate</span></td><td class="n">4.2k → 610</td><td class="n">28.0%</td><td class="n">0.0% / peak 0.2%</td><td><span class="vd ok">OK</span></td></tr><tr><td>g-high-risk-sig-lt-ip-intel-medium-pagebio-null<br><span class="muted">candidate</span></td><td class="n">41.6k → 9.3k</td><td class="n">20.4%</td><td class="n">0.6% / peak 2.3%</td><td><span class="vd fp-risk">FP risk</span></td></tr></table>
 <h3 class="sec">Claimed UA vs JA4 — g-cdn-ends-cl-rfc-ct-before-cl-tz-mismatch-grease on Amazon - IDS - Production - Key 2 (last 2 days of the window)</h3>
-<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d1517h2_8daaf6152771_dcad5a053991</code></td><td>Chrome 152</td><td class="n">174k</td><td class="n">24%</td><td class="n">168.6k</td><td>chromium (98%)</td><td>US</td><td><b>100% from one ASN (200373)</b></td></tr><tr><td><code>t13d1516h2_8daaf6152771_e5627efa2ab1</code></td><td>Chrome 105</td><td class="n">87k</td><td class="n">16%</td><td class="n">50.6k</td><td>chromium (62%)</td><td>US</td><td><span class="muted">consistent</span></td></tr><tr><td><code>t13d1516h2_8daaf6152771_d8a2da3f94cd</code></td><td>Chrome 136</td><td class="n">82.1k</td><td class="n">7%</td><td class="n">142.8k</td><td>chromium (92%)</td><td>US</td><td><span class="muted">consistent</span></td></tr><tr><td><code>t13d1516h2_8daaf6152771_02713d6af862</code></td><td>Chrome 131</td><td class="n">57.5k</td><td class="n">20%</td><td class="n">60.2k</td><td>chromium (93%)</td><td>US</td><td><span class="muted">consistent</span></td></tr><tr><td><code>t13d1517h2_8daaf6152771_b1ff8ab2d16f</code></td><td>Chrome 120</td><td class="n">5.5k</td><td class="n">26%</td><td class="n">3.5k</td><td>chromium (88%)</td><td>US</td><td><span class="muted">consistent</span></td></tr></table></div>
+<p class="muted">Top TLS fingerprints (JA4) of the flagged sessions on this key. A JA4 does not encode a browser version, only the TLS stack, so the check is: does the claimed browser match what that JA4 is across all keys (family), does one JA4 carry many browser/version claims (rotation), does sec-ch-ua disagree with the UA version, and is it concentrated on one ASN.</p><div class="scroll"><table class="share"><tr><th>JA4</th><th>Main claim</th><th class="n">Flagged</th><th class="n">Verified</th><th class="n">Unflagged (same key)</th><th>JA4 across all keys (family)</th><th>Top country</th><th>Findings</th></tr><tr><td><code>t13d1517h2_8daaf6152771_dcad5a053991</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 152</td><td class="n">174k</td><td class="n">24%</td><td class="n">168.6k</td><td>chromium (98%)</td><td>US</td><td><b>100% from one ASN (200373)</b></td></tr><tr><td><code>t13d1516h2_8daaf6152771_e5627efa2ab1</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 16 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 105</td><td class="n">87k</td><td class="n">16%</td><td class="n">50.6k</td><td>chromium (62%)</td><td>US</td><td><span class="muted">consistent</span></td></tr><tr><td><code>t13d1516h2_8daaf6152771_d8a2da3f94cd</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 16 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 136</td><td class="n">82.1k</td><td class="n">7%</td><td class="n">142.8k</td><td>chromium (92%)</td><td>US</td><td><span class="muted">consistent</span></td></tr><tr><td><code>t13d1516h2_8daaf6152771_02713d6af862</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 16 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 131</td><td class="n">57.5k</td><td class="n">20%</td><td class="n">60.2k</td><td>chromium (93%)</td><td>US</td><td><span class="muted">consistent</span></td></tr><tr><td><code>t13d1517h2_8daaf6152771_b1ff8ab2d16f</code><br><span class="muted" style="font-size:11px">TCP TLS1.3, SNI, 15 ciphers, 17 ext, ALPN h2, Chromium/BoringSSL</span></td><td>Chrome 120</td><td class="n">5.5k</td><td class="n">26%</td><td class="n">3.5k</td><td>chromium (88%)</td><td>US</td><td><span class="muted">consistent</span></td></tr></table></div>
 </section>
 <div id="tip"></div><script>
 const tip=document.getElementById('tip');
