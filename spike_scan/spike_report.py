@@ -1132,7 +1132,10 @@ def cmd_anomaly(a):
     print("anomaly: %d key-days for run %s%s" % (n, a.run, (" (sampled %s%%, scaled x%.0f)" % (a.sample, scale)) if a.sample else ""))
 
 
-def anomaly_findings(entry, win_start, win_end):
+TZ_BROKEN_RUNS = {"2026-11-24"}  # tz_mis compared 'asia/seoul' to 'Asia/Seoul' case-sensitively (fixed in 08 after this run)
+
+
+def anomaly_findings(entry, win_start, win_end, run=None, release_capi=None):
     """Per anomaly: median baseline rate vs window rate. Finding when window rate >= 2x baseline AND +2 points AND >= 300/day,
     or when the rate is already >= 20% of the key's traffic."""
     ws, we = dt.date.fromisoformat(win_start), dt.date.fromisoformat(win_end)
@@ -1142,6 +1145,8 @@ def anomaly_findings(entry, win_start, win_end):
     med = lambda xs: sorted(xs)[len(xs) // 2] if xs else 0
     out = []
     for i, (name, label) in enumerate(ANOM):
+        if name == "tz_mis" and run in TZ_BROKEN_RUNS:
+            continue
         br = [days[d][2 + 2 * i] / days[d][0] for d in bd if d in days and days[d][0]]
         wn = sum(days[d][2 + 2 * i] for d in wd if d in days); wt = sum(days[d][0] for d in wd if d in days)
         wv = sum(days[d][3 + 2 * i] for d in wd if d in days)
@@ -1153,10 +1158,24 @@ def anomaly_findings(entry, win_start, win_end):
         jump = w >= 2 * b and w - b >= 0.02 and per_day >= 300
         high = w >= 0.2 and per_day >= 300
         if jump or high:
+            kind = "jump" if jump else "standing"
+            if name == "capi_off" and ((release_capi and (entry.get("capi") or {}).get("win_top") == release_capi) or (wn and wv / wn >= 0.9)):
+                kind = "release"  # the key moved to the CAPI version most keys moved to: a platform release, not an attack
             out.append({"name": name, "label": label, "base": b, "win": w, "peak": peak[0], "peak_day": peak[1], "per_day": per_day,
-                        "verified": wv / wn if wn else 0, "kind": "jump" if jump else "standing"})
-    out.sort(key=lambda r: (r["kind"] != "jump", -(r["win"] - r["base"])))
+                        "verified": wv / wn if wn else 0, "kind": kind})
+    out.sort(key=lambda r: ({"jump": 0, "standing": 1, "release": 2}[r["kind"]], -(r["win"] - r["base"])))
     return out
+
+
+def release_capi_version(anom_run):
+    """The CAPI version that most profiled keys moved to in the window (a platform release)."""
+    moved = collections.Counter(e["capi"]["win_top"] for e in anom_run.values()
+                                if e.get("capi") and e["capi"]["win_top"] != e["capi"]["base_mode"] and e["capi"]["win_top_share"] >= 0.5)
+    if moved:
+        v, n = moved.most_common(1)[0]
+        if n >= 3:
+            return v
+    return None
 
 
 def cmd_focus(a):
@@ -1171,6 +1190,7 @@ def cmd_focus(a):
     anom = (json.loads(ANOMALY.read_text()) if ANOMALY.exists() else {}).get(a.run, {})
     combos = {c["id"]: c for c in load_combos()}
     dd = drop_days(a.run)
+    rel = release_capi_version(anom)
     pc = lambda x: "%.1f%%" % (100 * x)
     cards, toc = [], []
     for k in keys:
@@ -1190,10 +1210,10 @@ def cmd_focus(a):
                         % (html.escape(c.get("telltale_name") or cid), c["status"], fmt(r["base_flagged"]), fmt(r["win_flagged"]), pc(r["win_verified"]),
                            pc(r["win_share"]), pc(r["peak_share"]), r["verdict"], VERDICT_LABEL[r["verdict"]]))
         e = anom.get(k[:8])
-        an = anomaly_findings(e, a.win_start, a.win_end) if e else []
+        an = anomaly_findings(e, a.win_start, a.win_end, a.run, rel) if e else []
         arow = "".join('<tr><td>%s</td><td class="n">%s</td><td class="n">%s</td><td class="n">%s (%s)</td><td class="n">%s</td><td class="n">%s</td><td>%s</td></tr>'
                        % (html.escape(x["label"]), pc(x["base"]), pc(x["win"]), pc(x["peak"]), x["peak_day"][5:], fmt(x["per_day"]), pc(x["verified"]),
-                          "<b>jump</b>" if x["kind"] == "jump" else "standing high") for x in an)
+                          {"jump": "<b>jump</b>", "standing": "standing high", "release": "CAPI release %s (platform-wide)" % html.escape(rel or "")}[x["kind"]]) for x in an)
         meta = (e or {}).get("capi")
         verdict_bits = []
         if kd:
@@ -1231,7 +1251,8 @@ def cmd_focus(a):
            '<h1>Key focus — %s</h1>' % a.run,
            '<p class="muted">Generated %s. Window <b>%s → %s</b> vs the 7 days before. Per key: all-session traffic and drops, attribute anomalies '
            '(CAPI version, language, timezone, UA header, client hints, fake-fingerprint flags, platform, WebGL renderer, hosting/proxy, headless), '
-           'tracked signal combinations with the 2%% rule, and claimed UA vs JA4 for the biggest combination.</p>' % (gen, ws, we - dt.timedelta(days=1))]
+           'tracked signal combinations with the 2%% rule, and claimed UA vs JA4 for the biggest combination.%s</p>' % (gen, ws, we - dt.timedelta(days=1),
+           (" CAPI <b>%s</b> rolled out across most keys in this window, so a CAPI change to that version is marked as a release, not an anomaly." % html.escape(rel)) if rel else "")]
     if a.summary:
         sm = json.loads(pathlib.Path(a.summary).read_text())
         doc.append('<div class="card"><h2 style="margin-top:0">%s</h2>%s</div>' % (html.escape(sm["title"]), "".join(

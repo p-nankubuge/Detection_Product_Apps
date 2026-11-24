@@ -38,7 +38,7 @@ f AS (
   SELECT s.k, s.d, s.ver,
     (s.capi IS NULL OR s.capi <> c.m) AS a0,
     (s.fl IS NOT NULL AND s.al IS NOT NULL AND LOWER(LEFT(s.fl, 2)) <> LOWER(LEFT(s.al, 2))) AS a1,
-    (s.tz IS NOT NULL AND s.iptz IS NOT NULL AND SPLIT_PART(s.tz, '/', 1) <> SPLIT_PART(s.iptz, '/', 1)) AS a2,
+    (s.tz IS NOT NULL AND s.iptz IS NOT NULL AND LOWER(SPLIT_PART(s.tz, '/', 1)) <> LOWER(SPLIT_PART(s.iptz, '/', 1))) AS a2,
     (s.ua IS NOT NULL AND s.hua IS NOT NULL AND s.ua <> s.hua) AS a3,
     (s.br ILIKE ANY ('chrome%', 'edge%', 'opera%', 'samsung%') AND s.chua IS NOT NULL AND NOT CONTAINS(s.chua, 'v="' || s.mj || '"')) AS a4,
     s.fake AS a5,
