@@ -1,0 +1,37 @@
+{
+ "ticket": "DETCORE-4466",
+ "telltale_type": "suspicion_flags",
+ "cohort_category": "Suspicious",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "telltale_active": false,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+ "location": "SESSION_SETUP",
+ "telltale_name": "g-webgl-renderer-os-mismatch-d3d-mobile-gpu",
+ "telltale_description": "WebGL unmasked renderer inconsistent with the UA OS: Direct3D renderer on a non-Windows OS, or a mobile GPU (Adreno/Mali/PowerVR) on OS X or Windows (Adreno on Windows only without Direct3D, so Windows-on-ARM Snapdragon laptops are not hit). Apple GPU on Windows is already covered by g-dp-spoofing-webgl-windows-mismatch (6292).",
+ "telltale_definition": [
+  {"key": "location", "operator": "TS_EQ", "value": "session_setup", "type": "string"},
+  {"operator": "#INCLUDE", "value": "g-global-telltales-enabled"},
+  {"key": "webgl_unmasked_renderer", "operator": "EXISTS"},
+  {"key": "os", "operator": "EXISTS"},
+  {"operator": "OR", "conditions": [
+   {"operator": "AND", "conditions": [
+    {"key": "webgl_unmasked_renderer", "operator": "TS_CONTAINS", "value": "Direct3D", "type": "string"},
+    {"key": "os", "operator": "TS_NOT_IN", "value": ["Windows", "Xbox", "Windows Phone"], "type": "list[string]"}]},
+   {"operator": "AND", "conditions": [
+    {"key": "os", "operator": "TS_EQ", "value": "OS X", "type": "string"},
+    {"key": "webgl_unmasked_renderer", "operator": "TS_REGEX", "value": "/(?i)(adreno|mali|powervr)/", "type": "string"}]},
+   {"operator": "AND", "conditions": [
+    {"key": "os", "operator": "TS_EQ", "value": "Windows", "type": "string"},
+    {"key": "webgl_unmasked_renderer", "operator": "TS_REGEX", "value": "/(?i)(mali|powervr)/", "type": "string"}]},
+   {"operator": "AND", "conditions": [
+    {"key": "os", "operator": "TS_EQ", "value": "Windows", "type": "string"},
+    {"key": "webgl_unmasked_renderer", "operator": "TS_REGEX", "value": "/(?i)adreno/", "type": "string"},
+    {"key": "webgl_unmasked_renderer", "operator": "TS_NOT_CONTAINS", "value": "Direct3D", "type": "string"}]}]}
+ ],
+ "_validated": "validate_telltale 2026-11-24: valid, no errors (NOT created)",
+ "_measured": "Nov 23 12-18 UTC, all Production keys: Roblox Signup 146k Direct3D-on-Ubuntu at 1.8% verified; Uber SMS 113k Adreno-on-Windows (21% verified), 51k Mali/PowerVR-on-Windows (21%), 40k Direct3D-on-Android (8%); Amazon IDS 28k Direct3D-on-iPadOS (35%); long tail of small keys at 85-100% verified (Direct3D on Linux/OS X: UA-switcher extensions on real Windows machines) - so suspicion flag first, pressure only per key after a verified-share check."
+}
