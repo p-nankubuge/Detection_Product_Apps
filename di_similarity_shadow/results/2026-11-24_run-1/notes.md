@@ -1,21 +1,20 @@
 # Run 1 notes (no agents)
 
-## What I asked
+## What we looked at
 
-1. Figma Registration K2, 20 Nov 12:00–14:00 UTC: sessions and verify rate by DI dictionary.
-2. Same query for 19 Nov, to check the window is typical.
-3. Dict 1 and Dict 3 broken down by OS and top-5 JA4, compared with Dict 63.
+- Figma Registration K2 (`A207F8A1-ED09-4325-ACE6-C8E26A458FBA`), 12:00–14:00 UTC on 20 Nov 2026, with 19 Nov as a comparison.
+- Sessions and verify rate by today's DI dictionary (-1 to 63).
+- Dict 1 and Dict 3 broken down by OS and top-5 JA4, compared with Dict 63 (known real devices).
 
-## What happened
+## What we found
 
-- Checked that `vw_events.timestamp` is UTC before querying (latest event vs `SYSDATE()`: 0 min apart).
-- Split is stable across both days (shares within ~1.3 points). ~55% Dict 63.
+- The split is stable across both days: ~55% of sessions are Dict 63, and shares moved by at most ~1.3 points.
 - ~99% of sessions that reach a challenge pass it at every dictionary, so "verified" doesn't separate good from bad on this key.
-- Dict 1 = JA4s never seen on real devices, several non-browser-looking. Dict 3 = normal JA4s; the mismatch is elsewhere. macOS is ~2× over-represented at Dict 3.
-- One query failed (window function inside an aggregate); fixed by simplifying.
+- Dict 1 is mostly JA4s never seen at Dict 63, several of them non-browser-looking (HTTP/1.1 only, TLS 1.2, no ALPN).
+- Dict 3 has ordinary Chrome/Safari JA4s, so its mismatch is in another field. macOS is ~2× its normal share there (185 sessions).
 
-## What I'd change
+## Questions I still have
 
-- Report verify rate both ways from the start ("of all sessions" vs "of those challenged").
-- Always include a baseline column (Dict 63) when breaking a dictionary down.
-- Next: find which field drops macOS sessions to Dict 3; join Figma truth data (Athena) to test the readings.
+1. Which field drops the macOS sessions to Dict 3: OS version, browser version, screen size or WebGL?
+2. Are the Dict 1 sessions with non-browser JA4s actually bad? Figma's truth data should say.
+3. Why do ~10% of low-dictionary sessions never reach a challenge: abandoned, not challenged, or something else?
