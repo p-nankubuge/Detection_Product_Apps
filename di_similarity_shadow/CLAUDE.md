@@ -75,6 +75,11 @@ Typical order: `whitelist-builder` first; then `similarity-scorer`, `impossible-
 
 Figma Registration K2 (Legit + Nonlegit labels) and Blizzard ROW Registration K2 (Nonlegit only) have customer truth data. Prefer them for measuring uplift. TD is in **Athena** (Superset `database_id: 2`), `starfleet_production.truth_data_history`, and joins to `starfleet_production.prod_session_summary` (which has the DI, JA4, OS, UA and WebGL fields) on `session = arkose_session_id`. Always filter Athena tables on their `year`/`month`/`day` partitions. Full column list and caveats are at the top of `known_cases.md`. Athena uses Presto/Trino SQL, not Snowflake SQL (e.g. `date_add`, `regexp_like`, `contains()` for arrays).
 
+**TD is optional, not required.** Most keys have no truth data, and where it exists it can arrive **up to ~2 weeks late**. So:
+- Every analysis must work without TD (comparison tables, known cases, verify / risk, example sessions).
+- When TD is used, pick a window that ended **at least 2–3 weeks ago**, and say how complete the labels look for that window.
+- Never treat "no label" as "legitimate".
+
 **Uplift, defined:** among TD **Nonlegit** sessions that Arkose let through (`is_verified = 1`), the share a new rule would have flagged. **False-positive rate:** among TD **Legit** sessions, the share the rule would have flagged. Report both, with counts.
 
 ## Judging results
