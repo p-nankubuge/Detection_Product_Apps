@@ -1422,7 +1422,7 @@ def cohort_verdict(c, win_start):
     ind.append(("new", new, "%s/day in the window vs %s/day before (%s)" % (fmt(wmean), fmt(bmean), "new" if new else "was already there")))
     per_ip = n / max(1, S["ips"]); per_dev = n / max(1, S["devs"]) if S["devs"] else 0
     asn_sh = S["top_asn_n"] / max(1, n); host = (S["hosting"] + S["proxy"]) / max(1, 2 * n)
-    conc = per_ip >= 3 or S["max_ip"] >= max(50, 0.02 * n) or asn_sh >= 0.3 or host >= 0.3 or per_dev >= 3
+    conc = per_ip >= 3 or S["max_ip"] >= max(50, 0.02 * n) or asn_sh >= 0.3 or host >= 0.3 or per_dev >= 10  # stateless device ids collide for common configs: high bar
     ind.append(("concentrated", conc, "%.1f sessions/IP (top IP %s), %.1f sessions/device, top ASN %s %.0f%%, hosting %.0f%% / proxy-VPN %.0f%%"
                 % (per_ip, fmt(S["max_ip"]), per_dev, S["top_asn"] or "?", 100 * asn_sh, 100 * S["hosting"] / max(1, n), 100 * S["proxy"] / max(1, n))))
     hrs = sorted(c["hourly"]); co = [c["hourly"][h][0] for h in hrs]; kt = [c["hourly"][h][1] - c["hourly"][h][0] for h in hrs]

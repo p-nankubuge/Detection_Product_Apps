@@ -42,7 +42,7 @@ if a.vocab:
     if len(flags) > 62:
         raise SystemExit("vocab too large for a BIGINT bitmask (max 62)")
     vals["vocab"] = ",".join("'%s'" % f.replace("'", "''") for f in flags)
-vals["sample"] = ("SAMPLE SYSTEM (%s)" % a.sample) if a.sample else ""
+vals["sample"] = ("SAMPLE SYSTEM (%s) SEED (42)" % a.sample) if a.sample else ""  # seeded: every CTE reference sees the same blocks
 # 06_key_volume_drops
 vals["window_days"] = ", ".join("('%s')" % (ws + dt.timedelta(days=i)) for i in range((we - ws).days))
 vals["recent_end"] = (a.recent_end + ":00:00") if a.recent_end else str(we) + " 00:00:00"
