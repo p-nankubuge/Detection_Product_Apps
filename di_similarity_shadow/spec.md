@@ -12,7 +12,7 @@ Distilled from the two one-pagers (sources in `CLAUDE.md`). If this file and Con
 | OS version | `os_version_at_session_created` (summary); also the part after `::` in the first field of the DI signature (e.g. `iOS::26.6.1`, `Windows::10`, `GNU/Linux::` empty) | similarity-scorer layer 1, 2026-11-25 (Figma K2) |
 | JA4 | `cdn__ja4_hash` | |
 | Screen size | 3rd `\|\|` part of `DI_HIGHEST_SIGNATURE_AT_SESSION_CREATED` (`avail_w,avail_h::w,h`, e.g. `1920,1032::1920,1080`); `LATEST_FP_RESOLUTION` (ARRAY, latest not at-create) in the summary | similarity-scorer layer 1, 2026-11-25 |
-| device_params (platform, CPU cores, colour depth, touch, storage/cookie flags, font hash) | 4th `\|\|` part of `DI_HIGHEST_SIGNATURE_AT_SESSION_CREATED`, 13 `::`-separated values, e.g. `Win32::0::1::24::8::1::1::0::1::0::0::0::7EC6D` (platform first, colour depth 4th, cores 5th, touch points 11th, font hash last; other positions not individually confirmed) | similarity-scorer layer 1, 2026-11-25 |
+| device_params (platform, CPU cores, colour depth, touch, storage/cookie flags, font hash) | 4th `\|\|` part of `DI_HIGHEST_SIGNATURE_AT_SESSION_CREATED`, 13 `::`-separated values, e.g. `Win32::0::1::24::8::1::1::0::1::0::0::0::7EC6D` (platform 1st, colour depth 4th, CPU cores 5th, **max touch points 10th** (0/1/2/5/10), touch flag 11th (0/1), font hash 13th; other positions are 0/1 flags not individually confirmed. Corrected 25 Nov by layer 1 v2: touch points were listed as 11th) | similarity-scorer layer 1, 2026-11-25 |
 | navigator.platform | First value of device_params (e.g. `Win32`, `MacIntel`, `iPhone`, `Linux armv81`); `LATEST_FP_NAVIGATOR_PLATFORM` in the summary | similarity-scorer layer 1, 2026-11-25 |
 | User-Agent | `ua` | |
 | WebGL renderer | `webgl_unmasked_renderer` | |
@@ -67,7 +67,7 @@ Chain, each level requires all previous fields: **os (Dict 1) → +JA4 (3) → +
 
 **Band D trigger:** mobile (iOS, iPadOS, Android) = 1 failed check. Desktop (Windows, macOS, ChromeOS, Linux) = 2 failed checks, or 1 failed check + a never-seen screen or device_params.
 
-**Updated 25 Nov** (details in `.claude/agents/similarity-scorer.md`, "Seen-before rules"; options considered in `decisions.md`): every "seen before" lookup is per **platform group** (§4), not per exact OS; pair checks compare **coarse** values (UA = browser + major version; device_params = platform, CPU cores, colour depth, touch); OS version is checked only within one OS line (iOS + iPadOS together), skipped where the version is frozen, and an older unseen version does not count toward Band D.
+**Updated 25 Nov** (details in `.claude/agents/similarity-scorer.md`, "Seen-before rules"; options considered in `decisions.md`): every "seen before" lookup is per **platform group** (§4), not per exact OS; pair checks are **two-level** (coarse pair never seen = failed check; coarse seen but exact never seen = one warning sign; coarse UA = browser + major version, coarse device_params = positions 1, 4, 5, 10, 11); screen is compared on **physical size only** (`w,h`, not the available window size); empty or unparsed values never match each other; OS version is checked only within one OS line (iOS + iPadOS together), skipped where the version is frozen, and an older unseen version does not count toward Band D.
 
 ### Never-seen values (not in the whitelist for this platform group)
 
