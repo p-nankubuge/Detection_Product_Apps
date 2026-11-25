@@ -17,12 +17,13 @@ Context: the thresholds run (`results/2026-11-25_thresholds/`) fell back to all-
 - **Why:** keeps every threshold per key, and no thin cell gets looser than today. Real (non-fallback) key cells may still exceed today's threshold where the key's own clean traffic supports it.
 - **Revisit when:** a key has so little volume that most cells end at the current threshold (the design then adds nothing for that key), or a key's pooled cell is clearly too tight for one platform group.
 
-### D-12. Whitelist scope = the key's DI dictionary group
+### D-12. Whitelist scope = the keys that feed the key's DI dictionary
 
-- **Decided:** build the whitelist from every key sharing the session key's `di_dictionary_used` (an account ID today, a vertical ID once verticals exist).
-- **Options considered:** per key (layer 1 so far); per account looked up elsewhere; all keys; **DI's own dictionary group** (chosen).
-- **Why:** it is exactly the scope today's DI matches against, so the comparison is like for like, and it needs no separate vertical or account mapping. For Figma K2 the group is the Figma account (`23454`) with only this key active, so the layer-1 runs already used the right scope.
-- **Revisit when:** verticals are defined (check whether `di_dictionary_used` switches to vertical IDs), or a group mixes very different traffic (e.g. a web and a mobile-SDK key in one account).
+- **Decided:** find the dictionary a key is matched against (`di_dictionary_used`). Account dictionary (value = account ID) → whitelist from **all keys on the account** (`account_id`). Vertical dictionary (value = a name, e.g. `general_internet`) → all keys in the vertical; proxy = keys whose `di_dictionary_used` is that name, until vertical membership exists.
+- **Options considered:** per key (layer 1 so far); keys sharing `di_dictionary_used` (first version of this decision: confuses what a key is *matched against* with what *feeds* the dictionary); all keys; **the dictionary's learning scope** (chosen).
+- **Why:** an account dictionary learns from all the account's keys and a vertical groups more keys, so known devices are learned faster; the whitelist should match that. Figma account `23454` has 3 keys: K2 (on the account dictionary) and two small keys matched against `general_internet` (315 sessions on 19 Nov). The layer-1 runs used K2 only, missing ~50 Dict 63 sessions/day of 364,042 in the whitelist (~0.1%), so their results stand.
+- **Open:** whether a key matched against a vertical (e.g. Figma's two small keys) also feeds its account dictionary. Assumed yes (account = all its keys).
+- **Revisit when:** vertical membership is defined, or a dictionary mixes very different traffic (e.g. web and mobile-SDK keys in one account).
 
 ## 25 Nov 2026 (later): changes after layer 1 v2
 

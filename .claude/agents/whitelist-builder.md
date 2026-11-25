@@ -10,7 +10,7 @@ You build the reference data the similarity scorer compares against. You are rea
 Read `di_similarity_shadow/CLAUDE.md` and `di_similarity_shadow/spec.md` (sections 2 and 3). Confirm the column names for screen size, device_params, OS version and WebGL renderer, and record them in "Confirmed field names" in `spec.md`.
 
 ## What to build
-1. **Whitelist proxy:** distinct Dict 63 signatures (OS family, OS version, JA4, screen, device_params, UA, WebGL) over the requested window, on the keys of the requested **DI dictionary group** (`vw_events.di_dictionary_used`: an account ID, or a vertical ID once verticals exist; list the keys covered), or all keys if asked (`decisions.md` D-12), **excluding** List A renderers, List B combinations, List C combinations, the synthetics key and proxy keys' JA4.
+1. **Whitelist proxy:** distinct Dict 63 signatures (OS family, OS version, JA4, screen, device_params, UA, WebGL) over the requested window, on the keys that feed the requested **DI dictionary** (account dictionary = all keys on the account, `vw_events.account_id`; vertical dictionary = keys whose `di_dictionary_used` is the vertical's name, as a proxy until vertical membership exists; list the keys covered), or all keys if asked (`decisions.md` D-12), **excluding** List A renderers, List B combinations, List C combinations, the synthetics key and proxy keys' JA4.
    - The real whitelist uses eligibility rules (3+ accounts, multi-key persistence, 7 of 14 days). Approximate them where possible: e.g. require a signature seen on ≥ 3 distinct accounts or keys and ≥ 2 distinct days. State exactly what approximation you used.
 2. **Pair indexes** (value pairs seen together on whitelisted signatures):
    - UA × device_params
