@@ -2,6 +2,20 @@
 
 Choices made while building the shadow evaluator, with the alternatives considered, so they can be revisited when evidence changes. Newest first. Each entry: what was decided, the options, why, and what would make us revisit it.
 
+## 25 Nov 2026 (night): threshold level (under test)
+
+### D-13. How to stop per-key thresholds over-firing on clean traffic (G7)
+
+- **Status:** under test (`results/2026-11-25_thresholds-v3/`), not decided.
+- **Context:** thresholds v2 (`results/2026-11-25_thresholds-v2/`): Figma's own base p99 is 2–9 sessions per signature per 40 min, so thresholds after multipliers are 3–10 vs today's flat 11. Fires on clean traffic rise from 118 to 301 on 20 Nov; G7 fails in 15 cells.
+- **Options being tested:**
+  1. p99 as now (baseline).
+  2. **Floor:** base never below 5 (before multipliers).
+  3. **p99.9** instead of p99.
+  4. **p99.9 + floor 5.**
+- **Not tested yet:** floor at today's threshold (would remove any tightening); a larger minimum volume per cell; a per-signature IP-diversity exception for identical managed fleets (Dict 63 Linux case).
+- **Judge by:** G7 (clean-traffic fires vs today), High risk among fires, K3 (Adobe) still firing, G8 (Payoneer), the Dict 63 Linux group.
+
 ## 25 Nov 2026 (evening): scope of thresholds and whitelists
 
 Context: the thresholds run (`results/2026-11-25_thresholds/`) fell back to all-keys cells for 15 of 35 Figma cells, which made Dict 1 looser than today (35 vs 11). Clarified: thresholds are per key; the dictionary whitelist is shared across a group of keys (a vertical or an account) so known devices are learned faster.
