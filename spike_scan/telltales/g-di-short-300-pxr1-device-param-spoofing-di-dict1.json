@@ -1,0 +1,37 @@
+{
+ "ticket": "DETCORE-4466",
+ "telltale_type": "suspicion_flags",
+ "cohort_category": "Suspicious",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "telltale_active": false,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+ "location": "SESSION_SETUP",
+ "telltale_name": "g-di-short-300-pxr1-device-param-spoofing-di-dict1",
+ "telltale_description": "Replacement for g-di-short-300-pxr1-device-param-spoofing-ja4-dict1 (14769325): same logic but the CHAMPION DI dictionary 1 flag instead of ja4-dict-1-challenger, which has known issues.",
+ "telltale_definition": [
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "di-short-count-300-fp-pixel-ratio-1"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-device-parameter-spoofing"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "g-di-dict-1-match-short-term-threshold-exceeded-1x"
+  }
+ ],
+ "_validated": "validate_telltale 2026-11-25: valid, no errors (NOT created). A raw di_dictionary_num_matched == 1 row instead of the #INCLUDE fails ground_truth_overlap with msidentity2-20161116-cdssolver--ground-truth (15350642).",
+ "_note": "Champion flag g-di-dict-1-match-short-term-threshold-exceeded-1x carries the Nov 12 revert thresholds (THR-408), so it is not identical to a bare num_matched == 1."
+}

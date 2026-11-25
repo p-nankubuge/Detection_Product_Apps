@@ -177,6 +177,10 @@ Work from the repo root, `cd spike_scan`.
    Chrome QUIC b=55b375c5d22e. Red flags: TLS 1.2 or lower, no SNI, no ALPN, ALPN h1 with a browser UA, 25+ ciphers (OpenSSL/library
    default 30-52), < 10 extensions, a cipher set that is not a browser stack, claimed browser != stack, or a browser stack with the
    wrong cipher/extension counts (impersonation libraries such as curl-impersonate / tls-client).
+   **Do not build on `ja4-dict-1-challenger` (13957758) or its copy `...-is-supicious-not-included` (13957871)**: the challenger DI
+   dictionary 1 has known issues. Use the champion dictionary 1 (`di_dictionary_num_matched == 1`, via the champion flags such as
+   `g-di-dict-1-match-short-term-threshold-exceeded-1x`). A raw `di_dictionary_num_matched` row can fail validate_telltale on
+   ground_truth_overlap (msidentity2 cdssolver ground truth) - #INCLUDE the champion flag instead.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)
