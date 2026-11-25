@@ -9,19 +9,21 @@ Distilled from the two one-pagers (sources in `CLAUDE.md`). If this file and Con
 | Concept | Column | Confirmed by / date |
 |---|---|---|
 | OS family | `os` | |
-| OS version | ? | |
+| OS version | `os_version_at_session_created` (summary); also the part after `::` in the first field of the DI signature (e.g. `iOS::26.6.1`, `Windows::10`, `GNU/Linux::` empty) | similarity-scorer layer 1, 2026-11-25 (Figma K2) |
 | JA4 | `cdn__ja4_hash` | |
-| Screen size | ? | |
-| device_params (platform, CPU cores, colour depth, touch, storage/cookie flags, font hash) | ? | |
-| navigator.platform | ? | |
+| Screen size | 3rd `\|\|` part of `DI_HIGHEST_SIGNATURE_AT_SESSION_CREATED` (`avail_w,avail_h::w,h`, e.g. `1920,1032::1920,1080`); `LATEST_FP_RESOLUTION` (ARRAY, latest not at-create) in the summary | similarity-scorer layer 1, 2026-11-25 |
+| device_params (platform, CPU cores, colour depth, touch, storage/cookie flags, font hash) | 4th `\|\|` part of `DI_HIGHEST_SIGNATURE_AT_SESSION_CREATED`, 13 `::`-separated values, e.g. `Win32::0::1::24::8::1::1::0::1::0::0::0::7EC6D` (platform first, colour depth 4th, cores 5th, touch points 11th, font hash last; other positions not individually confirmed) | similarity-scorer layer 1, 2026-11-25 |
+| navigator.platform | First value of device_params (e.g. `Win32`, `MacIntel`, `iPhone`, `Linux armv81`); `LATEST_FP_NAVIGATOR_PLATFORM` in the summary | similarity-scorer layer 1, 2026-11-25 |
 | User-Agent | `ua` | |
 | WebGL renderer | `webgl_unmasked_renderer` | |
-| Browser name / version | `browser_name` / ? | |
+| Browser name / version | `browser_name` / ?; summary: `BROWSER_NAME_AT_SESSION_CREATED`, `BROWSER_VERSION_AT_SESSION_CREATED` | similarity-scorer layer 1, 2026-11-25 (summary columns via INFORMATION_SCHEMA) |
 | Risk band | `latest_risk_band`? | |
 | Risk band (session summary) | `latest_risk_band` in `ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY`; values `Low` / `Medium` / `High` (and a few `''`) | impossible-combos, 2026-11-24 (Figma K2, Oct 2026) |
 | JA4 / UA / OS (session summary) | `cdn__ja4_hash_at_session_created`, `ua_at_session_created`, `os_at_session_created` (e.g. `Windows`, `OS X`, `Android`, `iOS`, `GNU/Linux`, `Chrome OS`, `iPadOS`, `Ubuntu`), `os_version_at_session_created` in `PROD_INT_SESSION_SUMMARY` (Snowflake) and `starfleet_production.prod_session_summary` (Athena) | impossible-combos, 2026-11-24 |
 | Brave flag | `latest_browser_detection_brave` (BOOLEAN) in `PROD_INT_SESSION_SUMMARY` / Athena `prod_session_summary` (Brave UA is identical to Chrome) | impossible-combos, 2026-11-24 |
 | Session create time (summary) | `session_ts` (TIMESTAMP_NTZ). Snowflake prunes on `session_last_timestamp`; Athena `prod_session_summary` has **no year/month/day partitions** and prunes only on `session_ts` (1 h ≈ 27 s, ≥ 6 h times out) | impossible-combos, 2026-11-24 |
+| Full DI signature (summary) | `DI_HIGHEST_SIGNATURE_AT_SESSION_CREATED` = the session's own six fields even below Dict 63: `os::os_version\|\|ja4\|\|screen\|\|device_params\|\|ua\|\|webgl_block`; WebGL block = `hash::version::glsl::max_dims::unmasked_vendor::unmasked_renderer::bits`. `DI_MATCHED_SIGNATURE_AT_SESSION_CREATED` = the matched prefix only | similarity-scorer layer 1, 2026-11-25 (every one of 9,156 Figma K2 sessions on 20 Nov has 6 parts) |
+| Outcomes (summary) | `SESSIONS_VERIFIED`, `SESSIONS_VERIFY_ATTEMPTED`, `WAS_CHALLENGED`, `SESSIONS_SOLVED` (NUMBER; use `> 0`) | similarity-scorer layer 1, 2026-11-25 |
 | IP intel | `vpn_proxy_description` / `vpn_proxy_type` exist in `vw_events` only (not in `PROD_INT_SESSION_SUMMARY`) | impossible-combos, 2026-11-24 |
 
 ## 1. Current dictionary (for reference)
