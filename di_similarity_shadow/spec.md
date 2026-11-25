@@ -29,6 +29,11 @@ Distilled from the two one-pagers (sources in `CLAUDE.md`). If this file and Con
 | Velocity counts / thresholds (summary) | `DI_SHORT_TERM_COUNT_AT_SESSION_CREATED`, `DI_LONG_TERM_COUNT_AT_SESSION_CREATED`, `DI_SHORT_TERM_THRESHOLD_RATIO_…`, `DI_SHORT_TERM_THRESHOLD_BREACHED_…` (BOOLEAN), same for `LONG_TERM`, `DI_SHORT_TERM_PERCENT_…`. Threshold = count / ratio (Figma: ST 11, LT 660 for every dict); breached = count > threshold; recorded at Dict 63 too (exempt) | velocity-thresholds, 2026-11-25 |
 | Velocity buckets (`vw_events`) | `di_short_term_count` = `di_short_term_current_bucket_count` + `di_short_term_previous_bucket_count` (same for long term); bucket length not confirmed (fit suggests 20 min) | velocity-thresholds, 2026-11-25 |
 | User IP (summary) | `USER_IP_AT_SESSION_CREATED`, `LATEST_USER_IP` | velocity-thresholds, 2026-11-25 |
+| ISP / organization | `isp`, `organization` in `vw_events` (lower-case text); also `ip_intel__dx_user_ip__isp` / `__organization` | velocity-thresholds v2, 2026-11-25 |
+| Connection type, hosting, VPN | `connection_type` (e.g. `nat`), `is_hosting_provider`, `is_vpn` (0/1) in `vw_events`; `vpn_proxy_description` / `vpn_proxy_type` are empty strings, not NULL, when unknown | velocity-thresholds v2, 2026-11-25 |
+| IP country | `ip_intel__dx_user_ip__country` in `vw_events` | velocity-thresholds v2, 2026-11-25 |
+| ASN | `asn` in `vw_events` (number); also `ip_intel__dx_user_ip__asn`, `cdn__asn` | velocity-thresholds v2, 2026-11-25 |
+| Current thresholds, other keys (ST / LT) | Payoneer `EE844FC3-…` 35 / 2,100, `E3EFEFBF-…` 15 / 900, `7CC24C4A-…` 60 / 3,600; Adobe ARP K8 90 / 5,400 on 17–18 Nov (100 / 6,000 earlier that week); Figma Registration K2 11 / 660 | velocity-thresholds v1–v2, 2026-11-25 |
 | IP intel | `vpn_proxy_description` / `vpn_proxy_type` exist in `vw_events` only (not in `PROD_INT_SESSION_SUMMARY`) | impossible-combos, 2026-11-24 |
 
 ## 1. Current dictionary (for reference)
