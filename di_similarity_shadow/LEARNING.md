@@ -4,6 +4,8 @@ Goal: by the end, have a working prototype that compares today's DI with the new
 
 Each run is one sitting. Keep notes at the end of each run in `results/<date>_run-N/notes.md`: what you asked, what happened, what you'd change.
 
+**Build order (agreed 25 Nov):** similarity scorer alone first, compared with today's DI; then add one agent at a time and measure whether it improves the result. Layer 1: similarity scorer alone (uncleaned Dict 63 as whitelist). Layer 2: per-dictionary × platform velocity thresholds (both layers are about putting sessions in the right bucket and thresholding them correctly). Layer 3: impossible-combos cleaner (bad / suspicious lists). Layer 4: whitelist eligibility. Runs 1–2 (Figma exploration and the JA4 rule tests) feed layer 3.
+
 | Run | What you do | What you learn |
 |---|---|---|
 | 1 | One question, no agents: look at Figma's traffic by DI dictionary, OS, JA4 | How Claude queries data; what "normal" looks like on a key; why you need a baseline before judging anything |

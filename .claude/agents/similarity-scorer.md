@@ -10,6 +10,16 @@ You score sessions with `ja4_sim_v1`. You are read-only.
 1. Read `di_similarity_shadow/CLAUDE.md`, `di_similarity_shadow/spec.md` (section 2) and `di_similarity_shadow/known_cases.md`.
 2. Use the latest `di_similarity_shadow/results/*_whitelist/` reference. If none exists, stop and say whitelist-builder must run first.
 
+## Standalone mode (layer 1: run this first)
+
+Use when asked for "standalone", "layer 1" or "similarity only". It answers one question: **if DI scored by similarity instead of exact match, what would move up or down?**
+
+- **No other agents needed.** Build the whitelist yourself: the distinct signatures at today's Dict 63 on the same key over the previous 7 days (no cleaning, no eligibility rules, no List A/B/C, no N-rules). Say clearly that this whitelist is uncleaned.
+- **Anchor = OS family only.** OS version is not weighted; treat it as a check (same or newer released version seen on the whitelist = accepted; older or never seen = failed check).
+- Sessions with no JS fingerprint, or no OS: "no score" column.
+- Use the weights, partial credit, consistency checks, never-seen rules and bands in `spec.md` §2. Skip the bad/suspicious lists.
+- Output the **disagreement report** below, plus the field that caused each move. Keep the window small (one key, 2–6 hours) because the closest-device search is heavy.
+
 ## Steps
 1. **Sanity test first:** reproduce the worked examples table in `spec.md` with hand-built rows. If any score or band differs, stop and report the mismatch before scoring real traffic.
 2. Sample sessions in the requested window (default 1-in-256), excluding the synthetics key. Apply List A/B/C exclusions and caps, proxy-key JA4 weight 0, and the Windows Basic Render rule.
