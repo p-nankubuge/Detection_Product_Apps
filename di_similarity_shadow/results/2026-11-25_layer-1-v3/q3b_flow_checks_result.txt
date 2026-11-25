@@ -1,0 +1,82 @@
+# Raw output of q3b_flow_checks.sql (run 2026-11-25, 25.1 s). 77 rows.
+# D15W|v3 band|v3 failed checks|v3 warning signs|n|high|ver|ch|chns  (v1 Dict 15 group: D in v1 by exactly UAxDP + SCRxDP; 51 sessions)
+# FC|cause|v2 band>v3 band|v2 reason => v3 reason|n|high|ver|ch|chns   (top 8 per cause)
+# FW|desk/mob|D/notD (v3 Band D trigger)|failed checks|warning signs|n|high|ver|ch|chns  (top 22 per group; rows with >=1 failed check or exact-pair warning)
+#    UAxDPx / SCRxDPx = exact-only pair mismatch (coarse pair seen) = warning sign; SCRnew / DPnew in the warnings column = never-seen value
+D15W|A||UAxDPx|3|0|3|0|0
+D15W|B|UAxDP||2|0|2|0|0
+D15W|B||DPnew|1|0|1|0|0
+D15W|B||UAxDPx SCRxDPx|15|8|9|9|5
+D15W|B||UAxDPx|5|0|4|1|1
+D15W|C|UAxDP||1|0|1|0|0
+D15W|C||DPnew|3|0|2|2|1
+D15W|C||UAxDPx SCRxDPx|14|8|7|10|1
+D15W|C||UAxDPx|2|0|2|2|0
+D15W|D|UAxDP SCRxDP||7|0|7|5|0
+FC|null fix|A>B|diff:UAmaj => diff:JA4+GL|1|0|1|0|0
+FC|null fix|A>B|diff:UAmaj => diff:UA|32|0|31|3|1
+FC|null fix|B>C|diff:JA4+UAmaj => diff:JA4+UA|1|0|1|1|0
+FC|phys screen in checks|A>D|diff:SCR => chk:SCRxDP SCRxGL|7|0|7|3|0
+FC|phys screen in checks|B>D|diff:UA+SCR => chk:SCRxDP SCRxGL|7|0|7|2|0
+FC|phys screen in checks|C>D|diff:SCR+DP => chk:SCRxGL +DPnew|7|0|6|4|1
+FC|phys screen in checks|D>A|chk:SCRxDP SCRxGL => diff:DP|6|0|6|0|0
+FC|phys screen in checks|D>A|chk:SCRxDP SCRxGL => diff:JA4qt|6|1|5|2|0
+FC|phys screen in checks|D>A|chk:SCRxDP SCRxGL => diff:SCR|6|0|6|1|0
+FC|phys screen in checks|D>A|chk:SCRxDP SCRxGL => diff:|42|1|41|8|1
+FC|phys screen in checks|D>A|chk:SCRxPG +SCRnew => diff:GL|7|0|7|2|0
+FC|phys screen in scoring + phys screen in checks|C>D|diff:SCR+DP => chk:SCRxDP SCRxGL|2|0|2|0|0
+FC|phys screen in scoring + phys screen in checks|C>D|diff:SCR+DP => chk:SCRxGL +DPnew|1|0|1|1|0
+FC|phys screen in scoring + two-level pairs|C>D|diff:UA+DP+GL => chk:SCRxGL +UAxDPx +SCRxDPx|1|0|1|0|0
+FC|phys screen in scoring|B>A|diff:DP+GL => diff:|8|0|8|1|0
+FC|phys screen in scoring|B>A|diff:JA4qt+SCR => diff:JA4qt|28|0|27|4|0
+FC|phys screen in scoring|B>A|diff:JA4qt+UA => diff:JA4qt|26|0|26|12|0
+FC|phys screen in scoring|B>A|diff:SCR => diff:|75|4|70|16|5
+FC|phys screen in scoring|B>A|diff:UA => diff:|65|1|64|11|1
+FC|phys screen in scoring|B>A|diff:UA+DP => diff:DP|8|0|7|1|0
+FC|phys screen in scoring|B>A|diff:UA+SCR => diff:UA|24|1|23|6|1
+FC|phys screen in scoring|C>B|diff:SCR+DP => diff:DP|8|0|8|1|0
+FC|two-level pairs|A>D|diff:SCR => chk:SCRxGL +SCRxDPx|20|1|20|5|0
+FC|two-level pairs|B>D|diff:JA4qt+SCR => chk:SCRxGL +SCRxDPx|2|0|1|1|1
+FC|two-level pairs|B>D|diff:UA+SCR => chk:SCRxGL +SCRxDPx|9|0|9|0|0
+FC|two-level pairs|C>D|diff:JA4+UA+GL => chk:SCRxGL +UAxDPx|11|0|11|2|0
+FC|two-level pairs|C>D|diff:JA4qt+SCR+DP => chk:SCRxGL +SCRxDPx|5|0|5|0|0
+FC|two-level pairs|C>D|diff:JA4qt+UA+GL => chk:SCRxGL +UAxDPx|8|0|8|1|0
+FC|two-level pairs|C>D|diff:SCR+DP => chk:SCRxGL +SCRxDPx|7|0|6|2|1
+FC|two-level pairs|C>D|diff:UA+SCR+DP => chk:SCRxGL +UAxDPx +SCRxDPx|3|0|3|0|0
+FW|desk|D|SCRxDP SCRxGL|UAxDPx|4|0|4|0|0
+FW|desk|D|SCRxDP SCRxGL||83|2|83|14|0
+FW|desk|D|SCRxGL|DPnew|43|0|41|10|2
+FW|desk|D|SCRxGL|SCRxDPx|53|2|51|12|2
+FW|desk|D|SCRxGL|UAxDPx SCRxDPx|17|1|16|5|1
+FW|desk|D|SCRxGL|UAxDPx|20|0|20|3|0
+FW|desk|D|SCRxPG|SCRnew DPnew|27|5|22|5|5
+FW|desk|D|SCRxPG|SCRnew UAxDPx|3|0|3|0|0
+FW|desk|D|SCRxPG|SCRnew|21|1|18|7|3
+FW|desk|D|UAxDP SCRxDP SCRxGL||10|0|10|1|0
+FW|desk|D|UAxDP SCRxDP||14|0|14|5|0
+FW|desk|D|UAxDP SCRxGL||2|0|2|0|0
+FW|desk|D|UAxDP SCRxPG|SCRnew|6|0|6|1|0
+FW|desk|D|UAxDP|SCRnew|5|0|3|3|2
+FW|desk|D|UAxDP|SCRxDPx|6|0|6|1|0
+FW|desk|notD|SCRxDP||34|0|33|5|1
+FW|desk|notD|SCRxGL||144|3|135|44|9
+FW|desk|notD|UAxDP||163|38|137|60|21
+FW|desk|notD||SCRnew UAxDPx|17|1|14|8|3
+FW|desk|notD||SCRxDPx|128|5|121|23|4
+FW|desk|notD||UAxDPx SCRxDPx|64|17|48|34|8
+FW|desk|notD||UAxDPx|280|23|250|93|25
+FW|mob|D|DPnew||5|2|3|4|2
+FW|mob|D|SCRxDP SCRxGL||7|0|7|2|0
+FW|mob|D|SCRxDP|UAxDPx|1|0|1|0|0
+FW|mob|D|SCRxDP||14|2|11|4|3
+FW|mob|D|SCRxGL DPnew||2|0|2|0|0
+FW|mob|D|SCRxGL|UAxDPx SCRxDPx|2|1|1|1|1
+FW|mob|D|SCRxGL||30|3|27|5|3
+FW|mob|D|UAxDP SCRxDP SCRxGL||2|0|2|0|0
+FW|mob|D|UAxDP SCRxDP||7|0|7|4|0
+FW|mob|D|UAxDP SCRxGL||1|0|1|0|0
+FW|mob|D|UAxDP SCRxPG||1|0|1|0|0
+FW|mob|D|UAxDP||23|3|19|5|3
+FW|mob|notD||SCRxDPx|3|0|3|1|0
+FW|mob|notD||UAxDPx SCRxDPx|3|0|3|1|0
+FW|mob|notD||UAxDPx|6|0|6|2|0

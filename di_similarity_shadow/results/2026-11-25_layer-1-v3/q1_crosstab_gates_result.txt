@@ -1,0 +1,111 @@
+# Raw output of q1_crosstab_gates.sql (run 2026-11-25, 16.4 s, EXECUTE IMMEDIATE wrapper, whitespace-minified copy). 102 rows.
+# X3|dict|v3 band|n|high|verified|challenged|challenged_not_solved|mean v3 score     X2|dict|v2 band|n|high (recomputed v2)
+# G3vN|desk/mob|Dchk (Band D trigger fired)/pass|n|high|ver|ch|chns   (v1 uses the v1 OS-family mobile flag; v2/v3 the platform group)
+# MV|moved/same (v2 band vs v3 band)|intoD/outD/other|n|high|ver|ch|chns
+# SC|sign(v3 score - v2 score)|score band changed?|final band changed?|n|high|ver|ch|chns
+# D15|v3 band|v3 reason|...  (Dict 15 sessions that were D in v1 with exactly chk:UAxDP SCRxDP)
+# OSV|OS line|status|...   FRZ|OS line|top version|top share of whitelist sessions|newest (numeric)
+# NOSC|no-score sessions|v2 sessions whose closest-device UA 1/2 credit came from two unparsed UAs|same in v3|v3 sessions with an unparsed
+#      UA matched exactly (full credit kept, see caveats)|sessions with an unparsed UA|sessions whose score changed v2->v3|changed at S1 (null fix)
+D15|A|diff:DP|1|0|1|0|0
+D15|A|diff:UA|2|0|2|0|0
+D15|B|diff:DP|15|8|9|9|5
+D15|B|diff:JA4qt+DP|1|0|1|0|0
+D15|B|diff:UA+DP|1|0|1|0|0
+D15|B|diff:UA+GL|1|0|0|1|1
+D15|B|diff:UA+SCR|3|0|3|0|0
+D15|B|diff:UA|2|0|2|0|0
+D15|C|diff:JA4qt+UA+DP|3|0|2|2|1
+D15|C|diff:UA+DP|16|8|9|11|1
+D15|C|diff:UA+GL|1|0|1|1|0
+D15|D|chk:UAxDP SCRxDP|7|0|7|5|0
+FRZ|Android|10|0.9934|17000000
+FRZ|Chrome OS|14541.0.0|1.0000|14541000000
+FRZ|Linux||1.0000|0
+FRZ|OS X|10.15.7|0.6831|27003000
+FRZ|Windows|10|1.0000|10000000
+FRZ|iOS+iPadOS|26.6.1|0.2258|27003000
+G3v1|desk|Dchk|976|61|881|255|77
+G3v1|desk|pass|6713|317|6288|1582|342
+G3v1|mob|Dchk|97|10|85|26|11
+G3v1|mob|pass|1370|48|1245|348|118
+G3v2|desk|Dchk|348|18|330|69|17
+G3v2|desk|pass|7341|360|6839|1768|402
+G3v2|mob|Dchk|94|12|81|25|12
+G3v2|mob|pass|1373|46|1249|349|117
+G3v3|desk|Dchk|316|11|301|67|15
+G3v3|desk|pass|7373|367|6868|1770|404
+G3v3|mob|Dchk|95|11|82|25|12
+G3v3|mob|pass|1372|47|1248|349|117
+MV|moved|intoD|139|3|133|34|6
+MV|moved|other|421|10|402|99|17
+MV|moved|outD|156|7|150|32|4
+MV|same|other|8440|416|7814|2046|521
+NOSC|0|v2_uanull_half=39|v3_uanull_half=0|v3_unparsed_ua_exact=29|unparsed_ua_sessions=67|score_changed=984|score1_changed=37
+OSV|-|skip: no OS line|5|0|5|0|0
+OSV|Android|skip: frozen line|899|36|795|229|99
+OSV|Chrome OS|skip: frozen line|133|17|115|43|14
+OSV|Linux|skip: frozen line|241|6|216|91|22
+OSV|OS X|seen|1627|48|1556|337|60
+OSV|Windows|skip: frozen line|5683|307|5277|1366|323
+OSV|iOS+iPadOS|older, not seen (warning)|2|0|2|0|0
+OSV|iOS+iPadOS|seen|566|22|533|145|30
+SC|-1|same scoreband|same band|2|0|2|0|0
+SC|-1|scoreband changed|band changed|34|0|33|4|1
+SC|-1|scoreband changed|same band|1|0|1|0|0
+SC|0|same scoreband|band changed|164|7|156|39|8
+SC|0|same scoreband|same band|8008|395|7404|1936|501
+SC|1|same scoreband|band changed|28|1|27|8|1
+SC|1|same scoreband|same band|420|21|398|108|20
+SC|1|scoreband changed|band changed|490|12|469|114|17
+SC|1|scoreband changed|same band|9|0|9|2|0
+X2|-1|A|1|0
+X2|15|A|375|24
+X2|15|B|466|40
+X2|15|C|117|17
+X2|15|D|97|3
+X2|1|A|9|1
+X2|1|B|6|1
+X2|1|C|3|0
+X2|1|D|5|0
+X2|31|A|830|43
+X2|31|B|512|27
+X2|31|C|70|5
+X2|31|D|58|2
+X2|3|A|120|13
+X2|3|B|173|6
+X2|3|C|62|6
+X2|3|D|91|12
+X2|63|A|4762|162
+X2|63|B|230|11
+X2|63|C|2|0
+X2|63|D|29|2
+X2|7|A|259|10
+X2|7|B|507|21
+X2|7|C|169|15
+X2|7|D|203|15
+X3|-1|B|1|0|1|0|0|0.700
+X3|15|A|461|25|431|150|29|0.915
+X3|15|B|406|39|359|124|38|0.762
+X3|15|C|81|16|63|40|11|0.547
+X3|15|D|107|4|102|21|4|0.576
+X3|1|A|11|1|10|3|1|0.877
+X3|1|B|6|1|4|3|2|0.743
+X3|1|C|2|0|2|1|0|0.621
+X3|1|D|4|0|4|2|0|0.307
+X3|31|A|874|42|810|227|48|0.915
+X3|31|B|481|27|455|113|21|0.746
+X3|31|C|59|5|54|10|3|0.542
+X3|31|D|56|3|55|11|1|0.742
+X3|3|A|206|16|190|69|14|0.942
+X3|3|B|110|5|100|37|9|0.738
+X3|3|C|41|5|36|16|4|0.528
+X3|3|D|89|11|73|35|16|0.593
+X3|63|A|4816|168|4531|997|241|0.992
+X3|63|B|192|6|181|39|11|0.861
+X3|63|C|2|0|2|1|0|0.486
+X3|63|D|13|1|12|3|1|0.730
+X3|7|A|337|11|312|80|20|0.923
+X3|7|B|486|23|424|150|50|0.725
+X3|7|C|118|16|103|45|12|0.531
+X3|7|D|197|11|185|34|12|0.537

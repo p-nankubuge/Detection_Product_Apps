@@ -1,0 +1,141 @@
+# Raw output of q2_flow_warnings.sql (run 2026-11-25, 13.4 s). 135 rows.
+# FL|dict|v2 band>v3 band|cause (sequential: null fix -> phys screen in scoring -> phys screen in checks -> two-level pairs)|n|high|ver|ch|chns
+# WF|desk/mob (platform group: Mobile vs all others)|f<failed checks, 2=2+>|w<warning signs, 3=3+>|n|high|ver|ch|chns  (scored sessions)
+#    desktop warning signs = never-seen screen + never-seen DP + exact-only UAxDP + exact-only SCRxDP; mobile = the two exact-only pairs only
+# WX|same but x<exact-only pair warnings only (0-2)>
+# PG|platform group|OS|v3 band|n|high|ver|ch|chns
+FL|-1|A>B|null fix|1|0|1|0|0
+FL|15|A>B|null fix|27|0|26|3|1
+FL|15|A>D|phys screen in checks|1|0|1|1|0
+FL|15|B>A|phys screen in scoring|100|1|97|25|3
+FL|15|B>C|null fix|1|0|1|1|0
+FL|15|B>D|phys screen in checks|4|0|4|0|0
+FL|15|B>D|two-level pairs|1|0|1|0|0
+FL|15|C>B|phys screen in scoring|14|0|13|4|1
+FL|15|C>D|phys screen in checks|1|0|1|0|0
+FL|15|C>D|two-level pairs|25|1|25|5|0
+FL|15|D>A|phys screen in checks|14|0|14|2|0
+FL|15|D>B|phys screen in checks|5|0|5|0|0
+FL|15|D>C|phys screen in checks|3|0|3|1|0
+FL|1|C>A|phys screen in scoring|1|0|1|0|0
+FL|1|D>A|phys screen in checks|1|0|1|1|0
+FL|31|A>B|null fix|1|0|1|0|0
+FL|31|A>D|two-level pairs|14|1|14|5|0
+FL|31|B>A|phys screen in scoring|41|0|39|8|2
+FL|31|B>D|phys screen in checks|3|0|3|1|0
+FL|31|B>D|two-level pairs|4|0|4|0|0
+FL|31|C>B|phys screen in scoring|11|0|11|1|0
+FL|31|C>D|two-level pairs|2|0|2|0|0
+FL|31|D>A|phys screen in checks|18|0|18|1|0
+FL|31|D>B|phys screen in checks|5|0|5|0|0
+FL|31|D>C|phys screen in checks|1|0|1|0|0
+FL|31|D>C|phys screen in scoring|1|0|1|0|0
+FL|3|A>D|phys screen in checks|4|0|4|2|0
+FL|3|A>D|two-level pairs|2|0|2|0|0
+FL|3|B>A|phys screen in scoring|70|1|67|22|2
+FL|3|B>D|phys screen in checks|9|0|9|1|0
+FL|3|B>D|two-level pairs|1|0|1|0|0
+FL|3|C>A|phys screen in scoring|9|1|9|2|0
+FL|3|C>B|phys screen in scoring|5|0|5|0|0
+FL|3|C>D|phys screen in checks|8|0|6|5|2
+FL|3|C>D|two-level pairs|2|0|2|1|0
+FL|3|D>A|phys screen in checks|13|1|11|2|1
+FL|3|D>B|phys screen in checks|11|0|10|2|1
+FL|3|D>B|phys screen in scoring|1|0|1|0|0
+FL|3|D>C|phys screen in checks|3|0|2|1|1
+FL|63|A>B|null fix|4|0|4|0|0
+FL|63|B>A|phys screen in scoring|41|6|38|9|3
+FL|63|B>D|phys screen in checks|2|0|1|2|1
+FL|63|D>A|phys screen in checks|17|0|17|4|0
+FL|63|D>B|phys screen in checks|1|1|1|1|0
+FL|7|A>D|phys screen in checks|4|0|4|0|0
+FL|7|A>D|two-level pairs|4|0|4|0|0
+FL|7|B>A|phys screen in scoring|60|0|57|11|2
+FL|7|B>D|phys screen in checks|2|0|2|0|0
+FL|7|B>D|two-level pairs|11|0|10|2|1
+FL|7|C>A|phys screen in scoring|6|0|6|1|0
+FL|7|C>B|phys screen in scoring|29|1|26|12|3
+FL|7|C>D|phys screen in checks|9|0|9|3|0
+FL|7|C>D|phys screen in scoring + phys screen in checks|3|0|3|1|0
+FL|7|C>D|phys screen in scoring + two-level pairs|1|0|1|0|0
+FL|7|C>D|two-level pairs|22|1|20|5|2
+FL|7|D>A|phys screen in checks|20|1|20|5|0
+FL|7|D>B|phys screen in checks|23|1|22|6|1
+FL|7|D>C|phys screen in checks|16|3|16|6|0
+FL|7|D>C|phys screen in scoring|3|0|2|0|0
+PG|Desktop|Chrome OS|A|101|17|88|38|11
+PG|Desktop|Chrome OS|B|25|0|23|1|0
+PG|Desktop|Chrome OS|C|3|0|0|3|3
+PG|Desktop|Chrome OS|D|4|0|4|1|0
+PG|Desktop|OS X|A|1466|41|1408|298|48
+PG|Desktop|OS X|B|126|3|118|28|7
+PG|Desktop|OS X|C|7|0|6|3|1
+PG|Desktop|OS X|D|24|0|24|4|0
+PG|Desktop|Windows|A|3860|160|3638|824|175
+PG|Desktop|Windows|B|1109|83|992|327|94
+PG|Desktop|Windows|C|209|39|174|88|23
+PG|Desktop|Windows|D|220|9|211|46|9
+PG|Linux|GNU/Linux|A|92|0|79|49|11
+PG|Linux|GNU/Linux|B|28|1|26|7|2
+PG|Linux|GNU/Linux|C|35|0|33|8|1
+PG|Linux|GNU/Linux|D|46|0|46|9|0
+PG|Linux|Ubuntu|A|4|0|4|1|0
+PG|Linux|Ubuntu|B|8|0|8|1|0
+PG|Linux|Ubuntu|D|12|0|12|2|0
+PG|Mobile|Android|A|666|21|585|174|77
+PG|Mobile|Android|B|126|4|117|28|9
+PG|Mobile|Android|C|15|0|14|1|1
+PG|Mobile|Android|D|92|11|79|26|12
+PG|Mobile|iOS|A|454|21|424|128|27
+PG|Mobile|iOS|B|46|0|43|6|3
+PG|Mobile|iOS|C|1|0|1|1|0
+PG|Mobile|iOS|D|1|0|1|0|0
+PG|Mobile|iPadOS|A|56|0|56|9|0
+PG|Mobile|iPadOS|B|5|1|5|1|0
+PG|Mobile|iPadOS|D|5|0|5|0|0
+PG|Other|GNU/Linux|A|5|3|1|5|4
+PG|Other|GNU/Linux|B|7|1|4|6|3
+PG|Other|GNU/Linux|D|2|1|1|1|1
+PG|Other|HarmonyOS|A|1|0|1|0|0
+PG|Other|HarmonyOS|C|1|0|1|0|0
+PG|Other|HarmonyOS|D|1|0|1|0|0
+PG|Other|OS X|D|4|4|0|4|4
+PG|Other|OpenHarmony|C|1|0|1|0|0
+PG|Other|OpenHarmony|D|1|0|1|0|0
+PG|Other|Ubuntu|C|2|0|2|2|0
+PG|Other|Windows|B|1|1|1|1|0
+PG|Other|Windows|C|4|1|4|2|0
+PG|Other|Windows|D|35|5|30|5|5
+PG|Windows RD/VM|Windows|B|201|7|187|60|13
+PG|Windows RD/VM|Windows|C|25|2|24|5|1
+PG|Windows RD/VM|Windows|D|19|0|16|8|3
+WF|desk|f0|w0|5964|249|5615|1349|278
+WF|desk|f0|w1|954|55|855|255|82
+WF|desk|f0|w2|114|22|93|57|13
+WF|desk|f1|w0|341|41|305|109|31
+WF|desk|f1|w1|149|3|140|36|9
+WF|desk|f1|w2|47|6|41|10|6
+WF|desk|f2|w0|109|2|109|20|0
+WF|desk|f2|w1|11|0|11|1|0
+WF|mob|f0|w0|1360|47|1236|345|117
+WF|mob|f0|w1|9|0|9|3|0
+WF|mob|f0|w2|3|0|3|1|0
+WF|mob|f1|w0|72|10|60|18|11
+WF|mob|f1|w1|1|0|1|0|0
+WF|mob|f1|w2|2|1|1|1|1
+WF|mob|f2|w0|20|0|20|6|0
+WX|desk|f0|x0|6543|280|6130|1503|333
+WX|desk|f0|x1|425|29|385|124|32
+WX|desk|f0|x2|64|17|48|34|8
+WX|desk|f1|x0|437|47|389|134|43
+WX|desk|f1|x1|83|2|81|16|2
+WX|desk|f1|x2|17|1|16|5|1
+WX|desk|f2|x0|115|2|115|21|0
+WX|desk|f2|x1|5|0|5|0|0
+WX|mob|f0|x0|1360|47|1236|345|117
+WX|mob|f0|x1|9|0|9|3|0
+WX|mob|f0|x2|3|0|3|1|0
+WX|mob|f1|x0|72|10|60|18|11
+WX|mob|f1|x1|1|0|1|0|0
+WX|mob|f1|x2|2|1|1|1|1
+WX|mob|f2|x0|20|0|20|6|0

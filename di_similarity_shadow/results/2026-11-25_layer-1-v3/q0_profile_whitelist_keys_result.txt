@@ -1,0 +1,7 @@
+# Raw output of q0_profile_whitelist_keys.sql (run 2026-11-25, 6.2 s). src|key|sessions|...
+SPX|wl|::|31
+win|A207F8A1-ED09-4325-ACE6-C8E26A458FBA|9156|sigs=7203|ja4empty=0|scrempty=0|sp_unparsed=0|sp_zero=0|dpempty=0|uaempty=0|glempty=0|osempty=0|sp_distinct=461|scr_distinct=1172
+wl|955D26AF-E956-4106-A4EF-2F63304776D9|1|sigs=1|ja4empty=0|scrempty=0|sp_unparsed=0|sp_zero=0|dpempty=0|uaempty=0|glempty=0|osempty=0|sp_distinct=1|scr_distinct=1
+wl|A207F8A1-ED09-4325-ACE6-C8E26A458FBA|364042|sigs=65959|ja4empty=0|scrempty=0|sp_unparsed=31|sp_zero=0|dpempty=0|uaempty=0|glempty=0|osempty=0|sp_distinct=778|scr_distinct=2954
+# (wl rows = Dict 63 sessions 13-20 Nov; win = the scored window. glempty tests '' or only ':' characters. SPX = screen strings
+# whose physical part does not parse as w,h: only '::' (empty screen), 31 whitelist sessions, 0 window sessions.)

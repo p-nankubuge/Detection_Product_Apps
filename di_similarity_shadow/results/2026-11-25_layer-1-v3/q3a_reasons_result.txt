@@ -1,0 +1,83 @@
+# Raw output of q3a_reasons.sql (run 2026-11-25, 18.3 s). 79 rows.
+# RS|today's dict|v3 band|v3 reason|n|high|ver|ch|chns   (top 5 per cell where the v3 band differs from the agree band)
+# reason: 'diff:' + fields that differ from the closest whitelisted device ('diff:' alone = exact match; Windows RD/VM is capped at B,
+# JA4qt = QUIC/TCP variant, UAmaj = same browser+major); 'chk:' = Band D by trigger: failed checks, then +warning signs
+RS|-1|B|diff:UA|1|0|1|0|0
+RS|15|A|diff:DP|23|0|23|5|0
+RS|15|A|diff:JA4qt|127|9|110|45|17
+RS|15|A|diff:UAmaj|54|4|50|31|4
+RS|15|A|diff:UA|124|9|119|37|4
+RS|15|A|diff:|77|2|77|19|0
+RS|15|C|diff:JA4qt+UA+DP|10|0|9|6|1
+RS|15|C|diff:JA4qt+UA+GL|3|0|2|3|1
+RS|15|C|diff:SCR+DP|4|0|3|2|1
+RS|15|C|diff:UA+DP|42|13|33|18|2
+RS|15|C|diff:UA+GL|5|1|3|3|2
+RS|15|D|chk:SCRxDP SCRxGL|17|0|17|4|0
+RS|15|D|chk:SCRxGL +UAxDPx|16|0|16|3|0
+RS|15|D|chk:SCRxGL|9|0|8|1|1
+RS|15|D|chk:UAxDP SCRxDP|9|0|9|6|0
+RS|15|D|chk:UAxDP|17|3|13|4|3
+RS|1|A|diff:JA4|11|1|10|3|1
+RS|1|B|diff:JA4+SCR|1|0|1|0|0
+RS|1|B|diff:JA4+UA+DP|1|0|1|1|0
+RS|1|B|diff:JA4qt+SCR|1|0|1|0|0
+RS|1|B|diff:JA4|3|1|1|2|2
+RS|1|C|diff:JA4+GL|1|0|1|1|0
+RS|1|C|diff:JA4+SCR|1|0|1|0|0
+RS|31|A|diff:GL|14|0|14|1|0
+RS|31|A|diff:JA4qt|294|11|266|99|24
+RS|31|A|diff:SCR|119|1|113|22|4
+RS|31|A|diff:UA|272|24|250|73|12
+RS|31|A|diff:|142|6|137|21|5
+RS|31|C|diff:DP+GL|5|0|5|0|0
+RS|31|C|diff:GL|4|0|4|0|0
+RS|31|C|diff:SCR+GL|6|4|3|4|1
+RS|31|C|diff:UA+DP|12|0|10|4|2
+RS|31|C|diff:UA+GL|6|1|6|1|0
+RS|31|D|chk:SCRxDP SCRxGL|16|0|16|1|0
+RS|31|D|chk:SCRxDP|3|0|3|0|0
+RS|31|D|chk:SCRxGL +SCRxDPx|18|1|18|5|0
+RS|31|D|chk:SCRxGL|10|2|9|2|1
+RS|31|D|chk:SCRxPG +SCRnew|4|0|4|3|0
+RS|3|A|diff:JA4qt|70|10|61|32|7
+RS|3|A|diff:JA4|21|0|21|6|0
+RS|3|A|diff:SCR|25|1|21|8|4
+RS|3|A|diff:UAmaj|13|3|12|5|1
+RS|3|A|diff:|67|2|65|18|2
+RS|3|B|diff:JA4+UA|9|0|9|2|0
+RS|3|B|diff:JA4qt+SCR|16|1|15|6|1
+RS|3|B|diff:JA4qt+UA+SCR|7|0|4|5|3
+RS|3|B|diff:JA4qt+UA|22|2|20|7|2
+RS|3|B|diff:SCR|27|2|26|8|1
+RS|3|C|diff:JA4+DP|3|0|3|0|0
+RS|3|C|diff:JA4+UA+DP|3|2|0|3|3
+RS|3|C|diff:JA4+UA+SCR|3|1|2|1|0
+RS|3|C|diff:JA4qt+UA+SCR|3|0|3|0|0
+RS|3|C|diff:SCR+DP|8|1|8|4|0
+RS|63|B|diff:DP|32|1|30|7|2
+RS|63|B|diff:JA4+UA|16|1|16|2|0
+RS|63|B|diff:SCR|9|0|8|2|1
+RS|63|B|diff:UA|30|0|28|6|2
+RS|63|B|diff:|87|4|82|17|5
+RS|63|C|diff:DP|1|0|1|1|0
+RS|63|C|diff:UA+GL|1|0|1|0|0
+RS|63|D|chk:SCRxDP SCRxGL|2|0|2|1|0
+RS|63|D|chk:SCRxGL|5|1|4|2|1
+RS|63|D|chk:SCRxPG +SCRnew|5|0|5|0|0
+RS|63|D|chk:UAxDP|1|0|1|0|0
+RS|7|A|diff:DP|65|1|62|5|2
+RS|7|A|diff:JA4qt|143|7|131|53|10
+RS|7|A|diff:JA4|29|1|25|6|4
+RS|7|A|diff:SCR|45|0|44|4|0
+RS|7|A|diff:|48|2|43|10|4
+RS|7|B|diff:DP|172|11|145|44|23
+RS|7|B|diff:JA4+UA|28|3|24|12|2
+RS|7|B|diff:JA4qt+DP|119|2|106|48|12
+RS|7|B|diff:JA4qt+SCR|38|0|34|8|3
+RS|7|B|diff:JA4qt+UA|51|4|45|18|4
+RS|7|D|chk:SCRxDP SCRxGL|33|1|33|3|0
+RS|7|D|chk:SCRxGL +DPnew|34|0|34|6|0
+RS|7|D|chk:SCRxGL +SCRxDPx|26|0|24|5|2
+RS|7|D|chk:SCRxPG +SCRnew +DPnew|18|1|17|1|1
+RS|7|D|diff:JA4qt+DP+GL|23|4|19|4|4
