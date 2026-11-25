@@ -25,13 +25,13 @@ Part a is the text before the first `_` (e.g. `t13d1516h2`). In Snowflake:
 QUIC JA4s (`q13d03…h3`) always show 3 ciphers; exclude them from N10 and N11 (QUIC is always TLS 1.3).
 
 ## N10: build the browser baseline first
-N10 can't be tested until the "real browser" ranges exist. Before testing it:
-1. Take **TCP** (`t…`) JA4s on `session_setup` rows at **Dict 63**, over at least 24h, excluding the synthetics key, proxy keys and List A/B/C signatures.
-2. Group by browser family from the UA (Chrome, Edge, Firefox, Safari, Opera, Brave, Samsung, other) and count sessions per cipher count and per extension count.
-3. A browser family's range = the values that cover 99.9% of its sessions; list any value with < 50 sessions separately, don't silently include it.
-4. Save as `n10_browser_baseline.csv` and `.sql` in the results folder, and use that file when testing N10.
-
-**Assumption:** Dict 63 is treated as real devices. That is not yet proven (another agent checks it). State this in the baseline file and in `summary.md`.
+N10 compares each session with what real browsers of the **same family** looked like at Dict 63 in the **7 days before that session**. Build it before testing N10:
+1. **Source:** Dict 63 sessions on **all keys**, TCP (`t…`) JA4s only, excluding the synthetics key and proxy keys. `PROD_INT_SESSION_SUMMARY` is fast enough for this; `vw_events` over 7 days of all keys times out.
+2. **Clean it first:** Dict 63 is not trusted by default (`spec.md` §2, "Bad and suspicious lists"). Remove every session carrying a Definitely-bad or Suspicious culprit, using the latest cleaner-mode `exclusion.sql` (see "Cleaner mode" below) so N10 and the good list drop exactly the same sessions. If no cleaner output exists, apply List A, List B, List C, N9 and N11 directly and say so.
+3. **Per browser family** (Chrome, Edge, Firefox, Safari, Opera, Brave, Samsung): the set of cipher counts and the set of extension counts seen. **Every value seen counts.** No percentage cut-off and no minimum session count. Each family has its own set.
+4. **Sliding window:** 7 days ending when the session is created. For a test period longer than a day, use one baseline per day (the 7 days before that day's 00:00 UTC), applied to that day's sessions, and say so.
+5. **Hit:** a browser session whose cipher count or extension count is not in its family's set for that day.
+6. Save the baseline as `n10_browser_baseline.csv` (date, family, cipher counts, extension counts, sessions) plus its `.sql`.
 
 ## For each rule you are asked to test
 1. Write the rule as SQL on `ARK_PROD.events.vw_events`, `location = 'session_setup'`, excluding the synthetics key. Exclude proxy keys for any JA4-based rule (List C, N8–N11).
@@ -40,10 +40,16 @@ N10 can't be tested until the "real browser" ranges exist. Before testing it:
    - sessions hit and distinct keys hit (top 10 keys by volume, with names via `lookup_key_names`); in single-key mode, sessions hit and share of the key's sessions instead
    - High-risk rate and verified rate of hits, vs the same keys' baseline
    - **unverified hits** separately (sessions with no verify attempted): these can never get a TD label
+   - **already handled today?** challenged %, and of those challenged the share that never solved (`was_challenged`, `sessions_solved` in `PROD_INT_SESSION_SUMMARY`), vs the key's all-sessions and Dict 63 baselines. A rule whose hits fail challenges far more than baseline is catching traffic today's system already stops when it challenges it
    - **false-positive check:** hits on traffic that looks legitimate (high verify, many distinct real-looking devices, keys with no attack that day)
+   - **who the hits are:** split hits by IP tag (`vpn_proxy_description`, `vw_events` only, so use a sampled day) and report the share from each tag vs its share of all traffic
    - which known cases it catches, and what share of each
    - **truth-data score**, if the key has TD (see below)
-4. Verdict per rule: **ready to propose / needs refinement / reject**, with one line of reasoning. A rule with no TD score can still be judged; say which evidence the verdict rests on.
+4. Verdict per rule: **ready to propose / needs refinement / reject**, with one line of reasoning, and say which evidence it rests on.
+   - **State the tier** (`spec.md` §2, "Bad and suspicious lists"): **Definitely bad** (hard override), **Suspicious** (weighted penalty), or **neither**. A rule with real catches but a measured false-positive rate belongs in Suspicious, not "reject".
+   - **Never reject on TD alone.** Nonlegit labels only exist on sessions that got through, so low uplift can mean the rule's traffic is already stopped. Weigh TD together with the challenge outcome above.
+   - **"Needs refinement" must name the refinement**, e.g. "exclude cloud-security IPs and re-test", "move to Suspicious", "narrow to Chrome ≥ 120".
+   - **Don't state a cause as fact.** "Corporate proxies" or "bots" needs evidence (e.g. the IP-tag split); otherwise write "consistent with …".
 
 ## Single-key mode
 - **Check for a proxy key first:** if a single JA4 is on ≥ 98% of the key's sessions over 24h, JA4 is the proxy's, so skip List C and N8–N11 for this key and say so.
@@ -54,7 +60,12 @@ N10 can't be tested until the "real browser" ranges exist. Before testing it:
 ## Truth-data scoring
 Only for keys with TD (see `known_cases.md`; today Figma Registration K2 and Blizzard ROW Registration K2). Most keys have none: TD is optional, and every rule must be judged without it as well.
 
-**Where:** Athena, Superset `database_id: 2`. Join `starfleet_production.truth_data_history` (labels) to `starfleet_production.prod_session_summary` (device fields) on `arkose_session_id = session`. Athena uses Presto/Trino SQL (`date_add`, `regexp_like`, `split_part`, `substr`), not Snowflake SQL. **Always filter both tables on their `year` / `month` / `day` partitions.**
+**Where:** labels are in Athena, Superset `database_id: 2`, table `starfleet_production.truth_data_history` (filter on its `year` / `month` / `day` partitions). Athena uses Presto/Trino SQL (`date_add`, `regexp_like`, `split_part`, `substr`), not Snowflake SQL.
+
+**Working route (Athena join times out):** Athena `prod_session_summary` has no year/month/day partitions, so joining labels to it over more than about an hour times out. Instead:
+1. Export the labels for the key and window from `truth_data_history` (session ID, label, `is_verified`) in chunks.
+2. Score them in Snowflake by joining to `PROD_INT_SESSION_SUMMARY` on session ID, using the same rule flags as the rest of the run.
+3. Run **all** chunks, not a sample, unless it can't be done; if you stop early, say how many labels were scored out of how many, and treat counts under 30 as rough.
 
 **The ~2-week delay:**
 - Labels can arrive up to ~2 weeks after the session. Pick a session window that ended **at least 2–3 weeks ago**.
