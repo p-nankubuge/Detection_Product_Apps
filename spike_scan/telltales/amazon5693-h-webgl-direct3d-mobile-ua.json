@@ -1,0 +1,47 @@
+{
+ "telltale_type": "telltale",
+ "location": "SESSION_SETUP",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "immediate_non_legit": false,
+ "telltale_active": true,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Specified TTL - Review after 14 days",
+ "owner_category": "User",
+ "ticket": "<Zendesk ticket number>",
+ "_validated": "validate_telltale 2026-11-25: valid, no errors (NOT created; ticket placeholder DETCORE-4466 used for validation)",
+ "telltale_name": "amazon5693-h-webgl-direct3d-mobile-ua",
+ "telltale_description": "Amazon IDS: UA claims iOS/iPadOS/Android but WebGL renderer is Direct3D (Windows-only) and navigator.platform is Win32 on 99.4%. Steady 115-210k/day since at least Nov 5, ~1/3 hosting/proxy, ~2/3 on a TLS1.2 no-ALPN library JA4; pass rate rose from ~9% to ~29% since Nov 23. Created without pressure; SOC to add pressure.",
+ "external_description": "Key-level telltale: Direct3D WebGL renderer with a mobile OS in the user agent (UA spoofing) on Amazon IDS",
+ "telltale_definition": [
+  {
+   "key": "public_key",
+   "operator": "TS_EQ",
+   "value": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "type": "string"
+  },
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "key": "webgl_unmasked_renderer",
+   "operator": "TS_CONTAINS",
+   "value": "Direct3D",
+   "type": "string"
+  },
+  {
+   "key": "os",
+   "operator": "TS_IN",
+   "value": [
+    "iOS",
+    "iPadOS",
+    "Android"
+   ],
+   "type": "list[string]"
+  }
+ ]
+}

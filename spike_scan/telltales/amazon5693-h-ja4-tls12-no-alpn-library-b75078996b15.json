@@ -1,0 +1,37 @@
+{
+ "telltale_type": "telltale",
+ "location": "SESSION_SETUP",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "immediate_non_legit": false,
+ "telltale_active": true,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Specified TTL - Review after 14 days",
+ "owner_category": "User",
+ "ticket": "<Zendesk ticket number>",
+ "_validated": "validate_telltale 2026-11-25: valid, no errors (NOT created; ticket placeholder DETCORE-4466 used for validation)",
+ "telltale_name": "amazon5693-h-ja4-tls12-no-alpn-library-b75078996b15",
+ "telltale_description": "Amazon IDS: non-browser TLS client - JA4 t12d280700_b75078996b15 (TLS 1.2, 28 ciphers, 7 extensions, no ALPN) claiming Mobile Safari / mobile browsers. ~80-140k/day since at least Nov 5, seen on no other large Production key; pass rate ~10% mid-Nov rising to ~28% since Nov 23. Created without pressure; SOC to add pressure.",
+ "external_description": "Key-level telltale for a non-browser TLS fingerprint (TLS1.2, no ALPN, JA4 b75078996b15) on Amazon IDS",
+ "telltale_definition": [
+  {
+   "key": "public_key",
+   "operator": "TS_EQ",
+   "value": "56938EF5-6EFA-483E-B6F6-C8A72B6A95EE",
+   "type": "string"
+  },
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "key": "cdn__ja4_hash",
+   "operator": "TS_REGEX",
+   "value": "/^t12d\\d{4}00_b75078996b15_/",
+   "type": "string"
+  }
+ ]
+}
