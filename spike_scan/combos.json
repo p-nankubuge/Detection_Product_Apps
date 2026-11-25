@@ -309,6 +309,90 @@
    "history_note": "Exact history Nov 5-15 backfilled 2026-11-16 (all keys); per-key charts seeded from it; no hourly rows yet.",
    "action": "hold",
    "action_detail": "Exact Nov 12-15: Amazon IDS 42-43k/day (17-18% verified, baseline 8k), Roblox Signup 20-33k/day (2-3%), MS Identity Signup 6-23k/day (0%). Mostly blocked; overlaps the Amazon IDS wave already covered by pragma/ends-cl combos. Hold, re-check next run."
+  },
+  {
+   "id": "ipconn_hosting_ipvel_st4x",
+   "telltale_name": "g-ip-conn-hosting-ip-velocity-st-4x",
+   "status": "candidate",
+   "found": "2026-11-25",
+   "flags": [
+    "g-ip-connection-type-velocity-short-term-abuse-hosting",
+    "g-ip-velocity-short-term-abuse-4x"
+   ],
+   "draft": "telltales/g-ip-conn-hosting-ip-velocity-st-4x.json",
+   "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
+   "action": "review (exact counts + 2% share check first)",
+   "action_detail": "Sampled (1%) Nov 21-24 vs Nov 14-20: 7 keys, share 0.72, ~253k/day excess (Dropbox Login, Adobe Sign Up, AppFolio Login, Uber SMS, 447C2794, 5B6F3411, 72361606). Datacenter-IP velocity wave. Superset +ipvel LT 4x is 6 keys / 0.72, adds nothing."
+  },
+  {
+   "id": "ipconn_hosting_ipvel_lt4x",
+   "telltale_name": "g-ip-conn-hosting-ip-velocity-lt-4x",
+   "status": "candidate",
+   "found": "2026-11-25",
+   "flags": [
+    "g-ip-connection-type-velocity-short-term-abuse-hosting",
+    "g-ip-velocity-long-term-abuse-4x"
+   ],
+   "draft": "telltales/g-ip-conn-hosting-ip-velocity-lt-4x.json",
+   "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
+   "action": "review (exact counts + 2% share check first)",
+   "action_detail": "Sampled Nov 21-24: 7 keys, share 0.51 (borderline), ~236k/day (Adobe Sign Up, Dropbox, Uber SMS, 4455454D, 12D76D4C, 07D6B751, 5AA600D0). Same hosting wave as ipconn_hosting_ipvel_st4x on partly different keys; retire one of the two once exact counts are in."
+  },
+  {
+   "id": "pagebio_touch_null_sensors_null",
+   "telltale_name": "g-pagebio-touch-null-sensors-null-canvas",
+   "status": "candidate",
+   "found": "2026-11-25",
+   "flags": [
+    "g-page-level-biometrics-touch-anomalies-is-null-session-true",
+    "sensors-avail-hash-is-null-canvas"
+   ],
+   "draft": "telltales/g-pagebio-touch-null-sensors-null-canvas.json",
+   "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
+   "action": "review (exact counts + 2% share check first)",
+   "action_detail": "Sampled Nov 21-24: 6 keys, share 0.94, ~2.16M/day (Uber SMS dominant; DoorDash Website, Adobe Sign Up, Meta Login, Blizzard ROW Login, 12D76D4C). Both flags are 'telemetry missing' signals and may co-fire on ordinary traffic: run the 2% share-of-traffic check before any pressure. sensors-null + accept-lang-fp-mismatch (5/0.95) and sensors-null + ipvel LT 4x (5/0.94) hit the same keys and were not added."
+  },
+  {
+   "id": "dishort300_rfc_cl_secchua",
+   "telltale_name": "g-di-short-300-pxr1-rfc-cl-before-sec-ch-ua",
+   "status": "candidate",
+   "found": "2026-11-25",
+   "flags": [
+    "di-short-count-300-fp-pixel-ratio-1",
+    "susp-rfc-violation-cdn-header-order-content-length-before-sec-ch-ua"
+   ],
+   "draft": "telltales/g-di-short-300-pxr1-rfc-cl-before-sec-ch-ua.json",
+   "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
+   "action": "review (exact counts + 2% share check first)",
+   "action_detail": "Sampled Nov 21-24: 5 keys, share 0.98, ~8.3M/day, almost all Uber SMS (di-short-300 ~6.4M/day there); also Uber Account Mgmt, Air Canada Login, Dropbox Login, Adobe Sign Up."
+  },
+  {
+   "id": "spoofed_os_rfc_cl_secchua",
+   "telltale_name": "g-spoofed-os-mismatch-rfc-cl-before-sec-ch-ua",
+   "status": "candidate",
+   "found": "2026-11-25",
+   "flags": [
+    "spoofed-os-mismatch",
+    "susp-rfc-violation-cdn-header-order-content-length-before-sec-ch-ua"
+   ],
+   "draft": "telltales/g-spoofed-os-mismatch-rfc-cl-before-sec-ch-ua.json",
+   "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
+   "action": "review (exact counts + 2% share check first)",
+   "action_detail": "Sampled Nov 21-24: 5 keys, share 0.90, ~1.85M/day (Uber SMS dominant; Uber Account Mgmt, Coinbase Email Verification, Adobe Sign Up, Blizzard ROW Login)."
+  },
+  {
+   "id": "spoofed_os_ipintel_med",
+   "telltale_name": "g-spoofed-os-mismatch-ip-intel-medium",
+   "status": "candidate",
+   "found": "2026-11-25",
+   "flags": [
+    "spoofed-os-mismatch",
+    "g-ip-intel-asn-intel-reputation-medium-risk"
+   ],
+   "draft": "telltales/g-spoofed-os-mismatch-ip-intel-medium.json",
+   "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
+   "action": "review (exact counts + 2% share check first)",
+   "action_detail": "Sampled Nov 21-24: 5 keys, share 0.93, ~1.25M/day (Uber SMS dominant; DoorDash ATM PoV, AppFolio Login, Coinbase Email Verification, Amazon IDS)."
   }
  ],
  "retired": [

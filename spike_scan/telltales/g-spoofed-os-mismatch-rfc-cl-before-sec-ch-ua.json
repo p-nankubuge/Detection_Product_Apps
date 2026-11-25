@@ -1,0 +1,33 @@
+{
+ "ticket": "DETCORE-4466",
+ "telltale_type": "suspicion_flags",
+ "cohort_category": "Suspicious",
+ "owner": "p.nankubuge@arkoselabs.com",
+ "owner_category": "User",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "telltale_active": false,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Spike-scan candidate; review after 14 days",
+ "location": "SESSION_SETUP",
+ "telltale_name": "g-spoofed-os-mismatch-rfc-cl-before-sec-ch-ua",
+ "telltale_definition": [
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "spoofed-os-mismatch"
+  },
+  {
+   "operator": "#INCLUDE",
+   "value": "susp-rfc-violation-cdn-header-order-content-length-before-sec-ch-ua"
+  }
+ ],
+ "telltale_description": "Spike-scan 2026-11-25 (window Nov 21-24 vs Nov 14-20, Roblox keys excluded): UA OS vs navigator.platform mismatch + content-length before sec-ch-ua in CDN header order. Spiked on 5 keys (Blizzard ROW Login, Uber Account Mgmt, Coinbase Email Verification, Adobe Sign Up, Uber SMS), sampled share 0.90, ~1849k/day excess.",
+ "_validated": "validate_telltale 2026-11-25: valid, no errors (NOT created)"
+}
