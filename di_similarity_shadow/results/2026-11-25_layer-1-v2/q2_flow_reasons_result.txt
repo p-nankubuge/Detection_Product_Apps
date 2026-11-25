@@ -1,0 +1,155 @@
+# Raw output of q2_flow_reasons.sql (run 2026-11-25, 16.5 s, via EXECUTE IMMEDIATE wrapper). 150 rows.
+# FL|dict|v1 band>v2 band|rule step that changed the band|n|high|verified|challenged|challenged_not_solved   (only sessions whose band changed)
+# FC|rule step|v1 checks (if v1 Band D by checks)|v2 reason|n|high    (top 6 combinations per rule step)
+# RS|dict>v2 band|up/down vs agree band|v2 reason ([BRD] = Windows Basic Render)|n|high   (top 5 per moved cell)
+# SH|same/up/down|n     G4|mobile: never-seen screen (platform group) with failed / passing UAxDP-or-DPnew, or seen|n|high|ver|ch|chns
+FC|OS version|chk:OSver|diff:UAmaj+GL|1|0
+FC|OS version|chk:OSver|diff:UAmaj|2|0
+FC|coarse pairs|-|chk:UAxDP|17|3
+FC|coarse pairs|chk:SCRxDP SCRxGL|diff:SCR+DP|13|0
+FC|coarse pairs|chk:SCRxDP SCRxGL|diff:SCR|24|0
+FC|coarse pairs|chk:SCRxDP SCRxGL|diff:UA+SCR|12|0
+FC|coarse pairs|chk:UAxDP SCRxDP|diff:DP|25|8
+FC|coarse pairs|chk:UAxDP SCRxDP|diff:UA+DP|25|8
+FC|device_params warning|chk:DPnew +SCRnew|diff:SCR+DP|25|1
+FC|device_params warning|chk:DPnew|[BRD]diff:DP|15|0
+FC|device_params warning|chk:DPnew|diff:DP|208|11
+FC|device_params warning|chk:DPnew|diff:JA4+UA+DP|8|2
+FC|device_params warning|chk:DPnew|diff:JA4qt+DP|48|0
+FC|device_params warning|chk:DPnew|diff:UA+DP|20|2
+FC|platform grouping|-|[BRD]chk:SCRxPG +SCRnew|8|0
+FC|platform grouping|-|[BRD]chk:UAxDP +SCRnew|2|0
+FC|platform grouping|-|[BRD]chk:UAxDP SCRxDP|1|0
+FC|platform grouping|-|chk:SCRxDP SCRxGL|6|0
+FC|platform grouping|-|chk:SCRxPG +SCRnew +DPnew|1|1
+FC|platform grouping|-|chk:UAxDP SCRxDP|1|0
+FL|-1|D>A|OS version|1|0|1|0|0
+FL|15|A>D|coarse pairs|4|3|1|3|2
+FL|15|B>D|coarse pairs|8|0|7|1|1
+FL|15|C>D|coarse pairs|1|0|1|0|0
+FL|15|D>A|coarse pairs|5|0|5|1|0
+FL|15|D>A|device_params warning|4|0|4|3|0
+FL|15|D>B|coarse pairs|31|8|25|11|5
+FL|15|D>B|device_params warning|17|0|17|1|0
+FL|15|D>C|coarse pairs|51|9|42|19|3
+FL|15|D>C|device_params warning|14|1|12|3|2
+FL|31|A>D|platform grouping|3|0|3|0|0
+FL|31|B>D|platform grouping|3|0|3|1|0
+FL|31|D>A|coarse pairs|20|0|19|6|1
+FL|31|D>A|device_params warning|2|0|2|0|0
+FL|31|D>B|coarse pairs|4|0|4|0|0
+FL|31|D>B|device_params warning|27|0|27|3|0
+FL|31|D>C|coarse pairs|4|0|4|0|0
+FL|31|D>C|device_params warning|11|0|10|2|1
+FL|3|B>D|coarse pairs|4|0|4|0|0
+FL|3|B>D|platform grouping|3|0|0|3|3
+FL|3|C>D|coarse pairs|1|0|1|1|0
+FL|3|D>A|OS version|1|0|1|0|0
+FL|3|D>B|OS version|1|0|1|0|0
+FL|3|D>B|coarse pairs|11|0|7|6|4
+FL|3|D>B|device_params warning|4|0|4|2|0
+FL|3|D>C|coarse pairs|6|0|6|1|0
+FL|3|D>C|device_params warning|16|1|15|8|1
+FL|63|B>D|platform grouping|4|0|4|0|0
+FL|63|D>A|coarse pairs|2|0|2|0|0
+FL|63|D>A|device_params warning|1|0|1|1|0
+FL|63|D>B|device_params warning|6|0|4|3|2
+FL|63|D>C|device_params warning|1|0|1|1|0
+FL|7|A>D|platform grouping|1|0|1|0|0
+FL|7|B>D|platform grouping|2|0|2|0|0
+FL|7|C>D|coarse pairs|2|0|2|1|0
+FL|7|C>D|platform grouping|3|1|3|2|0
+FL|7|D>A|coarse pairs|14|1|11|3|2
+FL|7|D>A|device_params warning|22|0|22|1|0
+FL|7|D>B|coarse pairs|52|3|44|19|5
+FL|7|D>B|device_params warning|185|11|154|53|26
+FL|7|D>C|coarse pairs|44|1|42|12|2
+FL|7|D>C|device_params warning|75|6|66|30|8
+G4|newscr_fail|4|0|4|2|0
+G4|newscr_ok|53|1|50|6|3
+G4|seen|1410|57|1276|366|126
+RS|-1>A|up|diff:UAmaj|1|0
+RS|15>A|up|diff:DP|19|0
+RS|15>A|up|diff:JA4qt|118|10
+RS|15>A|up|diff:SCR|27|0
+RS|15>A|up|diff:UAmaj|78|4
+RS|15>A|up|diff:UA|107|9
+RS|15>C|down|diff:JA4+UA+GL|13|0
+RS|15>C|down|diff:JA4qt+UA+DP|9|0
+RS|15>C|down|diff:JA4qt+UA+GL|9|0
+RS|15>C|down|diff:SCR+DP|9|0
+RS|15>C|down|diff:UA+DP|42|13
+RS|15>D|down|chk:SCRxDP SCRxGL|26|0
+RS|15>D|down|chk:SCRxDP|6|0
+RS|15>D|down|chk:SCRxGL|9|0
+RS|15>D|down|chk:UAxDP SCRxDP|12|0
+RS|15>D|down|chk:UAxDP|16|3
+RS|1>A|up|diff:JA4|9|1
+RS|1>B|up|[BRD]diff:JA4|1|0
+RS|1>B|up|diff:JA4+SCR|1|0
+RS|1>B|up|diff:JA4+UA+DP|1|0
+RS|1>B|up|diff:JA4qt+SCR|1|0
+RS|1>B|up|diff:JA4|2|1
+RS|1>C|up|[BRD]diff:JA4+SCR|1|0
+RS|1>C|up|diff:JA4+SCR+GL|1|0
+RS|1>C|up|diff:JA4+SCR|1|0
+RS|31>A|up|diff:DP|15|0
+RS|31>A|up|diff:GL|19|0
+RS|31>A|up|diff:JA4qt|301|11
+RS|31>A|up|diff:SCR|195|7
+RS|31>A|up|diff:UA|275|25
+RS|31>C|down|diff:JA4+UA+GL|5|0
+RS|31>C|down|diff:SCR+DP|5|0
+RS|31>C|down|diff:SCR+GL|7|4
+RS|31>C|down|diff:UA+DP|17|0
+RS|31>C|down|diff:UA+GL|6|1
+RS|31>D|down|chk:SCRxDP SCRxGL|30|0
+RS|31>D|down|chk:SCRxDP|3|0
+RS|31>D|down|chk:SCRxGL|13|2
+RS|31>D|down|chk:SCRxPG +SCRnew|5|0
+RS|31>D|down|chk:UAxDP SCRxGL|2|0
+RS|3>A|up|diff:JA4qt+UAmaj|3|1
+RS|3>A|up|diff:JA4qt|43|8
+RS|3>A|up|diff:JA4|18|0
+RS|3>A|up|diff:SCR|31|1
+RS|3>A|up|diff:UAmaj|24|3
+RS|3>B|up|diff:JA4+UA|13|1
+RS|3>B|up|diff:JA4qt+SCR|23|1
+RS|3>B|up|diff:JA4qt+UA+SCR|7|0
+RS|3>B|up|diff:JA4qt+UA|23|2
+RS|3>B|up|diff:SCR|62|2
+RS|3>C|up|diff:JA4+UA+DP|3|2
+RS|3>C|up|diff:JA4qt+SCR+DP|4|0
+RS|3>C|up|diff:JA4qt+SCR|9|1
+RS|3>C|up|diff:SCR+DP+GL|4|0
+RS|3>C|up|diff:SCR+DP|11|1
+RS|63>B|down|[BRD]diff:|87|4
+RS|63>B|down|diff:DP|32|1
+RS|63>B|down|diff:JA4+UA|15|0
+RS|63>B|down|diff:SCR|24|4
+RS|63>B|down|diff:UA|50|1
+RS|63>C|down|[BRD]diff:DP|1|0
+RS|63>C|down|diff:UA+GL|1|0
+RS|63>D|down|[BRD]chk:SCRxPG +SCRnew|4|0
+RS|63>D|down|chk:SCRxDP SCRxGL|14|0
+RS|63>D|down|chk:SCRxGL|6|2
+RS|63>D|down|chk:SCRxPG +SCRnew|4|0
+RS|63>D|down|chk:UAxDP|1|0
+RS|7>A|up|diff:DP|47|1
+RS|7>A|up|diff:JA4qt|123|8
+RS|7>A|up|diff:JA4|27|1
+RS|7>A|up|diff:SCR|59|0
+RS|7>A|up|diff:UAmaj|2|0
+RS|7>B|up|diff:DP|153|11
+RS|7>B|up|diff:JA4+UA|27|3
+RS|7>B|up|diff:JA4qt+DP|115|0
+RS|7>B|up|diff:JA4qt+SCR|50|0
+RS|7>B|up|diff:JA4qt+UA|35|3
+RS|7>D|down|chk:SCRxDP SCRxGL|62|3
+RS|7>D|down|chk:SCRxGL +DPnew|45|0
+RS|7>D|down|chk:SCRxPG +SCRnew +DPnew|40|6
+RS|7>D|down|chk:UAxDP SCRxDP SCRxGL|9|1
+RS|7>D|down|chk:UAxDP SCRxDP|6|0
+SH|down|806
+SH|same|6005
+SH|up|2345

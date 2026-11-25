@@ -1,0 +1,139 @@
+# Raw output of q1_crosstab_gates.sql (run 2026-11-25, 10.2 s, via EXECUTE IMMEDIATE wrapper). 133 rows.
+# X2|dict|v2 band|n|high|verified|challenged|challenged_not_solved|mean score   X1 = same for v1 band (no mean)
+# G3v1|desk/mob (v1 OS-family definition)|Dchk/pass|n|high|ver|ch|chns   G3v2 = same with v2 platform group definition
+# OSV|OS line|status|n|high|ver|ch|chns   FRZ|OS line|top version|top share (whitelist sessions)|newest version (numeric)
+# MV|moved/same (v1 band vs v2 band)|n|high|ver|ch|chns   D15|v2 band|v2 reason|... (Dict 15, v1 = D by exactly UAxDP+SCRxDP)
+# PG|platform group|OS|v2 band|n|high|ver|ch|chns   NOSC|no-score sessions|sessions whose UA 1/2 credit came from two unparsed UAs
+D15|A|diff:DP|1|0|1|0|0
+D15|B|diff:DP|14|8|8|9|5
+D15|B|diff:JA4qt+DP|1|0|1|0|0
+D15|B|diff:UA+DP|1|0|1|0|0
+D15|B|diff:UA+SCR|4|0|4|0|0
+D15|C|diff:DP|1|0|1|0|0
+D15|C|diff:JA4+UA+DP|1|0|0|1|1
+D15|C|diff:JA4qt+UA+DP|2|0|2|1|0
+D15|C|diff:UA+DP|16|8|9|11|1
+D15|C|diff:UA+SCR+GL|1|0|0|1|1
+D15|C|diff:UA+SCR|1|0|1|0|0
+D15|D|chk:SCRxPG +SCRnew +DPnew|1|0|1|1|0
+D15|D|chk:UAxDP SCRxDP|9|0|9|5|0
+FRZ|Android|10|0.9934|17000000
+FRZ|Chrome OS|14541.0.0|1.0000|14541000000
+FRZ|Linux||1.0000|0
+FRZ|OS X|10.15.7|0.6831|27003000
+FRZ|Windows|10|1.0000|10000000
+FRZ|iOS+iPadOS|26.6.1|0.2258|27003000
+G3v1|desk|Dchk|976|61|881|255|77
+G3v1|desk|pass|6713|317|6288|1582|342
+G3v1|mob|Dchk|97|10|85|26|11
+G3v1|mob|pass|1370|48|1245|348|118
+G3v2|desk|Dchk|348|18|330|69|17
+G3v2|desk|pass|7341|360|6839|1768|402
+G3v2|mob|Dchk|94|12|81|25|12
+G3v2|mob|pass|1373|46|1249|349|117
+MV|moved|671|45|585|201|68
+MV|same|8485|391|7914|2010|480
+NOSC|0|uanull_halfcredit=39
+OSV|-|skip: no OS line|5|0|5|0|0
+OSV|Android|skip: frozen line|899|36|795|229|99
+OSV|Chrome OS|skip: frozen line|133|17|115|43|14
+OSV|Linux|skip: frozen line|241|6|216|91|22
+OSV|OS X|seen|1627|48|1556|337|60
+OSV|Windows|skip: frozen line|5683|307|5277|1366|323
+OSV|iOS+iPadOS|older, not seen (warning)|2|0|2|0|0
+OSV|iOS+iPadOS|seen|566|22|533|145|30
+PG|Desktop|Chrome OS|A|95|12|84|33|9
+PG|Desktop|Chrome OS|B|29|5|25|6|2
+PG|Desktop|Chrome OS|C|3|0|0|3|3
+PG|Desktop|Chrome OS|D|6|0|6|1|0
+PG|Desktop|OS X|A|1198|37|1149|243|41
+PG|Desktop|OS X|B|301|5|286|69|13
+PG|Desktop|OS X|C|41|1|40|10|1
+PG|Desktop|OS X|D|83|1|81|11|1
+PG|Desktop|Windows|A|3800|159|3580|812|174
+PG|Desktop|Windows|B|1144|82|1028|327|92
+PG|Desktop|Windows|C|285|40|244|111|29
+PG|Desktop|Windows|D|169|10|163|35|6
+PG|Linux|GNU/Linux|A|79|0|66|45|11
+PG|Linux|GNU/Linux|B|28|1|27|8|1
+PG|Linux|GNU/Linux|C|40|0|38|11|2
+PG|Linux|GNU/Linux|D|54|0|53|9|0
+PG|Linux|Ubuntu|A|4|0|4|1|0
+PG|Linux|Ubuntu|B|8|0|8|1|0
+PG|Linux|Ubuntu|C|1|0|1|0|0
+PG|Linux|Ubuntu|D|11|0|11|2|0
+PG|Mobile|Android|A|631|21|553|165|74
+PG|Mobile|Android|B|160|3|148|37|12
+PG|Mobile|Android|C|17|0|16|1|1
+PG|Mobile|Android|D|91|12|78|26|12
+PG|Mobile|iOS|A|487|21|456|131|28
+PG|Mobile|iOS|B|14|0|12|4|2
+PG|Mobile|iOS|D|1|0|1|0|0
+PG|Mobile|iPadOS|A|56|0|56|9|0
+PG|Mobile|iPadOS|B|5|1|5|1|0
+PG|Mobile|iPadOS|D|5|0|5|0|0
+PG|Other|GNU/Linux|A|5|3|1|5|4
+PG|Other|GNU/Linux|B|7|1|4|6|3
+PG|Other|GNU/Linux|D|2|1|1|1|1
+PG|Other|HarmonyOS|A|1|0|1|0|0
+PG|Other|HarmonyOS|C|1|0|1|0|0
+PG|Other|HarmonyOS|D|1|0|1|0|0
+PG|Other|OS X|D|4|4|0|4|4
+PG|Other|OpenHarmony|C|2|0|2|0|0
+PG|Other|Ubuntu|C|2|0|2|2|0
+PG|Other|Windows|B|1|1|1|1|0
+PG|Other|Windows|C|2|0|2|0|0
+PG|Other|Windows|D|37|6|32|7|5
+PG|Windows RD/VM|Windows|B|197|7|183|59|13
+PG|Windows RD/VM|Windows|C|29|2|28|6|1
+PG|Windows RD/VM|Windows|D|19|0|16|8|3
+X1|-1|D|1|0|1|0|0
+X1|15|A|370|27|339|126|29
+X1|15|B|426|32|383|132|35
+X1|15|C|53|7|45|25|7
+X1|15|D|206|18|188|52|11
+X1|1|A|9|1|8|2|1
+X1|1|B|6|1|4|3|2
+X1|1|C|3|0|3|1|0
+X1|1|D|5|0|5|3|0
+X1|31|A|811|43|750|217|45
+X1|31|B|484|27|456|119|23
+X1|31|C|55|5|51|9|2
+X1|31|D|120|2|117|16|3
+X1|3|A|119|13|108|45|11
+X1|3|B|164|6|153|53|9
+X1|3|C|41|5|36|15|4
+X1|3|D|122|13|102|44|19
+X1|63|A|4759|162|4477|983|238
+X1|63|B|228|11|215|46|13
+X1|63|C|1|0|1|0|0
+X1|63|D|35|2|33|11|2
+X1|7|A|224|9|205|59|16
+X1|7|B|272|7|249|73|18
+X1|7|C|55|9|47|22|7
+X1|7|D|587|36|523|155|53
+X2|-1|A|1|0|1|0|0|0.850
+X2|15|A|375|24|347|127|27|0.896
+X2|15|B|466|40|418|143|39|0.758
+X2|15|C|117|17|98|47|12|0.530
+X2|15|D|97|3|92|18|4|0.606
+X2|1|A|9|1|8|2|1|0.883
+X2|1|B|6|1|4|3|2|0.743
+X2|1|C|3|0|3|1|0|0.514
+X2|1|D|5|0|5|3|0|0.346
+X2|31|A|830|43|768|223|46|0.895
+X2|31|B|512|27|484|121|23|0.742
+X2|31|C|70|5|65|11|3|0.543
+X2|31|D|58|2|57|6|1|0.722
+X2|3|A|120|13|109|45|11|0.906
+X2|3|B|173|6|161|58|10|0.718
+X2|3|C|62|6|56|23|5|0.532
+X2|3|D|91|12|73|31|17|0.559
+X2|63|A|4762|162|4480|984|238|0.989
+X2|63|B|230|11|215|49|15|0.845
+X2|63|C|2|0|2|1|0|0.486
+X2|63|D|29|2|29|6|0|0.710
+X2|7|A|259|10|237|63|18|0.909
+X2|7|B|507|21|445|145|49|0.723
+X2|7|C|169|15|150|61|17|0.530
+X2|7|D|203|15|192|40|10|0.511

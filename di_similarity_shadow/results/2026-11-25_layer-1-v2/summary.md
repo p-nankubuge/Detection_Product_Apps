@@ -1,0 +1,7 @@
+# Layer 1 v2 (Seen-before rules): summary
+
+- **Scope:** identical to the first layer-1 run: Figma Registration K2, sessions created 2026-11-20 12:00-14:00 UTC, all 9,156 sessions, uncleaned 7-day Dict 63 whitelist (65,959 signatures). Only the seen-before checks changed (platform groups, coarse pairs, OS version reported only, desktop device_params never seen = warning). No truth data.
+- **Sanity test:** all 14 `spec.md` examples reproduce unchanged; 2 added rows move as the new rules intend.
+- **Result:** Band A 69.4%, B 20.7%, C 4.6%, D 5.3% (was 11.8%). Same bucket 65.6% / up 25.6% / down 8.8% (was 63.9 / 22.1 / 14.0). 671 sessions changed band: 385 freed by the device_params warning, 244 freed and 20 caught by coarse pairs, 19 caught by platform grouping, 3 freed by the OS-version rule.
+- **Main findings:** (1) Demotions drop from 361 to 184, and what is left is mostly SCRxDP+SCRxGL on new browser window sizes (Low risk). (2) Desktop checks no longer separate risk (G3 1.05x, was 1.3x): the coarse pair values released all 16 High-risk sessions of the Dict 15 UAxDP+SCRxDP group (31% High) to B/C. (3) Mobile separation is slightly better (3.8x, n = 94). (4) The highest-risk Band D pocket is now the Other group (software renderers on Windows/macOS: 11 of 44 High). (5) OS version rule barely matters here: Windows, Android, ChromeOS and Linux are frozen (≥ 99%) and skipped; only 2 iOS sessions had older unseen versions.
+- Details: `compare_v1_v2.md`, `disagreement.md`, `crosstab.md`, `gates.md`, `caveats.md`.
