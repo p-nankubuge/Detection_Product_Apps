@@ -2,6 +2,18 @@
 
 **Subject:** Amazon - IDS - Production - Key 2: persistent UA-spoofing bot (mobile UA on Windows machines, TLS1.2 library JA4), pass rate up to ~29% - add pressure on 2 new key-level TTs
 
+> **HOLD - do not file as-is (2026-11-25, after review).** Follow-up checks show this is NOT a new attack and the TLS1.2 JA4 telltale would hit
+> a large long-standing population:
+> - JA4 `t12d280700_b75078996b15` has been 10-25% of ALL Amazon IDS traffic every week since at least Aug 24 (1.2-3.0M sessions/week),
+>   on iOS / iPadOS / Android UAs with and without Direct3D. Telltale 2 below would flag ~20% of the key - withdrawn.
+> - Inside that population the Direct3D share is 29-30% **every week for 3 months** - a fixed, stable mix, which looks like a standing
+>   client population or a long-running profile pool, not a spike. The daily curve follows the key's normal rhythm.
+> - What is still true: the Direct3D + mobile-UA sessions run on Windows (renderer and navigator.platform are client-side), so those
+>   devices are not phones; the JA4 population passes far less than the rest of the key (7-30% vs 40-53%), sits ~3 sessions/IP vs
+>   ~1.1 for real phones, and is concentrated on ASNs 3257 / 263740.
+> - Open question before any pressure: is this an Amazon-side or partner integration (proxy / emulator / test fleet) or a standing bot
+>   population? Confirm with the Amazon account team. Telltale 1 can still be created as a NO-pressure monitor.
+
 **Customer / key:** Amazon - IDS - Production - Key 2, public key `56938EF5-6EFA-483E-B6F6-C8A72B6A95EE`
 
 **Type / priority:** Attack, ongoing every day, getting through more since Nov 23. Suggested priority: High.

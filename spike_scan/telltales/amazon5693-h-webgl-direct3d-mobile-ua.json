@@ -43,5 +43,6 @@
    ],
    "type": "list[string]"
   }
- ]
+ ],
+ "_status": "HOLD 2026-11-25: stable ~29% slice of a 3-month-old JA4 population, not a new spike. Create only as a no-pressure monitor until Amazon confirms whether it is their integration."
 }

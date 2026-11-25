@@ -33,5 +33,6 @@
    "value": "/^t12d\\d{4}00_b75078996b15_/",
    "type": "string"
   }
- ]
+ ],
+ "_status": "WITHDRAWN 2026-11-25: this JA4 is 10-25% of all Amazon IDS traffic every week since at least Aug 24 (real-mobile-UA sessions included) - far too broad; do not create."
 }
