@@ -1,0 +1,37 @@
+{
+ "telltale_type": "telltale",
+ "location": "SESSION_SETUP",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "immediate_non_legit": false,
+ "telltale_active": true,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Specified TTL - Review after 14 days",
+ "owner_category": "User",
+ "ticket": "<Zendesk ticket number>",
+ "_validated": "validate_telltale 2026-11-25: valid, no errors (NOT created; ticket placeholder DETCORE-4466 used for validation)",
+ "telltale_name": "uber3000-h-ja4-http1-library-1d37bd780c83",
+ "telltale_description": "Uber SMS: non-browser TLS client (JA4 cipher set 1d37bd780c83, 30 ciphers, ALPN http/1.1 only) claiming Chrome Mobile / Chrome Webview on Android. Bursts Nov 21 21:39-23:19 UTC (~1.1M est, 65% verified) and Nov 25 04:12-05:48 UTC (~0.67M est, 11% verified), mostly India (ASN 9329). Catches the tool even if it changes its WebGL renderer. Created without pressure; SOC to add pressure.",
+ "external_description": "Key-level telltale for a non-browser TLS fingerprint (HTTP/1.1-only JA4 1d37bd780c83) on Uber SMS",
+ "telltale_definition": [
+  {
+   "key": "public_key",
+   "operator": "TS_EQ",
+   "value": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "type": "string"
+  },
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "key": "cdn__ja4_hash",
+   "operator": "TS_REGEX",
+   "value": "/^t13d\\d{4}h1_1d37bd780c83_/",
+   "type": "string"
+  }
+ ]
+}

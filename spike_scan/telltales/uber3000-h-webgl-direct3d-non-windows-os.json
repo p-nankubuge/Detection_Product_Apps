@@ -1,0 +1,55 @@
+{
+ "telltale_type": "telltale",
+ "location": "SESSION_SETUP",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "immediate_non_legit": false,
+ "telltale_active": true,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Specified TTL - Review after 14 days",
+ "owner_category": "User",
+ "ticket": "<Zendesk ticket number>",
+ "_validated": "validate_telltale 2026-11-25: valid, no errors (NOT created; ticket placeholder DETCORE-4466 used for validation)",
+ "telltale_name": "uber3000-h-webgl-direct3d-non-windows-os",
+ "telltale_description": "Uber SMS: WebGL renderer says Direct3D (only exists on Windows) while the UA claims a non-Windows OS (Linux, Android, iOS, OS X). Wave since Nov 21: Linux-Chrome UA on Windows machines (~6M est, ~8% verified, residential IPs, TR) plus Android Chrome Mobile/Webview bursts from an HTTP/1.1 library JA4 (t13d30xxh1_1d37bd780c83, IN, 11-65% verified). Created without pressure; SOC to add pressure.",
+ "external_description": "Key-level telltale: Direct3D WebGL renderer with a non-Windows OS in the user agent (UA spoofing) on Uber SMS",
+ "telltale_definition": [
+  {
+   "key": "public_key",
+   "operator": "TS_EQ",
+   "value": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "type": "string"
+  },
+  {
+   "key": "location",
+   "operator": "TS_EQ",
+   "value": "session_setup",
+   "type": "string"
+  },
+  {
+   "key": "webgl_unmasked_renderer",
+   "operator": "EXISTS"
+  },
+  {
+   "key": "os",
+   "operator": "EXISTS"
+  },
+  {
+   "key": "webgl_unmasked_renderer",
+   "operator": "TS_CONTAINS",
+   "value": "Direct3D",
+   "type": "string"
+  },
+  {
+   "key": "os",
+   "operator": "TS_NOT_IN",
+   "value": [
+    "Windows",
+    "Xbox",
+    "Windows Phone"
+   ],
+   "type": "list[string]"
+  }
+ ]
+}
