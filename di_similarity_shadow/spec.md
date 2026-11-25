@@ -62,19 +62,22 @@ Chain, each level requires all previous fields: **os (Dict 1) → +JA4 (3) → +
 | UA × device_params (both directions) | Strongest |
 | screen × device_params | |
 | screen × WebGL | Hardware GPUs only |
-| screen × OS family | Few fail, nearly all bad |
+| screen × platform group | Few fail, nearly all bad (was screen × OS family) |
 | **Never** anything × JA4 | Points the wrong way (bots copy Chrome TLS + Chrome UA pairs) |
 
 **Band D trigger:** mobile (iOS, iPadOS, Android) = 1 failed check. Desktop (Windows, macOS, ChromeOS, Linux) = 2 failed checks, or 1 failed check + a never-seen screen or device_params.
 
-### Never-seen values (not in the whitelist for this OS family)
+**Updated 25 Nov** (details in `.claude/agents/similarity-scorer.md`, "Seen-before rules"; options considered in `decisions.md`): every "seen before" lookup is per **platform group** (§4), not per exact OS; pair checks compare **coarse** values (UA = browser + major version; device_params = platform, CPU cores, colour depth, touch); OS version is checked only within one OS line (iOS + iPadOS together), skipped where the version is frozen, and an older unseen version does not count toward Band D.
+
+### Never-seen values (not in the whitelist for this platform group)
 
 | Field | Treatment |
 |---|---|
 | UA, JA4, OS version (newer) | Neutral |
 | screen, mobile | Neutral (flagged: needs more testing) |
 | screen, desktop | One warning sign |
-| device_params | Counts as a failed check |
+| device_params, desktop | One warning sign (was: a failed check; changed 25 Nov, `decisions.md` D-6) |
+| device_params, mobile | Counts as a failed check |
 | WebGL (hardware) | Neutral |
 
 **Mobile screen fast track:** a never-seen mobile screen seen at 3+ distinct customers (accounts, not keys) within 24h, on sessions passing UA × device_params, is treated as whitelisted.

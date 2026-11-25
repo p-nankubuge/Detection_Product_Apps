@@ -8,7 +8,7 @@ A **shadow, read-only** evaluation of three Device Intelligence (DI) proposals, 
 2. **Impossible combinations:** Lists A/B/C from the companion page, plus new checks (UA × OS / OS version, screen × OS family, platform × OS, browser version × OS version).
 3. **Per-dictionary × platform velocity thresholds**, including Dict 63. Source: [One-Pager: Per-Dictionary × Platform Velocity Thresholds and Virtual GPU Eligibility](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/4780228745).
 
-The exact rules are in `spec.md`. The ground-truth cases are in `known_cases.md`. **Work from those files, not from memory of the Confluence pages.**
+The exact rules are in `spec.md`. The ground-truth cases are in `known_cases.md`. Design choices and the options not taken are in `decisions.md`; check it before reopening a settled question. **Work from those files, not from memory of the Confluence pages.**
 
 ## Agents
 
