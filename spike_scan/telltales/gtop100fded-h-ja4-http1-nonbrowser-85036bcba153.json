@@ -1,0 +1,22 @@
+{
+ "telltale_name": "gtop100fded-h-ja4-http1-nonbrowser-85036bcba153",
+ "telltale_type": "telltale",
+ "location": "SESSION_SETUP",
+ "risk_category": "CUSTOM",
+ "risk_score": 0,
+ "immediate_non_legit": false,
+ "telltale_active": true,
+ "allow_others_to_include": true,
+ "life_cycle_management": "M",
+ "manual_life_cycle_details": "Specified TTL - Review after 14 days",
+ "owner_category": "User",
+ "ticket": "<Zendesk ticket number>",
+ "telltale_description": "gtop100: non-browser TLS client (JA4 cipher set 85036bcba153, 18 ciphers, ALPN http/1.1 only) claiming Chrome. Weekly bursts on Sundays (Nov 8 55k, Nov 15 87k, Nov 22 46k sessions) from 5-13 IPs, 55% ASN 208172, ~90% hosting, 42-87% verified. Created without pressure; SOC to add pressure.",
+ "external_description": "Key-level telltale for a non-browser TLS fingerprint (HTTP/1.1-only JA4 85036bcba153) on gtop100",
+ "telltale_definition": [
+  {"key": "public_key", "operator": "TS_EQ", "value": "FDED3FA5-1764-490F-8BA3-7CE7B0553BC9", "type": "string"},
+  {"key": "location", "operator": "TS_EQ", "value": "session_setup", "type": "string"},
+  {"key": "cdn__ja4_hash", "operator": "TS_REGEX", "value": "/^t13d\\d{4}h1_85036bcba153_/", "type": "string"}
+ ],
+ "_validated": "validate_telltale 2026-11-25: valid, no errors (NOT created; ticket placeholder DETCORE-4466 used for validation)"
+}
