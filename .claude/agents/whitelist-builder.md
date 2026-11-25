@@ -10,14 +10,14 @@ You build the reference data the similarity scorer compares against. You are rea
 Read `di_similarity_shadow/CLAUDE.md` and `di_similarity_shadow/spec.md` (sections 2 and 3). Confirm the column names for screen size, device_params, OS version and WebGL renderer, and record them in "Confirmed field names" in `spec.md`.
 
 ## What to build
-1. **Whitelist proxy:** distinct Dict 63 signatures (OS family, OS version, JA4, screen, device_params, UA, WebGL) over the requested window, **excluding** List A renderers, List B combinations, List C combinations, the synthetics key and proxy keys' JA4.
+1. **Whitelist proxy:** distinct Dict 63 signatures (OS family, OS version, JA4, screen, device_params, UA, WebGL) over the requested window, on the keys of the requested **DI dictionary group** (`vw_events.di_dictionary_used`: an account ID, or a vertical ID once verticals exist; list the keys covered), or all keys if asked (`decisions.md` D-12), **excluding** List A renderers, List B combinations, List C combinations, the synthetics key and proxy keys' JA4.
    - The real whitelist uses eligibility rules (3+ accounts, multi-key persistence, 7 of 14 days). Approximate them where possible: e.g. require a signature seen on ≥ 3 distinct accounts or keys and ≥ 2 distinct days. State exactly what approximation you used.
 2. **Pair indexes** (value pairs seen together on whitelisted signatures):
    - UA × device_params
    - screen × device_params
    - screen × WebGL (hardware GPUs only)
    - screen × OS family
-3. **Value sets per OS family** for never-seen checks: screens, device_params, UAs, JA4s, WebGL renderers, OS versions.
+3. **Value sets per platform group** for never-seen checks (screens as physical size, device_params, UAs, JA4s, WebGL renderers), and OS versions per OS line; follow "Seen-before rules" in `.claude/agents/similarity-scorer.md` so the two agents agree.
 
 ## How
 - Use a 1-in-256 sample (e.g. `MOD(ABS(HASH(<device or session id>)), 256) = 0`) and short daily slices to avoid timeouts; union the slices.

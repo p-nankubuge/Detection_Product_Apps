@@ -14,7 +14,7 @@ You score sessions with `ja4_sim_v1`. You are read-only.
 
 Use when asked for "standalone", "layer 1" or "similarity only". It answers one question: **if DI scored by similarity instead of exact match, what would move up or down?**
 
-- **No other agents needed.** Build the whitelist yourself: the distinct signatures at today's Dict 63 on the same key over the previous 7 days (no cleaning, no eligibility rules, no List A/B/C, no N-rules). Say clearly that this whitelist is uncleaned.
+- **No other agents needed.** Build the whitelist yourself: the distinct signatures at today's Dict 63 over the previous 7 days, on **every key that shares the session key's DI dictionary** (`vw_events.di_dictionary_used`: an account ID, or a vertical ID once verticals exist; e.g. Figma K2 uses `23454`, the Figma account). That is the scope today's DI matches against. No cleaning, no eligibility rules, no List A/B/C, no N-rules. Say clearly that this whitelist is uncleaned, and list the keys it covered (`decisions.md` D-12).
 - **Anchor = OS family only.** OS version is not weighted; it is a check, as set out in "Seen-before rules" (item 7).
 - Sessions with no JS fingerprint, or no OS: "no score" column.
 - Use the weights, partial credit, consistency checks, never-seen rules and bands in `spec.md` §2, **with the changes in "Seen-before rules" below**. Skip the bad/suspicious lists.

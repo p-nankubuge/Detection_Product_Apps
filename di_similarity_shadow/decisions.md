@@ -2,6 +2,28 @@
 
 Choices made while building the shadow evaluator, with the alternatives considered, so they can be revisited when evidence changes. Newest first. Each entry: what was decided, the options, why, and what would make us revisit it.
 
+## 25 Nov 2026 (evening): scope of thresholds and whitelists
+
+Context: the thresholds run (`results/2026-11-25_thresholds/`) fell back to all-keys cells for 15 of 35 Figma cells, which made Dict 1 looser than today (35 vs 11). Clarified: thresholds are per key; the dictionary whitelist is shared across a group of keys (a vertical or an account) so known devices are learned faster.
+
+### D-11. Threshold fallback stays within the key
+
+- **Decided:** key × dict × platform group → key × dict across all platform groups → the key's current threshold. A fallback value never exceeds the key's current threshold. All-keys cells are a cross-check only.
+- **Options considered:**
+  1. Fall back to the all-keys cell (old spec wording): not per key, and loosened Dict 1.
+  2. Key's current threshold for every thin cell: simplest, but throws away the key's own data where a pooled cell is big enough.
+  3. Pool within the key, uncapped: per key, but a pooled cell could still exceed today.
+  4. **Pool within the key, fallbacks capped at the key's current threshold** (chosen).
+- **Why:** keeps every threshold per key, and no thin cell gets looser than today. Real (non-fallback) key cells may still exceed today's threshold where the key's own clean traffic supports it.
+- **Revisit when:** a key has so little volume that most cells end at the current threshold (the design then adds nothing for that key), or a key's pooled cell is clearly too tight for one platform group.
+
+### D-12. Whitelist scope = the key's DI dictionary group
+
+- **Decided:** build the whitelist from every key sharing the session key's `di_dictionary_used` (an account ID today, a vertical ID once verticals exist).
+- **Options considered:** per key (layer 1 so far); per account looked up elsewhere; all keys; **DI's own dictionary group** (chosen).
+- **Why:** it is exactly the scope today's DI matches against, so the comparison is like for like, and it needs no separate vertical or account mapping. For Figma K2 the group is the Figma account (`23454`) with only this key active, so the layer-1 runs already used the right scope.
+- **Revisit when:** verticals are defined (check whether `di_dictionary_used` switches to vertical IDs), or a group mixes very different traffic (e.g. a web and a mobile-SDK key in one account).
+
 ## 25 Nov 2026 (later): changes after layer 1 v2
 
 Context: layer 1 v2 (`results/2026-11-25_layer-1-v2/`) halved Band D, but desktop checks still didn't separate risk (G3 1.05x), most remaining desktop Band D came from screen pairs on resized windows, and the v1 Dict 15 group (UA × DP + screen × DP failures, 16 of 51 High risk) left Band D under coarse pairs. Not yet re-run.
