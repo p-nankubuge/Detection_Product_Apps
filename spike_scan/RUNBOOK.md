@@ -181,6 +181,12 @@ Work from the repo root, `cd spike_scan`.
    dictionary 1 has known issues. Use the champion dictionary 1 (`di_dictionary_num_matched == 1`, via the champion flags such as
    `g-di-dict-1-match-short-term-threshold-exceeded-1x`). A raw `di_dictionary_num_matched` row can fail validate_telltale on
    ground_truth_overlap (msidentity2 cdssolver ground truth) - #INCLUDE the champion flag instead.
+   **Churned customers (from 2026-11-25):** `data/churned_accounts.json` lists account names (Roblox Corporation churned Nov 2026).
+   Their keys are dropped from per-key charts, recurrence tables, the 2% check, drop cards and UA/JA4 targets. Discovery should not
+   count them in keys_spiking.
+   **Long-standing cohorts:** before asking SOC to pressure a cohort that has been steady for more than 4 weeks (e.g. Amazon IDS
+   TLS1.2 JA4 b75078996b15, 10-25% of the key since August), confirm with the customer / account team that it is not their own
+   integration - a steady, normal-looking curve can be a standing operation or an integration artifact.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)

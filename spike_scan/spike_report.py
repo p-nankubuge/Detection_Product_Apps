@@ -29,7 +29,16 @@ DROPS = ROOT / "data" / "key_drops.csv"  # run,public_key,kind,when,sessions,bas
 UAJA4 = ROOT / "data" / "ua_ja4.json"  # {run: {"combo|key": [rows]}} (07_ua_ja4_profile.sql)
 ANOMALY = ROOT / "data" / "key_anomalies.json"  # {run: {key8: {"days": {day: [n,v,a0,v0..]}, "sample": pct, "capi": [...]}}} (08)
 COHORTS = ROOT / "data" / "cohorts.json"  # {run: {name: {key, desc, sample, daily, hourly, summ}}} (09)
-TOTALS = ROOT / "data" / "key_totals.csv"  # day,public_key,sessions: ALL Production sessions on the key (04_key_totals.sql)
+TOTALS = ROOT / "data" / "key_totals.csv"
+CHURNED = ROOT / "data" / "churned_accounts.json"  # ["Roblox Corporation", ...]: their keys are left out of every report
+
+
+def churned_keys():
+    """Public keys of churned accounts (by data/key_names.json account_name)."""
+    if not CHURNED.exists() or not NAMES.exists():
+        return set()
+    acc = set(json.loads(CHURNED.read_text()))
+    return {k for k, v in json.loads(NAMES.read_text()).items() if v.get("account_name") in acc}  # day,public_key,sessions: ALL Production sessions on the key (04_key_totals.sql)
 HOURLY = ROOT / "data" / "hourly_key_counts.csv"  # ts_hour,public_key,combo_id,sessions,verified (chart keys)
 HOURLY_FIELDS = ["ts_hour", "public_key", "combo_id", "sessions", "verified"]  # key-filtered exact counts + verified, for perkey
 NAMES = ROOT / "data" / "key_names.json"
@@ -570,6 +579,8 @@ def perkey_body(c, win_start, win_end, all_keys, uid, heading=True, chart_start=
     keys = [k for k in st if st[k]["spiking"] or k in today_burst] if not all_keys else [k for k in st if st[k]["peak"] >= ACTIVE_MIN or k in today_burst]
     # keys shown in the recurrence table always get a chart, even when steadily high (not "spiking" vs their own last 7 days)
     keys += [k for k in extra_keys if k in st and k not in keys and max(st[k]["series"]) >= ACTIVE_MIN]
+    _ch = churned_keys()
+    keys = [k for k in keys if k not in _ch]
     cdays = days + ([str(we)] if today_hour else [])
     partial = ("so far, to %s:59 UTC" % today_hour) if today_hour else None
     zero = [0] * len(hours)
@@ -660,7 +671,9 @@ def recurrence_data(start, end, today=None):
     days = days_between(dt.date.fromisoformat(start), dt.date.fromisoformat(end))
     di = {d: i for i, d in enumerate(days)}
     result = {}
+    _ch = churned_keys()
     for cid, keys in keymap.items():
+        keys = [k for k in keys if k not in _ch]
         ser = {k: ([0] * len(days), [0] * len(days)) for k in keys}
         for r in rows:
             if r["combo_id"] == cid and r["public_key"] in ser and r["day"] in di:
@@ -880,6 +893,8 @@ def share_check(cid, win_start, win_end, counts=None, totals=None, drops=None):
                 " - real users likely caught, review before pressure" if row["win_verified"] >= 0.5 else
                 " - mostly blocked already, so likely bot traffic on a high-bot key" if row["win_verified"] < 0.1 else "")
         out.append(row)
+    _ch = churned_keys()
+    out = [r for r in out if r["key"] not in _ch]
     rank = {"fp-risk": 0, "volumetric": 1, "no-totals": 2, "ok": 3}
     out.sort(key=lambda r: (rank[r["verdict"]], -r.get("win_flagged", 0)))
     return out
@@ -939,7 +954,8 @@ def drop_days(run):
 
 
 def drops_card(run, names):
-    rows = read_drops(run)
+    _ch = churned_keys()
+    rows = [r for r in read_drops(run) if r["public_key"] not in _ch]
     if not rows:
         return ""
     by = collections.defaultdict(list)
