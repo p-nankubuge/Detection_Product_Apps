@@ -26,6 +26,11 @@ Context: the runs so far built a **per-account** whitelist (Figma: effectively o
 - **Options considered:** one p99 per dictionary × platform cell (D-13 runs); the signature's own p99; the design page's defaults literally (absolute 200 / percent 0.08); **expected × multiplier** (chosen by the user).
 - **Why:** the design ties the threshold to how common *that* signature normally is; one limit per cell treats a hugely common signature the same as a rare one, which is a likely reason per-cell limits over-fired on Figma's common signatures.
 - **Revisit when:** calibration can't find a multiplier that passes G7 and G8 together.
+- **Calibration result (26 Nov, `results/2026-11-26_thresholds-per-signature/`, short-term only), not decided.** Leading option: **m = 5, floor 11** (in practice floor = min(11, key's current threshold)).
+  - Figma (20 Nov): 335 fires (56.7% High) vs 381 recorded / 179 effective today; clean-traffic fires 96 vs 131; G7 0 failing cells.
+  - Blizzard (9–11 Nov; labels 9 Nov only, 3,670 of 5,718): 141 Nonlegit caught vs 4 today; clean fires 173 vs 974; G8 pass; G7 fails 4 cells (Dict 31 Desktop 50 clean fires vs 0, not profiled).
+  - The floor matters far more than the multiplier: floor 5 catches ~3.4× more Blizzard labels (477–490) but fails Figma G7 in 14–17 cells.
+  - Open before deciding: score 10–11 Nov labels; profile Blizzard Dict 31 Desktop and the lost Figma fires; test floor 8; calibrate long-term; Figma Legit-label false-positive rate.
 
 ## 26 Nov 2026: threshold gates
 
