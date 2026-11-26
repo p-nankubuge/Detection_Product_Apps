@@ -1,0 +1,22 @@
+{
+ "2026-11-25": {
+  "CC3F2AEA-6C11-493B-A83B-7BA702D7525F": {
+   "fraud": {
+    "n": 250,
+    "verified": 249,
+    "h3": 67,
+    "h1": 0,
+    "font_os_mis": 0,
+    "rig": 0,
+    "no_fonts": 0,
+    "no_fp": 0,
+    "d3d_nonwin": 0,
+    "plat_mis": 0,
+    "top_fontset_n": 139,
+    "top_voices_n": 18,
+    "ja4_h1": 0,
+    "soft_rend": 0
+   }
+  }
+ }
+}
