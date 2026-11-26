@@ -1,0 +1,54 @@
+V0|1|Desktop|clean fires 1 of 96 = 1.042% | today dict 1 0.000% | FAIL
+V0|3|Desktop|clean fires 47 of 2874 = 1.635% | today dict 3 0.768% | FAIL
+V0|3|Linux|clean fires 5 of 294 = 1.701% | today dict 3 0.768% | FAIL
+V0|3|Mobile|clean fires 2 of 701 = 0.285% | today dict 3 0.768% | pass
+V0|3|WinRDVM|clean fires 8 of 155 = 5.161% | today dict 3 0.768% | FAIL
+V0|7|Desktop|clean fires 71 of 8230 = 0.863% | today dict 7 0.275% | FAIL
+V0|7|Linux|clean fires 6 of 481 = 1.247% | today dict 7 0.275% | FAIL
+V0|7|Mobile|clean fires 2 of 252 = 0.794% | today dict 7 0.275% | FAIL
+V0|15|Desktop|clean fires 22 of 6676 = 0.330% | today dict 15 0.136% | FAIL
+V0|15|WinRDVM|clean fires 5 of 285 = 1.754% | today dict 15 0.136% | FAIL
+V0|31|Desktop|clean fires 36 of 11787 = 0.305% | today dict 31 0.112% | FAIL
+V0|31|Mobile|clean fires 2 of 791 = 0.253% | today dict 31 0.112% | FAIL
+V0|31|WinRDVM|clean fires 6 of 519 = 1.156% | today dict 31 0.112% | FAIL
+V0|63|Desktop|clean fires 62 of 33541 = 0.185% | today dict 63 0.075% | FAIL
+V0|63|Linux|clean fires 25 of 370 = 6.757% | today dict 63 0.075% | FAIL
+V0|63|Mobile|clean fires 1 of 10352 = 0.010% | today dict 63 0.075% | pass
+V0 FAIL cells (14): 1 Desktop, 3 Desktop, 3 Linux, 3 WinRDVM, 7 Desktop, 7 Linux, 7 Mobile, 15 Desktop, 15 WinRDVM, 31 Desktop, 31 Mobile, 31 WinRDVM, 63 Desktop, 63 Linux | extra vs Dict 63 effective (0): 63 Mobile
+V1|1|Desktop|clean fires 1 of 96 = 1.042% | today dict 1 0.000% | FAIL
+V1|3|Desktop|clean fires 47 of 2874 = 1.635% | today dict 3 0.768% | FAIL
+V1|3|Linux|clean fires 5 of 294 = 1.701% | today dict 3 0.768% | FAIL
+V1|3|Mobile|clean fires 2 of 701 = 0.285% | today dict 3 0.768% | pass
+V1|3|WinRDVM|clean fires 8 of 155 = 5.161% | today dict 3 0.768% | FAIL
+V1|7|Desktop|clean fires 56 of 8230 = 0.680% | today dict 7 0.275% | FAIL
+V1|7|Linux|clean fires 4 of 481 = 0.832% | today dict 7 0.275% | FAIL
+V1|15|Desktop|clean fires 9 of 6676 = 0.135% | today dict 15 0.136% | pass
+V1|15|WinRDVM|clean fires 4 of 285 = 1.404% | today dict 15 0.136% | FAIL
+V1|31|Desktop|clean fires 17 of 11787 = 0.144% | today dict 31 0.112% | FAIL
+V1|31|WinRDVM|clean fires 3 of 519 = 0.578% | today dict 31 0.112% | FAIL
+V1|63|Desktop|clean fires 29 of 33541 = 0.086% | today dict 63 0.075% | FAIL
+V1|63|Linux|clean fires 17 of 370 = 4.595% | today dict 63 0.075% | FAIL
+V1|63|Mobile|clean fires 1 of 10352 = 0.010% | today dict 63 0.075% | pass
+V1 FAIL cells (11): 1 Desktop, 3 Desktop, 3 Linux, 3 WinRDVM, 7 Desktop, 7 Linux, 15 WinRDVM, 31 Desktop, 31 WinRDVM, 63 Desktop, 63 Linux | extra vs Dict 63 effective (0): 63 Mobile
+V2|3|Desktop|clean fires 27 of 2874 = 0.939% | today dict 3 0.768% | FAIL
+V2|3|Linux|clean fires 2 of 294 = 0.680% | today dict 3 0.768% | pass
+V2|3|WinRDVM|clean fires 4 of 155 = 2.581% | today dict 3 0.768% | FAIL
+V2|7|Desktop|clean fires 21 of 8230 = 0.255% | today dict 7 0.275% | pass
+V2|15|Desktop|clean fires 2 of 6676 = 0.030% | today dict 15 0.136% | pass
+V2|15|WinRDVM|clean fires 4 of 285 = 1.404% | today dict 15 0.136% | FAIL
+V2|31|Desktop|clean fires 12 of 11787 = 0.102% | today dict 31 0.112% | pass
+V2|63|Desktop|clean fires 0 of 33541 = 0.000% | today dict 63 0.075% | pass
+V2|63|Linux|clean fires 11 of 370 = 2.973% | today dict 63 0.075% | FAIL
+V2|63|Mobile|clean fires 0 of 10352 = 0.000% | today dict 63 0.075% | pass
+V2 FAIL cells (4): 3 Desktop, 3 WinRDVM, 15 WinRDVM, 63 Linux | extra vs Dict 63 effective (0): none
+V3|3|Desktop|clean fires 27 of 2874 = 0.939% | today dict 3 0.768% | FAIL
+V3|3|Linux|clean fires 2 of 294 = 0.680% | today dict 3 0.768% | pass
+V3|3|WinRDVM|clean fires 4 of 155 = 2.581% | today dict 3 0.768% | FAIL
+V3|7|Desktop|clean fires 21 of 8230 = 0.255% | today dict 7 0.275% | pass
+V3|15|Desktop|clean fires 2 of 6676 = 0.030% | today dict 15 0.136% | pass
+V3|15|WinRDVM|clean fires 4 of 285 = 1.404% | today dict 15 0.136% | FAIL
+V3|31|Desktop|clean fires 12 of 11787 = 0.102% | today dict 31 0.112% | pass
+V3|63|Desktop|clean fires 0 of 33541 = 0.000% | today dict 63 0.075% | pass
+V3|63|Linux|clean fires 11 of 370 = 2.973% | today dict 63 0.075% | FAIL
+V3|63|Mobile|clean fires 0 of 10352 = 0.000% | today dict 63 0.075% | pass
+V3 FAIL cells (4): 3 Desktop, 3 WinRDVM, 15 WinRDVM, 63 Linux | extra vs Dict 63 effective (0): none

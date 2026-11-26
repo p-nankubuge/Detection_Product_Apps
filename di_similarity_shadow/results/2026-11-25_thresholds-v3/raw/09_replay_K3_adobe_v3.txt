@@ -1,0 +1,17 @@
+# 09_replay_K3_adobe_v3.sql, run 2026-11-25, 9.0 s, no sampling. v|cohort|d|grp|n|High%|thr ST|today ST breached|NA n/High%|ST count p10/p50/max
+0|attack|15|Desktop|n=203|hi=100.0|thr=14.00|T=32|NA=203/100.0|stc=38/85/97
+0|attack|31|Desktop|n=1565|hi=100.0|thr=22.00|T=1565|NA=1565/100.0|stc=130/185/229
+0|attack|63|Desktop|n=307|hi=100.0|thr=34.00|T=0|NA=132/100.0|stc=23/26/44
+0|attack|ALL|ALL|n=2084|hi=100.0|T=1597|NA=1900/100.0
+0|rest|ALL|ALL|n=1557562|hi=17.6|T=131170|NA=61179/55.9
+1|attack|15|Desktop|n=203|thr=14.00|T=32|NA=203/100.0
+1|attack|31|Desktop|n=1565|thr=22.00|T=1565|NA=1565/100.0
+1|attack|63|Desktop|n=307|thr=34.00|T=0|NA=132/100.0
+1|attack|ALL|ALL|n=2084|T=1597|NA=1900/100.0
+1|rest|ALL|ALL|n=1557562|T=131170|NA=61179/55.9
+2|attack|15|Desktop|n=203|thr=24.00|T=32|NA=202/100.0
+2|attack|31|Desktop|n=1565|thr=52.00|T=1565|NA=1565/100.0
+2|attack|63|Desktop|n=307|thr=104.00|T=0|NA=0/-
+2|attack|ALL|ALL|n=2084|T=1597|NA=1767/100.0
+2|rest|ALL|ALL|n=1557562|T=131170|NA=26144/92.7
+3 = 2 (identical rows)

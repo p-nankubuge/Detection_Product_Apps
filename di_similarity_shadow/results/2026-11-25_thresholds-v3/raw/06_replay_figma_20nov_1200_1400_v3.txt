@@ -1,0 +1,26 @@
+# Run 2026-11-25, 4.3 s, no sampling. Columns as 05_. Only cells with a fire (today or new) plus the total per variant.
+0|7|Desktop|n=937|hi=5.1|cl=882|T=4|clT=4|NA=20/15.0/55.0/50.0/45.0|NL=0|NEW=16/12.5|TONLY=0|clNA=18
+0|7|Linux|n=59|hi=0.0|cl=59|T=0|clT=0|NA=4/0.0/75.0/100.0/0.0|NL=0|NEW=4/0.0|TONLY=0|clNA=4
+0|15|Desktop|n=777|hi=10.0|cl=692|T=0|clT=0|NA=9/55.6/55.6/77.8/22.2|NL=0|NEW=9/55.6|TONLY=0|clNA=4
+0|31|Desktop|n=1306|hi=5.1|cl=1226|T=0|clT=0|NA=4/25.0/75.0/25.0/25.0|NL=0|NEW=4/25.0|TONLY=0|clNA=3
+0|63|Desktop|n=3722|hi=3.5|cl=3568|T=7|clT=7|NA=12/25.0/83.3/83.3/16.7|NL=0|NEW=5/0.0|TONLY=0|clNA=12
+0|63|Linux|n=70|hi=0.0|cl=70|T=13|clT=13|NA=19/0.0/89.5/100.0/10.5|NL=0|NEW=6/0.0|TONLY=0|clNA=19
+0|63|Mobile|n=1106|hi=3.2|cl=1055|T=1|clT=0|NA=2/50.0/100.0/50.0/0.0|NL=0|NEW=1/0.0|TONLY=0|clNA=1
+0|ALL|ALL|n=9156|hi=4.8|cl=8492|T=25|clT=24|NA=70/18.6/72.9/74.3/22.9|NL=0|NEW=45/17.8|TONLY=0|clNA=61
+1|7|Desktop|n=937|hi=5.1|cl=882|T=4|clT=4|NA=14/14.3/42.9/57.1/57.1|NL=0|NEW=10/10.0|TONLY=0|clNA=13
+1|7|Linux|n=59|hi=0.0|cl=59|T=0|clT=0|NA=3/0.0/66.7/100.0/0.0|NL=0|NEW=3/0.0|TONLY=0|clNA=3
+1|15|Desktop|n=777|hi=10.0|cl=692|T=0|clT=0|NA=1/100.0/0.0/100.0/100.0|NL=0|NEW=1/100.0|TONLY=0|clNA=0
+1|63|Desktop|n=3722|hi=3.5|cl=3568|T=7|clT=7|NA=8/37.5/75.0/100.0/25.0|NL=0|NEW=1/0.0|TONLY=0|clNA=8
+1|63|Linux|n=70|hi=0.0|cl=70|T=13|clT=13|NA=15/0.0/86.7/100.0/13.3|NL=0|NEW=2/0.0|TONLY=0|clNA=15
+1|63|Mobile|n=1106|hi=3.2|cl=1055|T=1|clT=0|NA=2/50.0/100.0/50.0/0.0|NL=0|NEW=1/0.0|TONLY=0|clNA=1
+1|ALL|ALL|n=9156|hi=4.8|cl=8492|T=25|clT=24|NA=43/16.3/67.4/83.7/30.2|NL=0|NEW=18/11.1|TONLY=0|clNA=40
+2|7|Desktop|n=937|hi=5.1|cl=882|T=4|clT=4|NA=2/50.0/0.0/100.0/100.0|NL=0|NEW=0/-|TONLY=2|clNA=2
+2|63|Desktop|n=3722|hi=3.5|cl=3568|T=7|clT=7|NA=0/-/-/-/-|NL=0|NEW=0/-|TONLY=7|clNA=0
+2|63|Linux|n=70|hi=0.0|cl=70|T=13|clT=13|NA=11/0.0/81.8/100.0/18.2|NL=0|NEW=0/-|TONLY=2|clNA=11
+2|63|Mobile|n=1106|hi=3.2|cl=1055|T=1|clT=0|NA=0/-/-/-/-|NL=0|NEW=0/-|TONLY=1|clNA=0
+2|ALL|ALL|n=9156|hi=4.8|cl=8492|T=25|clT=24|NA=13/7.7/69.2/100.0/30.8|NL=0|NEW=0/-|TONLY=12|clNA=13
+3|7|Desktop|n=937|hi=5.1|cl=882|T=4|clT=4|NA=2/50.0/0.0/100.0/100.0|NL=0|NEW=0/-|TONLY=2|clNA=2
+3|63|Desktop|n=3722|hi=3.5|cl=3568|T=7|clT=7|NA=0/-/-/-/-|NL=0|NEW=0/-|TONLY=7|clNA=0
+3|63|Linux|n=70|hi=0.0|cl=70|T=13|clT=13|NA=11/0.0/81.8/100.0/18.2|NL=0|NEW=0/-|TONLY=2|clNA=11
+3|63|Mobile|n=1106|hi=3.2|cl=1055|T=1|clT=0|NA=0/-/-/-/-|NL=0|NEW=0/-|TONLY=1|clNA=0
+3|ALL|ALL|n=9156|hi=4.8|cl=8492|T=25|clT=24|NA=13/7.7/69.2/100.0/30.8|NL=0|NEW=0/-|TONLY=12|clNA=13

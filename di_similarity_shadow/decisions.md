@@ -6,7 +6,10 @@ Choices made while building the shadow evaluator, with the alternatives consider
 
 ### D-13. How to stop per-key thresholds over-firing on clean traffic (G7)
 
-- **Status:** under test (`results/2026-11-25_thresholds-v3/`), not decided.
+- **Status:** tested (`results/2026-11-25_thresholds-v3/variants.md`), not decided. Leading option: p99.9 + floor 5.
+- **Result (Figma K2, replay 20 Nov):** clean-traffic fires p99 301 → floor 5: 203 → p99.9: 83 (today 84 effective); total fires 698 / 500 / 218; High% of fires 44 / 48 / 47; G7 failing cells 14 / 11 / 4; K3 (Adobe) firing 91% / 91% / 85% (today 77%; p99.9 loses the Dict 63 Desktop part); G8 (Payoneer) fails in every variant (counts 477–746, a similarity problem, not a threshold one). p99.9 and p99.9 + floor 5 gave identical results on Figma; the floor only protects low-volume cells.
+- **Trade-offs of p99.9 + floor 5:** almost no new detection on Figma beyond enforcing Dict 63 (91 fires, 53% High, hidden by today's exemption); loses 40 fires today's flat 11 catches (not profiled); noisier day to day than p99; doesn't remove the Dict 63 Linux fleet group (counts up to 24).
+- **Before deciding:** profile the 40 lost fires; test a fleet / IP-diversity exception; re-check on a second key with truth data and a full (non-sampled) Adobe base.
 - **Context:** thresholds v2 (`results/2026-11-25_thresholds-v2/`): Figma's own base p99 is 2–9 sessions per signature per 40 min, so thresholds after multipliers are 3–10 vs today's flat 11. Fires on clean traffic rise from 118 to 301 on 20 Nov; G7 fails in 15 cells.
 - **Options being tested:**
   1. p99 as now (baseline).
