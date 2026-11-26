@@ -1,0 +1,27 @@
+{
+ "title": "Daily run 2026-11-25 (exact Nov 21-24; hourly to Nov 25 20h UTC; Roblox excluded - churned)",
+ "sections": [
+  {"h": "Getting through / ongoing",
+   "items": [
+    "Uber SMS (Key 1): the big one. Key traffic 12.8M/day baseline -> 21.8M (Nov 21), 38.2M (Nov 22), 67.4M (Nov 23). Runs in bursts that switch signature: spoofed_os_pagebio_grease Nov 23 20h - Nov 24 16h (1.1-2.7M per 4h, 9% verified), then dishort300_dp_spoof_ja4_dict1 Nov 25 00-04h (1.06M). Both back to baseline since Nov 25 08h - expect the next burst. Mostly blocked (5-12% verified), but at this volume 5-10% is hundreds of thousands of SMS sends a day.",
+    "Uber SMS Direct3D-renderer + non-Windows UA cohort: 5/7 attack indicators (new, concentrated, off-rhythm, TLS, fingerprint detail). ~1.5M on Nov 21 -> ~5M on Nov 24 (5% sample, scaled). Top JA4 t13d3013h1_1d37bd780c83 (HTTP/1.1, 30-cipher library stack) claiming Chrome Mobile 158; TR the top country. NEW granular check: 0% HTTP/3 vs 12% on the rest of the key, Windows fonts on a non-Windows UA 92% vs 5%, one exact font set 78% vs 29%, one voices hash 72% vs 46%. The Uber SMS ticket draft (docs/tickets/zendesk_ubersms_2026-11-25.md) is ready to send.",
+    "gtop100: weekly Sunday bursts of the HTTP/1.1 non-browser JA4 - ticket draft ready (docs/tickets/zendesk_gtop100_2026-11-25.md).",
+    "Microsoft Account Signup: single_click_dp_spoof 510/day -> 9.6k/day (40% verified) - small, watch."
+   ]},
+  {"h": "6 new candidate combinations - all HOLD (2% rule)",
+   "items": [
+    "ipconn_hosting_ipvel_st4x / _lt4x, pagebio_touch_null_sensors_null, dishort300_rfc_cl_secchua, spoofed_os_rfc_cl_secchua, spoofed_os_ipintel_med were added from discovery. All are driven by the Uber SMS surge, but each also flags >2% of keys that are 95-100% verified (Adobe Sign-in, DoorDash Website/ATM PoV, EG Taap, Dropbox Login, AT&T BIAM). Not specific enough for a global TT. For Uber SMS use the scoped key-level drafts (uber3000-h-webgl-direct3d-non-windows-os, uber3000-h-ja4-http1-library-1d37bd780c83).",
+    "Review: Coinbase Email Verification (Key 2) - spoofed_os_rfc_cl_secchua went from 0 to 6.1k/day (45% of the key at peak, 21% verified)."
+   ]},
+  {"h": "Traffic drops (not attacks)",
+   "items": [
+    "Blizzard ROW Registration Key 2: 1.1k and 182 sessions on Nov 21-22 vs 53k/day normal, 13.6k on Nov 23 - near-outage / integration change.",
+    "Hcom OTP (Key 7): ~38k/day on Nov 23-24 vs 167k normal, last 6h at 25% of normal - ongoing.",
+    "AppFolio Login and BofA CashPro ATM: weekend dips (Nov 21-22)."
+   ]},
+  {"h": "NEW check - fingerprint detail (cohort profile, 7th indicator)",
+   "items": [
+    "Added from the Blizzard ROW 'candidate signals vs truth' work: per cohort vs the rest of the key - HTTP/3 share (FP bound: real Chrome upgrades to QUIC, libraries don't), HTTP/1.1 share, fonts that don't match the claimed OS, <=4GB memory with 12+ cores (rig), one exact font set / one voices hash reused, no fonts / no fingerprint. Counts when 2+ fire. Cohort scores are now out of 7 (3+ = attack-like)."
+   ]}
+ ]
+}

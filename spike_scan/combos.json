@@ -321,8 +321,8 @@
    ],
    "draft": "telltales/g-ip-conn-hosting-ip-velocity-st-4x.json",
    "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
-   "action": "review (exact counts + 2% share check first)",
-   "action_detail": "Sampled (1%) Nov 21-24 vs Nov 14-20: 7 keys, share 0.72, ~253k/day excess (Dropbox Login, Adobe Sign Up, AppFolio Login, Uber SMS, 447C2794, 5B6F3411, 72361606). Datacenter-IP velocity wave. Superset +ipvel LT 4x is 6 keys / 0.72, adds nothing."
+   "action": "hold",
+   "action_detail": "hold - flags 2-9% of Adobe Sign Up, GitLab, EG Taap, AppFolio and 72361606 (EG Taap / 72361606 are 100% verified): hosting + IP velocity is not attack-specific. Do not create globally."
   },
   {
    "id": "ipconn_hosting_ipvel_lt4x",
@@ -335,8 +335,8 @@
    ],
    "draft": "telltales/g-ip-conn-hosting-ip-velocity-lt-4x.json",
    "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
-   "action": "review (exact counts + 2% share check first)",
-   "action_detail": "Sampled Nov 21-24: 7 keys, share 0.51 (borderline), ~236k/day (Adobe Sign Up, Dropbox, Uber SMS, 4455454D, 12D76D4C, 07D6B751, 5AA600D0). Same hosting wave as ipconn_hosting_ipvel_st4x on partly different keys; retire one of the two once exact counts are in."
+   "action": "hold",
+   "action_detail": "hold - same as the short-term variant; 72361606 at 44% of its traffic and 100% verified, AT&T BIAM 97% verified. Do not create."
   },
   {
    "id": "pagebio_touch_null_sensors_null",
@@ -349,8 +349,8 @@
    ],
    "draft": "telltales/g-pagebio-touch-null-sensors-null-canvas.json",
    "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
-   "action": "review (exact counts + 2% share check first)",
-   "action_detail": "Sampled Nov 21-24: 6 keys, share 0.94, ~2.16M/day (Uber SMS dominant; DoorDash Website, Adobe Sign Up, Meta Login, Blizzard ROW Login, 12D76D4C). Both flags are 'telemetry missing' signals and may co-fire on ordinary traffic: run the 2% share-of-traffic check before any pressure. sensors-null + accept-lang-fp-mismatch (5/0.95) and sensors-null + ipvel LT 4x (5/0.94) hit the same keys and were not added."
+   "action": "hold",
+   "action_detail": "hold - DoorDash Website / DoorDash ATM PoV 95-98% verified, Microsoft Learn 22% of traffic and 80% verified: null touch + null sensors is normal for desktop/headless-less clients. Do not create."
   },
   {
    "id": "dishort300_rfc_cl_secchua",
@@ -363,8 +363,8 @@
    ],
    "draft": "telltales/g-di-short-300-pxr1-rfc-cl-before-sec-ch-ua.json",
    "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
-   "action": "review (exact counts + 2% share check first)",
-   "action_detail": "Sampled Nov 21-24: 5 keys, share 0.98, ~8.3M/day, almost all Uber SMS (di-short-300 ~6.4M/day there); also Uber Account Mgmt, Air Canada Login, Dropbox Login, Adobe Sign Up."
+   "action": "hold",
+   "action_detail": "hold globally - Uber SMS carries 8M/day (21% of the key, 12% verified) and rides the surge, but Adobe Sign-in (100% verified), Dropbox Login (99%) and Customer Dashboard (95%) are hit too. For Uber SMS use the scoped key-level drafts (uber3000-h-webgl-direct3d-non-windows-os, uber3000-h-ja4-http1-library-1d37bd780c83)."
   },
   {
    "id": "spoofed_os_rfc_cl_secchua",
@@ -377,8 +377,8 @@
    ],
    "draft": "telltales/g-spoofed-os-mismatch-rfc-cl-before-sec-ch-ua.json",
    "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
-   "action": "review (exact counts + 2% share check first)",
-   "action_detail": "Sampled Nov 21-24: 5 keys, share 0.90, ~1.85M/day (Uber SMS dominant; Uber Account Mgmt, Coinbase Email Verification, Adobe Sign Up, Blizzard ROW Login)."
+   "action": "hold",
+   "action_detail": "hold - volumetric on Uber SMS (2M/day, 27% peak) and Coinbase Email Verification (45% peak, 21% verified - review), FP-risk on Adobe Sign-in (100% verified) and Amazon Client (97%)."
   },
   {
    "id": "spoofed_os_ipintel_med",
@@ -391,8 +391,8 @@
    ],
    "draft": "telltales/g-spoofed-os-mismatch-ip-intel-medium.json",
    "history_note": "No exact history yet: backfill 11 days with 03 using a temporary combos file holding only the 2026-11-25 entries.",
-   "action": "review (exact counts + 2% share check first)",
-   "action_detail": "Sampled Nov 21-24: 5 keys, share 0.93, ~1.25M/day (Uber SMS dominant; DoorDash ATM PoV, AppFolio Login, Coinbase Email Verification, Amazon IDS)."
+   "action": "hold",
+   "action_detail": "hold - Uber SMS 1.3M/day (9% verified) and Amazon IDS 7.7% of traffic (17% verified, the long-standing Amazon cohort - on HOLD pending the customer); Adobe Sign-in 100% verified. Do not create."
   }
  ],
  "retired": [
