@@ -19,6 +19,14 @@ Context: the runs so far built a **per-account** whitelist (Figma: effectively o
 - **Decided:** for each checked pair (UA × device_params, screen × device_params, screen × WebGL, screen × platform group), measure how often it appears among devices of the same platform group in the pooled whitelist, and grade **common / rare / never**. The cut-off is **measured first** (where High risk starts to rise), then fixed in the spec.
 - **Options considered:** exact / coarse yes-or-no (D-9); fixed cut-off of 0.1%; fewer than 3 accounts; **measure first** (chosen by the user).
 - **Revisit when:** the measured cut-off differs a lot between platform groups or verticals.
+- **Measured (26 Nov, `results/2026-11-26_similarity-v4/frequency_bins.md`):** on desktop, rare-but-seen pairs are no riskier than common ones (every frequency bin 0.4–1.3× the 4.9% baseline), so **no frequency cut-off on desktop**; "rare" stays "coarse pair seen, exact pair never seen". Mobile: screen × device_params (coarse) and screen × platform group seen in fewer than ~1e-4 of whitelist sessions are rare (≈2.3×, but only 10 High sessions). Applying this changes no band on Figma (v4 = v3).
+
+### D-20. Desktop Band D trigger (leading option, not decided)
+
+- **Leading:** desktop Band D if (a) a **coarse UA × device_params pair was never seen** together, on its own; or (b) **2 or more warning signs**; or the existing 2 failed checks / 1 failed check + 1 warning; with (c) **screen × WebGL failure counted as a warning sign**, not a failed check. Mobile unchanged.
+- **Evidence (Figma, 20 Nov 12:00–14:00):** never-seen pairs by risk on desktop: coarse UA × device_params 18.4% High (3.7×), exact UA × DP 10.3%, exact screen × DP 9.3%, screen × platform group 10.5%; screen × WebGL 2.1% and coarse screen × DP 1.4% (below the 4.9% baseline). With a + b + c: 732 sessions in D at 11.9% High vs 4.1% passing, **desktop G3 2.77×** (v3: 0.70×); all 16 High sessions of the v1 Dict 15 group reach D. Cost: demoted 176 → 339, G1 71.0% → 67.0%.
+- **Options considered:** v3 trigger (G3 0.70×); each of a, b, c alone (2.24×, 1.61×, 0.89×); uniform frequency cut-offs 1e-4 / 1e-3 (1.12×, 1.51×); **a + b + c** (best).
+- **Before deciding:** a second window or day, and truth data (Figma Legit / Nonlegit, or Blizzard Nonlegit) to confirm the extra Band D sessions are bad, not just High risk.
 
 ### D-19. Threshold per matched signature: expected × multiplier
 
