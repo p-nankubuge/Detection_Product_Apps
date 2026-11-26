@@ -195,6 +195,10 @@ Work from the repo root, `cd spike_scan`.
    **Churned customers (from 2026-11-25):** `data/churned_accounts.json` lists account names (Roblox Corporation churned Nov 2026).
    Their keys are dropped from per-key charts, recurrence tables, the 2% check, drop cards and UA/JA4 targets. Discovery should not
    count them in keys_spiking.
+   **Proxy URL integrations (from 2026-11-26):** `data/proxy_integration_keys.json` lists keys where the customer proxies the
+   Arkose calls (e.g. Payoneer E3EFEFBF): JA4, HTTP version and header order are the customer's proxy, not the visitor. UA vs JA4,
+   the cohort TLS indicator and the HTTP/3 check are skipped for them; never draft a JA4 / header-order TT for such a key. Add a key
+   when its JA4 is one non-browser stack for ~all traffic including verified/legit-labelled sessions, and confirm with the TAM.
    **Long-standing cohorts:** before asking SOC to pressure a cohort that has been steady for more than 4 weeks (e.g. Amazon IDS
    TLS1.2 JA4 b75078996b15, 10-25% of the key since August), confirm with the customer / account team that it is not their own
    integration - a steady, normal-looking curve can be a standing operation or an integration artifact.
@@ -214,8 +218,8 @@ Work from the repo root, `cd spike_scan`.
    Findings 2026-11-26 (6 keys): labelled sessions are ~100% verified (truth is mostly on sessions that got through). Fonts-vs-OS,
    Direct3D + non-Windows UA, rig, platform mismatch, no fonts / no fingerprint: <=1.3% on legit labels (Uber SMS, Grab, Figma,
    E3EFEFBF) - precise - but 0-7% on labelled fraud (Blizzard ROW Reg 2, Bumble SMS, Grab, Figma): they catch automation stacks, not
-   the sweatshop / manual fraud customers label. HTTP/1.1 is key-relative: E3EFEFBF legit is 100% HTTP/1.1 (h1 JA4), Figma legit 23%
-   - never call an h1 JA4 non-browser without checking the rest of the key.
+   the sweatshop / manual fraud customers label. HTTP/1.1 is key-relative: E3EFEFBF (Payoneer) is 100% HTTP/1.1 because it is a proxy URL
+   integration (the JA4 is Payoneer's proxy), Figma legit 23% - never call an h1 JA4 non-browser without checking the rest of the key.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)

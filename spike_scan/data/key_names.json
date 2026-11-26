@@ -394,5 +394,9 @@
  "FE296399-FDEA-2EA2-8CD5-50F6E3157ECA": {
   "account_name": "WBD",
   "key_name": "Discovery - GIP Login - Production - Key 1"
+ },
+ "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF": {
+  "account_name": "Payoneer",
+  "key_name": "Payoneer - E3EFEFBF (proxy URL integration)"
  }
 }

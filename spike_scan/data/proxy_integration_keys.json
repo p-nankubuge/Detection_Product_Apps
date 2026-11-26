@@ -1,0 +1,6 @@
+{
+ "_doc": "Keys integrated through a customer-side proxy URL: CDN-level fields (JA4, HTTP version, header order, and likely IP/ASN/country) describe the CUSTOMER'S proxy, not the end user. TLS/JA4, HTTP-version and header-order checks are skipped for these keys; judge them on client-side fingerprint fields only.",
+ "keys": {
+  "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF": "Payoneer - proxy URL integration: JA4 is Payoneer's proxy (HTTP/1.1, 100% of legit truth labels) (told 2026-11-26)"
+ }
+}

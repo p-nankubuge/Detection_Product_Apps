@@ -33,6 +33,14 @@ TOTALS = ROOT / "data" / "key_totals.csv"
 CHURNED = ROOT / "data" / "churned_accounts.json"  # ["Roblox Corporation", ...]: their keys are left out of every report
 
 
+PROXY_KEYS = ROOT / "data" / "proxy_integration_keys.json"  # {"keys": {public_key: note}}: CDN-level fields are the customer's proxy
+
+
+def proxy_keys():
+    """Keys behind a customer proxy URL integration: JA4 / HTTP version / header order belong to the customer's proxy."""
+    return json.loads(PROXY_KEYS.read_text()).get("keys", {}) if PROXY_KEYS.exists() else {}
+
+
 def churned_keys():
     """Public keys of churned accounts (by data/key_names.json account_name)."""
     if not CHURNED.exists() or not NAMES.exists():
@@ -1063,11 +1071,13 @@ def cmd_uaja4(a):
     print("ua_ja4: %d JA4 cohorts for %s on %s (run %s)" % (len(rows), a.combo, a.key[:8], a.run))
 
 
-def uaja4_notes(r):
+def uaja4_notes(r, proxy=False):
     notes = []
     br = r["claim"].rsplit(" ", 1)[0]
     if r["flagged"] < 100:
         return notes
+    if proxy:
+        return ["proxy URL integration: this JA4 is the customer's proxy, not the visitor - not evidence either way"]
     notes += ja4_decode(r["ja4"], r["claim"])[1]
     if "headless" in br.lower():
         notes.append("UA says headless browser")
@@ -1149,7 +1159,7 @@ def uaja4_section_rows(cid, k, rows, names):
     tr = []
     tot = sum(r["flagged"] for r in rows) or 1
     for r in [r for r in rows if r["flagged"] >= max(100, 0.005 * tot)][:10]:
-        notes = uaja4_notes(r)
+        notes = uaja4_notes(r, k in proxy_keys())
         tr.append('<tr><td><code>%s</code><br><span class="muted" style="font-size:11px">%s</span></td><td>%s</td><td class="n">%s</td><td class="n">%.0f%%</td><td class="n">%s</td><td>%s (%.0f%%)</td><td>%s</td><td>%s</td></tr>'
                   % (html.escape(r["ja4"]), html.escape(ja4_decode(r["ja4"], r["claim"])[0]), html.escape(r["claim"]), fmt(r["flagged"]), 100 * r["flag_ver"] / max(1, r["flagged"]), fmt(r["unflagged"]),
                      html.escape(r["fam_browser"]), 100 * r["fam_share"], html.escape(r["top_cc"]),
@@ -1454,8 +1464,12 @@ def cohort_verdict(c, win_start):
     coa = worst[1] >= 0.3
     ind.append(("other anomalies", coa, ", ".join("%s %.0f%%" % (k, 100 * v) for k, v in co_an.items() if v >= 0.05) or "none ≥5%"))
     jt, ji = ja4_decode(S["top_ja4"], S["top_ja4_claim"])
+    proxied = c.get("key") in proxy_keys()
+    if proxied:  # JA4 / HTTP version are the customer's proxy
+        ji = []
     tls = bool(ji)
-    ind.append(("TLS", tls, "top JA4 %s (%s, %.0f%% of cohort): %s" % (S["top_ja4"], S["top_ja4_claim"], 100 * S["top_ja4_n"] / max(1, n), "; ".join(ji) or "consistent with the claim")))
+    ind.append(("TLS", tls, "proxy URL integration - JA4 %s is the customer's proxy, not scored" % S["top_ja4"] if proxied else
+                "top JA4 %s (%s, %.0f%% of cohort): %s" % (S["top_ja4"], S["top_ja4_claim"], 100 * S["top_ja4_n"] / max(1, n), "; ".join(ji) or "consistent with the claim")))
     rot = S["claims"] >= 20 and S["claims"] >= 3 * max(1, S["ja4s"])
     ind.append(("UA rotation", rot, "%d browser/version claims over %d JA4s" % (S["claims"], S["ja4s"])))
     if "h3" in S:
@@ -1466,7 +1480,7 @@ def cohort_verdict(c, win_start):
         vhc, vhr = S["top_voices_n"] / n1, S["rest_top_voices_n"] / rn
         rig = S["rig"] / n1
         hits = []
-        if h3r >= 0.05 and h3c <= 0.2 * h3r: hits.append("no HTTP/3 (%.0f%% vs %.0f%% on the rest of the key)" % (100 * h3c, 100 * h3r))
+        if not proxied and h3r >= 0.05 and h3c <= 0.2 * h3r: hits.append("no HTTP/3 (%.0f%% vs %.0f%% on the rest of the key)" % (100 * h3c, 100 * h3r))
         if fom >= 0.3 and fom >= 3 * max(fomr, 0.01): hits.append("fonts don't match the claimed OS %.0f%% (rest %.0f%%)" % (100 * fom, 100 * fomr))
         if rig >= 0.3: hits.append("≤4GB memory with 12+ cores %.0f%%" % (100 * rig))
         if fsc >= 0.5 and fsc >= 2 * fsr: hits.append("one exact font set %.0f%% (rest %.0f%%)" % (100 * fsc, 100 * fsr))
