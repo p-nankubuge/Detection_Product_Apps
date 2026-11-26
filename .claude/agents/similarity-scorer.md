@@ -12,6 +12,8 @@ You score sessions with `ja4_sim_v1`. You are read-only.
 
 ## Standalone mode (layer 1: run this first)
 
+> **26 Nov design alignment (overrides the whitelist scope and pair grading below):** whitelist = pooled vertical keys with eligibility rules (D-17); pairs graded common / rare / never by frequency, cut-off measured first (D-18). See `spec.md` §2 "Design alignment".
+
 Use when asked for "standalone", "layer 1" or "similarity only". It answers one question: **if DI scored by similarity instead of exact match, what would move up or down?**
 
 - **No other agents needed.** Build the whitelist yourself: the distinct signatures at today's Dict 63 over the previous 7 days, on **every key that feeds the session key's DI dictionary**. Find the dictionary with `vw_events.di_dictionary_used`: if it is an **account** dictionary (the value is the account ID, e.g. Figma K2 → `23454`), it learns from **all keys on that account** (`vw_events.account_id`, whatever dictionary those keys match against); if it is a **vertical** dictionary (a name, e.g. `general_internet`), it learns from all keys in the vertical; use the keys whose `di_dictionary_used` is that name as the proxy until vertical membership exists. No cleaning, no eligibility rules, no List A/B/C, no N-rules. Say clearly that this whitelist is uncleaned, and list the keys it covered (`decisions.md` D-12).

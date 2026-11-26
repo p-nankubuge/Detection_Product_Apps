@@ -44,6 +44,12 @@ Chain, each level requires all previous fields: **os (Dict 1) → +JA4 (3) → +
 
 ## 2. Similarity scoring (`ja4_sim_v1`)
 
+> **Design alignment, 26 Nov (supersedes the whitelist scope and the binary pair checks below; `decisions.md` D-17, D-18).** Source: [Device Outlier Intelligence - Design](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/895516676).
+> - **Whitelist = pooled across the vertical's keys** (e.g. `general_internet`: travel, retail, tech, social, dating), so a device new to one key but common on others is already known. A signature enters only if it meets the eligibility rules (design §3.2.2: e.g. seen on ≥ 3 accounts; or persistent on several keys over several days). An **account** dictionary (only that customer's keys) is an optional stricter layer.
+> - **Field combinations are graded by frequency**, not just seen / never seen: **common**, **rare**, **never** seen together, within the platform group of the pooled whitelist. The common / rare cut-off is **measured first** from the data, then fixed here.
+> - Each whitelisted signature also has an **expected occurrence share** (design §3.2.4 step 5), used by the thresholds (§4).
+
+
 ### Steps
 1. **Candidates:** whitelisted Dict 63 devices with the same OS family. Sessions with no JS fingerprint, or no OS reported, get **no score**.
 2. **Score** = sum of weights of matching fields (with partial credit below).
@@ -187,6 +193,13 @@ Each must be measured on clean traffic for false positives before being proposed
 **Reading JA4 part a** (e.g. `t13d1516h2`): `t`/`q` = TCP or QUIC; `13`/`12` = highest TLS version; `d`/`i` = SNI present (domain) or IP; next 2 digits = cipher count; next 2 = extension count; last 2 = ALPN (`h2`, `h1`, `h3`, `00` = none). QUIC JA4s (`q13d03…h3`) always offer 3 ciphers; that is normal, not a bot sign.
 
 ## 4. Per-dictionary × platform velocity thresholds
+
+> **Design alignment, 26 Nov (supersedes the per-cell p99 rule below; `decisions.md` D-19).** Source: Device Outlier Intelligence - Design §3.3.4 and §4.2.
+> - **Count:** sessions with the same **matched signature** (the nearest match) on the key in the **current + previous 20-minute bucket** (rolling 40 min), i.e. DI's own `di_short_term_count`.
+> - **Expected:** that signature's normal **share** of the key's sessions (from the last 7 days) × the key's sessions in the same two buckets.
+> - **Fire when** count > max(floor, expected × multiplier), multiplier by dictionary (ESM-6922 style: lower dictionaries stricter), floor small (e.g. 5). Multiplier and floor are **calibrated** on Figma and Blizzard (G7, G8). Signatures with no history have expected 0, so the floor applies.
+> - Thresholds stay **per key** (D-11); the Dict 63 exemption stays removed.
+
 
 ### Platform groups (from OS + renderer)
 

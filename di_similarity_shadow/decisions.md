@@ -2,6 +2,30 @@
 
 Choices made while building the shadow evaluator, with the alternatives considered, so they can be revisited when evidence changes. Newest first. Each entry: what was decided, the options, why, and what would make us revisit it.
 
+## 26 Nov 2026 (later): align with the Device Outlier Intelligence design
+
+Context: the runs so far built a **per-account** whitelist (Figma: effectively one key), **binary** pair checks, and **one threshold per dictionary × platform cell**. The design ([Device Outlier Intelligence - Design](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/895516676)) and the user describe something different. Superseded parts: D-5/D-9 (binary / two-level pairs, as the pair *grading*), D-12 (whitelist scope, now the vertical first), D-13 (per-cell p99 level). Kept: platform groups for seen-before lookups, physical screen size, null fix, per-key thresholds (D-11), Dict 63 exemption removed.
+
+### D-17. Whitelist pooled across the vertical, with eligibility rules
+
+- **Decided:** build the whitelist from all keys in the vertical dictionary (e.g. `general_internet`), keeping only signatures that meet the design's eligibility rules (§3.2.2; approximated over the available window and stated). The account dictionary is an optional stricter layer.
+- **Options considered:** per key; per account (what layer 1 did); **pooled vertical + eligibility** (chosen); all keys.
+- **Why:** pooling gives more diverse device signatures, so something new on one key isn't suspicious if it's normal on others. Figma's account has one live key, so an account-only whitelist judges Figma against its own thin traffic; that is a likely reason for the never-seen and pair-check over-firing.
+- **Revisit when:** vertical membership is formally defined (today inferred from `di_dictionary_used`), or a vertical mixes very different clients (e.g. custom apps).
+
+### D-18. Field combinations graded common / rare / never
+
+- **Decided:** for each checked pair (UA × device_params, screen × device_params, screen × WebGL, screen × platform group), measure how often it appears among devices of the same platform group in the pooled whitelist, and grade **common / rare / never**. The cut-off is **measured first** (where High risk starts to rise), then fixed in the spec.
+- **Options considered:** exact / coarse yes-or-no (D-9); fixed cut-off of 0.1%; fewer than 3 accounts; **measure first** (chosen by the user).
+- **Revisit when:** the measured cut-off differs a lot between platform groups or verticals.
+
+### D-19. Threshold per matched signature: expected × multiplier
+
+- **Decided:** fire when a matched signature's rolling 40-minute count (current + previous 20-minute bucket, DI's own count) > max(floor, expected × multiplier). Expected = the signature's normal share of the key's sessions (7 days) × the key's sessions in the same two buckets. Multiplier by dictionary, small floor; both calibrated on Figma and Blizzard.
+- **Options considered:** one p99 per dictionary × platform cell (D-13 runs); the signature's own p99; the design page's defaults literally (absolute 200 / percent 0.08); **expected × multiplier** (chosen by the user).
+- **Why:** the design ties the threshold to how common *that* signature normally is; one limit per cell treats a hugely common signature the same as a rare one, which is a likely reason per-cell limits over-fired on Figma's common signatures.
+- **Revisit when:** calibration can't find a multiplier that passes G7 and G8 together.
+
 ## 26 Nov 2026: threshold gates
 
 ### D-15. G8 tests Blizzard registration, not Payoneer; G7 compares the same cell
