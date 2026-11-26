@@ -1,0 +1,293 @@
+-- Q3: example sessions that T1 (D-20 a+b+c) puts in Band D and T0 (v4 trigger) does not; labelled sessions first, then deterministic
+-- order HASH(session); max 20. Window 2026-11-06 18:00-24:00 UTC only (smallest label list). Columns: label (L/N/-)|dict|T0>T1 band|
+-- T1 part (a = coarse UAxDP never seen, b = 2+ warnings)|failed checks|warning signs (T0 view)|risk band|verified|OS|platform group|OS version|
+-- UA (shortened, 60)|JA4|physical screen|device_params|WebGL renderer (40). Same core and whitelist as q1_main.
+-- ja4_sim_v1, STANDALONE / SIMILARITY v4 = layer 1 v3 + pair checks GRADED BY FREQUENCY (D-18): common / rare / never.
+-- v4 additions (everything v3 computed is still computed, so v1/v2/v3 bands come out of the same query):
+--   * wl carries n (whitelist sessions per signature); ref = whitelist SESSION COUNT per lookup key (not just seen/not seen);
+--     seen.zc = those counts per session key; pgt = whitelist sessions per platform group.
+--   * pair frequency = whitelist sessions with the pair / whitelist sessions in the platform group, coarse and exact:
+--       fuc / fux  UA x DP coarse / exact        fsc / fsx  screen x DP coarse / exact
+--       fsg screen x WebGL (one level)            fsp screen x platform group
+--     NULL = check not applicable (same "never both" preconditions as v3; exact level only where the coarse pair is seen).
+--   * v4 grading: coarse never = failed check (as v3); rare = coarse < cut-off OR exact < cut-off (exact 0 included) = ONE warning
+--     sign per pair; common = pass. Cut-offs = the CUT_* placeholders (in braces). Band D trigger unchanged.
+--   * what-if triggers (desktop = non-Mobile groups; mobile trigger unchanged): ta = v4 + coarse UAxDP alone -> D; tb = v4 + 2+ warning
+--     signs -> D; tc = screen x WebGL failure counted as a warning sign instead of a failed check; tabc = all three.
+-- Below: the v3 header, unchanged.
+-- ja4_sim_v1, STANDALONE / LAYER 1 v3 ("Seen-before rules" of the similarity-scorer agent file, items 5, 6 and 9 updated 25 Nov).
+-- Snowflake, Superset database_id 14. Template: the PRE, SESS_RAW and WL_RAW placeholders (in braces, below) are
+-- replaced by hand-built rows (sanity_test_v3.sql) or by the real Figma K2 window / 7-day uncleaned account whitelist.
+--
+-- Starts from results/2026-11-25_layer-1-v2/_core_template_v2.sql. Everything v2 computed is still computed (v1 and v2
+-- bands, so both can be compared in the same query); v3 adds four steps on top of v2, applied in this order:
+--   V2 = layer 1 v2 (verbatim: CTE best -> pk_v2, flags in c, t4 -> band_v2)
+--   S1 = V2 + null fix (item 9 / D-10): an empty or unparsed value gets no credit, full or partial, and is never "seen".
+--        In Snowflake HASH(NULL) = HASH(NULL), so every hashed comparison is guarded on the session side (a non-empty
+--        session value can only hash-match the same non-empty whitelist value). Scoring and lookups.
+--   S2 = S1 + physical screen in SCORING (item 6 / D-8): screen credit on `w,h` (part after '::') instead of the full string.
+--        Changes the score and possibly the closest device.
+--   S3 = S2 + physical screen in CHECKS: never-seen screen, screen x platform group, screen x DP, screen x WebGL on `w,h`.
+--   S4 = S3 + two-level pair checks (item 5 / D-9): coarse pair never seen = failed check (as v2); coarse seen but exact
+--        pair never seen = one warning sign (counts toward the desktop Band D trigger; reported only on mobile).   (= v3)
+-- Sequential attribution: `cause3` lists the step(s) at which the band changed on the V2 -> S4 path.
+--
+-- Pair definitions in v3 (screen is the physical size at both levels, so screen x WebGL has one level only):
+--   UA x DP     coarse (browser family/major, DP positions 1,4,5,10,11)  exact (full UA, full DP)
+--   screen x DP coarse (w,h, DP positions 1,4,5,10,11)                     exact (w,h, full DP)
+--   screen x WebGL (w,h, full WebGL block)                                 failed check only
+-- "Never both": a pair check runs only if the screen and DP are each seen exactly in the platform group and the UA is seen at
+-- the coarse level (as v2). The exact-level warning additionally needs the exact UA seen (a never-seen exact UA is neutral,
+-- so it is not turned into a pair warning).
+--
+-- Lookup key types (array ks; 0-19 unchanged from v2):
+--   0 osf+screen  1 screen (any OS)  2 osf+dp  3 osf+ua  4 osf+webgl  5 osf+osv  6 osf+ua+dp  7 osf+screen+dp
+--   8 osf+screen+webgl  9 pg+screen  10 pg+dp  11 pg+ua  12 pg+webgl  13 pg+coarse ua  14 pg+ua+dp  15 pg+screen+dp
+--   16 pg+screen+webgl  17 pg+coarse ua+coarse dp  18 pg+screen+coarse dp  19 OS line+osv
+--   v3: 20 pg+phys screen  21 phys screen (any group)  22 pg+phys screen+dp  23 pg+phys screen+webgl  24 pg+phys screen+coarse dp
+WITH lab AS (SELECT LEFT(value,13) AS k, RIGHT(value,1) AS l FROM TABLE(SPLIT_TO_TABLE('1060458142401L,1121782046101N,1180401882102L,1208727937605N,1371616222801N,1445598159001L,1717591492102L,1759248996105N,1790589947205N,1796251236101L,2067910675101N,2106795385901L,2212426215201L,2373323919601N,2394370478001N,2410613032305N,2503111353701L,2552713912401N,2715992286401L,2772450839001L,2787424752001L,2912084922704N,3046464761001L,3175390530902L,3173786573101N,3345579828601N,3418184378601N,3498634482601L,3584747406502L,3636133778601N,3823759936001N,3984747666902L,4110187863002L,4133992084801L,4184432173101L,4477722824601L,4596880011001N,4661968482205N,4701881046401N,4700343763305N,4868465261304N,4994354302102L,5008881932602L,5005967734505N,5158611859901L,5329100379301N,5461146670401N,5471082552101L,5514481797005N,5575636241401N,5599124395605N,5836223890301L,5873070783805N,5944226234901L,5968196832405N,6077828993205N,6144473572601N,6249014026305N,6394586464601L,6539910512904N,6589997687901L,6614417504101L,6801226800504L,6805810566001N,6873824900201N,7016753223102L,7308272978101N,7443156479802L,7491223738201N,7528243525202L,7542587634904N,7542537400905L,7604210532002L,7616278539005N,7733842609201L,7754174695801L,7781505411702L,8133200014401N,8168127177001L,8248945356505N,8414078335501L,8519065711801N,8625309238001N,8694096756901N,8766413726001L,8932148302701N,9371793452801L,9454314612004N,9465824174205N,9475949430301L,9563110340101L,9605846999502L,9843287420202L,9963278176905N,1029080023001N,1076799792505N,1193020518602N,1350428652601L,1460248901405N,1494446504905N,1502337683901L,1561836336801N,1570187644001N,1598189099401N,1845980996205N,1908374596001N,1921043817505N,2267323861301L,2503919689301L,2522843798501L,2612394932804N,2757529752401L,3216770246001L,3864622517301N,3983999007501L,3998644550505N,4478347631102L,4483301736001L,4680765748504N,4720253179401L,4964807752401N,5188805592902N,5195060678301L,5294764465802L,5359812790701N,5470242615501L,5707440930105N,5759054476301L,6156371921301L,6249819903301N,6442887493601L,6465944817201N,6808097603201L,6905354556704N,6978630019505L,7096829892501N,7195980877401L,7810409070005N,7932329138301L,8042257469901L,8359213065801L,9004482017204N,9127997010704N,9592889537205N,9669584988301L,1149477366302L,1578994428201N,1612451278904N,2035028959605N,2478756329701N,2540122492705N,2735725358602L,2964760616205N,3020721379901N,3415928135604N,3910244590201L,4128988546302N,4604870376502N,4986700574004N,5075982418601N,5414188843701N,5702639617401L,6383438754602L,6824736586005N,6924307424102L,7386290279702L,7493029002301L,7532789522602N,7654688681805N,7885650438501L,8986341817402L,9159784772601L,9526401588904N', ','))),
+
+wt AS (
+  SELECT column1 AS plat, column2 AS w_ja4, column3 AS w_scr, column4 AS w_dp, column5 AS w_ua, column6 AS w_gl
+  FROM VALUES ('Windows',0.10,0.15,0.30,0.15,0.30), ('macOS',0.15,0.35,0.15,0.20,0.15),
+              ('Linux',0.25,0.20,0.25,0.15,0.15),   ('ChromeOS',0.15,0.20,0.25,0.15,0.25),
+              ('Android',0.05,0.30,0.05,0.20,0.40), ('iOS',0.15,0.40,0.05,0.30,0.10)
+),
+sess_raw AS ( SELECT s.session, s.di_dictionary_num_matched_at_session_created AS d, s.di_highest_signature_at_session_created AS h,
+    s.latest_risk_band AS risk, (s.sessions_verified > 0) AS verified, (s.sessions_verify_attempted > 0) AS va,
+    (s.was_challenged > 0) AS ch, (s.sessions_solved > 0) AS solved, lab.l AS lab
+  FROM ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY s LEFT JOIN lab ON lab.k = LEFT(s.session,3)||RIGHT(s.session,10)
+  WHERE s.public_key = 'A207F8A1-ED09-4325-ACE6-C8E26A458FBA'
+    AND s.session_last_timestamp >= '2026-11-06 18:00:00' AND s.session_last_timestamp < '2026-11-07 06:00:00'
+    AND s.session_ts >= '2026-11-06 18:00:00' AND s.session_ts < '2026-11-07 00:00:00' ),   -- columns: session, d, h, risk, verified, va, ch, solved
+wl_raw AS ( SELECT di_highest_signature_at_session_created AS h, COUNT(*) AS n
+  FROM ARK_PROD.STARFLEET.PROD_INT_SESSION_SUMMARY
+  WHERE public_key IN ('A207F8A1-ED09-4325-ACE6-C8E26A458FBA','955D26AF-E956-4106-A4EF-2F63304776D9')
+    AND session_last_timestamp >= '2026-10-30 00:00:00' AND session_last_timestamp < '2026-11-06 06:00:00'
+    AND session_ts >= '2026-10-30 00:00:00' AND session_ts < '2026-11-06 00:00:00'
+    AND di_dictionary_num_matched_at_session_created = 63
+  GROUP BY 1 ),       -- columns: h, n (whitelist sessions per signature)
+p AS (
+  SELECT h, SPLIT_PART(SPLIT_PART(h,'||',1),'::',1) AS osf, SPLIT_PART(SPLIT_PART(h,'||',1),'::',2) AS osv,
+    SPLIT_PART(h,'||',2) AS ja4, SPLIT_PART(h,'||',3) AS scr, SPLIT_PART(h,'||',4) AS dp,
+    SPLIT_PART(h,'||',5) AS ua, SPLIT_PART(h,'||',6) AS gl
+  FROM (SELECT h FROM sess_raw UNION SELECT h FROM wl_raw)
+),
+p2 AS (
+  SELECT p.*, LEFT(ja4,1) AS tr,
+    CASE WHEN ua RLIKE '.*Edg(e|A|iOS)?/[0-9].*' THEN 'Edge' WHEN ua RLIKE '.*(OPR|OPT)/[0-9].*' THEN 'Opera'
+         WHEN ua RLIKE '.*SamsungBrowser/[0-9].*' THEN 'Samsung' WHEN ua RLIKE '.*(Firefox|FxiOS)/[0-9].*' THEN 'Firefox'
+         WHEN ua RLIKE '.*(Chrome|CriOS)/[0-9].*' THEN 'Chrome'
+         WHEN ua RLIKE '.*Version/[0-9.]+ (Mobile/[^ ]+ )?Safari/.*' THEN 'Safari' END AS bfam,
+    COALESCE(TRY_TO_NUMBER(SPLIT_PART(osv,'.',1)),0)*1000000 + COALESCE(TRY_TO_NUMBER(SPLIT_PART(osv,'.',2)),0)*1000
+      + COALESCE(TRY_TO_NUMBER(SPLIT_PART(osv,'.',3)),0) AS osv_num,
+    CASE osf WHEN 'Windows' THEN 'Windows' WHEN 'OS X' THEN 'macOS' WHEN 'Chrome OS' THEN 'ChromeOS'
+             WHEN 'Android' THEN 'Android' WHEN 'iOS' THEN 'iOS' WHEN 'iPadOS' THEN 'iOS' ELSE 'Linux' END AS plat,
+    osf IN ('iOS','iPadOS','Android') AS mobile,                                   -- v1 mobile flag
+    (osf = 'Windows' AND gl ILIKE '%Basic Render Driver%') AS basic,
+    (gl ILIKE '%SwiftShader%' OR gl ILIKE '%llvmpipe%' OR gl ILIKE '%VirtualBox%' OR gl ILIKE '%VMware%') AS soft,
+    NOT (soft OR gl ILIKE '%Basic Render Driver%') AS hw_gl,
+    CASE WHEN soft THEN 'Other' WHEN gl ILIKE '%Basic Render Driver%' THEN IFF(osf = 'Windows','Windows RD/VM','Other')
+         WHEN osf IN ('Windows','OS X','Chrome OS') THEN 'Desktop' WHEN osf IN ('iOS','iPadOS','Android') THEN 'Mobile'
+         WHEN osf IN ('GNU/Linux','Ubuntu') THEN 'Linux' ELSE 'Other' END AS pg,           -- platform group
+    CASE WHEN osf IN ('iOS','iPadOS') THEN 'iOS+iPadOS' WHEN osf IN ('GNU/Linux','Ubuntu') THEN 'Linux'
+         WHEN osf IN ('Android','Windows','OS X','Chrome OS') THEN osf END AS line,        -- OS line (NULL = none)
+    SPLIT_PART(dp,'::',1)||'::'||SPLIT_PART(dp,'::',4)||'::'||SPLIT_PART(dp,'::',5)||'::'||SPLIT_PART(dp,'::',10)
+      ||'::'||SPLIT_PART(dp,'::',11) AS dpc,                                             -- coarse device_params
+    IFF(SPLIT_PART(scr,'::',2) RLIKE '[0-9]+,[0-9]+', SPLIT_PART(scr,'::',2), NULL) AS spv  -- v3 physical screen (NULL = unparsed)
+  FROM p
+),
+f AS (
+  SELECT p2.*,
+    bfam || '/' || CASE bfam WHEN 'Edge' THEN REGEXP_SUBSTR(ua,'Edg[A-Za-z]*/([0-9]+)',1,1,'e',1)
+                             WHEN 'Opera' THEN REGEXP_SUBSTR(ua,'OP[RT]/([0-9]+)',1,1,'e',1)
+                             WHEN 'Samsung' THEN REGEXP_SUBSTR(ua,'SamsungBrowser/([0-9]+)',1,1,'e',1)
+                             WHEN 'Firefox' THEN REGEXP_SUBSTR(ua,'(Firefox|FxiOS)/([0-9]+)',1,1,'e',2)
+                             WHEN 'Chrome' THEN REGEXP_SUBSTR(ua,'(Chrome|CriOS)/([0-9]+)',1,1,'e',2)
+                             WHEN 'Safari' THEN REGEXP_SUBSTR(ua,'Version/([0-9]+)',1,1,'e',1) END AS ua_bm,
+    HASH(ja4) AS hj, HASH(scr) AS hs, HASH(dp) AS hd, HASH(ua) AS hu, HASH(gl) AS hg, HASH(ua_bm) AS hub,
+    HASH(COALESCE(ua_bm, ua)) AS huc, HASH(dpc) AS hdc, HASH(spv) AS hsp,
+    -- v3 item 9 guards: TRUE only when the value is present and parsed
+    (ja4 <> '') AS ja4_ok, (spv IS NOT NULL) AS sp_ok, (ua <> '') AS ua_ok, (ua_bm IS NOT NULL) AS ub_ok, (gl <> '') AS gl_ok,
+    (ua_bm IS NOT NULL OR ua <> '') AS uc_ok, (osv <> '') AS osv_ok
+  FROM p2
+),
+k AS (
+  SELECT f.*, ARRAY_CONSTRUCT(HASH(0,osf,hs), HASH(1,hs), HASH(2,osf,hd), HASH(3,osf,hu), HASH(4,osf,hg), HASH(5,osf,osv),
+    HASH(6,osf,hu,hd), HASH(7,osf,hs,hd), HASH(8,osf,hs,hg), HASH(9,pg,hs), HASH(10,pg,hd), HASH(11,pg,hu), HASH(12,pg,hg),
+    HASH(13,pg,huc), HASH(14,pg,hu,hd), HASH(15,pg,hs,hd), HASH(16,pg,hs,hg), HASH(17,pg,huc,hdc), HASH(18,pg,hs,hdc),
+    HASH(19,line,osv),
+    HASH(20,pg,hsp), HASH(21,hsp), HASH(22,pg,hsp,hd), HASH(23,pg,hsp,hg), HASH(24,pg,hsp,hdc)) AS ks
+  FROM f
+),
+wl AS (SELECT k.*, r.n AS wn FROM k JOIN wl_raw r ON r.h = k.h),
+pgt AS (SELECT pg, SUM(wn) AS pgn FROM wl GROUP BY pg),
+jf AS (SELECT DISTINCT hj, bfam FROM wl WHERE bfam IS NOT NULL),
+st AS (
+  SELECT k.*, (jf.hj IS NOT NULL) AS ja4_fam_ok,
+    IFF(basic, w.w_ja4/0.70, w.w_ja4) AS w_ja4, IFF(basic, w.w_scr/0.70, w.w_scr) AS w_scr,
+    IFF(basic, w.w_dp/0.70, w.w_dp) AS w_dp,    IFF(basic, w.w_ua/0.70, w.w_ua) AS w_ua,
+    IFF(basic, 0, w.w_gl) AS w_gl
+  FROM k JOIN wt w ON w.plat = k.plat
+  LEFT JOIN jf ON jf.hj = k.hj AND jf.bfam = k.bfam
+  WHERE k.h IN (SELECT h FROM sess_raw)
+),
+-- closest device, three variants in one join: packed = round(score*10000)*100 + match code
+--   pk_v2 = verbatim layer 1 / v2 arithmetic (unguarded; HASH(NULL)=HASH(NULL) gives 1/2 UA credit between two unparsed UAs)
+--   pk_s1 = null-guarded (item 9), full screen string          pk_s3 = null-guarded, physical screen (v3 scoring)
+--   per-candidate match codes: jc JA4 (2 exact, 1 QUIC/TCP variant of the same browser family), uc UA (2 exact, 1 browser+major),
+--   sv full screen, pv physical screen, dv device_params, gv WebGL (1 = equal)
+bm AS (
+  SELECT s.h, s.w_ja4, s.w_scr, s.w_dp, s.w_ua, s.w_gl,
+    IFF(s.hj = c.hj, 2, IFF(s.tr <> c.tr AND s.bfam = c.bfam AND s.ja4_fam_ok, 1, 0)) AS jc, IFF(s.hu = c.hu, 2, IFF(s.hub = c.hub, 1, 0)) AS uc,
+    IFF(s.hs = c.hs, 1, 0) AS sv, IFF(s.hsp = c.hsp, 1, 0) AS pv, IFF(s.hd = c.hd, 1, 0) AS dv, IFF(s.hg = c.hg, 1, 0) AS gv,
+    IFF(s.ja4_ok, jc, 0) AS jg, CASE WHEN uc = 2 AND s.ua_ok THEN 2 WHEN uc >= 1 AND s.ub_ok THEN 1 ELSE 0 END AS ug,
+    IFF(s.sp_ok, sv, 0) AS sg, IFF(s.sp_ok, pv, 0) AS pg2, IFF(s.gl_ok, gv, 0) AS gg
+  FROM st s JOIN wl c ON c.osf = s.osf
+),
+best AS (
+  SELECT h,
+    MAX(ROUND(10000 * (w_ja4 * DECODE(jc, 2, 1, 1, 2/3, 0) + w_scr * sv + w_dp * dv + w_ua * DECODE(uc, 2, 1, 1, 0.5, 0) + w_gl * gv)) * 100
+        + jc + 3 * uc + 9 * sv + 18 * dv + 36 * gv) AS pk_v2,
+    MAX(ROUND(10000 * (w_ja4 * DECODE(jg, 2, 1, 1, 2/3, 0) + w_scr * sg + w_dp * dv + w_ua * DECODE(ug, 2, 1, 1, 0.5, 0) + w_gl * gg)) * 100
+        + jg + 3 * ug + 9 * sg + 18 * dv + 36 * gg) AS pk_s1,
+    MAX(ROUND(10000 * (w_ja4 * DECODE(jg, 2, 1, 1, 2/3, 0) + w_scr * pg2 + w_dp * dv + w_ua * DECODE(ug, 2, 1, 1, 0.5, 0) + w_gl * gg)) * 100
+        + jg + 3 * ug + 9 * pg2 + 18 * dv + 36 * gg) AS pk_s3
+  FROM bm GROUP BY h
+),
+ref AS (SELECT x.value::NUMBER AS kk, SUM(wl.wn) AS cnt FROM wl, LATERAL FLATTEN(wl.ks) x GROUP BY 1),
+seen AS (
+  SELECT q.h, ARRAY_AGG(r.kk IS NOT NULL) WITHIN GROUP (ORDER BY q.i) AS z, ARRAY_AGG(COALESCE(r.cnt, 0)) WITHIN GROUP (ORDER BY q.i) AS zc
+  FROM (SELECT s.h, x.index AS i, x.value::NUMBER AS kk FROM st s, LATERAL FLATTEN(s.ks) x) q
+  LEFT JOIN ref r ON r.kk = q.kk GROUP BY q.h
+),
+omx AS (SELECT osf, MAX(osv_num) AS mx FROM wl GROUP BY osf),
+lv AS (SELECT w.line, w.osv, MAX(w.osv_num) AS vn, SUM(r.n) AS n FROM wl w JOIN wl_raw r ON r.h = w.h WHERE w.line IS NOT NULL GROUP BY 1, 2),
+lmx AS (SELECT line, MAX(vn) AS mx, MAX_BY(osv, n) AS top_osv, MAX(n) / SUM(n) AS top_share FROM lv GROUP BY line),
+c AS (
+  SELECT s.h, s.osf, s.osv, s.pg, s.line, s.mobile, s.basic, s.ua_bm, s.ua_ok, s.ub_ok, (s.pg = 'Mobile') AS mob2,
+    (s.osf IN ('','--') OR s.dp = '') AS no_score,
+    COALESCE(b.pk_v2, 0) AS pk, FLOOR(pk / 100) / 10000 AS score, MOD(pk, 100) AS code,
+    COALESCE(b.pk_s1, 0) AS pk1, FLOOR(pk1 / 100) / 10000 AS score1, MOD(pk1, 100) AS code1,
+    COALESCE(b.pk_s3, 0) AS pk3, FLOOR(pk3 / 100) / 10000 AS score3, MOD(pk3, 100) AS code3,
+    CASE WHEN no_score THEN 'no score' WHEN score >= 0.85 THEN IFF(s.basic,'B','A') WHEN score >= 0.65 THEN 'B'
+         WHEN score >= 0.40 THEN 'C' ELSE 'D' END AS sb,                            -- v2 score band (before the Band D trigger)
+    CASE WHEN no_score THEN 'no score' WHEN score1 >= 0.85 THEN IFF(s.basic,'B','A') WHEN score1 >= 0.65 THEN 'B'
+         WHEN score1 >= 0.40 THEN 'C' ELSE 'D' END AS sb1,
+    CASE WHEN no_score THEN 'no score' WHEN score3 >= 0.85 THEN IFF(s.basic,'B','A') WHEN score3 >= 0.65 THEN 'B'
+         WHEN score3 >= 0.40 THEN 'C' ELSE 'D' END AS sb3,                          -- v3 score band
+    -- v1 (S0) flags, verbatim
+    z[3]::BOOLEAN AND z[2]::BOOLEAN AND NOT z[6]::BOOLEAN AS f_ua_dp, z[0]::BOOLEAN AND z[2]::BOOLEAN AND NOT z[7]::BOOLEAN AS f_scr_dp,
+    s.hw_gl AND z[0]::BOOLEAN AND z[4]::BOOLEAN AND NOT z[8]::BOOLEAN AS f_scr_gl, z[1]::BOOLEAN AND NOT z[0]::BOOLEAN AS f_scr_os,
+    NOT z[5]::BOOLEAN AND NOT (s.osv_num > COALESCE(o.mx,-1)) AS f_osv, NOT z[2]::BOOLEAN AS f_dp_new, NOT z[0]::BOOLEAN AND NOT s.mobile AS w_scr0,
+    -- v2 flags, verbatim
+    z[11]::BOOLEAN AND z[10]::BOOLEAN AND NOT z[14]::BOOLEAN AS p_ua_dp, z[9]::BOOLEAN AND z[10]::BOOLEAN AND NOT z[15]::BOOLEAN AS p_scr_dp,
+    s.hw_gl AND z[9]::BOOLEAN AND z[12]::BOOLEAN AND NOT z[16]::BOOLEAN AS p_scr_gl, z[1]::BOOLEAN AND NOT z[9]::BOOLEAN AS p_scr_pg,
+    NOT z[10]::BOOLEAN AS p_dp_new, NOT z[9]::BOOLEAN AND s.pg <> 'Mobile' AS w_scr1,
+    z[13]::BOOLEAN AND z[10]::BOOLEAN AND NOT z[17]::BOOLEAN AS c_ua_dp, z[9]::BOOLEAN AND z[10]::BOOLEAN AND NOT z[18]::BOOLEAN AS c_scr_dp,
+    -- S1/S2 flags = v2 checks with item 9 guards (full screen string)
+    (z[9]::BOOLEAN AND s.sp_ok) AS s_scr, z[10]::BOOLEAN AS s_dp, (z[13]::BOOLEAN AND s.uc_ok) AS s_uac,
+    (z[11]::BOOLEAN AND s.ua_ok) AS s_ua, (z[12]::BOOLEAN AND s.gl_ok) AS s_gl, (z[20]::BOOLEAN AND s.sp_ok) AS s_sp,
+    s_uac AND s_dp AND NOT z[17]::BOOLEAN AS g_ua_dp, s_scr AND s_dp AND NOT z[18]::BOOLEAN AS g_scr_dp,
+    s.hw_gl AND s_scr AND s_gl AND NOT z[16]::BOOLEAN AS g_scr_gl, z[1]::BOOLEAN AND s.sp_ok AND NOT z[9]::BOOLEAN AS g_scr_pg,
+    NOT s_scr AND s.pg <> 'Mobile' AS g_w_scr,
+    -- S3 flags: physical screen in the checks (UA x DP unchanged = g_ua_dp)
+    s_sp AND s_dp AND NOT z[24]::BOOLEAN AS h_scr_dp, s.hw_gl AND s_sp AND s_gl AND NOT z[23]::BOOLEAN AS h_scr_gl,
+    z[21]::BOOLEAN AND s.sp_ok AND NOT z[20]::BOOLEAN AS h_scr_pg, NOT s_sp AND s.pg <> 'Mobile' AS h_w_scr,
+    z[9]::BOOLEAN AS scr_seen_pg, s_sp AS sp_seen_pg,
+    -- S4 flags: exact-only pair mismatches = warning signs
+    s_uac AND s_dp AND NOT g_ua_dp AND s_ua AND NOT z[14]::BOOLEAN AS x_ua_dp,
+    s_sp AND s_dp AND NOT h_scr_dp AND NOT z[22]::BOOLEAN AS x_scr_dp,
+    -- OS version status (reported only; v3 adds the empty-version guard)
+    CASE WHEN s.line IS NULL THEN 'skip: no OS line' WHEN l.top_share >= 0.90 THEN 'skip: frozen line'
+         WHEN NOT s.osv_ok THEN 'skip: empty version'
+         WHEN z[19]::BOOLEAN THEN 'seen' WHEN s.osv_num > l.mx THEN 'newer than newest seen' ELSE 'older, not seen (warning)' END AS osv_status,
+    -- v4 pair frequencies (share of the platform group's whitelist sessions; NULL = not applicable)
+    pt.pgn AS pgn,
+    IFF(s_uac AND s_dp, zc[17]::NUMBER / pt.pgn, NULL) AS fuc,
+    IFF(s_uac AND s_dp AND s_ua AND zc[17]::NUMBER > 0, zc[14]::NUMBER / pt.pgn, NULL) AS fux,
+    IFF(s_sp AND s_dp, zc[24]::NUMBER / pt.pgn, NULL) AS fsc,
+    IFF(s_sp AND s_dp AND zc[24]::NUMBER > 0, zc[22]::NUMBER / pt.pgn, NULL) AS fsx,
+    IFF(s.hw_gl AND s_sp AND s_gl, zc[23]::NUMBER / pt.pgn, NULL) AS fsg,
+    IFF(s.sp_ok AND z[21]::BOOLEAN, zc[20]::NUMBER / pt.pgn, NULL) AS fsp,
+    -- v4 rare flags (coarse seen but below the cut-off at the coarse or the exact level)
+    (fuc > 0 AND (fuc < 1e-12 OR COALESCE(fux < 1e-12, FALSE))) AS r_ua_dp,
+    (fsc > 0 AND (fsc < IFF(s.pg = 'Mobile', 1e-4, 1e-12) OR COALESCE(fsx < 1e-12, FALSE))) AS r_scr_dp,
+    (fsg > 0 AND fsg < 1e-12) AS r_scr_gl,
+    (fsp > 0 AND fsp < IFF(s.pg = 'Mobile', 1e-4, 1e-12)) AS r_scr_pg
+  FROM st s JOIN seen USING (h) LEFT JOIN best b ON b.h = s.h LEFT JOIN omx o ON o.osf = s.osf LEFT JOIN lmx l ON l.line = s.line
+  LEFT JOIN pgt pt ON pt.pg = s.pg
+),
+t AS (
+  SELECT c.*,
+    -- v1 and v2, verbatim
+    IFF(f_ua_dp,1,0)+IFF(f_scr_dp,1,0)+IFF(f_scr_gl,1,0)+IFF(f_scr_os,1,0)+IFF(f_osv,1,0)+IFF(f_dp_new,1,0) AS n0,
+    IFF(c_ua_dp,1,0)+IFF(c_scr_dp,1,0)+IFF(p_scr_gl,1,0)+IFF(p_scr_pg,1,0) AS n3x,
+    n3x + IFF(p_dp_new AND mob2,1,0) AS n4,
+    IFF(mobile, n0 >= 1, n0 >= 2 OR (n0 >= 1 AND (w_scr0 OR f_dp_new))) AS t0,
+    IFF(mob2, n4 >= 1, n4 >= 2 OR (n4 >= 1 AND (w_scr1 OR p_dp_new))) AS t4,
+    IFF(t0 AND NOT no_score,'D',sb) AS band_v1, IFF(t4 AND NOT no_score,'D',sb) AS band_v2,
+    -- S1 / S2 (v2 checks, guarded)
+    IFF(g_ua_dp,1,0)+IFF(g_scr_dp,1,0)+IFF(g_scr_gl,1,0)+IFF(g_scr_pg,1,0)+IFF(p_dp_new AND mob2,1,0) AS ng,
+    IFF(mob2, ng >= 1, ng >= 2 OR (ng >= 1 AND (g_w_scr OR p_dp_new))) AS tg,
+    IFF(tg AND NOT no_score,'D',sb1) AS bs1, IFF(tg AND NOT no_score,'D',sb3) AS bs2,
+    -- S3 (physical screen in checks, coarse pairs only)
+    IFF(g_ua_dp,1,0)+IFF(h_scr_dp,1,0)+IFF(h_scr_gl,1,0)+IFF(h_scr_pg,1,0)+IFF(p_dp_new AND mob2,1,0) AS nfail,   -- = v3 failed checks
+    IFF(mob2, nfail >= 1, nfail >= 2 OR (nfail >= 1 AND (h_w_scr OR p_dp_new))) AS th,
+    IFF(th AND NOT no_score,'D',sb3) AS bs3,
+    -- S4 = v3: warning signs. Desktop (non-Mobile groups): never-seen screen, never-seen DP, exact-only pair mismatches.
+    -- Mobile: only the exact-only pair mismatches are counted (reported; they never trigger D on mobile).
+    IFF(x_ua_dp,1,0)+IFF(x_scr_dp,1,0) AS nxw,
+    IFF(mob2, nxw, nxw + IFF(h_w_scr,1,0) + IFF(p_dp_new,1,0)) AS nwarn,
+    IFF(mob2, nfail >= 1, nfail >= 2 OR (nfail >= 1 AND nwarn >= 1)) AS t3,
+    IFF(t3 AND NOT no_score,'D',sb3) AS band,
+    -- v4: same failed checks as v3 (nfail); warning signs = rare pairs (one per pair) + desktop never-seen screen / DP
+    IFF(r_ua_dp,1,0)+IFF(r_scr_dp,1,0)+IFF(r_scr_gl,1,0)+IFF(r_scr_pg,1,0) AS nrare,
+    IFF(mob2, nrare, nrare + IFF(h_w_scr,1,0) + IFF(p_dp_new,1,0)) AS nwarn4,
+    IFF(mob2, nfail >= 1, nfail >= 2 OR (nfail >= 1 AND nwarn4 >= 1)) AS t4v,
+    IFF(t4v AND NOT no_score,'D',sb3) AS band4,
+    -- what-if triggers (desktop only; mobile = t4v)
+    t4v OR (NOT mob2 AND g_ua_dp) AS ta,
+    t4v OR (NOT mob2 AND nwarn4 >= 2) AS tb,
+    nfail - IFF(h_scr_gl AND NOT mob2,1,0) AS nfail_c, nwarn4 + IFF(h_scr_gl AND NOT mob2,1,0) AS nwarn_c,
+    IFF(mob2, nfail >= 1, nfail_c >= 2 OR (nfail_c >= 1 AND nwarn_c >= 1)) AS tc,
+    IFF(mob2, nfail >= 1, nfail_c >= 2 OR (nfail_c >= 1 AND nwarn_c >= 1) OR g_ua_dp OR nwarn_c >= 2) AS tabc,
+    IFF(ta AND NOT no_score,'D',sb3) AS band_a, IFF(tb AND NOT no_score,'D',sb3) AS band_b,
+    IFF(tc AND NOT no_score,'D',sb3) AS band_c, IFF(tabc AND NOT no_score,'D',sb3) AS band_abc
+  FROM c
+),
+res AS (
+  SELECT r.session, r.d, r.h, r.risk, r.verified, r.va, r.ch, r.solved, t.* EXCLUDE (h),
+    CASE WHEN r.d = 63 THEN 'A' WHEN r.d IN (31,15) THEN 'B' WHEN r.d = 7 THEN 'C' ELSE 'D' END AS agree_band,
+    ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(IFF(band_v2<>bs1,'null fix',NULL), IFF(bs1<>bs2,'phys screen in scoring',NULL),
+      IFF(bs2<>bs3,'phys screen in checks',NULL), IFF(bs3<>band,'two-level pairs',NULL)), ' + ') AS cause3,
+    IFF(t0, 'chk:'||ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(IFF(f_ua_dp,'UAxDP',NULL), IFF(f_scr_dp,'SCRxDP',NULL),
+      IFF(f_scr_gl,'SCRxGL',NULL), IFF(f_scr_os,'SCRxOS',NULL), IFF(f_osv,'OSver',NULL), IFF(f_dp_new,'DPnew',NULL),
+      IFF(w_scr0,'+SCRnew',NULL)), ' '), NULL) AS chk_v1,
+    IFF(t4, 'chk:'||ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(IFF(c_ua_dp,'UAxDP',NULL), IFF(c_scr_dp,'SCRxDP',NULL),
+      IFF(p_scr_gl,'SCRxGL',NULL), IFF(p_scr_pg,'SCRxPG',NULL), IFF(p_dp_new AND mob2,'DPnew(fail)',NULL),
+      IFF(w_scr1,'+SCRnew',NULL), IFF(p_dp_new AND NOT mob2,'+DPnew',NULL)), ' '),
+      'diff:'||ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(CASE MOD(code,3) WHEN 1 THEN 'JA4qt' WHEN 0 THEN 'JA4' END,
+      CASE MOD(FLOOR(code/3),3) WHEN 1 THEN 'UAmaj' WHEN 0 THEN 'UA' END, IFF(MOD(FLOOR(code/9),2)=0,'SCR',NULL),
+      IFF(MOD(FLOOR(code/18),2)=0,'DP',NULL), IFF(MOD(FLOOR(code/36),2)=0 AND NOT basic,'GL',NULL)), '+')) AS reason_v2,
+    -- v3 failed checks and warning signs (always listed, whatever the band)
+    ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(IFF(g_ua_dp,'UAxDP',NULL), IFF(h_scr_dp,'SCRxDP',NULL), IFF(h_scr_gl,'SCRxGL',NULL),
+      IFF(h_scr_pg,'SCRxPG',NULL), IFF(p_dp_new AND mob2,'DPnew',NULL)), ' ') AS fails3,
+    ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(IFF(h_w_scr,'SCRnew',NULL), IFF(p_dp_new AND NOT mob2,'DPnew',NULL),
+      IFF(x_ua_dp,'UAxDPx',NULL), IFF(x_scr_dp,'SCRxDPx',NULL)), ' ') AS warns3,
+    -- v3 reason: the checks if Band D by trigger (fails, then +warning signs), else the fields that differ from the closest device
+    IFF(t3, 'chk:'||fails3||IFF(warns3<>'',' +'||REPLACE(warns3,' ',' +'),''),
+      'diff:'||ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(CASE MOD(code3,3) WHEN 1 THEN 'JA4qt' WHEN 0 THEN 'JA4' END,
+      CASE MOD(FLOOR(code3/3),3) WHEN 1 THEN 'UAmaj' WHEN 0 THEN 'UA' END, IFF(MOD(FLOOR(code3/9),2)=0,'SCR',NULL),
+      IFF(MOD(FLOOR(code3/18),2)=0,'DP',NULL), IFF(MOD(FLOOR(code3/36),2)=0 AND NOT basic,'GL',NULL)), '+')) AS reason,
+    -- v4 warning signs and reason
+    ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(IFF(h_w_scr AND NOT mob2,'SCRnew',NULL), IFF(p_dp_new AND NOT mob2,'DPnew',NULL),
+      IFF(r_ua_dp,'UAxDPr',NULL), IFF(r_scr_dp,'SCRxDPr',NULL), IFF(r_scr_gl,'SCRxGLr',NULL), IFF(r_scr_pg,'SCRxPGr',NULL)), ' ') AS warns4,
+    IFF(t4v, 'chk:'||fails3||IFF(warns4<>'',' +'||REPLACE(warns4,' ',' +'),''),
+      'diff:'||ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(CASE MOD(code3,3) WHEN 1 THEN 'JA4qt' WHEN 0 THEN 'JA4' END,
+      CASE MOD(FLOOR(code3/3),3) WHEN 1 THEN 'UAmaj' WHEN 0 THEN 'UA' END, IFF(MOD(FLOOR(code3/9),2)=0,'SCR',NULL),
+      IFF(MOD(FLOOR(code3/18),2)=0,'DP',NULL), IFF(MOD(FLOOR(code3/36),2)=0 AND NOT basic,'GL',NULL)), '+')) AS reason4
+  FROM sess_raw r JOIN t ON t.h = r.h
+)
+, g AS (SELECT r.session, r.d, r.risk, r.verified, r.ch, r.solved, COALESCE(r.lab,'-') AS lab, t.*, IFF(t.pg='Mobile','mob','desk') AS md, IFF(band4='no score','n',band4) AS b0, IFF(band_abc='no score','n',band_abc) AS b1, (t4v AND NOT no_score) AS tr0, (tabc AND NOT no_score) AS tr1, IFF(g_ua_dp AND NOT mob2,'a','')||IFF(nwarn_c>=2 AND NOT mob2,'b','') AS ab, ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(CASE MOD(code3,3) WHEN 1 THEN 'JA4qt' WHEN 0 THEN 'JA4' END, CASE MOD(FLOOR(code3/3),3) WHEN 1 THEN 'UAmaj' WHEN 0 THEN 'UA' END, IFF(MOD(FLOOR(code3/9),2)=0,'SCR',NULL), IFF(MOD(FLOOR(code3/18),2)=0,'DP',NULL), IFF(MOD(FLOOR(code3/36),2)=0 AND NOT basic,'GL',NULL)),'+') AS diff, ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(IFF(g_ua_dp,'UAxDP',NULL), IFF(h_scr_dp,'SCRxDP',NULL), IFF(h_scr_gl,'SCRxGL',NULL), IFF(h_scr_pg,'SCRxPG',NULL), IFF(p_dp_new AND mob2,'DPnew',NULL)),' ') AS fl, ARRAY_TO_STRING(ARRAY_CONSTRUCT_COMPACT(IFF(h_w_scr AND NOT mob2,'SCRnew',NULL), IFF(p_dp_new AND NOT mob2,'DPnew',NULL), IFF(r_ua_dp,'UAxDPr',NULL), IFF(r_scr_dp,'SCRxDPr',NULL), IFF(r_scr_gl,'SCRxGLr',NULL), IFF(r_scr_pg,'SCRxPGr',NULL)),' ') AS wn, IFF(diff LIKE '%+%','multi',diff) AS dg, LEAST(nfail,2) AS nf2, LEAST(nwarn4,3) AS nw3 FROM sess_raw r JOIN t ON t.h = r.h)
+SELECT lab||'|'||d||'|'||b0||'>'||b1||'|'||ab||'|'||fl||'|'||wn||'|'||COALESCE(risk,'')||'|'||IFF(verified,'v','-')||'|'||osf||'|'||pg||'|'||osv||'|'||LEFT(REPLACE(REPLACE(REPLACE(SPLIT_PART(h,'||',5),'Mozilla/5.0 (',''),'AppleWebKit/537.36 (KHTML, like Gecko) ',''),'AppleWebKit/605.1.15 (KHTML, like Gecko) ',''),60)||'|'||SPLIT_PART(h,'||',2)||'|'||SPLIT_PART(SPLIT_PART(h,'||',3),'::',2)||'|'||SPLIT_PART(h,'||',4)||'|'||LEFT(REPLACE(SPLIT_PART(SPLIT_PART(h,'||',6),'::',6),'ANGLE (',''),40) AS r FROM g WHERE b0<>'D' AND b1='D' QUALIFY ROW_NUMBER() OVER (ORDER BY IFF(lab<>'-',0,1), HASH(session)) <= 20 ORDER BY r
