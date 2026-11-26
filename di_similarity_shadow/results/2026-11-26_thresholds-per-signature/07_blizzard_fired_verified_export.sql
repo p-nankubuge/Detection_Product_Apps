@@ -1,0 +1,8 @@
+-- Blizzard: export the VERIFIED sessions (sessions_verified > 0) that fire under today's ST or LT breach or any grid point, as
+-- '<10-digit suffix after the dot>:<bitmask>' so the labels can be scored in Athena (08_) without sending all label IDs to Snowflake.
+-- Labels exist only for verified sessions, so a label not in this set is "not fired" under every rule (checked in 06b / 08_).
+-- Bits: 1 = today ST breached, 2 = today LT breached, 4..512 = grid points gp1..gp8 (4 = gp1 (m2,f5) ... 512 = gp8 (m20,f11)).
+-- CTEs identical to 06_replay_blizzard_3days_template.sql up to s2 (with {LABELS} = ''), then:
+--   SELECT LISTAGG(RIGHT(sid,10)||':'||mask, ',') FROM (SELECT sid, MAX(stb)*1 + MAX(ltb)*2 + SUM(fire_gp * POWER(2, gp+1)) mask
+--   FROM s2 CROSS JOIN gr(gp 1..8) WHERE ver = 1 GROUP BY sid HAVING mask > 0) WHERE dy filter {DAYS}; run in 2 parts:
+--   part 1: dy = 2026-11-09; part 2: dy IN (2026-11-10, 2026-11-11). Outputs in raw/07_*.txt.

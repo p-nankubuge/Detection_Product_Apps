@@ -1,0 +1,4 @@
+# Blizzard ROW Registration K2, replay 2026-11-09 only (base 2-8 Nov), same template as Figma (05_gen_replay_sql.py), no labels.
+# Kept as a check for the 3-day query (06_). Full per-cell output was read but only these totals are stored here (computed by hand from the cells):
+# today ST fires (gp0, eligible + skip groups): 12,820 of which Dict 7 Desktop 11,917 (11,916 High); Dict 63 Other 251 (0 High, 250 verified, all clean)
+# gp1 (m2,f5) Dict 7 Desktop 13,357 fires; gp5 (m2,f11) Dict 7 Desktop 12,612; every grid point loses the 251 Dict 63 Other fires.

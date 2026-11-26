@@ -1,0 +1,51 @@
+FIGMA 20 Nov (full day; slice 12-14 UTC in brackets)
+gp|rule|fires|High%|ver%|chall%|chall-not-solved%|clean fires|clean%|new-only|lost vs today ST|slice fires/High%/clean
+0|today ST|381|52.8|62.7|82.7|36.7|131|34.4|0|0|25/20.0/24
+1|m2 f5|1081|38.1|67.1|66.6|30.9|531|49.1|719|19|110/16.4/93
+2|m5 f5|942|41.4|65.2|71.1|32.5|420|44.6|607|46|102/14.7/88
+3|m10 f5|856|42.5|63.3|72.8|34.1|360|42.1|547|72|92/16.3/79
+4|m20 f5|744|45.6|59.9|76.9|37.2|286|38.4|471|108|77/19.5/64
+5|m2 f11|362|54.4|64.9|82.6|34.5|116|32.0|0|19|25/20.0/24
+6|m5 f11|335|56.7|65.4|84.2|34.0|96|28.7|0|46|25/20.0/24
+7|m10 f11|309|57.3|65.4|84.8|34.0|78|25.2|0|72|25/20.0/24
+8|m20 f11|273|58.2|61.2|89.4|38.1|61|22.3|0|108|25/20.0/24
+FIGMA G7 per cell: clean fires grid vs today (recorded ST breach, same cell); FAIL if grid > today. [eff] = vs today effective (Dict 63 exempt -> 0)
+gp1 m2 f5: 17 failing: 1 Desktop (9 vs 0); 3 Desktop (63 vs 30); 3 Linux (6 vs 0); 3 Mobile (12 vs 0); 3 WinRDVM (5 vs 1); 7 Desktop (90 vs 26); 7 Linux (9 vs 0); 7 WinRDVM (1 vs 0); 15 Desktop (28 vs 8); 15 Mobile (1 vs 0); 15 WinRDVM (7 vs 4); 31 Desktop (51 vs 15); 31 Mobile (1 vs 0); 31 WinRDVM (5 vs 0); 63 Desktop (180 vs 20); 63 Linux (27 vs 14); 63 Mobile (36 vs 0) | extra vs effective: none
+gp2 m5 f5: 15 failing: 1 Desktop (2 vs 0); 3 Linux (6 vs 0); 3 WinRDVM (4 vs 1); 7 Desktop (78 vs 26); 7 Linux (9 vs 0); 7 WinRDVM (1 vs 0); 15 Desktop (28 vs 8); 15 Mobile (1 vs 0); 15 WinRDVM (7 vs 4); 31 Desktop (51 vs 15); 31 Mobile (1 vs 0); 31 WinRDVM (5 vs 0); 63 Desktop (150 vs 20); 63 Linux (27 vs 14); 63 Mobile (26 vs 0) | extra vs effective: none
+gp3 m10 f5: 14 failing: 3 Linux (6 vs 0); 3 WinRDVM (4 vs 1); 7 Desktop (61 vs 26); 7 Linux (9 vs 0); 7 WinRDVM (1 vs 0); 15 Desktop (28 vs 8); 15 Mobile (1 vs 0); 15 WinRDVM (7 vs 4); 31 Desktop (51 vs 15); 31 Mobile (1 vs 0); 31 WinRDVM (5 vs 0); 63 Desktop (136 vs 20); 63 Linux (27 vs 14); 63 Mobile (15 vs 0) | extra vs effective: none
+gp4 m20 f5: 14 failing: 3 Linux (6 vs 0); 3 WinRDVM (4 vs 1); 7 Desktop (29 vs 26); 7 Linux (8 vs 0); 7 WinRDVM (1 vs 0); 15 Desktop (23 vs 8); 15 Mobile (1 vs 0); 15 WinRDVM (7 vs 4); 31 Desktop (50 vs 15); 31 Mobile (1 vs 0); 31 WinRDVM (5 vs 0); 63 Desktop (111 vs 20); 63 Linux (27 vs 14); 63 Mobile (5 vs 0) | extra vs effective: none
+gp5 m2 f11: 0 failing: none | extra vs effective: 63 Desktop (18); 63 Linux (14)
+gp6 m5 f11: 0 failing: none | extra vs effective: 63 Desktop (13); 63 Linux (14)
+gp7 m10 f11: 0 failing: none | extra vs effective: 63 Desktop (13); 63 Linux (14)
+gp8 m20 f11: 0 failing: none | extra vs effective: 63 Desktop (13); 63 Linux (14)
+FIGMA Dict 63 (all groups): fires / High% ; Dict 63 Linux cell fires/High/verified/clean
+0|today ST|D63 202 fires 59.4% High | 63 Linux 14 fires, 0 High, 12 verified, 14 clean
+1|m2 f5|D63 599 fires 40.1% High | 63 Linux 27 fires, 0 High, 24 verified, 27 clean
+2|m5 f5|D63 553 fires 42.7% High | 63 Linux 27 fires, 0 High, 24 verified, 27 clean
+3|m10 f5|D63 505 fires 43.2% High | 63 Linux 27 fires, 0 High, 24 verified, 27 clean
+4|m20 f5|D63 435 fires 44.8% High | 63 Linux 27 fires, 0 High, 24 verified, 27 clean
+5|m2 f11|D63 200 fires 60.0% High | 63 Linux 14 fires, 0 High, 12 verified, 14 clean
+6|m5 f11|D63 195 fires 61.5% High | 63 Linux 14 fires, 0 High, 12 verified, 14 clean
+7|m10 f11|D63 190 fires 60.5% High | 63 Linux 14 fires, 0 High, 12 verified, 14 clean
+8|m20 f11|D63 171 fires 56.7% High | 63 Linux 14 fires, 0 High, 12 verified, 14 clean
+BLIZZARD 9-12 Nov (3 days); Nonlegit caught = 9 Nov labels only (3,670 labels)
+gp|rule|fires|High%|ver%|chall%|chall-not-solved%|clean fires|clean%|new-only|lost vs today ST|NL caught|NL new-only|G8 clean<=today|G8 more NL|G8
+0|today ST|35464|97.2|2.8|97.2|32.1|974|2.7|-|-|4|-|-|-|-
+1|m2 f5|48464|96.5|4.7|97.4|37.5|986|2.0|14048|1048|490|486|FAIL|pass|FAIL
+2|m5 f5|47443|97.1|3.8|98.0|37.2|790|1.7|13027|1048|488|484|pass|pass|PASS
+3|m10 f5|46431|97.3|3.5|98.1|36.5|730|1.6|12015|1048|483|479|pass|pass|PASS
+4|m20 f5|45333|97.7|3.0|98.4|36.4|605|1.3|10917|1048|477|473|pass|pass|PASS
+5|m2 f11|39481|99.1|1.1|99.4|35.3|194|0.5|5065|1048|141|137|pass|pass|PASS
+6|m5 f11|39336|99.3|0.9|99.5|35.3|173|0.4|4920|1048|141|137|pass|pass|PASS
+7|m10 f11|39272|99.3|0.8|99.5|35.3|172|0.4|4856|1048|141|137|pass|pass|PASS
+8|m20 f11|39070|99.4|0.8|99.6|35.2|158|0.4|4654|1048|141|137|pass|pass|PASS
+today ST or LT: 36725 fires, 974 clean; LT breaches 32843
+BLIZZARD G7 per cell (9 Nov only): clean fires grid vs today same cell
+gp1 m2 f5: 15 failing: 3 Desktop (5 vs 0); 3 Mobile (4 vs 0); 3 Other (4 vs 0); 7 Desktop (29 vs 0); 7 Mobile (6 vs 0); 7 Other (1 vs 0); 7 WinRDVM (2 vs 0); 15 Desktop (26 vs 0); 15 Mobile (5 vs 0); 15 WinRDVM (3 vs 0); 31 Desktop (181 vs 0); 31 Mobile (3 vs 0); 63 Desktop (12 vs 0); 63 Mobile (59 vs 0); 63 WinRDVM (5 vs 0) | Dict 63 fires 282, 58.9% High
+gp2 m5 f5: 13 failing: 3 Desktop (5 vs 0); 3 Mobile (2 vs 0); 7 Desktop (25 vs 0); 7 Mobile (6 vs 0); 7 WinRDVM (2 vs 0); 15 Desktop (26 vs 0); 15 Mobile (5 vs 0); 15 WinRDVM (3 vs 0); 31 Desktop (174 vs 0); 31 Mobile (3 vs 0); 63 Desktop (8 vs 0); 63 Mobile (24 vs 0); 63 WinRDVM (5 vs 0) | Dict 63 fires 187, 67.9% High
+gp3 m10 f5: 13 failing: 3 Desktop (3 vs 0); 3 Mobile (2 vs 0); 7 Desktop (24 vs 0); 7 Mobile (6 vs 0); 7 WinRDVM (2 vs 0); 15 Desktop (26 vs 0); 15 Mobile (5 vs 0); 15 WinRDVM (3 vs 0); 31 Desktop (173 vs 0); 31 Mobile (3 vs 0); 63 Desktop (7 vs 0); 63 Mobile (14 vs 0); 63 WinRDVM (4 vs 0) | Dict 63 fires 134, 70.1% High
+gp4 m20 f5: 13 failing: 3 Desktop (2 vs 0); 3 Mobile (2 vs 0); 7 Desktop (15 vs 0); 7 Mobile (5 vs 0); 7 WinRDVM (2 vs 0); 15 Desktop (26 vs 0); 15 Mobile (5 vs 0); 15 WinRDVM (3 vs 0); 31 Desktop (172 vs 0); 31 Mobile (3 vs 0); 63 Desktop (5 vs 0); 63 Mobile (9 vs 0); 63 WinRDVM (4 vs 0) | Dict 63 fires 104, 70.2% High
+gp5 m2 f11: 6 failing: 7 WinRDVM (1 vs 0); 15 WinRDVM (2 vs 0); 31 Desktop (50 vs 0); 63 Desktop (2 vs 0); 63 Mobile (1 vs 0); 63 WinRDVM (2 vs 0) | Dict 63 fires 23, 52.2% High
+gp6 m5 f11: 4 failing: 7 WinRDVM (1 vs 0); 15 WinRDVM (2 vs 0); 31 Desktop (50 vs 0); 63 WinRDVM (2 vs 0) | Dict 63 fires 10, 60.0% High
+gp7 m10 f11: 4 failing: 7 WinRDVM (1 vs 0); 15 WinRDVM (2 vs 0); 31 Desktop (50 vs 0); 63 WinRDVM (2 vs 0) | Dict 63 fires 10, 60.0% High
+gp8 m20 f11: 4 failing: 7 WinRDVM (1 vs 0); 15 WinRDVM (2 vs 0); 31 Desktop (50 vs 0); 63 WinRDVM (2 vs 0) | Dict 63 fires 10, 60.0% High

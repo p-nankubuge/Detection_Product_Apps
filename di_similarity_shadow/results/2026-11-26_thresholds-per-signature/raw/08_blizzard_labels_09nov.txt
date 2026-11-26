@@ -1,0 +1,9 @@
+# Athena 08_ template, session-create day 2026-11-09. Fired-verified export (07_): 1,066 verified sessions firing under today ST/LT or any grid point
+# (masks: 60:473, 1:250, 1020:159, 4:84, 12:44, 28:37, 68:12, 1021:5, 204:1, 476:1).
+labels=3670 fired_ids=1066 matched_rows=490 matched_labels=490 (no duplicate matches)
+caught: today_ST=4 today_ST_or_LT=4 | gp1=490 gp2=488 gp3=483 gp4=477 | gp5=141 gp6=141 gp7=141 gp8=141
+caught only by new rule (not today ST): gp1=486 gp2=484 gp3=479 gp4=473 gp5=137 gp6=137 gp7=137 gp8=137 ; vs today ST or LT: gp1=486 gp5=137
+lost labels (today ST caught, grid point not): 0 for every grid point (today's 4 are all in mask 1021 / 1020-type groups... see note) 
+# note: t_st = 4 and g1..g8 >= t_st - n: g1 490-486 = 4 caught by both -> 0 lost for gp1..gp8 (g5: 141-137 = 4).
+# Coverage check (Snowflake): 20 of 20 sampled label suffixes (chunk '04') found once each in PROD_INT_SESSION_SUMMARY for this key, all verified.
+# 10-11 Nov labels (981 + 1,067 = 2,048) NOT scored (see caveats.md).
