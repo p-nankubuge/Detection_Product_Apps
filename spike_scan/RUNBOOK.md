@@ -196,8 +196,13 @@ Work from the repo root, `cd spike_scan`.
    Their keys are dropped from per-key charts, recurrence tables, the 2% check, drop cards and UA/JA4 targets. Discovery should not
    count them in keys_spiking.
    **Proxy URL integrations (from 2026-11-26):** `data/proxy_integration_keys.json` lists keys where the customer proxies the
-   Arkose calls (e.g. Payoneer E3EFEFBF): JA4, HTTP version and header order are the customer's proxy, not the visitor. UA vs JA4,
-   the cohort TLS indicator and the HTTP/3 check are skipped for them; never draft a JA4 / header-order TT for such a key. Add a key
+   Arkose calls, with `skip` = the CDN-level fields that are the proxy's, verified per key from a day of JA4 / HTTP-version profile:
+   Payoneer (4 prod keys) ja4 + http_version + header_order (one JA4 t13d1311h1_a44d0ee8b3cc on ~100%); Pinterest (4 prod keys)
+   http_version + header_order (HTTP 1.1 on 100%, but JA4 varies like real clients - looks passed through); Hornet (4 prod keys)
+   header_order only (JA4 / HTTP/3 look direct - confirm with the TAM). UA vs JA4 and the cohort TLS indicator skip `ja4` keys, the
+   HTTP/3 check skips `http_version` keys; never draft a JA4 / header-order TT for a key that skips that field. Header-order combos
+   seen on them (Nov 21-24): pragma_secchua_upcoming_chrome on Pinterest Login ~1.2k/day (5% verified), secchua_webgl_dp_spoof on
+   Payoneer CLM ~1k/day (0% verified) - review whether those blocks are proxy artifacts. Add a key
    when its JA4 is one non-browser stack for ~all traffic including verified/legit-labelled sessions, and confirm with the TAM.
    **Long-standing cohorts:** before asking SOC to pressure a cohort that has been steady for more than 4 weeks (e.g. Amazon IDS
    TLS1.2 JA4 b75078996b15, 10-25% of the key since August), confirm with the customer / account team that it is not their own

@@ -397,6 +397,38 @@
  },
  "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF": {
   "account_name": "Payoneer",
-  "key_name": "Payoneer - E3EFEFBF (proxy URL integration)"
+  "key_name": "Payoneer - CLM - Registration - Key 3"
+ },
+ "EE844FC3-499D-4A4D-A643-D7400F0FD4DE": {
+  "account_name": "Payoneer",
+  "key_name": "Payoneer - Login - Prod - Key 2"
+ },
+ "56DA9CC0-3C2D-47A7-A8C0-564572D4D008": {
+  "account_name": "Payoneer",
+  "key_name": "Payoneer - BLS - Prod - Key 4"
+ },
+ "0F985541-B543-4B29-A098-4BB9B8E9DEF8": {
+  "account_name": "Pinterest",
+  "key_name": "Pinterest - Challenge - Production - Key 3"
+ },
+ "2042BF34-D635-497B-A5A2-994408ABD4FD": {
+  "account_name": "Pinterest",
+  "key_name": "Pinterest - Transparent - Production - Key 4"
+ },
+ "26AA6D55-8C04-4BD7-8A71-F66E707C8C42": {
+  "account_name": "Hornet",
+  "key_name": "Hornet - Registration - Web - Production - Key 1"
+ },
+ "42887D34-B283-4723-AD25-26299EB55AC9": {
+  "account_name": "Hornet",
+  "key_name": "HornetX - Registration - Web - Production - Key 4"
+ },
+ "4FDBF9EF-B787-48E4-8891-F065A8076184": {
+  "account_name": "Hornet",
+  "key_name": "Hornet - Registration - SDK Android - Production - Key 2"
+ },
+ "825DD2FA-D899-455F-970A-9E2453663EEA": {
+  "account_name": "Hornet",
+  "key_name": "Hornet - Registration - SDK iOS - Production - Key 3"
  }
 }

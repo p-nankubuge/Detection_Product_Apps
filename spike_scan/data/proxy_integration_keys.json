@@ -1,6 +1,101 @@
 {
- "_doc": "Keys integrated through a customer-side proxy URL: CDN-level fields (JA4, HTTP version, header order, and likely IP/ASN/country) describe the CUSTOMER'S proxy, not the end user. TLS/JA4, HTTP-version and header-order checks are skipped for these keys; judge them on client-side fingerprint fields only.",
+ "_doc": "Keys integrated through a customer-side proxy URL. 'skip' lists the CDN-level fields that describe the customer's proxy, not the visitor: ja4 (TLS/JA4 checks, UA vs JA4), http_version (HTTP/3 / HTTP/1.1 checks), header_order (cdn-header-order-* / susp-rfc-violation-* header flags - do not draft TTs on them). Judge these keys on client-side fingerprint fields. Verified per key from one day of JA4 / HTTP-version profile (2026-11-24).",
  "keys": {
-  "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF": "Payoneer - proxy URL integration: JA4 is Payoneer's proxy (HTTP/1.1, 100% of legit truth labels) (told 2026-11-26)"
+  "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF": {
+   "name": "Payoneer - CLM - Registration - Key 3",
+   "skip": [
+    "ja4",
+    "http_version",
+    "header_order"
+   ],
+   "note": "Payoneer proxy URL integration: one JA4 t13d1311h1_a44d0ee8b3cc (Payoneer's server) on ~100% of traffic, HTTP/1.1 - JA4, HTTP version and header order are the proxy's"
+  },
+  "EE844FC3-499D-4A4D-A643-D7400F0FD4DE": {
+   "name": "Payoneer - Login - Prod - Key 2",
+   "skip": [
+    "ja4",
+    "http_version",
+    "header_order"
+   ],
+   "note": "Payoneer proxy URL integration: one JA4 t13d1311h1_a44d0ee8b3cc (Payoneer's server) on ~100% of traffic, HTTP/1.1 - JA4, HTTP version and header order are the proxy's"
+  },
+  "7CC24C4A-611B-41C7-9808-B95722C7861C": {
+   "name": "Payoneer - Registration - Prod - Key 1",
+   "skip": [
+    "ja4",
+    "http_version",
+    "header_order"
+   ],
+   "note": "Payoneer proxy URL integration: one JA4 t13d1311h1_a44d0ee8b3cc (Payoneer's server) on ~100% of traffic, HTTP/1.1 - JA4, HTTP version and header order are the proxy's"
+  },
+  "56DA9CC0-3C2D-47A7-A8C0-564572D4D008": {
+   "name": "Payoneer - BLS - Prod - Key 4",
+   "skip": [
+    "ja4",
+    "http_version",
+    "header_order"
+   ],
+   "note": "Payoneer proxy URL integration: one JA4 t13d1311h1_a44d0ee8b3cc (Payoneer's server) on ~100% of traffic, HTTP/1.1 - JA4, HTTP version and header order are the proxy's (no traffic 2026-11-24; assumed same as the other Payoneer keys)"
+  },
+  "F5675B21-025B-4843-983C-38D86DEB394B": {
+   "name": "Pinterest - Login - Production - Key 1",
+   "skip": [
+    "http_version",
+    "header_order"
+   ],
+   "note": "Pinterest proxy URL integration: JA4 varies like real clients (135-1,179 per day, Chrome/Safari/QUIC stacks - client TLS appears to be passed through) but CDN HTTP version is 1.1 on 100% - HTTP version and header order are the proxy's; JA4 usable with care"
+  },
+  "F7C0768A-A5B0-422A-BC5F-5912456296EE": {
+   "name": "Pinterest - Registration - Production - Key 2",
+   "skip": [
+    "http_version",
+    "header_order"
+   ],
+   "note": "Pinterest proxy URL integration: JA4 varies like real clients (135-1,179 per day, Chrome/Safari/QUIC stacks - client TLS appears to be passed through) but CDN HTTP version is 1.1 on 100% - HTTP version and header order are the proxy's; JA4 usable with care"
+  },
+  "0F985541-B543-4B29-A098-4BB9B8E9DEF8": {
+   "name": "Pinterest - Challenge - Production - Key 3",
+   "skip": [
+    "http_version",
+    "header_order"
+   ],
+   "note": "Pinterest proxy URL integration: JA4 varies like real clients (135-1,179 per day, Chrome/Safari/QUIC stacks - client TLS appears to be passed through) but CDN HTTP version is 1.1 on 100% - HTTP version and header order are the proxy's; JA4 usable with care"
+  },
+  "2042BF34-D635-497B-A5A2-994408ABD4FD": {
+   "name": "Pinterest - Transparent - Production - Key 4",
+   "skip": [
+    "http_version",
+    "header_order"
+   ],
+   "note": "Pinterest proxy URL integration: JA4 varies like real clients (135-1,179 per day, Chrome/Safari/QUIC stacks - client TLS appears to be passed through) but CDN HTTP version is 1.1 on 100% - HTTP version and header order are the proxy's; JA4 usable with care"
+  },
+  "26AA6D55-8C04-4BD7-8A71-F66E707C8C42": {
+   "name": "Hornet - Registration - Web - Production - Key 1",
+   "skip": [
+    "header_order"
+   ],
+   "note": "Hornet proxy URL integration (told 2026-11-26) but 2026-11-24 data looks direct (varied JA4, 58-88% HTTP/3) - header order treated as the proxy's; JA4/HTTP version kept until confirmed with the TAM"
+  },
+  "42887D34-B283-4723-AD25-26299EB55AC9": {
+   "name": "HornetX - Registration - Web - Production - Key 4",
+   "skip": [
+    "header_order"
+   ],
+   "note": "Hornet proxy URL integration (told 2026-11-26) but 2026-11-24 data looks direct (varied JA4, 58-88% HTTP/3) - header order treated as the proxy's; JA4/HTTP version kept until confirmed with the TAM"
+  },
+  "4FDBF9EF-B787-48E4-8891-F065A8076184": {
+   "name": "Hornet - Registration - SDK Android - Production - Key 2",
+   "skip": [
+    "header_order"
+   ],
+   "note": "Hornet proxy URL integration (told 2026-11-26) but 2026-11-24 data looks direct (varied JA4, 58-88% HTTP/3) - header order treated as the proxy's; JA4/HTTP version kept until confirmed with the TAM"
+  },
+  "825DD2FA-D899-455F-970A-9E2453663EEA": {
+   "name": "Hornet - Registration - SDK iOS - Production - Key 3",
+   "skip": [
+    "header_order"
+   ],
+   "note": "Hornet proxy URL integration (told 2026-11-26) but 2026-11-24 data looks direct (varied JA4, 58-88% HTTP/3) - header order treated as the proxy's; JA4/HTTP version kept until confirmed with the TAM"
+  }
  }
 }

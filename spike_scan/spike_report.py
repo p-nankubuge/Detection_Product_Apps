@@ -36,9 +36,11 @@ CHURNED = ROOT / "data" / "churned_accounts.json"  # ["Roblox Corporation", ...]
 PROXY_KEYS = ROOT / "data" / "proxy_integration_keys.json"  # {"keys": {public_key: note}}: CDN-level fields are the customer's proxy
 
 
-def proxy_keys():
-    """Keys behind a customer proxy URL integration: JA4 / HTTP version / header order belong to the customer's proxy."""
-    return json.loads(PROXY_KEYS.read_text()).get("keys", {}) if PROXY_KEYS.exists() else {}
+def proxy_keys(field=None):
+    """Keys behind a customer proxy URL integration -> {key: {skip: [ja4|http_version|header_order], note}}.
+    With field, only the keys where that CDN-level field is the customer's proxy (so the check must be skipped)."""
+    ks = json.loads(PROXY_KEYS.read_text()).get("keys", {}) if PROXY_KEYS.exists() else {}
+    return {k: v for k, v in ks.items() if field is None or field in v.get("skip", [])}
 
 
 def churned_keys():
@@ -1159,7 +1161,7 @@ def uaja4_section_rows(cid, k, rows, names):
     tr = []
     tot = sum(r["flagged"] for r in rows) or 1
     for r in [r for r in rows if r["flagged"] >= max(100, 0.005 * tot)][:10]:
-        notes = uaja4_notes(r, k in proxy_keys())
+        notes = uaja4_notes(r, k in proxy_keys("ja4"))
         tr.append('<tr><td><code>%s</code><br><span class="muted" style="font-size:11px">%s</span></td><td>%s</td><td class="n">%s</td><td class="n">%.0f%%</td><td class="n">%s</td><td>%s (%.0f%%)</td><td>%s</td><td>%s</td></tr>'
                   % (html.escape(r["ja4"]), html.escape(ja4_decode(r["ja4"], r["claim"])[0]), html.escape(r["claim"]), fmt(r["flagged"]), 100 * r["flag_ver"] / max(1, r["flagged"]), fmt(r["unflagged"]),
                      html.escape(r["fam_browser"]), 100 * r["fam_share"], html.escape(r["top_cc"]),
@@ -1464,7 +1466,8 @@ def cohort_verdict(c, win_start):
     coa = worst[1] >= 0.3
     ind.append(("other anomalies", coa, ", ".join("%s %.0f%%" % (k, 100 * v) for k, v in co_an.items() if v >= 0.05) or "none ≥5%"))
     jt, ji = ja4_decode(S["top_ja4"], S["top_ja4_claim"])
-    proxied = c.get("key") in proxy_keys()
+    proxied = c.get("key") in proxy_keys("ja4")
+    hv_proxied = c.get("key") in proxy_keys("http_version")
     if proxied:  # JA4 / HTTP version are the customer's proxy
         ji = []
     tls = bool(ji)
@@ -1480,7 +1483,7 @@ def cohort_verdict(c, win_start):
         vhc, vhr = S["top_voices_n"] / n1, S["rest_top_voices_n"] / rn
         rig = S["rig"] / n1
         hits = []
-        if not proxied and h3r >= 0.05 and h3c <= 0.2 * h3r: hits.append("no HTTP/3 (%.0f%% vs %.0f%% on the rest of the key)" % (100 * h3c, 100 * h3r))
+        if not hv_proxied and h3r >= 0.05 and h3c <= 0.2 * h3r: hits.append("no HTTP/3 (%.0f%% vs %.0f%% on the rest of the key)" % (100 * h3c, 100 * h3r))
         if fom >= 0.3 and fom >= 3 * max(fomr, 0.01): hits.append("fonts don't match the claimed OS %.0f%% (rest %.0f%%)" % (100 * fom, 100 * fomr))
         if rig >= 0.3: hits.append("≤4GB memory with 12+ cores %.0f%%" % (100 * rig))
         if fsc >= 0.5 and fsc >= 2 * fsr: hits.append("one exact font set %.0f%% (rest %.0f%%)" % (100 * fsc, 100 * fsr))
