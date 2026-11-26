@@ -1,0 +1,391 @@
+{
+ "run": "2026-11-25",
+ "truth_window": "2026-10-26..2026-11-25 (ingest partitions), Roblox Signup excluded",
+ "source": "Athena starfleet_production.truth_data_history (Superset db 2), sql/10_truth_check.sql",
+ "rows": [
+  {
+   "combo": "dishort300_rfc_cl_secchua",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 54,
+   "fraud_hit": 0
+  },
+  {
+   "combo": "ends_cl_ct_before_cl_tz_grease",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 5988
+  },
+  {
+   "combo": "ends_cl_ct_before_cl_tz_grease",
+   "key": "36D668DB-3171-41C7-8B22-73013C62CD38",
+   "key_legit": 0,
+   "key_fraud": 853,
+   "legit_hit": 0,
+   "fraud_hit": 328
+  },
+  {
+   "combo": "ends_cl_ct_before_cl_tz_grease",
+   "key": "A207F8A1-ED09-4325-ACE6-C8E26A458FBA",
+   "key_legit": 36356,
+   "key_fraud": 22122,
+   "legit_hit": 32,
+   "fraud_hit": 13
+  },
+  {
+   "combo": "ends_cl_ct_before_cl_tz_grease",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 272,
+   "fraud_hit": 0
+  },
+  {
+   "combo": "ends_te_dp_spoof",
+   "key": "06A0678C",
+   "key_legit": 0,
+   "key_fraud": 16866,
+   "legit_hit": 0,
+   "fraud_hit": 128
+  },
+  {
+   "combo": "ends_te_dp_spoof",
+   "key": "85AD0329",
+   "key_legit": 0,
+   "key_fraud": 133846,
+   "legit_hit": 0,
+   "fraud_hit": 23
+  },
+  {
+   "combo": "ends_te_dp_spoof",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 41,
+   "fraud_hit": 0
+  },
+  {
+   "combo": "hrsig_lt_ipintel_med_pagebio",
+   "key": "A207F8A1-ED09-4325-ACE6-C8E26A458FBA",
+   "key_legit": 36356,
+   "key_fraud": 22122,
+   "legit_hit": 0,
+   "fraud_hit": 48
+  },
+  {
+   "combo": "hrsig_st_spoofed_os",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 93
+  },
+  {
+   "combo": "hrsig_st_spoofed_os",
+   "key": "E3EFEFBF",
+   "key_legit": 6100,
+   "key_fraud": 124333,
+   "legit_hit": 1,
+   "fraud_hit": 79
+  },
+  {
+   "combo": "os_spoof_pagebio",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 1253
+  },
+  {
+   "combo": "os_spoof_pagebio",
+   "key": "E3EFEFBF",
+   "key_legit": 6100,
+   "key_fraud": 124333,
+   "legit_hit": 0,
+   "fraud_hit": 183
+  },
+  {
+   "combo": "os_spoof_pagebio",
+   "key": "85AD0329",
+   "key_legit": 0,
+   "key_fraud": 133846,
+   "legit_hit": 0,
+   "fraud_hit": 66
+  },
+  {
+   "combo": "os_spoof_pagebio",
+   "key": "06A0678C",
+   "key_legit": 0,
+   "key_fraud": 16866,
+   "legit_hit": 0,
+   "fraud_hit": 59
+  },
+  {
+   "combo": "os_spoof_pagebio",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 827,
+   "fraud_hit": 0
+  },
+  {
+   "combo": "pagebio_ends_cl_tz_novpn_ct_before_cl",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 5962
+  },
+  {
+   "combo": "pagebio_ends_cl_tz_novpn_ct_before_cl",
+   "key": "CC3F2AEA-6C11-493B-A83B-7BA702D7525F",
+   "key_legit": 0,
+   "key_fraud": 145673,
+   "legit_hit": 0,
+   "fraud_hit": 54
+  },
+  {
+   "combo": "pagebio_ends_cl_tz_novpn_ct_before_cl",
+   "key": "89C573F3",
+   "key_legit": 0,
+   "key_fraud": 88107,
+   "legit_hit": 0,
+   "fraud_hit": 32
+  },
+  {
+   "combo": "pagebio_ends_cl_tz_novpn_ct_before_cl",
+   "key": "C812C939",
+   "key_legit": 0,
+   "key_fraud": 26816,
+   "legit_hit": 0,
+   "fraud_hit": 32
+  },
+  {
+   "combo": "pagebio_ends_cl_tz_novpn_ct_before_cl",
+   "key": "A207F8A1-ED09-4325-ACE6-C8E26A458FBA",
+   "key_legit": 36356,
+   "key_fraud": 22122,
+   "legit_hit": 29,
+   "fraud_hit": 13
+  },
+  {
+   "combo": "pagebio_ends_cl_tz_novpn_ct_before_cl",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 88,
+   "fraud_hit": 0
+  },
+  {
+   "combo": "pagebio_touch_null_sensors_null",
+   "key": "36D668DB-3171-41C7-8B22-73013C62CD38",
+   "key_legit": 0,
+   "key_fraud": 853,
+   "legit_hit": 0,
+   "fraud_hit": 328
+  },
+  {
+   "combo": "pagebio_touch_null_sensors_null",
+   "key": "CC3F2AEA-6C11-493B-A83B-7BA702D7525F",
+   "key_legit": 0,
+   "key_fraud": 145673,
+   "legit_hit": 0,
+   "fraud_hit": 157
+  },
+  {
+   "combo": "pagebio_touch_null_sensors_null",
+   "key": "89C573F3",
+   "key_legit": 0,
+   "key_fraud": 88107,
+   "legit_hit": 0,
+   "fraud_hit": 51
+  },
+  {
+   "combo": "pagebio_touch_null_sensors_null",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 31,
+   "fraud_hit": 0
+  },
+  {
+   "combo": "pragma_secchua_upcoming_chrome",
+   "key": "36D668DB-3171-41C7-8B22-73013C62CD38",
+   "key_legit": 0,
+   "key_fraud": 853,
+   "legit_hit": 0,
+   "fraud_hit": 278
+  },
+  {
+   "combo": "pragma_secchua_upcoming_chrome",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 112
+  },
+  {
+   "combo": "pragma_secchua_upcoming_chrome",
+   "key": "E3EFEFBF",
+   "key_legit": 6100,
+   "key_fraud": 124333,
+   "legit_hit": 0,
+   "fraud_hit": 81
+  },
+  {
+   "combo": "secchua_webgl_dp_spoof",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 1045
+  },
+  {
+   "combo": "secchua_webgl_dp_spoof",
+   "key": "85AD0329",
+   "key_legit": 0,
+   "key_fraud": 133846,
+   "legit_hit": 0,
+   "fraud_hit": 117
+  },
+  {
+   "combo": "spoofed_os_ipintel_med",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 62
+  },
+  {
+   "combo": "spoofed_os_ipintel_med",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 678,
+   "fraud_hit": 0
+  },
+  {
+   "combo": "spoofed_os_pagebio_grease",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 1330
+  },
+  {
+   "combo": "spoofed_os_pagebio_grease",
+   "key": "E3EFEFBF",
+   "key_legit": 6100,
+   "key_fraud": 124333,
+   "legit_hit": 0,
+   "fraud_hit": 182
+  },
+  {
+   "combo": "spoofed_os_pagebio_grease",
+   "key": "CC3F2AEA-6C11-493B-A83B-7BA702D7525F",
+   "key_legit": 0,
+   "key_fraud": 145673,
+   "legit_hit": 0,
+   "fraud_hit": 158
+  },
+  {
+   "combo": "spoofed_os_pagebio_grease",
+   "key": "85AD0329",
+   "key_legit": 0,
+   "key_fraud": 133846,
+   "legit_hit": 0,
+   "fraud_hit": 146
+  },
+  {
+   "combo": "spoofed_os_pagebio_grease",
+   "key": "B0217B00-2CA4-41CC-925D-1EEB57BFFC2F",
+   "key_legit": 0,
+   "key_fraud": 1915,
+   "legit_hit": 0,
+   "fraud_hit": 97
+  },
+  {
+   "combo": "spoofed_os_pagebio_grease",
+   "key": "3515A340",
+   "key_legit": 0,
+   "key_fraud": 25700,
+   "legit_hit": 0,
+   "fraud_hit": 33
+  },
+  {
+   "combo": "spoofed_os_pagebio_grease",
+   "key": "A207F8A1-ED09-4325-ACE6-C8E26A458FBA",
+   "key_legit": 36356,
+   "key_fraud": 22122,
+   "legit_hit": 2,
+   "fraud_hit": 18
+  },
+  {
+   "combo": "spoofed_os_pagebio_grease",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 781,
+   "fraud_hit": 0
+  },
+  {
+   "combo": "spoofed_os_rfc_cl_secchua",
+   "key": "E8A75615-1CBA-5DFF-8032-D16BCF234E10",
+   "key_legit": 0,
+   "key_fraud": 106975,
+   "legit_hit": 0,
+   "fraud_hit": 579
+  },
+  {
+   "combo": "spoofed_os_rfc_cl_secchua",
+   "key": "CC3F2AEA-6C11-493B-A83B-7BA702D7525F",
+   "key_legit": 0,
+   "key_fraud": 145673,
+   "legit_hit": 0,
+   "fraud_hit": 234
+  },
+  {
+   "combo": "spoofed_os_rfc_cl_secchua",
+   "key": "85AD0329",
+   "key_legit": 0,
+   "key_fraud": 133846,
+   "legit_hit": 0,
+   "fraud_hit": 166
+  },
+  {
+   "combo": "spoofed_os_rfc_cl_secchua",
+   "key": "B0217B00-2CA4-41CC-925D-1EEB57BFFC2F",
+   "key_legit": 0,
+   "key_fraud": 1915,
+   "legit_hit": 0,
+   "fraud_hit": 97
+  },
+  {
+   "combo": "spoofed_os_rfc_cl_secchua",
+   "key": "3515A340",
+   "key_legit": 0,
+   "key_fraud": 25700,
+   "legit_hit": 0,
+   "fraud_hit": 44
+  },
+  {
+   "combo": "spoofed_os_rfc_cl_secchua",
+   "key": "A207F8A1-ED09-4325-ACE6-C8E26A458FBA",
+   "key_legit": 36356,
+   "key_fraud": 22122,
+   "legit_hit": 2,
+   "fraud_hit": 18
+  },
+  {
+   "combo": "spoofed_os_rfc_cl_secchua",
+   "key": "30000F36-CADF-490C-929A-C6A7DD8B33C4",
+   "key_legit": 72831,
+   "key_fraud": 0,
+   "legit_hit": 1087,
+   "fraud_hit": 0
+  }
+ ]
+}

@@ -58,6 +58,11 @@ if a.combo_id:
     vals["cond"] = vals["combo_cond"]
 if a.cond:
     vals["cond"], vals["key"] = a.cond, a.key
+# 10_truth_check (Athena): every combo as a VALUES row (id, ARRAY[flags])
+import json as _j
+vals["combo_values"] = ",\n  ".join("('%s', ARRAY[%s])" % (c["id"], ", ".join("'%s'" % f for f in c["flags"]))
+                                     for c in _j.loads(pathlib.Path(a.combos or "combos.json").read_text())["combos"])
+vals["truth_from"] = str(ws - dt.timedelta(days=30)); vals["truth_from_y"] = vals["truth_from"][:4]
 if a.keys and not a.combos:  # 04_key_totals.sql: plain key list
     vals["keys"] = ",".join("'%s'" % l.strip() for l in pathlib.Path(a.keys).read_text().splitlines() if l.strip())
 if a.combos:

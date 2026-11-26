@@ -197,6 +197,16 @@ Work from the repo root, `cd spike_scan`.
    **Long-standing cohorts:** before asking SOC to pressure a cohort that has been steady for more than 4 weeks (e.g. Amazon IDS
    TLS1.2 JA4 b75078996b15, 10-25% of the key since August), confirm with the customer / account team that it is not their own
    integration - a steady, normal-looking curve can be a standing operation or an integration artifact.
+7h. **Truth labels (from 2026-11-26).** `starfleet_production.truth_data_history` in **Athena (Superset database_id 2)**, not
+   Snowflake: one row per labelled session (`is_legit_value` 1 legit / 0 fraud, `source` Stream/Upload, `fraud_category`,
+   `suspicion_flags` + `telltale_list` as on the session, partitions year/month/day). Not every key has truth, and most keys are
+   one-sided: fraud-only (Blizzard ROW Reg Key 2, uploads of "Automation" for several keys) measures RECALL; legit-only (Uber SMS,
+   ~73k legit labels) gives KNOWN false positives. Two-sided keys (A207F8A1, E3EFEFBF, 963556DD) give both.
+   `python3 render.py sql/10_truth_check.sql --win-start <D-4>` -> `execute_sql` with database_id 2 -> save as
+   `data/truth_<D>.json`. Read it as: legit_hit / key_legit = FP rate on known-good sessions; fraud_hit / key_fraud = share of
+   confirmed fraud the combination would catch. A combination with legit hits >=1% of a key's legit labels needs a scoped TT
+   or an extra condition. Truth is labels on sessions, so it can score combinations (flags) directly; fingerprint-level cohorts
+   (09) need a join to the Snowflake session table by session id (not done yet).
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)
