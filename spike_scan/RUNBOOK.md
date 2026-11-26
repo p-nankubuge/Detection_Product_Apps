@@ -171,6 +171,16 @@ Work from the repo root, `cd spike_scan`.
    key < 0.5, or flat around the clock), other anomalies >=30% (language, platform, software renderer, headless, fake fingerprint), TLS
    (decoded JA4 does not fit the claimed browser), UA rotation. 3+ = attack-like, 2 = suspicious; only then the pass rate says "getting
    through" (>=20%) or "mostly blocked". The focus report shows a "Cohort profiles" card first.
+   **Fingerprint detail (7th indicator, from 2026-11-26; idea from the Blizzard ROW "candidate signals vs truth" work).** 09 now also
+   returns, for the cohort AND the rest of the key in the same window: HTTP/3 share, HTTP/1.1 share, fonts that don't match the
+   claimed OS (Segoe UI/Calibri on a non-Windows UA, or a Windows UA with 6+ fonts and no Segoe UI), <=4GB memory with 12+ cores
+   (rig), no fonts, no fingerprint, the largest share on one exact font set and on one speech-voices hash. It counts when 2+ of: no
+   HTTP/3 (<=20% of the rest's rate, rest >=5%); font/OS mismatch >=30% and >=3x the rest; rig >=30%; one font set >=50% and >=2x the
+   rest; one voices hash >=60% and >=1.5x the rest. **HTTP/3 is an FP bound:** real Chrome upgrades to QUIC via alt-svc, libraries and
+   most automation don't - a cohort with HTTP/3 at the key's normal rate is probably real browsers. The score is now out of 7
+   (3+ still = attack-like). Cohorts ingested before this change have no granular fields and are still scored out of 6.
+   Example (Uber SMS, D3D renderer + non-Windows UA, Nov 21-24): HTTP/3 0% vs 12%, Windows fonts on non-Windows UA 92% vs 5%,
+   one font set 78% vs 29%, one voices hash 72% vs 46%.
    **JA4 decoding** (every UA/JA4 and cohort table): part a = transport (t TCP / q QUIC) + TLS version + SNI (d domain / i IP) + cipher
    count + extension count + ALPN (h2 / h1 / h3 / 00 none); part b = cipher-set hash. Browsers: TLS 1.3, SNI, ALPN h2 (h3 on QUIC);
    Chromium b=8daaf6152771 with 15-16 ciphers / 15-18 ext, Safari b=a09f3c656075 with 20 / 13-14, Firefox b=5b57614c22b0 with 17 / 15-17,

@@ -1387,6 +1387,9 @@ def focus_charts(k, e, an, chart, combos, days, win_start, bmed):
 COHORT_S = ["n", "v", "ips", "max_ip", "devs", "max_dev", "ja4s", "claims", "hosting", "proxy", "lang_mis", "plat_mis", "soft_rend",
             "tz_mis", "headless", "fake", "ipv_med", "top_asn", "top_asn_n", "top_ja4", "top_ja4_claim", "top_ja4_n", "top_hv", "top_hv_n",
             "top_cc", "top_cc_n"]
+# granular fingerprint fields appended to 09 on 2026-11-26 (older cohorts.json rows lack them)
+COHORT_G = ["h3", "h1", "font_os_mis", "rig", "no_fonts", "no_fp", "top_fontset_n", "top_voices_n",
+            "rest_n", "rest_h3", "rest_font_os_mis", "rest_top_fontset_n", "rest_top_voices_n"]
 
 
 def cmd_cohort(a):
@@ -1402,10 +1405,10 @@ def cmd_cohort(a):
         h, n, tot = c.split(",")
         hourly[int(h)] = [int(n), int(tot)]
     f = parts.get("S", "").split("|")
-    if len(f) != len(COHORT_S):
+    if len(f) not in (len(COHORT_S), len(COHORT_S) + len(COHORT_G)):
         sys.exit("bad summary (%d fields)" % len(f))
     summ = {}
-    for k, v in zip(COHORT_S, f):
+    for k, v in zip(COHORT_S + COHORT_G, f):
         if k in ("top_asn", "top_ja4", "top_ja4_claim", "top_hv", "top_cc"):
             summ[k] = v
         elif k == "ipv_med":
@@ -1455,6 +1458,23 @@ def cohort_verdict(c, win_start):
     ind.append(("TLS", tls, "top JA4 %s (%s, %.0f%% of cohort): %s" % (S["top_ja4"], S["top_ja4_claim"], 100 * S["top_ja4_n"] / max(1, n), "; ".join(ji) or "consistent with the claim")))
     rot = S["claims"] >= 20 and S["claims"] >= 3 * max(1, S["ja4s"])
     ind.append(("UA rotation", rot, "%d browser/version claims over %d JA4s" % (S["claims"], S["ja4s"])))
+    if "h3" in S:
+        rn = max(1, S["rest_n"]); n1 = max(1, n)
+        h3c, h3r = S["h3"] / n1, S["rest_h3"] / rn
+        fom, fomr = S["font_os_mis"] / n1, S["rest_font_os_mis"] / rn
+        fsc, fsr = S["top_fontset_n"] / n1, S["rest_top_fontset_n"] / rn
+        vhc, vhr = S["top_voices_n"] / n1, S["rest_top_voices_n"] / rn
+        rig = S["rig"] / n1
+        hits = []
+        if h3r >= 0.05 and h3c <= 0.2 * h3r: hits.append("no HTTP/3 (%.0f%% vs %.0f%% on the rest of the key)" % (100 * h3c, 100 * h3r))
+        if fom >= 0.3 and fom >= 3 * max(fomr, 0.01): hits.append("fonts don't match the claimed OS %.0f%% (rest %.0f%%)" % (100 * fom, 100 * fomr))
+        if rig >= 0.3: hits.append("≤4GB memory with 12+ cores %.0f%%" % (100 * rig))
+        if fsc >= 0.5 and fsc >= 2 * fsr: hits.append("one exact font set %.0f%% (rest %.0f%%)" % (100 * fsc, 100 * fsr))
+        if vhc >= 0.6 and vhc >= 1.5 * vhr: hits.append("one voices hash %.0f%% (rest %.0f%%)" % (100 * vhc, 100 * vhr))
+        fpx = len(hits) >= 2
+        txt = "; ".join(hits) if hits else "HTTP/3 %.0f%% (rest %.0f%%), font/OS mismatch %.0f%%, top font set %.0f%%" % (100 * h3c, 100 * h3r, 100 * fom, 100 * fsc)
+        if h3c >= 0.5 * h3r and h3r >= 0.05: txt += " — HTTP/3 at the key's normal rate is a sign of real browsers (FP bound)"
+        ind.append(("fingerprint detail", fpx, txt))
     score = sum(1 for _, h, _ in ind if h)
     kind = "attack-like" if score >= 3 else "suspicious" if score == 2 else "user-like"
     ver = S["v"] / max(1, n)
@@ -1472,8 +1492,8 @@ def cohort_section(run, names, win_start):
     for i, (nm, c) in enumerate(sorted(db.items(), key=lambda kv: -cohort_verdict(kv[1], win_start)["score"])):
         v = cohort_verdict(c, win_start)
         cls = {"attack-like": "fp-risk", "suspicious": "volumetric", "user-like": "ok"}[v["kind"]]
-        rows.append('<tr><td><b>%s</b><br><span class="muted">%s</span></td><td>%s</td><td class="n">%s → %s</td><td class="n">%.1f%%</td><td class="n">%d/6</td><td class="n">%.0f%%</td><td><span class="vd %s">%s</span></td></tr>'
-                    % (html.escape(c["desc"]), html.escape(nm), html.escape(key_label(c["key"], names)), fmt(v["bmean"]), fmt(v["wmean"]), 100 * v["share"], v["score"], 100 * v["verified"], cls, html.escape(v["verdict"])))
+        rows.append('<tr><td><b>%s</b><br><span class="muted">%s</span></td><td>%s</td><td class="n">%s → %s</td><td class="n">%.1f%%</td><td class="n">%d/%d</td><td class="n">%.0f%%</td><td><span class="vd %s">%s</span></td></tr>'
+                    % (html.escape(c["desc"]), html.escape(nm), html.escape(key_label(c["key"], names)), fmt(v["bmean"]), fmt(v["wmean"]), 100 * v["share"], v["score"], len(v["ind"]), 100 * v["verified"], cls, html.escape(v["verdict"])))
         days = sorted(c["daily"])
         svg = svg_key_lines(days, [c["daily"][d][1] for d in days], [c["daily"][d][2] for d in days], v["bmean"], win_start, "coh%d" % i)
         cards.append('<div class="kcard"><h3 style="font-size:13px">%s — %s</h3><div class="kstats">%s</div>%s<ul style="font-size:12px;margin:6px 0 0 16px;padding:0">%s</ul></div>'
