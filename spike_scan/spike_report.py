@@ -1473,7 +1473,7 @@ def cohort_verdict(c, win_start):
         if vhc >= 0.6 and vhc >= 1.5 * vhr: hits.append("one voices hash %.0f%% (rest %.0f%%)" % (100 * vhc, 100 * vhr))
         fpx = len(hits) >= 2
         txt = "; ".join(hits) if hits else "HTTP/3 %.0f%% (rest %.0f%%), font/OS mismatch %.0f%%, top font set %.0f%%" % (100 * h3c, 100 * h3r, 100 * fom, 100 * fsc)
-        if h3c >= 0.5 * h3r and h3r >= 0.05: txt += " — HTTP/3 at the key's normal rate is a sign of real browsers (FP bound)"
+        if h3c >= 0.5 * h3r and h3r >= 0.05: txt += " — HTTP/3 at the key's normal rate: real browser stacks, but that does NOT clear it (labelled sweatshop/manual fraud uses HTTP/3 as much as legit)"
         ind.append(("fingerprint detail", fpx, txt))
     score = sum(1 for _, h, _ in ind if h)
     kind = "attack-like" if score >= 3 else "suspicious" if score == 2 else "user-like"

@@ -176,8 +176,9 @@ Work from the repo root, `cd spike_scan`.
    claimed OS (Segoe UI/Calibri on a non-Windows UA, or a Windows UA with 6+ fonts and no Segoe UI), <=4GB memory with 12+ cores
    (rig), no fonts, no fingerprint, the largest share on one exact font set and on one speech-voices hash. It counts when 2+ of: no
    HTTP/3 (<=20% of the rest's rate, rest >=5%); font/OS mismatch >=30% and >=3x the rest; rig >=30%; one font set >=50% and >=2x the
-   rest; one voices hash >=60% and >=1.5x the rest. **HTTP/3 is an FP bound:** real Chrome upgrades to QUIC via alt-svc, libraries and
-   most automation don't - a cohort with HTTP/3 at the key's normal rate is probably real browsers. The score is now out of 7
+   rest; one voices hash >=60% and >=1.5x the rest. **HTTP/3:** 0% HTTP/3 where the rest of the key has it points to a library or
+   automation stack. HTTP/3 at the key's normal rate is NOT an FP bound (truth check 2026-11-26: labelled fraud on Grab 98% vs legit
+   65%, Figma 67% vs 37%, Bumble 27% - sweatshop/manual fraud runs real browsers). The score is now out of 7
    (3+ still = attack-like). Cohorts ingested before this change have no granular fields and are still scored out of 6.
    Example (Uber SMS, D3D renderer + non-Windows UA, Nov 21-24): HTTP/3 0% vs 12%, Windows fonts on non-Windows UA 92% vs 5%,
    one font set 78% vs 29%, one voices hash 72% vs 46%.
@@ -206,7 +207,15 @@ Work from the repo root, `cd spike_scan`.
    `data/truth_<D>.json`. Read it as: legit_hit / key_legit = FP rate on known-good sessions; fraud_hit / key_fraud = share of
    confirmed fraud the combination would catch. A combination with legit hits >=1% of a key's legit labels needs a scoped TT
    or an extra condition. Truth is labels on sessions, so it can score combinations (flags) directly; fingerprint-level cohorts
-   (09) need a join to the Snowflake session table by session id (not done yet).
+   (09) are scored with `truth_fp.py` (below).
+   **Truth fingerprint check:** `truth_fp.py ids-sql --key K --from A --to B` (Athena, 150 ids per label, <=7-day session window, 2 days
+   for 10M+/day keys; filters on session_create_timestamp because partitions are the upload date) -> `truth_fp.py sql --key K --packed
+   '<cell>' --out q.sql` -> run q.sql on Snowflake -> `truth_fp.py save --key K --run D --packed '<cell>'` -> `truth_fp.py show`.
+   Findings 2026-11-26 (6 keys): labelled sessions are ~100% verified (truth is mostly on sessions that got through). Fonts-vs-OS,
+   Direct3D + non-Windows UA, rig, platform mismatch, no fonts / no fingerprint: <=1.3% on legit labels (Uber SMS, Grab, Figma,
+   E3EFEFBF) - precise - but 0-7% on labelled fraud (Blizzard ROW Reg 2, Bumble SMS, Grab, Figma): they catch automation stacks, not
+   the sweatshop / manual fraud customers label. HTTP/1.1 is key-relative: E3EFEFBF legit is 100% HTTP/1.1 (h1 JA4), Figma legit 23%
+   - never call an h1 JA4 non-browser without checking the rest of the key.
 8. **Report.** Save the shortlist as `data/discovery_<Y>.json` (same shape as the existing files),
    then `python3 spike_report.py report --win-start <D-4> --win-end <D> --discovery data/discovery_<Y>.json`.
    Screenshot `reports/latest.html` (Playwright, `executablePath: '/opt/pw-browsers/chromium'`)
