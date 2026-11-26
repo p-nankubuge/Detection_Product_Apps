@@ -17,6 +17,144 @@
     "ja4_h1": 0,
     "soft_rend": 0
    }
+  },
+  "E8A75615-1CBA-5DFF-8032-D16BCF234E10": {
+   "fraud": {
+    "n": 150,
+    "verified": 150,
+    "h3": 38,
+    "h1": 0,
+    "font_os_mis": 4,
+    "rig": 1,
+    "no_fonts": 0,
+    "no_fp": 0,
+    "d3d_nonwin": 3,
+    "plat_mis": 0,
+    "top_fontset_n": 25,
+    "top_voices_n": 40,
+    "ja4_h1": 0,
+    "soft_rend": 2
+   }
+  },
+  "963556DD-38CC-4C84-B9D1-F70F6B881B7B": {
+   "fraud": {
+    "n": 106,
+    "verified": 106,
+    "h3": 104,
+    "h1": 0,
+    "font_os_mis": 0,
+    "rig": 0,
+    "no_fonts": 0,
+    "no_fp": 0,
+    "d3d_nonwin": 0,
+    "plat_mis": 0,
+    "top_fontset_n": 106,
+    "top_voices_n": 0,
+    "ja4_h1": 0,
+    "soft_rend": 0
+   },
+   "legit": {
+    "n": 150,
+    "verified": 150,
+    "h3": 97,
+    "h1": 0,
+    "font_os_mis": 0,
+    "rig": 0,
+    "no_fonts": 2,
+    "no_fp": 0,
+    "d3d_nonwin": 0,
+    "plat_mis": 0,
+    "top_fontset_n": 148,
+    "top_voices_n": 0,
+    "ja4_h1": 0,
+    "soft_rend": 0
+   }
+  },
+  "30000F36-CADF-490C-929A-C6A7DD8B33C4": {
+   "legit": {
+    "n": 150,
+    "verified": 150,
+    "h3": 63,
+    "h1": 3,
+    "font_os_mis": 0,
+    "rig": 1,
+    "no_fonts": 0,
+    "no_fp": 0,
+    "d3d_nonwin": 0,
+    "plat_mis": 0,
+    "top_fontset_n": 64,
+    "top_voices_n": 66,
+    "ja4_h1": 2,
+    "soft_rend": 5
+   }
+  },
+  "A207F8A1-ED09-4325-ACE6-C8E26A458FBA": {
+   "legit": {
+    "n": 150,
+    "verified": 150,
+    "h3": 56,
+    "h1": 35,
+    "font_os_mis": 0,
+    "rig": 0,
+    "no_fonts": 0,
+    "no_fp": 0,
+    "d3d_nonwin": 0,
+    "plat_mis": 0,
+    "top_fontset_n": 64,
+    "top_voices_n": 16,
+    "ja4_h1": 14,
+    "soft_rend": 9
+   },
+   "fraud": {
+    "n": 150,
+    "verified": 150,
+    "h3": 101,
+    "h1": 4,
+    "font_os_mis": 11,
+    "rig": 3,
+    "no_fonts": 0,
+    "no_fp": 0,
+    "d3d_nonwin": 0,
+    "plat_mis": 0,
+    "top_fontset_n": 46,
+    "top_voices_n": 21,
+    "ja4_h1": 2,
+    "soft_rend": 7
+   }
+  },
+  "E3EFEFBF-8DE4-42ED-9E7F-92F35B1FD3CF": {
+   "legit": {
+    "n": 150,
+    "verified": 145,
+    "h3": 0,
+    "h1": 150,
+    "font_os_mis": 2,
+    "rig": 4,
+    "no_fonts": 3,
+    "no_fp": 0,
+    "d3d_nonwin": 1,
+    "plat_mis": 1,
+    "top_fontset_n": 43,
+    "top_voices_n": 45,
+    "ja4_h1": 150,
+    "soft_rend": 2
+   },
+   "fraud": {
+    "n": 150,
+    "verified": 142,
+    "h3": 2,
+    "h1": 148,
+    "font_os_mis": 1,
+    "rig": 0,
+    "no_fonts": 1,
+    "no_fp": 0,
+    "d3d_nonwin": 0,
+    "plat_mis": 0,
+    "top_fontset_n": 72,
+    "top_voices_n": 10,
+    "ja4_h1": 148,
+    "soft_rend": 2
+   }
   }
  }
 }

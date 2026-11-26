@@ -10,7 +10,7 @@ OUT = HERE / "data" / "truth_fp.json"
 F = ["n", "verified", "h3", "h1", "font_os_mis", "rig", "no_fonts", "no_fp", "d3d_nonwin", "plat_mis", "top_fontset_n", "top_voices_n", "ja4_h1", "soft_rend"]
 
 p = argparse.ArgumentParser(); sub = p.add_subparsers(dest="cmd", required=True)
-a1 = sub.add_parser("ids-sql"); a1.add_argument("--key", required=True); a1.add_argument("--from", dest="f", required=True); a1.add_argument("--to", required=True); a1.add_argument("--n", default="250")
+a1 = sub.add_parser("ids-sql"); a1.add_argument("--key", required=True); a1.add_argument("--from", dest="f", required=True); a1.add_argument("--to", required=True); a1.add_argument("--n", default="150")
 a2 = sub.add_parser("sql"); a2.add_argument("--key", required=True); a2.add_argument("--packed", required=True); a2.add_argument("--out", required=True)
 a3 = sub.add_parser("save"); a3.add_argument("--key", required=True); a3.add_argument("--run", required=True); a3.add_argument("--packed", required=True)
 a4 = sub.add_parser("show"); a4.add_argument("--run")
@@ -22,9 +22,9 @@ elif a.cmd == "sql":
     parts = dict(x.split(":", 1) for x in a.packed.strip().split("#"))
     L = [i for i in parts.get("L", "").split(",") if i]; Fr = [i for i in parts.get("F", "").split(",") if i]
     lo, hi = parts["R"].split(",")
-    q = lambda ids: ",".join("'%s'" % i.replace("'", "") for i in ids) or "''"
+    q = lambda ids: ",".join(i.replace("'", "").replace(",", "") for i in ids)
     t0 = dt.date.fromisoformat(lo[:10]); t1 = dt.date.fromisoformat(hi[:10]) + dt.timedelta(days=1)
-    sql = (HERE / "sql/12_truth_fp.sql").read_text().format(key=a.key, legit_ids=q(L), all_ids=q(L + Fr), ts_from=t0, ts_to=t1)
+    sql = (HERE / "sql/12_truth_fp.sql").read_text().format(key=a.key, legit_ids=q(L), fraud_ids=q(Fr), ts_from=t0, ts_to=t1)
     pathlib.Path(a.out).write_text(sql)
     print("legit ids %d, fraud ids %d, sessions %s .. %s -> %s" % (len(L), len(Fr), t0, t1, a.out))
 elif a.cmd == "save":
