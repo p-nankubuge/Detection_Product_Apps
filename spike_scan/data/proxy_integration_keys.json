@@ -17,7 +17,7 @@
     "http_version",
     "header_order"
    ],
-   "note": "Payoneer proxy URL integration: one JA4 t13d1311h1_a44d0ee8b3cc (Payoneer's server) on ~100% of traffic, HTTP/1.1 - JA4, HTTP version and header order are the proxy's"
+   "note": "Payoneer proxy URL integration: one JA4 t13d1311h1_a44d0ee8b3cc (Payoneer's server) on ~100% of traffic, HTTP/1.1 - JA4, HTTP version and header order are the proxy's Stable since at least Sep 28 (week of Nov 16 split ~58/42 between two proxy JA4s)."
   },
   "7CC24C4A-611B-41C7-9808-B95722C7861C": {
    "name": "Payoneer - Registration - Prod - Key 1",
@@ -43,7 +43,8 @@
     "http_version",
     "header_order"
    ],
-   "note": "Pinterest proxy URL integration: JA4 varies like real clients (135-1,179 per day, Chrome/Safari/QUIC stacks - client TLS appears to be passed through) but CDN HTTP version is 1.1 on 100% - HTTP version and header order are the proxy's; JA4 usable with care"
+   "note": "Pinterest proxy URL integration. Up to the week of 2026-10-19 Login/Registration had 1-3 JA4s and 1-3 JA3s (the proxy's). From the week of 2026-10-26 they carry hundreds of JA4s and ~all-distinct JA3s (real Chrome-style GREASE/extension shuffling): Pinterest now forwards the visitor's TLS fingerprint. JA4 usable from 2026-10-26 (not before); its transport letter is not (QUIC clients show as t..h3). CDN HTTP version is the proxy leg (1.1 on 100%) and header order is the proxy's.",
+   "ja4_forwarded_since": "2026-10-26"
   },
   "F7C0768A-A5B0-422A-BC5F-5912456296EE": {
    "name": "Pinterest - Registration - Production - Key 2",
@@ -51,7 +52,8 @@
     "http_version",
     "header_order"
    ],
-   "note": "Pinterest proxy URL integration: JA4 varies like real clients (135-1,179 per day, Chrome/Safari/QUIC stacks - client TLS appears to be passed through) but CDN HTTP version is 1.1 on 100% - HTTP version and header order are the proxy's; JA4 usable with care"
+   "note": "Pinterest proxy URL integration. Up to the week of 2026-10-19 Login/Registration had 1-3 JA4s and 1-3 JA3s (the proxy's). From the week of 2026-10-26 they carry hundreds of JA4s and ~all-distinct JA3s (real Chrome-style GREASE/extension shuffling): Pinterest now forwards the visitor's TLS fingerprint. JA4 usable from 2026-10-26 (not before); its transport letter is not (QUIC clients show as t..h3). CDN HTTP version is the proxy leg (1.1 on 100%) and header order is the proxy's.",
+   "ja4_forwarded_since": "2026-10-26"
   },
   "0F985541-B543-4B29-A098-4BB9B8E9DEF8": {
    "name": "Pinterest - Challenge - Production - Key 3",
@@ -59,7 +61,8 @@
     "http_version",
     "header_order"
    ],
-   "note": "Pinterest proxy URL integration: JA4 varies like real clients (135-1,179 per day, Chrome/Safari/QUIC stacks - client TLS appears to be passed through) but CDN HTTP version is 1.1 on 100% - HTTP version and header order are the proxy's; JA4 usable with care"
+   "note": "Pinterest proxy URL integration. Up to the week of 2026-10-19 Login/Registration had 1-3 JA4s and 1-3 JA3s (the proxy's). From the week of 2026-10-26 they carry hundreds of JA4s and ~all-distinct JA3s (real Chrome-style GREASE/extension shuffling): Pinterest now forwards the visitor's TLS fingerprint. JA4 usable from 2026-10-26 (not before); its transport letter is not (QUIC clients show as t..h3). CDN HTTP version is the proxy leg (1.1 on 100%) and header order is the proxy's.",
+   "ja4_forwarded_since": "2026-10-26"
   },
   "2042BF34-D635-497B-A5A2-994408ABD4FD": {
    "name": "Pinterest - Transparent - Production - Key 4",
@@ -67,35 +70,28 @@
     "http_version",
     "header_order"
    ],
-   "note": "Pinterest proxy URL integration: JA4 varies like real clients (135-1,179 per day, Chrome/Safari/QUIC stacks - client TLS appears to be passed through) but CDN HTTP version is 1.1 on 100% - HTTP version and header order are the proxy's; JA4 usable with care"
+   "note": "Pinterest proxy URL integration. Up to the week of 2026-10-19 Login/Registration had 1-3 JA4s and 1-3 JA3s (the proxy's). From the week of 2026-10-26 they carry hundreds of JA4s and ~all-distinct JA3s (real Chrome-style GREASE/extension shuffling): Pinterest now forwards the visitor's TLS fingerprint. JA4 usable from 2026-10-26 (not before); its transport letter is not (QUIC clients show as t..h3). CDN HTTP version is the proxy leg (1.1 on 100%) and header order is the proxy's.",
+   "ja4_forwarded_since": "2026-10-26"
   },
   "26AA6D55-8C04-4BD7-8A71-F66E707C8C42": {
    "name": "Hornet - Registration - Web - Production - Key 1",
-   "skip": [
-    "header_order"
-   ],
-   "note": "Hornet proxy URL integration (told 2026-11-26) but 2026-11-24 data looks direct (varied JA4, 58-88% HTTP/3) - header order treated as the proxy's; JA4/HTTP version kept until confirmed with the TAM"
+   "skip": [],
+   "note": "Hornet: told it is a proxy URL integration, but 8 weeks of data (Sep 28 - Nov 25) show the visitor's own connection on every prod key: HTTP/3 58-91% matching q-prefixed JA4s (a proxy cannot hand us the client's QUIC connection), varied JA3/JA4. Nothing skipped; re-check if Hornet's JA4 profile changes. Web Key 1 changed in the week of 2026-11-02 (volume halved, QUIC 19% -> 58%)."
   },
   "42887D34-B283-4723-AD25-26299EB55AC9": {
    "name": "HornetX - Registration - Web - Production - Key 4",
-   "skip": [
-    "header_order"
-   ],
-   "note": "Hornet proxy URL integration (told 2026-11-26) but 2026-11-24 data looks direct (varied JA4, 58-88% HTTP/3) - header order treated as the proxy's; JA4/HTTP version kept until confirmed with the TAM"
+   "skip": [],
+   "note": "Hornet: told it is a proxy URL integration, but 8 weeks of data (Sep 28 - Nov 25) show the visitor's own connection on every prod key: HTTP/3 58-91% matching q-prefixed JA4s (a proxy cannot hand us the client's QUIC connection), varied JA3/JA4. Nothing skipped; re-check if Hornet's JA4 profile changes. Web Key 1 changed in the week of 2026-11-02 (volume halved, QUIC 19% -> 58%)."
   },
   "4FDBF9EF-B787-48E4-8891-F065A8076184": {
    "name": "Hornet - Registration - SDK Android - Production - Key 2",
-   "skip": [
-    "header_order"
-   ],
-   "note": "Hornet proxy URL integration (told 2026-11-26) but 2026-11-24 data looks direct (varied JA4, 58-88% HTTP/3) - header order treated as the proxy's; JA4/HTTP version kept until confirmed with the TAM"
+   "skip": [],
+   "note": "Hornet: told it is a proxy URL integration, but 8 weeks of data (Sep 28 - Nov 25) show the visitor's own connection on every prod key: HTTP/3 58-91% matching q-prefixed JA4s (a proxy cannot hand us the client's QUIC connection), varied JA3/JA4. Nothing skipped; re-check if Hornet's JA4 profile changes. Web Key 1 changed in the week of 2026-11-02 (volume halved, QUIC 19% -> 58%)."
   },
   "825DD2FA-D899-455F-970A-9E2453663EEA": {
    "name": "Hornet - Registration - SDK iOS - Production - Key 3",
-   "skip": [
-    "header_order"
-   ],
-   "note": "Hornet proxy URL integration (told 2026-11-26) but 2026-11-24 data looks direct (varied JA4, 58-88% HTTP/3) - header order treated as the proxy's; JA4/HTTP version kept until confirmed with the TAM"
+   "skip": [],
+   "note": "Hornet: told it is a proxy URL integration, but 8 weeks of data (Sep 28 - Nov 25) show the visitor's own connection on every prod key: HTTP/3 58-91% matching q-prefixed JA4s (a proxy cannot hand us the client's QUIC connection), varied JA3/JA4. Nothing skipped; re-check if Hornet's JA4 profile changes. Web Key 1 changed in the week of 2026-11-02 (volume halved, QUIC 19% -> 58%)."
   }
  }
 }
