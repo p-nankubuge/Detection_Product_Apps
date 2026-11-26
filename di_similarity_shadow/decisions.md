@@ -8,7 +8,8 @@ Context: the runs so far built a **per-account** whitelist (Figma: effectively o
 
 ### D-17. Whitelist pooled across the vertical, with eligibility rules
 
-- **Decided:** build the whitelist from all keys in the vertical dictionary (e.g. `general_internet`), keeping only signatures that meet the design's eligibility rules (§3.2.2; approximated over the available window and stated). The account dictionary is an optional stricter layer.
+- **Status: deferred to the dictionary clean-up phase** (user, 26 Nov): this phase improves matching (similarity vs strict exact match) and thresholds on the dictionary DI uses today for each key; the clean-up agents (whitelist-builder, impossible-combos, gate-reviewer) build and clean the trusted dictionaries next.
+- **Decided (for that phase):** build the whitelist from all keys in the vertical dictionary (e.g. `general_internet`), keeping only signatures that meet the design's eligibility rules (§3.2.2; approximated over the available window and stated). The account dictionary is an optional stricter layer.
 - **Options considered:** per key; per account (what layer 1 did); **pooled vertical + eligibility** (chosen); all keys.
 - **Why:** pooling gives more diverse device signatures, so something new on one key isn't suspicious if it's normal on others. Figma's account has one live key, so an account-only whitelist judges Figma against its own thin traffic; that is a likely reason for the never-seen and pair-check over-firing.
 - **Revisit when:** vertical membership is formally defined (today inferred from `di_dictionary_used`), or a vertical mixes very different clients (e.g. custom apps).

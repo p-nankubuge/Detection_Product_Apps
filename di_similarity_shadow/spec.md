@@ -45,7 +45,8 @@ Chain, each level requires all previous fields: **os (Dict 1) → +JA4 (3) → +
 ## 2. Similarity scoring (`ja4_sim_v1`)
 
 > **Design alignment, 26 Nov (supersedes the whitelist scope and the binary pair checks below; `decisions.md` D-17, D-18).** Source: [Device Outlier Intelligence - Design](https://arkoselabs.atlassian.net/wiki/spaces/FP/pages/895516676).
-> - **Whitelist = pooled across the vertical's keys** (e.g. `general_internet`: travel, retail, tech, social, dating), so a device new to one key but common on others is already known. A signature enters only if it meets the eligibility rules (design §3.2.2: e.g. seen on ≥ 3 accounts; or persistent on several keys over several days). An **account** dictionary (only that customer's keys) is an optional stricter layer.
+> - **Phase note (26 Nov):** the current phase improves **matching (similarity) and thresholds** using the dictionary DI uses today for each key (account or vertical). Building / cleaning the dictionaries (pooling, eligibility, bad lists) is the next phase, handled by whitelist-builder, impossible-combos and gate-reviewer.
+> - **Next phase: whitelist = pooled across the vertical's keys** (e.g. `general_internet`: travel, retail, tech, social, dating), so a device new to one key but common on others is already known. A signature enters only if it meets the eligibility rules (design §3.2.2: e.g. seen on ≥ 3 accounts; or persistent on several keys over several days). An **account** dictionary (only that customer's keys) is an optional stricter layer.
 > - **Field combinations are graded by frequency**, not just seen / never seen: **common**, **rare**, **never** seen together, within the platform group of the pooled whitelist. The common / rare cut-off is **measured first** from the data, then fixed here.
 > - Each whitelisted signature also has an **expected occurrence share** (design §3.2.4 step 5), used by the thresholds (§4).
 
