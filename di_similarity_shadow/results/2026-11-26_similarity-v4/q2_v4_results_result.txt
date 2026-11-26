@@ -1,0 +1,95 @@
+# Raw output of q2_v4_results (run 2026-11-26, 15.5 s). Executed version: the readable q2_v4_results.sql minus unused intermediate
+# columns (v2 band and the S1-S3 steps, OS-version status; see _scripts/slim.py), with the final SELECT limited to the SH, G3, D15 and FL
+# rows (the full output exceeded the Superset response cap twice). The X4 / WF4 / RARE / G4 rows were run in q3_stats_rare_examples.
+# Versions: v1, v3 (recomputed), v4 (main cut-offs), v4a / v4b / v4c / v4abc (what-if triggers on top of v4), U1e-4 / U1e-3 (one uniform
+# rare cut-off for every pair and level). v2 was dropped from this run (published v2 figures are used in the report).
+# SH|ver|same|up|down|promoted|demoted|D|D High|not D|not D High|G1 (Dict 1/3 -> A/B)|G5 (Dict 63 -> A)|Dict -1 -> D
+# G3|ver|desk/mob|Dchk (Band D by the check trigger)/pass|n|High        D15|ver|band|n|High (v1 Dict 15 group, 53 sessions)
+# FL|ver|into D vs v3 (n/High)|out of D vs v3 (n/High)
+D15|U1e-3|A|3|0
+D15|U1e-3|B|21|8
+D15|U1e-3|C|19|8
+D15|U1e-3|D|10|0
+D15|U1e-4|A|3|0
+D15|U1e-4|B|21|8
+D15|U1e-4|C|19|8
+D15|U1e-4|D|10|0
+D15|v1|D|53|16
+D15|v3|A|3|0
+D15|v3|B|23|8
+D15|v3|C|20|8
+D15|v3|D|7|0
+D15|v4abc|A|3|0
+D15|v4abc|B|6|0
+D15|v4abc|C|5|0
+D15|v4abc|D|39|16
+D15|v4a|A|3|0
+D15|v4a|B|21|8
+D15|v4a|C|19|8
+D15|v4a|D|10|0
+D15|v4b|A|3|0
+D15|v4b|B|8|0
+D15|v4b|C|6|0
+D15|v4b|D|36|16
+D15|v4c|A|3|0
+D15|v4c|B|23|8
+D15|v4c|C|20|8
+D15|v4c|D|7|0
+D15|v4|A|3|0
+D15|v4|B|23|8
+D15|v4|C|20|8
+D15|v4|D|7|0
+FL|U1e-3|intoD=257/30|outD=0/0
+FL|U1e-4|intoD=158/15|outD=0/0
+FL|v1|intoD=690/45|outD=80/4
+FL|v3|intoD=0/0|outD=0/0
+FL|v4abc|intoD=266/57|outD=0/0
+FL|v4a|intoD=163/38|outD=0/0
+FL|v4b|intoD=103/19|outD=0/0
+FL|v4c|intoD=0/0|outD=127/3
+FL|v4|intoD=0/0|outD=0/0
+G3|U1e-3|desk|Dchk|574|41
+G3|U1e-3|desk|pass|7115|337
+G3|U1e-3|mob|Dchk|95|11
+G3|U1e-3|mob|pass|1372|47
+G3|U1e-4|desk|Dchk|474|26
+G3|U1e-4|desk|pass|7215|352
+G3|U1e-4|mob|Dchk|95|11
+G3|U1e-4|mob|pass|1372|47
+G3|v1|desk|Dchk|976|61
+G3|v1|desk|pass|6713|317
+G3|v1|mob|Dchk|97|10
+G3|v1|mob|pass|1370|48
+G3|v3|desk|Dchk|316|11
+G3|v3|desk|pass|7373|367
+G3|v3|mob|Dchk|95|11
+G3|v3|mob|pass|1372|47
+G3|v4abc|desk|Dchk|593|71
+G3|v4abc|desk|pass|7096|307
+G3|v4abc|mob|Dchk|95|11
+G3|v4abc|mob|pass|1372|47
+G3|v4a|desk|Dchk|479|49
+G3|v4a|desk|pass|7210|329
+G3|v4a|mob|Dchk|95|11
+G3|v4a|mob|pass|1372|47
+G3|v4b|desk|Dchk|430|33
+G3|v4b|desk|pass|7259|345
+G3|v4b|mob|Dchk|95|11
+G3|v4b|mob|pass|1372|47
+G3|v4c|desk|Dchk|183|8
+G3|v4c|desk|pass|7506|370
+G3|v4c|mob|Dchk|95|11
+G3|v4c|mob|pass|1372|47
+G3|v4|desk|Dchk|316|11
+G3|v4|desk|pass|7373|367
+G3|v4|mob|Dchk|95|11
+G3|v4|mob|pass|1372|47
+SH|U1e-3|same=5825|up=2403|down=928|prom=325|dem=360|D=723|Dhigh=60|notD=8433|notDhigh=376|G1AB=325/469|G5=4797/5023|m1D=0/1
+SH|U1e-4|same=5879|up=2443|down=834|prom=326|dem=277|D=624|Dhigh=45|notD=8532|notDhigh=391|G1AB=326/469|G5=4810/5023|m1D=0/1
+SH|v1|same=5852|up=2019|down=1285|prom=298|dem=361|D=1076|Dhigh=71|notD=8080|notDhigh=365|G1AB=298/469|G5=4759/5023|m1D=1/1
+SH|v3|same=5914|up=2535|down=707|prom=333|dem=176|D=466|Dhigh=30|notD=8690|notDhigh=406|G1AB=333/469|G5=4816/5023|m1D=0/1
+SH|v4abc|same=5837|up=2418|down=901|prom=314|dem=339|D=732|Dhigh=87|notD=8424|notDhigh=349|G1AB=314/469|G5=4806/5023|m1D=0/1
+SH|v4a|same=5848|up=2467|down=841|prom=328|dem=299|D=629|Dhigh=68|notD=8527|notDhigh=368|G1AB=328/469|G5=4807/5023|m1D=0/1
+SH|v4b|same=5903|up=2486|down=767|prom=319|dem=216|D=569|Dhigh=49|notD=8587|notDhigh=387|G1AB=319/469|G5=4815/5023|m1D=0/1
+SH|v4c|same=5961|up=2576|down=619|prom=338|dem=128|D=339|Dhigh=27|notD=8817|notDhigh=409|G1AB=338/469|G5=4816/5023|m1D=0/1
+SH|v4|same=5914|up=2535|down=707|prom=333|dem=176|D=466|Dhigh=30|notD=8690|notDhigh=406|G1AB=333/469|G5=4816/5023|m1D=0/1

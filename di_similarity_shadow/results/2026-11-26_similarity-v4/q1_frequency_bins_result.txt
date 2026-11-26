@@ -1,0 +1,163 @@
+# Raw output of q1_frequency_bins (run 2026-11-26, 13.3 s; first attempt with a 6x UNION ALL unpivot timed out, re-run with a single
+# FLATTEN unpivot and without the unused text columns; same logic). 158 rows.
+# BASE|desk/mob|sessions|High     PGN|platform group|whitelist sessions     REG|regression: v4 with all cut-offs 1e-12 vs v3
+# FB|check|desk/mob|frequency bin|sessions|High    CB|check|desk/mob|whitelist-count bin|sessions|High|largest frequency in bin
+# check: UAxDP_c / _x = UA x device_params coarse / exact; SCRxDP_c / _x; SCRxGL; SCRxPG. Exact rows only where the coarse pair is seen.
+BASE|desk|7689|378
+BASE|mob|1467|58
+PGN|Desktop|272232
+PGN|Linux|2842
+PGN|Mobile|80573
+PGN|Other|364
+PGN|Windows RD/VM|8032
+REG|band4<>band=0|t4v<>t3=0|nwarn4<>nwarn=0|A=6705|B=1682|C=303|D=466|v2D=483|v1D=1076
+FB|UAxDP_c|desk|0 never|207|38
+FB|UAxDP_c|desk|1 <1e-5|112|7
+FB|UAxDP_c|desk|2 1e-5..1e-4|396|23
+FB|UAxDP_c|desk|3 1e-4..1e-3|942|60
+FB|UAxDP_c|desk|4 1e-3..1e-2|1955|83
+FB|UAxDP_c|desk|5 >=1e-2|3499|132
+FB|UAxDP_c|mob|0 never|34|3
+FB|UAxDP_c|mob|2 1e-5..1e-4|32|1
+FB|UAxDP_c|mob|3 1e-4..1e-3|102|3
+FB|UAxDP_c|mob|4 1e-3..1e-2|205|7
+FB|UAxDP_c|mob|5 >=1e-2|1044|42
+FB|UAxDP_x|desk|0 never|406|42
+FB|UAxDP_x|desk|1 <1e-5|185|6
+FB|UAxDP_x|desk|2 1e-5..1e-4|702|44
+FB|UAxDP_x|desk|3 1e-4..1e-3|1216|51
+FB|UAxDP_x|desk|4 1e-3..1e-2|2216|88
+FB|UAxDP_x|desk|5 >=1e-2|2078|68
+FB|UAxDP_x|mob|0 never|12|1
+FB|UAxDP_x|mob|2 1e-5..1e-4|47|2
+FB|UAxDP_x|mob|3 1e-4..1e-3|108|5
+FB|UAxDP_x|mob|4 1e-3..1e-2|281|7
+FB|UAxDP_x|mob|5 >=1e-2|871|35
+FB|SCRxDP_c|desk|0 never|146|2
+FB|SCRxDP_c|desk|1 <1e-5|71|3
+FB|SCRxDP_c|desk|2 1e-5..1e-4|307|15
+FB|SCRxDP_c|desk|3 1e-4..1e-3|851|36
+FB|SCRxDP_c|desk|4 1e-3..1e-2|1876|78
+FB|SCRxDP_c|desk|5 >=1e-2|3737|206
+FB|SCRxDP_c|mob|0 never|31|2
+FB|SCRxDP_c|mob|2 1e-5..1e-4|65|6
+FB|SCRxDP_c|mob|3 1e-4..1e-3|112|1
+FB|SCRxDP_c|mob|4 1e-3..1e-2|298|16
+FB|SCRxDP_c|mob|5 >=1e-2|922|30
+FB|SCRxDP_x|desk|0 never|269|25
+FB|SCRxDP_x|desk|1 <1e-5|191|4
+FB|SCRxDP_x|desk|2 1e-5..1e-4|592|32
+FB|SCRxDP_x|desk|3 1e-4..1e-3|1284|61
+FB|SCRxDP_x|desk|4 1e-3..1e-2|2463|123
+FB|SCRxDP_x|desk|5 >=1e-2|2043|93
+FB|SCRxDP_x|mob|0 never|8|1
+FB|SCRxDP_x|mob|2 1e-5..1e-4|77|6
+FB|SCRxDP_x|mob|3 1e-4..1e-3|113|1
+FB|SCRxDP_x|mob|4 1e-3..1e-2|292|15
+FB|SCRxDP_x|mob|5 >=1e-2|907|30
+FB|SCRxGL|desk|0 never|377|8
+FB|SCRxGL|desk|1 <1e-5|136|8
+FB|SCRxGL|desk|2 1e-5..1e-4|737|39
+FB|SCRxGL|desk|3 1e-4..1e-3|1749|115
+FB|SCRxGL|desk|4 1e-3..1e-2|3206|132
+FB|SCRxGL|desk|5 >=1e-2|873|30
+FB|SCRxGL|mob|0 never|44|4
+FB|SCRxGL|mob|2 1e-5..1e-4|122|4
+FB|SCRxGL|mob|3 1e-4..1e-3|319|14
+FB|SCRxGL|mob|4 1e-3..1e-2|410|13
+FB|SCRxGL|mob|5 >=1e-2|518|21
+FB|SCRxPG|desk|0 never|57|6
+FB|SCRxPG|desk|1 <1e-5|43|1
+FB|SCRxPG|desk|2 1e-5..1e-4|122|4
+FB|SCRxPG|desk|3 1e-4..1e-3|149|6
+FB|SCRxPG|desk|4 1e-3..1e-2|657|39
+FB|SCRxPG|desk|5 >=1e-2|6500|315
+FB|SCRxPG|mob|0 never|1|0
+FB|SCRxPG|mob|2 1e-5..1e-4|43|4
+FB|SCRxPG|mob|3 1e-4..1e-3|87|3
+FB|SCRxPG|mob|4 1e-3..1e-2|297|14
+FB|SCRxPG|mob|5 >=1e-2|1008|36
+CB|UAxDP_c|desk|c0|207|38|0
+CB|UAxDP_c|desk|c1|88|8|0.000352
+CB|UAxDP_c|desk|c2-4|108|5|0.005495
+CB|UAxDP_c|desk|c5-19|343|11|0.027473
+CB|UAxDP_c|desk|c20-99|477|26|0.21978
+CB|UAxDP_c|desk|c100-999|1708|105|0.458791
+CB|UAxDP_c|desk|c1000+|4180|150|0.458128
+CB|UAxDP_c|mob|c0|34|3|0
+CB|UAxDP_c|mob|c1|9|1|1.2e-05
+CB|UAxDP_c|mob|c2-4|14|0|5e-05
+CB|UAxDP_c|mob|c5-19|58|2|0.000223
+CB|UAxDP_c|mob|c20-99|71|2|0.001067
+CB|UAxDP_c|mob|c100-999|214|7|0.010885
+CB|UAxDP_c|mob|c1000+|1017|41|0.316471
+CB|UAxDP_x|desk|c0|406|42|0
+CB|UAxDP_x|desk|c1|144|2|0.000352
+CB|UAxDP_x|desk|c2-4|237|13|0.005495
+CB|UAxDP_x|desk|c5-19|482|28|0.006685
+CB|UAxDP_x|desk|c20-99|787|41|0.206044
+CB|UAxDP_x|desk|c100-999|1754|79|0.458791
+CB|UAxDP_x|desk|c1000+|2993|94|0.458128
+CB|UAxDP_x|mob|c0|12|1|0
+CB|UAxDP_x|mob|c1|8|1|1.2e-05
+CB|UAxDP_x|mob|c2-4|20|0|5e-05
+CB|UAxDP_x|mob|c5-19|55|1|0.000236
+CB|UAxDP_x|mob|c20-99|85|5|0.001229
+CB|UAxDP_x|mob|c100-999|323|11|0.01225
+CB|UAxDP_x|mob|c1000+|816|31|0.301131
+CB|SCRxDP_c|desk|c0|146|2|0
+CB|SCRxDP_c|desk|c1|58|0|0.000352
+CB|SCRxDP_c|desk|c2-4|82|3|0.001407
+CB|SCRxDP_c|desk|c5-19|247|15|0.013736
+CB|SCRxDP_c|desk|c20-99|451|14|0.208791
+CB|SCRxDP_c|desk|c100-999|1530|76|0.453297
+CB|SCRxDP_c|desk|c1000+|4474|230|0.139567
+CB|SCRxDP_c|mob|c0|31|2|0
+CB|SCRxDP_c|mob|c1|21|3|1.2e-05
+CB|SCRxDP_c|mob|c2-4|13|0|3.7e-05
+CB|SCRxDP_c|mob|c5-19|69|4|0.000236
+CB|SCRxDP_c|mob|c20-99|100|1|0.001204
+CB|SCRxDP_c|mob|c100-999|302|17|0.01153
+CB|SCRxDP_c|mob|c1000+|892|28|0.085041
+CB|SCRxDP_x|desk|c0|269|25|0
+CB|SCRxDP_x|desk|c1|170|1|0.000352
+CB|SCRxDP_x|desk|c2-4|182|7|0.001407
+CB|SCRxDP_x|desk|c5-19|450|25|0.013736
+CB|SCRxDP_x|desk|c20-99|772|19|0.206044
+CB|SCRxDP_x|desk|c100-999|2050|131|0.453297
+CB|SCRxDP_x|desk|c1000+|2949|130|0.047816
+CB|SCRxDP_x|mob|c0|8|1|0
+CB|SCRxDP_x|mob|c1|20|2|1.2e-05
+CB|SCRxDP_x|mob|c2-4|16|1|5e-05
+CB|SCRxDP_x|mob|c5-19|81|4|0.000236
+CB|SCRxDP_x|mob|c20-99|102|1|0.001204
+CB|SCRxDP_x|mob|c100-999|292|16|0.011455
+CB|SCRxDP_x|mob|c1000+|878|28|0.085041
+CB|SCRxGL|desk|c0|377|8|0
+CB|SCRxGL|desk|c1|87|4|0.000352
+CB|SCRxGL|desk|c2-4|191|9|0.001407
+CB|SCRxGL|desk|c5-19|481|27|0.013736
+CB|SCRxGL|desk|c20-99|988|64|0.029557
+CB|SCRxGL|desk|c100-999|2886|137|0.003497
+CB|SCRxGL|desk|c1000+|2068|83|0.024255
+CB|SCRxGL|mob|c0|44|4|0
+CB|SCRxGL|mob|c1|26|1|1.2e-05
+CB|SCRxGL|mob|c2-4|41|2|5e-05
+CB|SCRxGL|mob|c5-19|127|2|0.000236
+CB|SCRxGL|mob|c20-99|292|18|0.001179
+CB|SCRxGL|mob|c100-999|400|8|0.011083
+CB|SCRxGL|mob|c1000+|483|21|0.080908
+CB|SCRxPG|desk|c0|57|6|0
+CB|SCRxPG|desk|c1|62|4|0.002747
+CB|SCRxPG|desk|c2-4|36|1|0.005495
+CB|SCRxPG|desk|c5-19|124|6|0.013736
+CB|SCRxPG|desk|c20-99|131|5|0.208791
+CB|SCRxPG|desk|c100-999|527|24|0.601648
+CB|SCRxPG|desk|c1000+|6591|325|0.441235
+CB|SCRxPG|mob|c0|1|0|0
+CB|SCRxPG|mob|c1|13|4|1.2e-05
+CB|SCRxPG|mob|c2-4|13|0|5e-05
+CB|SCRxPG|mob|c5-19|38|1|0.000236
+CB|SCRxPG|mob|c20-99|93|2|0.001229
+CB|SCRxPG|mob|c100-999|270|14|0.008229
+CB|SCRxPG|mob|c1000+|1008|36|0.085115

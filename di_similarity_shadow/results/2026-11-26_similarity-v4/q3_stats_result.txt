@@ -1,0 +1,99 @@
+# Raw output of the stats part of q3_stats_rare_examples (run 2026-11-26, 11.8 s). Executed version: q3_stats_rare_examples.sql further
+# reduced by hand to the columns these rows need (no v1/v2 computation, closest-device search with the v3/v4 arithmetic only), and without
+# the example rows (the combined output exceeded the Superset response cap). Same v4 logic and cut-offs.
+# REGX: v4 vs v3 band differences (all sessions) / desktop warning-sign count differences
+# XW|v4abc|dict|band|n|High (crosstab under all three what-if triggers)
+# WF4|desk/mob|failed checks (capped 2)|warning signs v4 (capped 3)|n|High
+# RARE|v4|desk/mob|v4 warning signs|failed checks|n|High (sessions with >= 1 rare-pair warning under the main v4 cut-offs; on desktop
+#   "rare" = exact pair never seen, so UAxDPr / SCRxDPr there are v3's UAxDPx / SCRxDPx)
+# RARE|U1e-4|desk/mob|failed checks|number of rare pairs at a uniform 1e-4 cut-off|n|High
+# G4|mobile sessions with a never-seen physical screen, split by UA x DP consistent (ok) or not|n|High
+G4|UAxDP fail/rare|3|0
+G4|UAxDP ok|29|1
+RARE|U1e-4|desk|f0|nrare=0|5040|212
+RARE|U1e-4|desk|f0|nrare=1|1211|61
+RARE|U1e-4|desk|f0|nrare=2|645|47
+RARE|U1e-4|desk|f0|nrare=3|136|6
+RARE|U1e-4|desk|f1|nrare=0|267|32
+RARE|U1e-4|desk|f1|nrare=1|153|6
+RARE|U1e-4|desk|f1|nrare=2|111|12
+RARE|U1e-4|desk|f1|nrare=3|6|0
+RARE|U1e-4|desk|f2|nrare=0|42|0
+RARE|U1e-4|desk|f2|nrare=1|59|2
+RARE|U1e-4|desk|f2|nrare=2|19|0
+RARE|U1e-4|mob|f0|nrare=0|1196|42
+RARE|U1e-4|mob|f0|nrare=1|135|4
+RARE|U1e-4|mob|f0|nrare=2|15|1
+RARE|U1e-4|mob|f0|nrare=3|26|0
+RARE|U1e-4|mob|f1|nrare=0|36|3
+RARE|U1e-4|mob|f1|nrare=1|20|4
+RARE|U1e-4|mob|f1|nrare=2|18|3
+RARE|U1e-4|mob|f1|nrare=3|1|1
+RARE|U1e-4|mob|f2|nrare=0|9|0
+RARE|U1e-4|mob|f2|nrare=1|9|0
+RARE|U1e-4|mob|f2|nrare=2|2|0
+RARE|v4|desk|SCRnew UAxDPr|f0|17|1
+RARE|v4|desk|SCRnew UAxDPr|f1|3|0
+RARE|v4|desk|SCRxDPr|f0|128|5
+RARE|v4|desk|SCRxDPr|f1|59|2
+RARE|v4|desk|SCRxDPr|f2|1|0
+RARE|v4|desk|UAxDPr SCRxDPr|f0|64|17
+RARE|v4|desk|UAxDPr SCRxDPr|f1|17|1
+RARE|v4|desk|UAxDPr|f0|280|23
+RARE|v4|desk|UAxDPr|f1|21|0
+RARE|v4|desk|UAxDPr|f2|4|0
+RARE|v4|mob|SCRxDPr SCRxPGr|f0|22|0
+RARE|v4|mob|SCRxDPr SCRxPGr|f1|9|2
+RARE|v4|mob|SCRxDPr|f0|21|0
+RARE|v4|mob|SCRxDPr|f1|13|3
+RARE|v4|mob|SCRxDPr|f2|1|0
+RARE|v4|mob|SCRxPGr|f1|4|1
+RARE|v4|mob|SCRxPGr|f2|6|0
+RARE|v4|mob|UAxDPr SCRxDPr SCRxPGr|f1|1|1
+RARE|v4|mob|UAxDPr SCRxDPr|f0|3|0
+RARE|v4|mob|UAxDPr SCRxDPr|f1|1|0
+RARE|v4|mob|UAxDPr SCRxPGr|f1|1|0
+RARE|v4|mob|UAxDPr|f0|6|0
+REGX|band4<>band=0|nwarn4<>nwarn(desk)=0
+WF4|desk|f0|w0|5964|249
+WF4|desk|f0|w1|954|55
+WF4|desk|f0|w2|114|22
+WF4|desk|f1|w0|341|41
+WF4|desk|f1|w1|149|3
+WF4|desk|f1|w2|47|6
+WF4|desk|f2|w0|109|2
+WF4|desk|f2|w1|11|0
+WF4|mob|f0|w0|1320|47
+WF4|mob|f0|w1|27|0
+WF4|mob|f0|w2|25|0
+WF4|mob|f1|w0|46|4
+WF4|mob|f1|w1|17|4
+WF4|mob|f1|w2|11|2
+WF4|mob|f1|w3|1|1
+WF4|mob|f2|w0|13|0
+WF4|mob|f2|w1|7|0
+XW|v4abc|-1|B|1|0
+XW|v4abc|15|A|429|21
+XW|v4abc|15|B|348|20
+XW|v4abc|15|C|57|5
+XW|v4abc|15|D|221|38
+XW|v4abc|1|A|11|1
+XW|v4abc|1|B|6|1
+XW|v4abc|1|C|2|0
+XW|v4abc|1|D|4|0
+XW|v4abc|31|A|867|42
+XW|v4abc|31|B|459|25
+XW|v4abc|31|C|49|2
+XW|v4abc|31|D|95|8
+XW|v4abc|3|A|206|16
+XW|v4abc|3|B|91|4
+XW|v4abc|3|C|22|1
+XW|v4abc|3|D|127|16
+XW|v4abc|63|A|4806|164
+XW|v4abc|63|B|192|6
+XW|v4abc|63|C|2|0
+XW|v4abc|63|D|23|5
+XW|v4abc|7|A|335|11
+XW|v4abc|7|B|448|20
+XW|v4abc|7|C|93|10
+XW|v4abc|7|D|262|20
