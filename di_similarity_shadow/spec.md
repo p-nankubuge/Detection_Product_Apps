@@ -235,5 +235,5 @@ List A/B/C sessions need no group.
 | G4 | **New mobile screens:** never-seen screen + consistent UA × device_params stays near normal High-risk rate |
 | G5 | **Easy majority:** clean Dict 63 → Band A; total non-matches → Band D |
 | G6 | **Lists A/B/C precision:** moved-down sessions have High-risk rate well above their current dict baseline |
-| G7 | **Threshold firing:** per cell, clean-traffic firing ≤ today's per-dict rate; Dict 63 fires concentrate on High risk |
-| G8 | **Proxy keys:** Payoneer firing at or below today |
+| G7 | **Threshold firing:** per cell, clean-traffic firing ≤ today's firing **in the same cell** (changed 26 Nov from "today's per-dict rate", `decisions.md` D-15); Dict 63 fires concentrate on High risk |
+| G8 | **Second registration key:** on Blizzard ROW Registration K2, clean-traffic firing ≤ today and more TD Nonlegit sessions caught than today (changed 26 Nov from "Payoneer firing at or below today"; Payoneer is a proxy key whose JA4 is the proxy's, so it belongs to the similarity side, not thresholds; D-15) |

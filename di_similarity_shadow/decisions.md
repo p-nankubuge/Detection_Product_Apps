@@ -2,6 +2,27 @@
 
 Choices made while building the shadow evaluator, with the alternatives considered, so they can be revisited when evidence changes. Newest first. Each entry: what was decided, the options, why, and what would make us revisit it.
 
+## 26 Nov 2026: threshold gates
+
+### D-15. G8 tests Blizzard registration, not Payoneer; G7 compares the same cell
+
+- **Decided:**
+  - **G8:** on Blizzard ROW Registration K2, clean-traffic firing ≤ today and more TD Nonlegit sessions caught than today. Payoneer is dropped from the threshold gates.
+  - **G7:** compare each cell's clean-traffic firing with **today's firing in the same cell**, not the dictionary average.
+- **Options considered:** keep Payoneer (L1) as G8; replace it with another proxy key; **replace it with a second normal registration key that has labels** (chosen).
+- **Why:**
+  - Payoneer is a proxy key: every user shares the proxy's JA4, so DI sees huge repeat counts (477–746) at Dict 1. No threshold level fixes that; it's a fingerprint problem for the similarity side (proxy keys get JA4 weight 0). It says nothing about whether thresholds are well set. Not comparable with Figma (user, 26 Nov).
+  - Blizzard ROW Registration K2 is a normal registration key with Nonlegit labels, so it measures uplift directly.
+  - G7 per dictionary average made two cells "fail" in thresholds v3 that fired no more than today in the same cell (Dict 3 Desktop 27 vs 30; Dict 15 Win RD/VM 4 vs 4).
+- **Revisit when:** Payoneer-type proxy keys show up in threshold firing again after the similarity side handles them.
+
+### D-16. No "identical managed fleet" exception for thresholds (for now)
+
+- **Decided:** don't exempt signatures that come from few IPs / one network (the Figma Dict 63 Linux group: one signature, 4 IPs in one /24, two bursts, mostly verified).
+- **Options considered:** exempt low IP-diversity signatures; exempt known institutional networks (ISP / ASN allow-list); **no exception** (chosen).
+- **Why:** "many identical devices from few IPs" is also what a bot farm on one IP looks like, the classic attack velocity is meant to catch. The fleet group was mostly verified, so a challenge costs them little.
+- **Revisit when:** truth data shows real fleets being labelled Legit and losing sign-ups, or an ASN allow-list is available from another team.
+
 ## 25 Nov 2026 (night): threshold level (under test)
 
 ### D-13. How to stop per-key thresholds over-firing on clean traffic (G7)
