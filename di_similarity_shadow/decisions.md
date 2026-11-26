@@ -21,12 +21,13 @@ Context: the runs so far built a **per-account** whitelist (Figma: effectively o
 - **Revisit when:** the measured cut-off differs a lot between platform groups or verticals.
 - **Measured (26 Nov, `results/2026-11-26_similarity-v4/frequency_bins.md`):** on desktop, rare-but-seen pairs are no riskier than common ones (every frequency bin 0.4–1.3× the 4.9% baseline), so **no frequency cut-off on desktop**; "rare" stays "coarse pair seen, exact pair never seen". Mobile: screen × device_params (coarse) and screen × platform group seen in fewer than ~1e-4 of whitelist sessions are rare (≈2.3×, but only 10 High sessions). Applying this changes no band on Figma (v4 = v3).
 
-### D-20. Desktop Band D trigger (leading option, not decided)
+### D-20. Desktop Band D trigger (not confirmed; part (a) dropped, (b) + (c) to re-test)
 
 - **Leading:** desktop Band D if (a) a **coarse UA × device_params pair was never seen** together, on its own; or (b) **2 or more warning signs**; or the existing 2 failed checks / 1 failed check + 1 warning; with (c) **screen × WebGL failure counted as a warning sign**, not a failed check. Mobile unchanged.
 - **Evidence (Figma, 20 Nov 12:00–14:00):** never-seen pairs by risk on desktop: coarse UA × device_params 18.4% High (3.7×), exact UA × DP 10.3%, exact screen × DP 9.3%, screen × platform group 10.5%; screen × WebGL 2.1% and coarse screen × DP 1.4% (below the 4.9% baseline). With a + b + c: 732 sessions in D at 11.9% High vs 4.1% passing, **desktop G3 2.77×** (v3: 0.70×); all 16 High sessions of the v1 Dict 15 group reach D. Cost: demoted 176 → 339, G1 71.0% → 67.0%.
 - **Options considered:** v3 trigger (G3 0.70×); each of a, b, c alone (2.24×, 1.61×, 0.89×); uniform frequency cut-offs 1e-4 / 1e-3 (1.12×, 1.51×); **a + b + c** (best).
 - **Before deciding:** a second window or day, and truth data (Figma Legit / Nonlegit, or Blizzard Nonlegit) to confirm the extra Band D sessions are bad, not just High risk.
+- **Confirmation (26 Nov, `results/2026-11-26_similarity-confirm/`): not confirmed.** Figma 6 Nov with labels: genuine users in Band D 3.3% → 7.3%, fraud in Band D 7.6% → 12.1%; added sessions 47% Nonlegit vs 43% overall (no enrichment). **Part (a)** is consistent with Chrome 157 release drift (coarse UA = browser + major version, so a new major version is "never seen" with any device_params) and leans Legit: **dropped until the coarse UA key treats a newer browser major as neutral**. **Part (b)** (2+ warnings) has label support on small counts (15 Nonlegit vs 6 Legit); warning signs carry signal (Nonlegit share 38% / 56% / 65% at 0 / 1 / 2 warnings). Next: re-test (b) + (c) and a version-safe (a) on another labelled day.
 
 ### D-19. Threshold per matched signature: expected × multiplier
 
@@ -39,6 +40,7 @@ Context: the runs so far built a **per-account** whitelist (Figma: effectively o
   - Blizzard (9–11 Nov; labels 9 Nov only, 3,670 of 5,718): 141 Nonlegit caught vs 4 today; clean fires 173 vs 974; G8 pass; G7 fails 4 cells (Dict 31 Desktop 50 clean fires vs 0, not profiled).
   - The floor matters far more than the multiplier: floor 5 catches ~3.4× more Blizzard labels (477–490) but fails Figma G7 in 14–17 cells.
   - Open before deciding: score 10–11 Nov labels; profile Blizzard Dict 31 Desktop and the lost Figma fires; test floor 8; calibrate long-term; Figma Legit-label false-positive rate.
+- **Confirmation (26 Nov, `results/2026-11-26_thresholds-confirm/`): m5 f11 remains the leading option.** Blizzard 9–11 Nov: 198 of 5,718 fraud labels caught vs 5 today, clean fires 173 vs 974. Figma 6 Nov: genuine-user labels fired on 2 of 807 (0.25%), the same 2 as today; no fraud label fired by any velocity rule. **Floor 8 not adopted** (Blizzard +156 caught, but Figma +185 fires, 6 more genuine users fired on, no Figma fraud caught). Long-term (two-day) check: never fires on Figma, +21 labels on Blizzard; proposed as short- or long-term breach, floor min(660, key's current LT). Weak spots look like short bursts (consistent with, not proven).
 
 ## 26 Nov 2026: threshold gates
 

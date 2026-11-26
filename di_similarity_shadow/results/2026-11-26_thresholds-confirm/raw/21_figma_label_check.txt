@@ -1,0 +1,4 @@
+# 21_athena_figma_label_check.sql: Figma K2 labels, sessions created 6 Nov 2026
+# is_legit|is_verified|rows|sessions|suffix len min-max|tail codes|first ingest|last ingest
+Legit|1|809|807|10-10|01,02,03,04,05|2026-11-06 00:16:33|2026-11-25 15:00:36
+Nonlegit|1|623|620|10-10|01,02,03,04,05|2026-11-06 00:17:07|2026-11-23 09:46:34

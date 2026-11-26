@@ -1,0 +1,5 @@
+-- Athena (database_id 2), as run for Figma 6 Nov. = 15_athena_score_labels_template.sql with {KEY} = Figma K2, both labels (no is_legit /
+-- is_verified filter), lab also counts sessions with both labels (nlv), and a reduced set of output columns:
+-- SELECT lv, count(DISTINCT s) labels, sum(IF(nlv>1,1,0)) both_labels, sum(mt) matched_rows, count(DISTINCT IF(mt=1,s)) matched_labels,
+--   t_st, m5f11, m5f8, m10f8, m10f11, n_m5f11, n_m5f8, l_m5f11, l_m5f8 FROM b GROUP BY lv
+-- {GROUPS} = masks 40, 56, 125, 45, 1 from the 22_ export (mask 32 omitted: fires only under m5 f5). Output: raw/23_figma_06nov_label_scores.txt

@@ -1,0 +1,33 @@
+FIGMA 20 Nov (88,608 sessions; cells with no fire omitted in raw, totals from them)
+rule|fires|High%|verified%|challenged%|clean fires|new vs today|lost vs today|G7 failing cells (clean fires > today same cell)
+today ST|381|52.8|62.7|82.7|131|0|0|0: none
+today LT|0|-|-|-|0|0|381|0: none
+today ST or LT|381|52.8|62.7|82.7|131|0|0|0: none
+ST m5 f11|335|56.7|65.4|84.2|96|0|46|0: none
+ST m5 f8|520|50.6|66.9|77.7|176|185|46|9: 3 Linux 3 vs 0; 7 Desktop 44 vs 26; 7 Linux 2 vs 0; 15 Desktop 15 vs 8; 31 Desktop 22 vs 15; 31 WinRDVM 2 vs 0; 63 Desktop 37 vs 20; 63 Linux 21 vs 14; 63 Mobile 7 vs 0
+ST m10 f8|473|51.0|66.0|78.9|146|164|72|9: 3 Linux 3 vs 0; 7 Desktop 34 vs 26; 7 Linux 2 vs 0; 15 Desktop 15 vs 8; 31 Desktop 22 vs 15; 31 WinRDVM 2 vs 0; 63 Desktop 37 vs 20; 63 Linux 21 vs 14; 63 Mobile 3 vs 0
+ST m5 f5|942|41.4|65.2|71.1|420|607|46|15: 1 Desktop 2 vs 0; 3 Linux 6 vs 0; 3 WinRDVM 4 vs 1; 7 Desktop 78 vs 26; 7 Linux 9 vs 0; 7 WinRDVM 1 vs 0; 15 Desktop 28 vs 8; 15 Mobile 1 vs 0; 15 WinRDVM 7 vs 4; 31 Desktop 51 vs 15; 31 Mobile 1 vs 0; 31 WinRDVM 5 vs 0; 63 Desktop 150 vs 20; 63 Linux 27 vs 14; 63 Mobile 26 vs 0
+ST m10 f11|309|57.3|65.4|84.8|78|0|72|0: none
+LT m5 f11|0|-|-|-|0|0|0|0: none
+LT m5 f8|0|-|-|-|0|0|0|0: none
+ST or LT m5 f11|335|56.7|65.4|84.2|96|0|46|0: none
+ST or LT m5 f8|520|50.6|66.9|77.7|176|185|46|9: 3 Linux 3 vs 0; 7 Desktop 44 vs 26; 7 Linux 2 vs 0; 15 Desktop 15 vs 8; 31 Desktop 22 vs 15; 31 WinRDVM 2 vs 0; 63 Desktop 37 vs 20; 63 Linux 21 vs 14; 63 Mobile 7 vs 0
+BLIZZARD 9-11 Nov (209,927 sessions); Nonlegit labels 5,718 (9 Nov 3,670; 10 Nov 981; 11 Nov 1,067)
+rule|fires|High%|verified%|clean fires|fires 9/10/11 Nov|NL caught (9/10/11)|G8 (clean <= today 974 and NL > today)|G7 failing cells (3-day clean fires > today same cell)
+today ST|35464|97.2|2.8|974|12820/17023/5621|5 (4/0/1)|-|0: none
+today LT|32843|100.0|0.0|0|11324/16734/4785|6 (0/3/3)|-|0: none
+today ST or LT|36725|97.3|2.7|974|13151/17377/6197|10 (4/3/3)|-|0: none
+ST m5 f11|39336|99.3|0.9|173|14377/18239/6720|198 (141/21/36)|PASS|11: 1 Desktop 15 vs 0; 7 Desktop 20 vs 0; 7 Mobile 7 vs 0; 7 WinRDVM 1 vs 0; 15 Desktop 59 vs 0; 15 Mobile 2 vs 0; 15 WinRDVM 2 vs 0; 31 Desktop 56 vs 0; 63 Desktop 8 vs 0; 63 Mobile 1 vs 0; 63 WinRDVM 2 vs 0
+ST m5 f8|42226|98.7|1.6|317|15389/19184/7653|354 (262/33/59)|PASS|13: 1 Desktop 18 vs 0; 3 Desktop 2 vs 0; 7 Desktop 49 vs 0; 7 Mobile 18 vs 0; 7 WinRDVM 2 vs 0; 15 Desktop 79 vs 0; 15 Mobile 5 vs 0; 15 WinRDVM 3 vs 0; 31 Desktop 109 vs 0; 31 Mobile 2 vs 0; 63 Desktop 17 vs 0; 63 Mobile 9 vs 0; 63 WinRDVM 4 vs 0
+ST m10 f8|41894|98.7|1.5|309|15300/19059/7535|348 (262/30/56)|PASS|13: 1 Desktop 18 vs 0; 3 Desktop 2 vs 0; 7 Desktop 49 vs 0; 7 Mobile 16 vs 0; 7 WinRDVM 2 vs 0; 15 Desktop 76 vs 0; 15 Mobile 5 vs 0; 15 WinRDVM 3 vs 0; 31 Desktop 109 vs 0; 31 Mobile 2 vs 0; 63 Desktop 17 vs 0; 63 Mobile 6 vs 0; 63 WinRDVM 4 vs 0
+ST m5 f5|47443|97.1|3.8|790|17169/20885/9389|620 (488/47/85)|PASS|18: 1 Desktop 21 vs 0; 3 Desktop 13 vs 0; 3 Mobile 2 vs 0; 3 Other 2 vs 0; 7 Desktop 134 vs 0; 7 Mobile 52 vs 0; 7 Other 1 vs 0; 7 WinRDVM 3 vs 0; 15 Desktop 138 vs 0; 15 Mobile 14 vs 0; 15 Other 1 vs 0; 15 WinRDVM 3 vs 0; 31 Desktop 232 vs 0; 31 Mobile 14 vs 0; 31 WinRDVM 2 vs 0; 63 Desktop 54 vs 0; 63 Mobile 94 vs 0; 63 WinRDVM 10 vs 0
+ST m10 f11|39272|99.3|0.8|172|14356/18221/6695|197 (141/21/35)|PASS|10: 1 Desktop 15 vs 0; 7 Desktop 20 vs 0; 7 Mobile 7 vs 0; 7 WinRDVM 1 vs 0; 15 Desktop 59 vs 0; 15 Mobile 2 vs 0; 15 WinRDVM 2 vs 0; 31 Desktop 56 vs 0; 63 Desktop 8 vs 0; 63 WinRDVM 2 vs 0
+LT m5 f11|37019|100.0|0.1|0|13071/17644/6304|36 (3/3/30)|PASS|0: none
+LT m5 f8|38809|99.9|0.2|0|13681/18509/6619|49 (3/13/33)|PASS|0: none
+ST or LT m5 f11|40798|99.3|0.9|173|14773/18579/7446|219 (142/22/55)|PASS|11: 1 Desktop 15 vs 0; 7 Desktop 20 vs 0; 7 Mobile 7 vs 0; 7 WinRDVM 1 vs 0; 15 Desktop 59 vs 0; 15 Mobile 2 vs 0; 15 WinRDVM 2 vs 0; 31 Desktop 56 vs 0; 63 Desktop 8 vs 0; 63 Mobile 1 vs 0; 63 WinRDVM 2 vs 0
+ST or LT m5 f8|43447|98.7|1.6|317|15861/19529/8057|366 (263/33/70)|PASS|13: 1 Desktop 18 vs 0; 3 Desktop 2 vs 0; 7 Desktop 49 vs 0; 7 Mobile 18 vs 0; 7 WinRDVM 2 vs 0; 15 Desktop 79 vs 0; 15 Mobile 5 vs 0; 15 WinRDVM 3 vs 0; 31 Desktop 109 vs 0; 31 Mobile 2 vs 0; 63 Desktop 17 vs 0; 63 Mobile 9 vs 0; 63 WinRDVM 4 vs 0
+Blizzard Dict 63 today ST: 976 fires, 0.0% High
+Blizzard Dict 63 ST m5 f11: 60 fires, 63.3% High
+Blizzard Dict 63 ST m5 f8: 203 fires, 67.5% High
+Blizzard Dict 63 ST m10 f8: 161 fires, 68.9% High
+Blizzard Dict 63 ST m5 f5: 949 fires, 68.8% High

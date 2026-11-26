@@ -1,0 +1,6 @@
+-- Blizzard 9 Nov: clean-traffic fires under ST m5 f11 in Dict 31 Desktop (r3=1 AND cl=1 AND d=31 AND grp='Desktop').
+-- = 11_replay_confirm_template.sql (for 2026-11-09, LT parts dropped) with this final select:
+-- SELECT TO_CHAR(ts,'HH24:MI')||'|'||LEFT(MD5(ms),6)||'|'||stc||'|'||ROUND(GREATEST(11,share*vol*5*dfac),1)||'|'||ROUND(share*1e4,2)||'|'||hi||'|'||ver||'|'||chl||'|'||chns
+--   ||'|'||ip||'|'||asn||'|'||LEFT(isp,22)||'|'||os||'|'||REGEXP_SUBSTR(ua,'(Edg|OPR|Firefox|Chrome|Version)/[0-9]+')||'|'||LEFT(ja4,10)||'|'||LEFT(r,30)
+-- FROM s4 WHERE r3=1 AND cl=1 AND d=31 AND grp='Desktop' ORDER BY ts
+-- Output: raw/20_blizzard_d31_desktop_profile.txt

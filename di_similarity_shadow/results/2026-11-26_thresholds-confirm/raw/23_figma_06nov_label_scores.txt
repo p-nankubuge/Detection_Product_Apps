@@ -1,0 +1,7 @@
+# Athena, Figma Registration K2 labels for sessions created 6 Nov 2026 (partitions day 6-26 Nov), joined to the 22_ export
+# (mask groups 125, 56, 40, 45, 1 sent; the 407 verified sessions firing only under m5 f5 (mask 32) were NOT sent, so m5 f5 is not scored).
+# All labels are verified (is_verified=1). No session carries both labels.
+# lv|labels|matched|today ST|m5f11|m5f8|m10f8|m10f11|new vs today: m5f11 / m5f8|lost vs today: m5f11 / m5f8
+Legit|807|8|2|2|8|8|2|0/6|0/0
+Nonlegit|620|0|0|0|0|0|0|0/0|0/0
+# LT rules (today LT, LT m5 f11, LT m5 f8) fire 0 sessions on Figma 6 Nov, so they catch 0 labels.

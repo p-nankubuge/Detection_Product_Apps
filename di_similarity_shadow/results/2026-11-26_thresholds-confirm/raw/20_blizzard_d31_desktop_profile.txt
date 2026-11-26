@@ -1,0 +1,51 @@
+# time|sig id (MD5 6 hex)|ST count|limit m5f11|share x1e4|High|verified|challenged|chall-not-solved|IP|ASN|ISP|OS|UA|JA4 part a|WebGL renderer (30 chars)
+14:52|e0baad|12|11.0|0.35|0|1|0|0|100.11.211.185|701|verizon usa|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) UHD Gra
+14:53|e0baad|13|11.0|0.35|0|1|0|0|69.36.216.228|23118|skybest communications|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon(TM) Gra
+14:54|116530|12|11.0|0.58|0|1|0|0|180.181.74.19|11492|cable one inc.|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+14:55|116530|13|11.0|0.58|0|1|0|0|69.174.144.80|30600|metronet|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+14:55|116530|14|11.0|0.58|0|1|0|0|74.98.223.135|701|verizon usa|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) Iris(R)
+14:55|e0baad|14|11.0|0.35|0|1|0|0|172.56.98.133|21928|t-mobile usa inc.|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+14:57|2e5f09|12|11.0|0.40|0|1|0|0|97.97.237.85|33363|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+14:58|e0baad|15|11.0|0.35|0|1|0|0|173.20.82.115|30036|mediacom communication|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, Radeon RX 570 Seri
+14:59|e0baad|16|11.0|0.35|0|1|0|0|134.215.1.48|4181|tds telecom|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon(TM) Gra
+15:00|ba1156|12|11.0|0.09|0|1|0|0|72.59.172.63|397772|metronet|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) UHD Gra
+15:00|97f624|12|11.0|0.28|0|1|1|0|71.70.251.77|11426|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:01|ba1156|13|11.0|0.09|0|1|1|0|69.7.65.212|393227|rtc communications cor|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:01|116530|15|11.0|0.58|0|1|1|0|74.67.144.21|11351|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:01|116530|16|11.0|0.58|0|1|0|0|76.35.140.72|10796|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:02|2e5f09|13|11.0|0.40|0|1|0|0|170.250.228.161|23089|hotwire fision|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:02|0b7a91|12|11.0|0.47|0|1|0|0|24.238.121.198|23089|hotwire communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:02|0b7a91|13|11.0|0.47|0|1|0|0|71.30.214.44|7029|windstream communicati|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:02|97f624|13|11.0|0.28|0|1|0|0|68.53.187.243|7922|comcast cable communic|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:03|116530|17|11.0|0.58|0|1|0|0|173.40.13.25|20115|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) UHD Gra
+15:03|2e5f09|14|11.0|0.40|0|1|0|0|23.84.102.163|20115|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon RX 6600
+15:03|e0baad|17|11.0|0.35|0|1|1|0|108.52.133.228|701|verizon usa|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon RX 580
+15:04|0b7a91|14|11.0|0.47|0|1|1|0|68.206.152.141|11427|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon RX 6600
+15:05|731a55|12|11.0|0.14|0|1|0|0|108.25.44.185|701|verizon usa|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:05|731a55|12|11.0|0.14|0|1|0|0|75.135.18.164|20115|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, Radeon RX 560 Seri
+15:06|ba1156|14|11.0|0.09|0|1|0|0|76.118.147.98|7922|comcast cable communic|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, Radeon RX 580 Seri
+15:06|116530|18|11.0|0.58|1|0|1|1|71.84.152.71|20115|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon RX 580
+15:07|731a55|13|11.0|0.14|0|1|1|0|108.252.115.53|7018|att enterprises llc|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) HD Grap
+15:07|116530|19|11.0|0.58|0|1|1|0|164.153.54.194|10279|west carolina communic|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:07|e0baad|18|11.0|0.35|0|1|1|0|174.104.34.225|10796|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:08|ba1156|15|11.0|0.09|0|1|1|0|136.50.185.153|16591|google fiber inc.|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:08|ba1156|16|11.0|0.09|0|1|0|0|151.204.193.210|701|verizon usa|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) UHD Gra
+15:09|0b7a91|15|11.0|0.47|0|1|0|0|69.113.202.35|6128|optimum online|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) Iris(R)
+15:09|116530|20|11.0|0.58|0|1|0|0|173.30.99.83|30036|mediacom communication|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) Iris(R)
+15:10|97f624|14|11.0|0.28|0|1|0|0|35.133.148.189|20115|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:10|0b7a91|16|11.0|0.47|0|1|0|0|99.41.151.66|7018|att enterprises llc|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:10|2e5f09|15|11.0|0.40|1|1|1|0|23.87.198.41|20115|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:10|731a55|14|11.0|0.14|0|1|0|0|65.191.6.9|11426|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) UHD Gra
+15:10|116530|21|11.0|0.58|1|1|1|0|35.142.1.83|33363|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon RX 6600
+15:10|e0baad|19|11.0|0.35|1|1|0|0|204.10.172.62|32852|lexington electric sys|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:11|6f9630|12|11.0|0.23|1|1|0|0|108.54.72.198|701|verizon usa|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:11|116530|22|11.0|0.58|1|1|0|0|148.74.236.132|6128|optimum online|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon(TM) Gra
+15:11|2e5f09|16|11.0|0.40|1|1|0|0|68.131.3.193|701|verizon usa|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:11|8c3e17|12|11.0|0.26|1|1|0|0|35.151.169.150|20115|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:12|e0baad|20|11.0|0.35|1|1|1|0|69.248.188.164|7922|comcast cable communic|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) Iris(R)
+15:12|731a55|15|11.0|0.14|1|1|1|0|104.52.64.141|7018|att enterprises llc|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon(TM) Veg
+15:13|97f624|15|11.0|0.28|1|0|1|1|69.244.172.240|7922|comcast cable communic|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:17|731a55|14|11.0|0.14|1|0|1|1|70.124.255.53|11427|charter communications|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) HD Grap
+15:17|ba1156|13|11.0|0.09|1|0|1|1|67.197.141.158|14615|comporium inc|Windows|Chrome/156|t13d1517h2|ANGLE (AMD, AMD Radeon(TM) RX
+15:18|0b7a91|15|11.0|0.47|1|0|1|1|2600:4040:a376:4b00:854d:158e:b1d7:2045|701|verizon usa|Windows|Chrome/156|t13d1517h2|ANGLE (NVIDIA, NVIDIA GeForce
+15:19|0b7a91|16|11.0|0.47|1|0|1|1|173.26.93.128|30036|mediacom communication|Windows|Chrome/156|t13d1517h2|ANGLE (Intel, Intel(R) Iris(R)

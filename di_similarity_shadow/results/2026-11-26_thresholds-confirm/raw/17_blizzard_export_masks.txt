@@ -1,0 +1,5 @@
+# Blizzard 9 Nov: verified sessions firing under any rule, by bitmask (13_final_export logic, query 17_blizzard_export_as_run.sql). IDs not stored (re-creatable).
+# Bits: 1 today ST | 2 today LT | 4 ST m5 f11 | 8 ST m5 f8 | 16 ST m10 f8 | 32 ST m5 f5 | 64 ST m10 f11 | 128 LT m5 f11 | 256 LT m5 f8
+# mask:n  32:390 1:250 124:157 56:155 40:8 256:4 125:3 508:3 509:2 384:2 440:1 44:1  (total 976; no verified session has today-LT bit 2)
+# 10 Nov mask:n  1:375 32:361 56:56 124:48 380:9 40:8 44:3 510:2 386:1 416:1 442:1 312:1  (total 866)
+# 11 Nov mask:n  32:380 1:349 124:89 56:65 508:12 40:11 440:10 416:7 44:6 312:3 386:3 384:2 256:2 288:1 511:1 380:1  (total 942)

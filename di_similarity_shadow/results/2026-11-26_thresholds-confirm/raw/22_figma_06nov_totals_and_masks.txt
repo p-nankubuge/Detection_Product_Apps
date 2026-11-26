@@ -1,0 +1,4 @@
+# Figma Registration K2, replay 2026-11-06 (base 30 Oct - 5 Nov, this key only), 11_ + 22_final_export_with_totals.sql.
+# TOT|n|clean| then per rule r0..r11 'F,Fh,Fcl,Fv'
+TOT|91613|84895|291,91,177,208|0,0,0,0|291,91,177,208|285,86,176,206|512,124,342,388|465,122,302,343|1070,253,734,795|264,85,157,185|0,0,0,0|0,0,0,0|285,86,176,206|512,124,342,388
+# verified fired sessions by mask (bits as 13_): 32:407 125:185 56:158 40:24 45:21 1:2 (total 797). IDs not stored (re-creatable).
